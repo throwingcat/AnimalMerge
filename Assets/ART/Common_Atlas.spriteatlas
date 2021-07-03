@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Common_Atlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: c7b50fe91a6b74b4bb2934041f78addd, type: 3}
+    totalSpriteSurfaceArea: 638675
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 5fa61430a06801a4484d5047040632ac, type: 3}
+  - {fileID: 21300000, guid: 9da468303806a5f4f9094a6749bff438, type: 3}
+  - {fileID: 21300000, guid: 409b9b60610bc58468b9f67fc9874f8b, type: 3}
+  - {fileID: 21300000, guid: 8017fc01cb325d548a80830f951aab1c, type: 3}
+  - {fileID: 21300000, guid: 50b5d611e6ad7724dbe6eab795f80235, type: 3}
+  - {fileID: 21300000, guid: 379f13b1bcc537247ae0963300a4bc76, type: 3}
+  - {fileID: 21300000, guid: 0c75341281d460a40b176e55e4f5f372, type: 3}
+  - {fileID: 21300000, guid: 8937af52659f0fb4d9d9788e9595b461, type: 3}
+  - {fileID: 21300000, guid: 1b3f418225e5e3346956f5c402292255, type: 3}
+  - {fileID: 21300000, guid: 4505e1a20c948784bbc7aae1fccc70c3, type: 3}
+  - {fileID: 21300000, guid: eac45a64b2fca7f448fe0b082f7eb72d, type: 3}
+  - {fileID: 21300000, guid: 46d2e7f5d7190fc4ab883a401b0f1ddf, type: 3}
+  - {fileID: 21300000, guid: 8efe95a758464e743a55db5918fe1414, type: 3}
+  - {fileID: 21300000, guid: 01bb9fb7db87f10409ead9764c5bb738, type: 3}
+  - {fileID: 21300000, guid: 18aac0d7000c87149ad9d27bfe79d4db, type: 3}
+  - {fileID: 21300000, guid: e913c04885ba5504488138a043b60201, type: 3}
+  - {fileID: 21300000, guid: 63039fa88c39e594db084d0398f48244, type: 3}
+  - {fileID: 21300000, guid: da1b6659b6d7d32499951bc29bb8d5dd, type: 3}
+  - {fileID: 21300000, guid: 8efc37aaf884e104db9ad24459cbe626, type: 3}
+  - {fileID: 21300000, guid: ab29530bca72d67408913f8a7282c451, type: 3}
+  - {fileID: 21300000, guid: aebfc39b7b5eaa04797e513a1b7be581, type: 3}
+  - {fileID: 21300000, guid: 5dbe740c21024e041b80dee6a3e37741, type: 3}
+  - {fileID: 21300000, guid: 4f5faabcee61ee7479b6656b8bbdafa6, type: 3}
+  - {fileID: 21300000, guid: 43fbd96e985a7d54db3f60e63dc34dd4, type: 3}
+  - {fileID: 21300000, guid: 035714ee130adea4a810c053a46df6db, type: 3}
+  - {fileID: 21300000, guid: 4d1a2b5f8c8456047a10d841d67c5f10, type: 3}
+  - {fileID: 21300000, guid: 90631bbf20f499c4487c7b6b70544a8e, type: 3}
+  - {fileID: 21300000, guid: 88765bdf17a3a9b4b92f4df2321bcd7b, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - icon_coin
+  - VS_small
+  - gauge_exp_fg
+  - img_skill_cool_fg
+  - img_Level_Bg
+  - gauge_02
+  - btn_close
+  - btn_confirm
+  - gauge_01
+  - btn_disable
+  - img_skill_cool_bg
+  - btn_start_h
+  - btn_setting
+  - btn_menu_05
+  - gauge_bg
+  - btn_menu_04
+  - btn_menu_03
+  - btn_start_d
+  - btn_post
+  - btn_goto
+  - btn_cancel
+  - btn_menu_01
+  - btn_menu
+  - btn_menu_02.png
+  - btn_bottom_menu_on
+  - btn_bottom_menu_off
+  - gauge_exp_bg
+  - btn_start_n
+  m_RenderDataMap: {}
+  m_Tag: Common_Atlas
+  m_IsVariant: 0
