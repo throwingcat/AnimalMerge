@@ -32,7 +32,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: c7b50fe91a6b74b4bb2934041f78addd, type: 3}
-    totalSpriteSurfaceArea: 638675
+    totalSpriteSurfaceArea: 662307
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -41,6 +41,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 5fa61430a06801a4484d5047040632ac, type: 3}
   - {fileID: 21300000, guid: 9da468303806a5f4f9094a6749bff438, type: 3}
   - {fileID: 21300000, guid: 409b9b60610bc58468b9f67fc9874f8b, type: 3}
+  - {fileID: 21300000, guid: 0816aea0f2297284a9d6566a78b7dca4, type: 3}
   - {fileID: 21300000, guid: 8017fc01cb325d548a80830f951aab1c, type: 3}
   - {fileID: 21300000, guid: 50b5d611e6ad7724dbe6eab795f80235, type: 3}
   - {fileID: 21300000, guid: 379f13b1bcc537247ae0963300a4bc76, type: 3}
@@ -49,6 +50,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 1b3f418225e5e3346956f5c402292255, type: 3}
   - {fileID: 21300000, guid: 4505e1a20c948784bbc7aae1fccc70c3, type: 3}
   - {fileID: 21300000, guid: eac45a64b2fca7f448fe0b082f7eb72d, type: 3}
+  - {fileID: 21300000, guid: c50bc2f418ad4d046a1a7c25b34d1e79, type: 3}
   - {fileID: 21300000, guid: 46d2e7f5d7190fc4ab883a401b0f1ddf, type: 3}
   - {fileID: 21300000, guid: 8efe95a758464e743a55db5918fe1414, type: 3}
   - {fileID: 21300000, guid: 01bb9fb7db87f10409ead9764c5bb738, type: 3}
@@ -61,6 +63,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: aebfc39b7b5eaa04797e513a1b7be581, type: 3}
   - {fileID: 21300000, guid: 5dbe740c21024e041b80dee6a3e37741, type: 3}
   - {fileID: 21300000, guid: 4f5faabcee61ee7479b6656b8bbdafa6, type: 3}
+  - {fileID: 21300000, guid: 287f786e43289e746abe4182c4e8d4ce, type: 3}
   - {fileID: 21300000, guid: 43fbd96e985a7d54db3f60e63dc34dd4, type: 3}
   - {fileID: 21300000, guid: 035714ee130adea4a810c053a46df6db, type: 3}
   - {fileID: 21300000, guid: 4d1a2b5f8c8456047a10d841d67c5f10, type: 3}
@@ -70,6 +73,7 @@ SpriteAtlas:
   - icon_coin
   - VS_small
   - gauge_exp_fg
+  - img_money_bg
   - img_skill_cool_fg
   - img_Level_Bg
   - gauge_02
@@ -78,6 +82,7 @@ SpriteAtlas:
   - gauge_01
   - btn_disable
   - img_skill_cool_bg
+  - gauge_exp_fg_2
   - btn_start_h
   - btn_setting
   - btn_menu_05
@@ -90,6 +95,7 @@ SpriteAtlas:
   - btn_cancel
   - btn_menu_01
   - btn_menu
+  - icon_newDot
   - btn_menu_02.png
   - btn_bottom_menu_on
   - btn_bottom_menu_off
