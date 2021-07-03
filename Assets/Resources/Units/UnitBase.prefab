@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1537196816447645683}
   - component: {fileID: 1537196816447645681}
   - component: {fileID: 1537196816447645682}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: UnitBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,6 +49,7 @@ MonoBehaviour:
   Texture: {fileID: 1537196816447645683}
   Rigidbody2D: {fileID: 1537196816447645681}
   CircleCollider2D: {fileID: 1537196816447645682}
+  GUID: 
 --- !u!212 &1537196816447645683
 SpriteRenderer:
   m_ObjectHideFlags: 0

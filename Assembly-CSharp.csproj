@@ -107,6 +107,7 @@
      <Compile Include="Assets\Submodules\Violet\Violet\Common\ICSVDataBase.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ParameterTexture.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUILoopScroll.cs" />
+     <Compile Include="Assets\Submodules\Violet\Violet\UI\PartCurtain.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\MaterialReplacements.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\FXController.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIToggle.cs" />
@@ -132,14 +133,17 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\BlurMode.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\Matrix2x3.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIDragSlider.cs" />
+     <Compile Include="Assets\Submodules\Violet\Violet\UI\UITracker.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Manager\RenderTextureManager.cs" />
+     <Compile Include="Assets\Script\UnitBase.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\CSVGenerator\CSVDownloadConfigCore.cs" />
+     <Compile Include="Assets\Script\GameCore.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIFlip.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPanelInfo.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\UI\UITracker.cs" />
-     <Compile Include="Assets\Script\GameCore.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\UI\PartCurtain.cs" />
-     <Compile Include="Assets\Script\UnitBase.cs" />
+     <Compile Include="Assets\Script\Data\Unit.cs" />
+     <Compile Include="Assets\Script\GameManager.cs" />
+     <Compile Include="Assets\Script\Define.cs" />
+     <Compile Include="Assets\Script\PartBase.cs" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\SoftMask.cginc" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Dissolve.shader" />
@@ -387,14 +391,14 @@
  <Reference Include="DemiLib">
  <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DemiLib/Core/DemiLib.dll</HintPath>
  </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>C:/Git/AnimalMerge/Assets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
+ </Reference>
  <Reference Include="DOTween">
  <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTween/DOTween.dll</HintPath>
  </Reference>
  <Reference Include="DOTweenPro">
  <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
- </Reference>
- <Reference Include="Newtonsoft.Json">
- <HintPath>C:/Git/AnimalMerge/Assets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
