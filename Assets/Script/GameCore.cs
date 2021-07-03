@@ -5,16 +5,27 @@ using Violet;
 
 public class GameCore : MonoSingleton<GameCore>
 {
+    #region Timer Value
     private float _mergeDelayDelta;
-    private UnitBase _unit;
     private float _unitSpawnDelayDelta;
+    private float _syncCaptureDelta = 0f;
+    #endregion
+    
     public CSVDownloadConfig CSVDownloadConfig;
+    
+    #region Unit Value
+    private UnitBase _unit;
     public Transform UnitParent;
-
     public UnitBase UnitPrefab;
     public List<UnitBase> UnitsInField = new List<UnitBase>();
     public Vector3 UnitSpawnPosition;
-
+    #endregion
+    
+    public void Initialize()
+    {
+        SyncManager.Instance.OnSyncCapture = OnCaptureSyncPacket;
+        SyncManager.Instance.OnSyncReceive = OnReceiveSyncPacket;
+    }
     public void OnUpdate(float delta)
     {
         InputUpdate();
@@ -25,6 +36,19 @@ public class GameCore : MonoSingleton<GameCore>
             _unitSpawnDelayDelta -= delta;
 
         MergeUpdate(delta);
+
+        #region Sync
+        if (_syncCaptureDelta <= 0f)
+        {
+            _syncCaptureDelta = EnvironmentValue.SYNC_CAPTURE_DELAY;
+            SyncManager.Instance.Capture();
+        }
+        else
+        {
+            _syncCaptureDelta -= delta;
+        }
+        #endregion
+        
     }
 
     private UnitBase SpawnUnit()
@@ -122,7 +146,7 @@ public class GameCore : MonoSingleton<GameCore>
                 _unit.transform.position =
                     new Vector3(input_pos.x, _unit.transform.position.y, _unit.transform.position.z);
 
-                var horizontalLimit = Screen.width * 0.5f - (EnvironmentValue.UNIT_SPRITE_BASE_SIZE * EnvironmentValue.WORLD_RATIO * _unit.Sheet.size);
+                var horizontalLimit = 540f - (EnvironmentValue.UNIT_SPRITE_BASE_SIZE * EnvironmentValue.WORLD_RATIO * _unit.Sheet.size);
                 _unit.transform.localPosition =
                     new Vector3(Mathf.Clamp(_unit.transform.localPosition.x, -horizontalLimit, horizontalLimit),
                         _unit.transform.localPosition.y,
@@ -157,5 +181,26 @@ public class GameCore : MonoSingleton<GameCore>
         }
     }
 
+    #endregion
+    
+    #region Sync
+
+    public void OnCaptureSyncPacket(SyncManager.SyncPacket packet)
+    {
+        SyncManager.Instance.Receive(packet);
+    }
+
+    public void OnReceiveSyncPacket(SyncManager.SyncPacket packet)
+    {
+        RefreshEnemy(packet);
+    }
+
+    public void RefreshEnemy(SyncManager.SyncPacket packet)
+    {
+        foreach (var unit in packet.UnitsDatas)
+        {
+            Debug.Log(unit.UnitKey);
+        }
+    }
     #endregion
 }

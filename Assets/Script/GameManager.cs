@@ -122,6 +122,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator OnEnterLobby()
     {
+        GameCore.Instance.Initialize();
         yield break;
     }
 

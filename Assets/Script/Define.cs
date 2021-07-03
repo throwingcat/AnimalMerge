@@ -24,6 +24,7 @@ namespace Define
         public static float UNIT_SPRITE_BASE_SIZE = 300f;
         public static float WORLD_RATIO = 0.00521f;
 
+        public static float SYNC_CAPTURE_DELAY = 1f;
     }
 }
 
