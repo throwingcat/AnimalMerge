@@ -53,7 +53,7 @@ public class UnitBase : MonoBehaviour
     private static Sprite GetSprite(string unit_key)
     {
         var sheet = TableManager.Instance.GetData<Unit>(unit_key);
-        string path = string.Format("Units/{0}/{1}", sheet.group, sheet.face_texture);
+        string path = string.Format("AnimalMerge/{0}/{1}", sheet.group, sheet.face_texture);
         return Resources.Load<Sprite>(path);
     }
 }

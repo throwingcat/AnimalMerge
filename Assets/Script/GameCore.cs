@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Define;
 using UnityEngine;
 using Violet;
+using Violet.Audio;
 
 public class GameCore : MonoSingleton<GameCore>
 {
@@ -13,6 +14,15 @@ public class GameCore : MonoSingleton<GameCore>
     
     public CSVDownloadConfig CSVDownloadConfig;
     
+    #region Enemy
+    public EnemyScreen EnemyScreen;
+    #endregion
+    
+    #region UI
+    public Canvas Canvas;
+    public PanelIngame panelIngame;
+    #endregion
+    
     #region Unit Value
     private UnitBase _unit;
     public Transform UnitParent;
@@ -21,22 +31,31 @@ public class GameCore : MonoSingleton<GameCore>
     public Vector3 UnitSpawnPosition;
     #endregion
     
-    #region Enemy Layer
+    #region ETC
 
-    public EnemyScreen EnemyScreen;
+    public int Combo = 0;
     #endregion
-    
     public void Initialize()
     {
         SyncManager.Instance.OnSyncCapture = OnCaptureSyncPacket;
         SyncManager.Instance.OnSyncReceive = OnReceiveSyncPacket;
+        
+        AudioManager.Instance.ChangeBGMVolume(0.3f);
+        AudioManager.Instance.ChangeSFXVolume(0.3f);
+        AudioManager.Instance.Play("Sound/bgm",eAUDIO_TYPE.BGM);
+        
     }
     public void OnUpdate(float delta)
     {
         InputUpdate();
 
         if (_unit == null && _unitSpawnDelayDelta <= 0f)
+        {
             _unit = SpawnUnit();
+            
+            //콤보 초기화
+            Combo = 0;
+        }
         else
             _unitSpawnDelayDelta -= delta;
 
@@ -121,6 +140,10 @@ public class GameCore : MonoSingleton<GameCore>
                         (unit.transform.localPosition.y + friend.transform.localPosition.y) * 0.5f,
                         unit.transform.localPosition.z);
 
+                    //콤보 출력
+                    Combo++;
+                    panelIngame.PlayCombo(unit.transform.position,Combo);
+                    
                     RemoveUnit(unit);
                     RemoveUnit(friend);
 
@@ -128,6 +151,8 @@ public class GameCore : MonoSingleton<GameCore>
                         UnitsInField.Add(SpawnUnit(unit.Sheet.grow_unit, pos));
 
                     _mergeDelayDelta = EnvironmentValue.MERGE_DELAY;
+                    _unitSpawnDelayDelta = EnvironmentValue.UNIT_SPAWN_DELAY;
+                    
                     break;
                 }
             }
