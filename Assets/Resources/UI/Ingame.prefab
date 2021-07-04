@@ -150,6 +150,147 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &29476245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 713807958887592243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d0390bd8b8ffd640b34fe25065ff1df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateType: 0
+  isSpeedBased: 0
+  hasOnStart: 0
+  hasOnPlay: 0
+  hasOnUpdate: 0
+  hasOnStepComplete: 0
+  hasOnComplete: 0
+  hasOnTweenCreated: 0
+  hasOnRewind: 0
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onStepComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  onComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  onTweenCreated:
+    m_PersistentCalls:
+      m_Calls: []
+  onRewind:
+    m_PersistentCalls:
+      m_Calls: []
+  targetIsSelf: 1
+  targetGO: {fileID: 0}
+  tweenTargetIsTargetGO: 1
+  delay: 0
+  duration: 0.6
+  easeType: 37
+  easeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 8.241538
+      outSlope: 8.241538
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.16016334
+      value: 1.3199923
+      inSlope: 2.7635999
+      outSlope: 2.7635999
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.40776893
+      value: 0.647907
+      inSlope: -0.42861396
+      outSlope: -0.42861396
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.6976127
+      value: 1.1861788
+      inSlope: 0.11809653
+      outSlope: 0.11809653
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9004984
+      value: 0.8573179
+      inSlope: -0.093474805
+      outSlope: -0.093474805
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1.4339675
+      outSlope: 1.4339675
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  loopType: 0
+  loops: 1
+  id: 
+  isRelative: 0
+  isFrom: 0
+  isIndependentUpdate: 0
+  autoKill: 1
+  isActive: 1
+  isValid: 1
+  target: {fileID: 323486252793679153}
+  animationType: 1
+  targetType: 5
+  forcedTargetType: 0
+  autoPlay: 1
+  useTargetAsV3: 0
+  endValueFloat: 0
+  endValueV3: {x: 0, y: 80, z: 0}
+  endValueV2: {x: 0, y: 0}
+  endValueColor: {r: 1, g: 1, b: 1, a: 1}
+  endValueString: 
+  endValueRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  endValueTransform: {fileID: 0}
+  optionalBool0: 0
+  optionalFloat0: 0
+  optionalInt0: 0
+  optionalRotationMode: 0
+  optionalScrambleMode: 0
+  optionalString: 
 --- !u!1 &1395872761286954648
 GameObject:
   m_ObjectHideFlags: 0
@@ -1903,8 +2044,61 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5760288835358076960, guid: dda9493c1a7012f4fb279c1df73ecce4, type: 3}
+      propertyPath: easeCurve.m_Curve.Array.data[1].time
+      value: 0.16016334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760288835358076960, guid: dda9493c1a7012f4fb279c1df73ecce4, type: 3}
+      propertyPath: easeCurve.m_Curve.Array.data[2].time
+      value: 0.31072548
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760288835358076960, guid: dda9493c1a7012f4fb279c1df73ecce4, type: 3}
+      propertyPath: easeCurve.m_Curve.Array.data[1].value
+      value: 1.3199923
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760288835358076960, guid: dda9493c1a7012f4fb279c1df73ecce4, type: 3}
+      propertyPath: easeCurve.m_Curve.Array.data[2].value
+      value: 0.5524837
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760288835358076960, guid: dda9493c1a7012f4fb279c1df73ecce4, type: 3}
+      propertyPath: easeCurve.m_Curve.Array.data[0].inSlope
+      value: 8.241538
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760288835358076960, guid: dda9493c1a7012f4fb279c1df73ecce4, type: 3}
+      propertyPath: easeCurve.m_Curve.Array.data[1].inSlope
+      value: 1.5719588
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760288835358076960, guid: dda9493c1a7012f4fb279c1df73ecce4, type: 3}
+      propertyPath: easeCurve.m_Curve.Array.data[2].inSlope
+      value: -1.1121559
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760288835358076960, guid: dda9493c1a7012f4fb279c1df73ecce4, type: 3}
+      propertyPath: easeCurve.m_Curve.Array.data[3].inSlope
+      value: 1.0041767
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760288835358076960, guid: dda9493c1a7012f4fb279c1df73ecce4, type: 3}
+      propertyPath: easeCurve.m_Curve.Array.data[0].outSlope
+      value: 8.241538
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760288835358076960, guid: dda9493c1a7012f4fb279c1df73ecce4, type: 3}
+      propertyPath: easeCurve.m_Curve.Array.data[1].outSlope
+      value: 1.5719588
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760288835358076960, guid: dda9493c1a7012f4fb279c1df73ecce4, type: 3}
+      propertyPath: easeCurve.m_Curve.Array.data[2].outSlope
+      value: -1.1121559
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760288835358076960, guid: dda9493c1a7012f4fb279c1df73ecce4, type: 3}
+      propertyPath: easeCurve.m_Curve.Array.data[3].outSlope
+      value: 1.0041767
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dda9493c1a7012f4fb279c1df73ecce4, type: 3}
+--- !u!1 &713807958887592243 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3779920667239857559, guid: dda9493c1a7012f4fb279c1df73ecce4, type: 3}
+  m_PrefabInstance: {fileID: 4436904761352670372}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &323486252793679153 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4174357841598415253, guid: dda9493c1a7012f4fb279c1df73ecce4, type: 3}
