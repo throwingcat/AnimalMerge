@@ -21,6 +21,11 @@ public class GameCore : MonoSingleton<GameCore>
     public Vector3 UnitSpawnPosition;
     #endregion
     
+    #region Enemy Layer
+
+    public EnemyScreen EnemyScreen;
+    #endregion
+    
     public void Initialize()
     {
         SyncManager.Instance.OnSyncCapture = OnCaptureSyncPacket;
@@ -57,7 +62,9 @@ public class GameCore : MonoSingleton<GameCore>
         go.transform.SetAsLastSibling();
         var component = go.GetComponent<UnitBase>();
 
-        component.OnSpawn("cat1", UnitSpawnPosition);
+        component.OnSpawn("cat1")
+            .SetPosition(UnitSpawnPosition)
+            .SetRotation(Vector3.zero);
 
         return component;
     }
@@ -67,7 +74,8 @@ public class GameCore : MonoSingleton<GameCore>
         var go = Instantiate(UnitPrefab, UnitParent);
         go.transform.SetAsLastSibling();
         var component = go.GetComponent<UnitBase>();
-        component.OnSpawn(key, pos);
+        component.OnSpawn(key)
+            .SetPosition(pos);
         component.Drop();
         return component;
     }
@@ -197,10 +205,7 @@ public class GameCore : MonoSingleton<GameCore>
 
     public void RefreshEnemy(SyncManager.SyncPacket packet)
     {
-        foreach (var unit in packet.UnitsDatas)
-        {
-            Debug.Log(unit.UnitKey);
-        }
+        EnemyScreen.Refresh(packet);
     }
     #endregion
 }

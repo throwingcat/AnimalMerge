@@ -13,23 +13,41 @@ public class UnitBase : MonoBehaviour
     public string GUID;
     public Unit Sheet;
 
-    public void OnSpawn(string unit_key, Vector3 position)
+    public UnitBase OnSpawn(string unit_key)
     {
         Sheet = TableManager.Instance.GetData<Unit>(unit_key);
         GUID = System.Guid.NewGuid().ToString();
 
-        transform.localPosition = position;
-        Rigidbody2D.gravityScale = 0;
-        CircleCollider2D.enabled = false;
+        if(Rigidbody2D != null)
+            Rigidbody2D.gravityScale = 0;
+        if(CircleCollider2D != null)
+            CircleCollider2D.enabled = false;
 
         Texture.sprite = GetSprite(unit_key);
         transform.localScale = Vector3.one * Sheet.size;
+
+        return this;
+    }
+
+    public UnitBase SetPosition(Vector3 position)
+    {
+        transform.localPosition = position;
+        return this;
+    }
+
+    public UnitBase SetRotation(Vector3 euler)
+    {
+        transform.localRotation = Quaternion.Euler(euler);
+        return this;
     }
 
     public void Drop()
     {
-        Rigidbody2D.gravityScale = 1;
-        CircleCollider2D.enabled = true;
+        if(Rigidbody2D != null)
+            Rigidbody2D.gravityScale = 1;
+        
+        if(CircleCollider2D != null)
+            CircleCollider2D.enabled = true;
     }
 
     private static Sprite GetSprite(string unit_key)
