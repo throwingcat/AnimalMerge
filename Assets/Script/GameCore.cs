@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using Define;
 using UnityEngine;
@@ -31,9 +33,10 @@ public class GameCore : MonoSingleton<GameCore>
     public Vector3 UnitSpawnPosition;
     #endregion
     
-    #region ETC
-
+    #region Merge
+    public bool isMergeProcess = false;
     public int Combo = 0;
+    public List<string> IgnoreUnitGUID = new List<string>();
     #endregion
     public void Initialize()
     {
@@ -119,37 +122,25 @@ public class GameCore : MonoSingleton<GameCore>
             return;
         }
 
-        var isMerge = false;
         for (var i = 0; i < UnitsInField.Count; i++)
         {
             var unit = UnitsInField[i];
-
+            
+            if(IgnoreUnitGUID.Contains(unit.GUID))
+                continue;
             foreach (var friend in UnitsInField)
             {
+                if (IgnoreUnitGUID.Contains(friend.GUID))
+                    continue;
                 if (unit.GUID == friend.GUID) continue;
                 if (unit.Sheet.key != friend.Sheet.key) continue;
+                
                 var distance = Vector3.Distance(unit.transform.localPosition, friend.transform.localPosition);
                 if (distance <= unit.transform.localScale.x * 1.26 * 2 + 5)
                 {
-                    //Merge 실행
-                    isMerge = true;
-                    //Remove A B
-
-                    var pos = new Vector3(
-                        (unit.transform.localPosition.x + friend.transform.localPosition.x) * 0.5f,
-                        (unit.transform.localPosition.y + friend.transform.localPosition.y) * 0.5f,
-                        unit.transform.localPosition.z);
-
-                    //콤보 출력
-                    Combo++;
-                    panelIngame.PlayCombo(unit.transform.position,Combo);
+                    isMergeProcess = true;
+                    StartCoroutine(MergeProcess(unit,friend));
                     
-                    RemoveUnit(unit);
-                    RemoveUnit(friend);
-
-                    if (unit.Sheet.grow_unit.IsNullOrEmpty() == false)
-                        UnitsInField.Add(SpawnUnit(unit.Sheet.grow_unit, pos));
-
                     _mergeDelayDelta = EnvironmentValue.MERGE_DELAY;
                     _unitSpawnDelayDelta = EnvironmentValue.UNIT_SPAWN_DELAY;
                     
@@ -157,11 +148,54 @@ public class GameCore : MonoSingleton<GameCore>
                 }
             }
 
-            if (isMerge)
+            if (isMergeProcess)
                 break;
         }
+
+        isMergeProcess = false;
     }
 
+    private IEnumerator MergeProcess(UnitBase a,UnitBase b)
+    {
+        var cached_guid_a = a.GUID;
+        var cached_guid_b = b.GUID;
+        var cached_pos_a = a.transform.position;
+        var cached_pos_b = b.transform.position;
+        
+        IgnoreUnitGUID.Add(cached_guid_a);
+        IgnoreUnitGUID.Add(cached_guid_b);
+        
+        a.PlayMerge();
+        b.PlayMerge();
+
+        float delta = 0f;
+        float duration = 0.5f;
+        while (delta < duration)
+        {
+            a.transform.position = cached_pos_a;
+            b.transform.position = cached_pos_b;
+            delta += Time.deltaTime;
+            yield return null;
+        }
+        
+        //콤보 출력
+        Combo++;
+        panelIngame.PlayCombo(a.transform.position,Combo);
+                    
+        RemoveUnit(a);
+        RemoveUnit(b);
+        
+        var pos = new Vector3(
+            (a.transform.localPosition.x + b.transform.localPosition.x) * 0.5f,
+            (a.transform.localPosition.y + b.transform.localPosition.y) * 0.5f,
+            a.transform.localPosition.z);
+        
+        if (a.Sheet.grow_unit.IsNullOrEmpty() == false)
+            UnitsInField.Add(SpawnUnit(a.Sheet.grow_unit, pos));
+
+        IgnoreUnitGUID.Remove(cached_guid_a);
+        IgnoreUnitGUID.Remove(cached_guid_b);
+    }
     #region Input
 
     private bool isPress;

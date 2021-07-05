@@ -286,6 +286,12 @@
  <Reference Include="DOTweenProEditor">
  <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTweenPro/Editor/DOTweenProEditor.dll</HintPath>
  </Reference>
+ <Reference Include="websocket-sharp">
+ <HintPath>C:/Git/AnimalMerge/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
+ </Reference>
+ <Reference Include="Photon3Unity3D">
+ <HintPath>C:/Git/AnimalMerge/Assets/Photon/PhotonLibs/netstandard2.0/Photon3Unity3D.dll</HintPath>
+ </Reference>
  <Reference Include="DOTweenEditor">
  <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
  </Reference>
@@ -297,12 +303,6 @@
  </Reference>
  <Reference Include="DOTweenPro">
  <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
- </Reference>
- <Reference Include="Photon3Unity3D">
- <HintPath>C:/Git/AnimalMerge/Assets/Photon/PhotonLibs/netstandard2.0/Photon3Unity3D.dll</HintPath>
- </Reference>
- <Reference Include="websocket-sharp">
- <HintPath>C:/Git/AnimalMerge/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

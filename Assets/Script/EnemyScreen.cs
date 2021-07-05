@@ -8,7 +8,7 @@ public class EnemyScreen : MonoBehaviour
 {
     [SerializeField]private Camera _camera;
     [SerializeField]private RenderTexture _renderTexture;
-    [SerializeField]private UnitBase _syncUnitPrefab;
+    [SerializeField]private SyncUnitBase _syncUnitPrefab;
     [SerializeField]private Transform _unitParent;
     private List<UnitBase> _units = new List<UnitBase>();
 

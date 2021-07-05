@@ -52,9 +52,9 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Photon\PhotonUnityNetworking\UtilityScripts\PhotonPlayer\Editor\PunTeamsInspector.cs" />
      <Compile Include="Assets\Photon\PhotonUnityNetworking\UtilityScripts\PhotonPlayer\Editor\PhotonTeamsManagerInspector.cs" />
      <Compile Include="Assets\Photon\PhotonUnityNetworking\UtilityScripts\PhotonPlayer\Editor\PlayerNumberingInspector.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\UtilityScripts\PhotonPlayer\Editor\PunTeamsInspector.cs" />
      <None Include="Assets\Photon\PhotonUnityNetworking\UtilityScripts\PhotonPlayer\Editor\PhotonUnityNetworking.Utilities.PhotonPlayer.Editor.asmdef" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -296,6 +296,12 @@
  <Reference Include="DOTweenProEditor">
  <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTweenPro/Editor/DOTweenProEditor.dll</HintPath>
  </Reference>
+ <Reference Include="websocket-sharp">
+ <HintPath>C:/Git/AnimalMerge/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
+ </Reference>
+ <Reference Include="Photon3Unity3D">
+ <HintPath>C:/Git/AnimalMerge/Assets/Photon/PhotonLibs/netstandard2.0/Photon3Unity3D.dll</HintPath>
+ </Reference>
  <Reference Include="DOTweenEditor">
  <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
  </Reference>
@@ -307,12 +313,6 @@
  </Reference>
  <Reference Include="DOTweenPro">
  <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
- </Reference>
- <Reference Include="Photon3Unity3D">
- <HintPath>C:/Git/AnimalMerge/Assets/Photon/PhotonLibs/netstandard2.0/Photon3Unity3D.dll</HintPath>
- </Reference>
- <Reference Include="websocket-sharp">
- <HintPath>C:/Git/AnimalMerge/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
  <HintPath>C:/Git/AnimalMerge/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>

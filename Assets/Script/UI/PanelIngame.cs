@@ -11,7 +11,7 @@ public class PanelIngame : MonoBehaviour
 
     public void PlayCombo(Vector3 worldPosition, int combo)
     {
-        string path = string.Format("Sound/Combo Sound/Default/combo_{0}",combo);
+        string path = string.Format("Sound/Combo Sound/Default/combo_{0}",Mathf.Clamp(combo,1,11));
         AudioManager.Instance.Play(path);
 
         var pool = GameObjectPool.GetPool("VFXCombo");

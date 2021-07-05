@@ -52,23 +52,23 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Views\PhotonRigidbodyView.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\PunClasses.cs" />
      <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\PhotonStreamQueue.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\ServerSettings.cs" />
      <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\PhotonNetworkPart.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Enums.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\PhotonNetwork.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\PhotonView.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Utilities\NestedComponentUtilities.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Views\PhotonAnimatorView.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Interfaces\IPunCallbacks.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Views\PhotonRigidbody2DView.cs" />
      <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Interfaces\IPhotonViewCallbacks.cs" />
      <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Views\PhotonTransformViewClassic.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\CustomTypes.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Views\PhotonTransformView.cs" />
      <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\PhotonHandler.cs" />
+     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\PunClasses.cs" />
+     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Views\PhotonRigidbody2DView.cs" />
+     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\PhotonNetwork.cs" />
+     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\PhotonView.cs" />
+     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Views\PhotonAnimatorView.cs" />
+     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\CustomTypes.cs" />
+     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Views\PhotonRigidbodyView.cs" />
+     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Enums.cs" />
+     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Interfaces\IPunCallbacks.cs" />
+     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Views\PhotonTransformView.cs" />
+     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\ServerSettings.cs" />
+     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Utilities\NestedComponentUtilities.cs" />
      <None Include="Assets\Photon\PhotonUnityNetworking\Code\PhotonUnityNetworking.asmdef" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -301,6 +301,12 @@
  <Reference Include="DOTweenProEditor">
  <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTweenPro/Editor/DOTweenProEditor.dll</HintPath>
  </Reference>
+ <Reference Include="websocket-sharp">
+ <HintPath>C:/Git/AnimalMerge/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
+ </Reference>
+ <Reference Include="Photon3Unity3D">
+ <HintPath>C:/Git/AnimalMerge/Assets/Photon/PhotonLibs/netstandard2.0/Photon3Unity3D.dll</HintPath>
+ </Reference>
  <Reference Include="DOTweenEditor">
  <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
  </Reference>
@@ -312,12 +318,6 @@
  </Reference>
  <Reference Include="DOTweenPro">
  <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
- </Reference>
- <Reference Include="Photon3Unity3D">
- <HintPath>C:/Git/AnimalMerge/Assets/Photon/PhotonLibs/netstandard2.0/Photon3Unity3D.dll</HintPath>
- </Reference>
- <Reference Include="websocket-sharp">
- <HintPath>C:/Git/AnimalMerge/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
