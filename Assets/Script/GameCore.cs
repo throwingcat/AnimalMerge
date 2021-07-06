@@ -11,31 +11,40 @@ using Violet.Audio;
 public class GameCore : MonoSingleton<GameCore>
 {
     #region Timer Value
+
     private float _mergeDelayDelta;
     private float _unitSpawnDelayDelta;
     private float _syncCaptureDelta = 0f;
+
     #endregion
-    
+
     public CSVDownloadConfig CSVDownloadConfig;
-    
+
     #region Enemy
+
     public EnemyScreen EnemyScreen;
+
     #endregion
-    
+
     #region UI
+
     public Canvas Canvas;
     public PanelIngame panelIngame;
+
     #endregion
-    
+
     #region Unit Value
+
     private UnitBase _unit;
     public Transform UnitParent;
     public UnitBase UnitPrefab;
     public List<UnitBase> UnitsInField = new List<UnitBase>();
     public Vector3 UnitSpawnPosition;
+
     #endregion
-    
+
     #region Player Data
+
     public int Score = 0;
     public int MAX_BADBLOCK_VALUE = 0;
     public int BadBlockValue = 0;
@@ -43,16 +52,18 @@ public class GameCore : MonoSingleton<GameCore>
     public int Combo = 0;
     public List<string> IgnoreUnitGUID = new List<string>();
     private List<Unit> _badBlockSheet = new List<Unit>();
+
     #endregion
+
     public void Initialize()
     {
         SyncManager.Instance.OnSyncCapture = OnCaptureSyncPacket;
         SyncManager.Instance.OnSyncReceive = OnReceiveSyncPacket;
-        
+
         AudioManager.Instance.ChangeBGMVolume(0.3f);
         AudioManager.Instance.ChangeSFXVolume(0.3f);
-        AudioManager.Instance.Play("Sound/bgm",eAUDIO_TYPE.BGM);
-        
+        AudioManager.Instance.Play("Sound/bgm", eAUDIO_TYPE.BGM);
+
         //방해 블록 초기화
         var table = TableManager.Instance.GetTable<Unit>();
         foreach (var sheet in table)
@@ -64,6 +75,7 @@ public class GameCore : MonoSingleton<GameCore>
                     _badBlockSheet.Add(unit);
             }
         }
+
         _badBlockSheet.Sort((a, b) =>
         {
             if (a.score < b.score) return 1;
@@ -71,7 +83,10 @@ public class GameCore : MonoSingleton<GameCore>
             return 0;
         });
         MAX_BADBLOCK_VALUE = _badBlockSheet[0].score * 5;
+
+        panelIngame.RefreshScore(0, 0);
     }
+
     public void OnUpdate(float delta)
     {
         InputUpdate();
@@ -79,7 +94,7 @@ public class GameCore : MonoSingleton<GameCore>
         if (_unit == null && _unitSpawnDelayDelta <= 0f)
         {
             _unit = SpawnUnit();
-            
+
             //콤보 초기화
             Combo = 0;
         }
@@ -89,6 +104,7 @@ public class GameCore : MonoSingleton<GameCore>
         MergeUpdate(delta);
 
         #region Sync
+
         if (_syncCaptureDelta <= 0f)
         {
             _syncCaptureDelta = EnvironmentValue.SYNC_CAPTURE_DELAY;
@@ -98,8 +114,8 @@ public class GameCore : MonoSingleton<GameCore>
         {
             _syncCaptureDelta -= delta;
         }
+
         #endregion
-        
     }
 
     private UnitBase SpawnUnit()
@@ -149,8 +165,8 @@ public class GameCore : MonoSingleton<GameCore>
         for (var i = 0; i < UnitsInField.Count; i++)
         {
             var unit = UnitsInField[i];
-            
-            if(IgnoreUnitGUID.Contains(unit.GUID))
+
+            if (IgnoreUnitGUID.Contains(unit.GUID))
                 continue;
             foreach (var friend in UnitsInField)
             {
@@ -158,16 +174,16 @@ public class GameCore : MonoSingleton<GameCore>
                     continue;
                 if (unit.GUID == friend.GUID) continue;
                 if (unit.Sheet.key != friend.Sheet.key) continue;
-                
+
                 var distance = Vector3.Distance(unit.transform.localPosition, friend.transform.localPosition);
                 if (distance <= unit.transform.localScale.x * 1.26 * 2 + 5)
                 {
                     isMergeProcess = true;
-                    StartCoroutine(MergeProcess(unit,friend));
-                    
+                    StartCoroutine(MergeProcess(unit, friend));
+
                     _mergeDelayDelta = EnvironmentValue.MERGE_DELAY;
                     _unitSpawnDelayDelta = EnvironmentValue.UNIT_SPAWN_DELAY;
-                    
+
                     break;
                 }
             }
@@ -179,16 +195,16 @@ public class GameCore : MonoSingleton<GameCore>
         isMergeProcess = false;
     }
 
-    private IEnumerator MergeProcess(UnitBase a,UnitBase b)
+    private IEnumerator MergeProcess(UnitBase a, UnitBase b)
     {
         var cached_guid_a = a.GUID;
         var cached_guid_b = b.GUID;
         var cached_pos_a = a.transform.position;
         var cached_pos_b = b.transform.position;
-        
+
         IgnoreUnitGUID.Add(cached_guid_a);
         IgnoreUnitGUID.Add(cached_guid_b);
-        
+
         a.PlayMerge();
         b.PlayMerge();
 
@@ -201,19 +217,19 @@ public class GameCore : MonoSingleton<GameCore>
             delta += Time.deltaTime;
             yield return null;
         }
-        
+
         //콤보 출력
         Combo++;
-        OnMergeEvent(a,b,Combo);
-        
+        OnMergeEvent(a, b, Combo);
+
         RemoveUnit(a);
         RemoveUnit(b);
-        
+
         var pos = new Vector3(
             (a.transform.localPosition.x + b.transform.localPosition.x) * 0.5f,
             (a.transform.localPosition.y + b.transform.localPosition.y) * 0.5f,
             a.transform.localPosition.z);
-        
+
         if (a.Sheet.grow_unit.IsNullOrEmpty() == false)
             UnitsInField.Add(SpawnUnit(a.Sheet.grow_unit, pos));
 
@@ -224,8 +240,8 @@ public class GameCore : MonoSingleton<GameCore>
     private void OnMergeEvent(UnitBase a, UnitBase b, int Combo)
     {
         //콤보 출력
-        panelIngame.PlayCombo(a.transform.position,Combo);
-        
+        panelIngame.PlayCombo(a.transform.position, Combo);
+
         //스코어 갱신
         int gain = (a.Sheet.score + b.Sheet.score) * 10 * Combo;
         OnGainScore(gain);
@@ -235,36 +251,34 @@ public class GameCore : MonoSingleton<GameCore>
     {
         int before = Score;
         Score += gain;
-        
-        panelIngame.RefreshScore(before,Score);
-        
+
+        panelIngame.RefreshScore(before, Score);
+
         OnReceiveBadBlock(gain);
         return;
-        
+
         //내 방해블록 제거
         if (0 < BadBlockValue)
         {
             BadBlockValue -= gain;
-            
+
             RefreshBadBlockUI();
             //내 방해블록 제거 + 상대방에게 공격
             if (BadBlockValue <= 0)
             {
-                
             }
         }
         //상대방에게 공격
         else
         {
-            BadBlockValue += gain;   
+            BadBlockValue += gain;
             RefreshBadBlockUI();
         }
-        
-        
     }
 
-    
+
     #region Input
+
     private bool isPress;
 
     private void InputUpdate()
@@ -273,7 +287,7 @@ public class GameCore : MonoSingleton<GameCore>
         {
             OnGainScore(20);
         }
-        
+
         if (Input.GetMouseButtonDown(0)) OnPress();
 
         if (isPress && Input.GetMouseButton(0) == false) OnRelease();
@@ -285,7 +299,8 @@ public class GameCore : MonoSingleton<GameCore>
                 _unit.transform.position =
                     new Vector3(input_pos.x, _unit.transform.position.y, _unit.transform.position.z);
 
-                var horizontalLimit = 540f - (EnvironmentValue.UNIT_SPRITE_BASE_SIZE * EnvironmentValue.WORLD_RATIO * _unit.Sheet.size);
+                var horizontalLimit = 540f - (EnvironmentValue.UNIT_SPRITE_BASE_SIZE * EnvironmentValue.WORLD_RATIO *
+                                              _unit.Sheet.size);
                 _unit.transform.localPosition =
                     new Vector3(Mathf.Clamp(_unit.transform.localPosition.x, -horizontalLimit, horizontalLimit),
                         _unit.transform.localPosition.y,
@@ -321,11 +336,11 @@ public class GameCore : MonoSingleton<GameCore>
     }
 
     #endregion
-    
+
     #region Attack
+
     private void OnSendBadBlock(int value)
-    {        
-        
+    {
     }
 
     private void OnReceiveBadBlock(int value)
@@ -347,18 +362,20 @@ public class GameCore : MonoSingleton<GameCore>
 
             if (0 < count)
             {
-                for(int i=0;i<count;i++)
+                for (int i = 0; i < count; i++)
                     blocks.Add(bad);
             }
 
             current = current % bad.score;
         }
-        
+
         panelIngame.RefreshBadBlock(blocks);
     }
-    
+
     #endregion
+
     #region Sync
+
     public void OnCaptureSyncPacket(SyncManager.SyncPacket packet)
     {
         SyncManager.Instance.Receive(packet);
@@ -373,5 +390,6 @@ public class GameCore : MonoSingleton<GameCore>
     {
         EnemyScreen.Refresh(packet);
     }
+
     #endregion
 }
