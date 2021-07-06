@@ -6,7 +6,7 @@ SpriteAtlas:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Common_Atlas
+  m_Name: Common
   m_EditorData:
     serializedVersion: 2
     textureSettings:
@@ -56,7 +56,8 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: c7b50fe91a6b74b4bb2934041f78addd, type: 3}
-    totalSpriteSurfaceArea: 735157
+    - {fileID: 102900000, guid: 0dcf213ce157a314080be094c25a343a, type: 3}
+    totalSpriteSurfaceArea: 780300
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -76,19 +77,25 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 4505e1a20c948784bbc7aae1fccc70c3, type: 3}
   - {fileID: 21300000, guid: eac45a64b2fca7f448fe0b082f7eb72d, type: 3}
   - {fileID: 21300000, guid: c50bc2f418ad4d046a1a7c25b34d1e79, type: 3}
+  - {fileID: 21300000, guid: 4d4dfb555bc8936478b3d98033075ab8, type: 3}
+  - {fileID: 21300000, guid: 5e798895ee8aa3c49a5c55d7d6dab0ad, type: 3}
   - {fileID: 21300000, guid: 46d2e7f5d7190fc4ab883a401b0f1ddf, type: 3}
+  - {fileID: 21300000, guid: 75d783f680934e74e9581b93ae8b24f7, type: 3}
   - {fileID: 21300000, guid: 8efe95a758464e743a55db5918fe1414, type: 3}
   - {fileID: 21300000, guid: 01bb9fb7db87f10409ead9764c5bb738, type: 3}
   - {fileID: 21300000, guid: 18aac0d7000c87149ad9d27bfe79d4db, type: 3}
   - {fileID: 21300000, guid: e913c04885ba5504488138a043b60201, type: 3}
   - {fileID: 21300000, guid: 63039fa88c39e594db084d0398f48244, type: 3}
+  - {fileID: 21300000, guid: c331fde83daec82479a0058546f241bd, type: 3}
   - {fileID: 21300000, guid: da1b6659b6d7d32499951bc29bb8d5dd, type: 3}
+  - {fileID: 21300000, guid: f526ce7a0cf0e834f890cf03d9681268, type: 3}
   - {fileID: 21300000, guid: 8efc37aaf884e104db9ad24459cbe626, type: 3}
   - {fileID: 21300000, guid: ab29530bca72d67408913f8a7282c451, type: 3}
   - {fileID: 21300000, guid: aebfc39b7b5eaa04797e513a1b7be581, type: 3}
   - {fileID: 21300000, guid: 5dbe740c21024e041b80dee6a3e37741, type: 3}
   - {fileID: 21300000, guid: 5f7f995c6bc6b8943af2b3cfc051fdef, type: 3}
   - {fileID: 21300000, guid: 4f5faabcee61ee7479b6656b8bbdafa6, type: 3}
+  - {fileID: 21300000, guid: 66c974bdcdcd170449941dd51831797e, type: 3}
   - {fileID: 21300000, guid: 287f786e43289e746abe4182c4e8d4ce, type: 3}
   - {fileID: 21300000, guid: 43fbd96e985a7d54db3f60e63dc34dd4, type: 3}
   - {fileID: 21300000, guid: 035714ee130adea4a810c053a46df6db, type: 3}
@@ -110,19 +117,25 @@ SpriteAtlas:
   - btn_disable
   - img_skill_cool_bg
   - gauge_exp_fg_2
+  - rat_02
+  - rat_00
   - btn_start_h
+  - img_shadow
   - btn_setting
   - btn_menu_05
   - gauge_bg
   - btn_menu_04
   - btn_menu_03
+  - rat_03
   - btn_start_d
+  - rat_01
   - btn_post
   - btn_goto
   - btn_cancel
   - btn_menu_01
   - enemy_bg
   - btn_menu
+  - rat_04
   - icon_newDot
   - btn_menu_02.png
   - btn_bottom_menu_on
@@ -130,5 +143,5 @@ SpriteAtlas:
   - gauge_exp_bg
   - btn_start_n
   m_RenderDataMap: {}
-  m_Tag: Common_Atlas
+  m_Tag: Common
   m_IsVariant: 0

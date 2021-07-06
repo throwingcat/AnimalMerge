@@ -53,8 +53,6 @@ public class SyncManager
         }
     }
 
-    
-
     public System.Action<SyncPacket> OnSyncCapture;
     public System.Action<SyncPacket> OnSyncReceive;
     
