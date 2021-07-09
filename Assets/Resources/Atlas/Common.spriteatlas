@@ -83,6 +83,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 46d2e7f5d7190fc4ab883a401b0f1ddf, type: 3}
   - {fileID: 21300000, guid: 1f2a99162997cb64b8fd7c97c9957f21, type: 3}
   - {fileID: 21300000, guid: 75d783f680934e74e9581b93ae8b24f7, type: 3}
+  - {fileID: 21300000, guid: 430859973f47b2c43b5da664f21322d8, type: 3}
   - {fileID: 21300000, guid: 8efe95a758464e743a55db5918fe1414, type: 3}
   - {fileID: 21300000, guid: 01bb9fb7db87f10409ead9764c5bb738, type: 3}
   - {fileID: 21300000, guid: 18aac0d7000c87149ad9d27bfe79d4db, type: 3}
@@ -104,6 +105,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 4d1a2b5f8c8456047a10d841d67c5f10, type: 3}
   - {fileID: 21300000, guid: 90631bbf20f499c4487c7b6b70544a8e, type: 3}
   - {fileID: 21300000, guid: 88765bdf17a3a9b4b92f4df2321bcd7b, type: 3}
+  - {fileID: 21300000, guid: 1e0af8efa2c64c547b25e7ba05b90bb8, type: 3}
   m_PackedSpriteNamesToIndex:
   - icon_coin
   - VS_small
@@ -125,6 +127,7 @@ SpriteAtlas:
   - btn_start_h
   - rat_05
   - img_shadow
+  - rat_06
   - btn_setting
   - btn_menu_05
   - gauge_bg
@@ -146,6 +149,7 @@ SpriteAtlas:
   - btn_bottom_menu_off
   - gauge_exp_bg
   - btn_start_n
+  - rat_05
   m_RenderDataMap: {}
   m_Tag: Common
   m_IsVariant: 0
