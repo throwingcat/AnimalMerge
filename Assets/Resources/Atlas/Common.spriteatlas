@@ -57,7 +57,7 @@ SpriteAtlas:
     packables:
     - {fileID: 102900000, guid: c7b50fe91a6b74b4bb2934041f78addd, type: 3}
     - {fileID: 102900000, guid: 0dcf213ce157a314080be094c25a343a, type: 3}
-    totalSpriteSurfaceArea: 780300
+    totalSpriteSurfaceArea: 788980
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -68,6 +68,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 409b9b60610bc58468b9f67fc9874f8b, type: 3}
   - {fileID: 21300000, guid: 700204a0ff843234da9609a3c0791177, type: 3}
   - {fileID: 21300000, guid: 0816aea0f2297284a9d6566a78b7dca4, type: 3}
+  - {fileID: 21300000, guid: 81f01af05a4131a4eb98ee6dca4a3e2c, type: 3}
   - {fileID: 21300000, guid: 8017fc01cb325d548a80830f951aab1c, type: 3}
   - {fileID: 21300000, guid: 50b5d611e6ad7724dbe6eab795f80235, type: 3}
   - {fileID: 21300000, guid: 379f13b1bcc537247ae0963300a4bc76, type: 3}
@@ -80,6 +81,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 4d4dfb555bc8936478b3d98033075ab8, type: 3}
   - {fileID: 21300000, guid: 5e798895ee8aa3c49a5c55d7d6dab0ad, type: 3}
   - {fileID: 21300000, guid: 46d2e7f5d7190fc4ab883a401b0f1ddf, type: 3}
+  - {fileID: 21300000, guid: 1f2a99162997cb64b8fd7c97c9957f21, type: 3}
   - {fileID: 21300000, guid: 75d783f680934e74e9581b93ae8b24f7, type: 3}
   - {fileID: 21300000, guid: 8efe95a758464e743a55db5918fe1414, type: 3}
   - {fileID: 21300000, guid: 01bb9fb7db87f10409ead9764c5bb738, type: 3}
@@ -108,6 +110,7 @@ SpriteAtlas:
   - gauge_exp_fg
   - btn_pause
   - img_money_bg
+  - rat_06
   - img_skill_cool_fg
   - img_Level_Bg
   - gauge_02
@@ -120,6 +123,7 @@ SpriteAtlas:
   - rat_02
   - rat_00
   - btn_start_h
+  - rat_05
   - img_shadow
   - btn_setting
   - btn_menu_05

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using BackEnd;
 using Define;
 using UnityEngine;
 using UnityEngine.AI;
@@ -70,6 +71,9 @@ public class GameManager : MonoBehaviour
         //기본 데이터 다운로드
         yield return StartCoroutine(LoadSheetData());
 
+        //서버 접속
+        yield return StartCoroutine(ConnectionServer());
+        
         //게임 시작
         yield return StartCoroutine(InitializeGame());
         
@@ -89,6 +93,21 @@ public class GameManager : MonoBehaviour
             yield return null;
     }
 
+    private IEnumerator ConnectionServer()
+    {
+        //뒤끝 SDK 초기화
+        var bro = Backend.Initialize(true);
+        if (bro.IsSuccess())
+        {
+            
+        }
+        else
+        {
+            Application.Quit();
+        }
+        yield break;
+    }
+        
     private IEnumerator InitializeGame()
     {
         ChangeGameState(eGAME_STATE.Lobby);

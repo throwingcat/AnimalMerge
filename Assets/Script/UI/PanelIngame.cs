@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using Violet;
 using Violet.Audio;
 
-public class PanelIngame : MonoBehaviour
+public class PanelIngame : SUIPanel
 {
     public Transform VFXComboParent;
     public GameObject VFXComboPrefab;

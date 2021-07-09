@@ -311,12 +311,6 @@
  <Reference Include="DOTweenProEditor">
  <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTweenPro/Editor/DOTweenProEditor.dll</HintPath>
  </Reference>
- <Reference Include="websocket-sharp">
- <HintPath>C:/Git/AnimalMerge/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
- </Reference>
- <Reference Include="Photon3Unity3D">
- <HintPath>C:/Git/AnimalMerge/Assets/Photon/PhotonLibs/netstandard2.0/Photon3Unity3D.dll</HintPath>
- </Reference>
  <Reference Include="DOTweenEditor">
  <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
  </Reference>
@@ -328,6 +322,24 @@
  </Reference>
  <Reference Include="DOTweenPro">
  <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
+ </Reference>
+ <Reference Include="TheBackendSettings">
+ <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/Settings/TheBackendSettings.dll</HintPath>
+ </Reference>
+ <Reference Include="TheBackendHashKeySettings">
+ <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/Settings/TheBackendHashKeySettings.dll</HintPath>
+ </Reference>
+ <Reference Include="LitJSON">
+ <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/LitJSON.dll</HintPath>
+ </Reference>
+ <Reference Include="TheBackendSettingEditor">
+ <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/Editor/TheBackendSettingEditor.dll</HintPath>
+ </Reference>
+ <Reference Include="TheBackend.iOS">
+ <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/Android/TheBackend.iOS.dll</HintPath>
+ </Reference>
+ <Reference Include="Backend">
+ <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/Backend.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
  <HintPath>C:/Git/AnimalMerge/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
@@ -776,37 +788,9 @@
       <Project>{5f280f4f-ded8-c4e3-9383-451a5a520da2}</Project>
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
-    <ProjectReference Include="PhotonChat.csproj">
-      <Project>{144e77d9-b317-9935-f416-87833869ead2}</Project>
-      <Name>PhotonChat</Name>
-    </ProjectReference>
     <ProjectReference Include="Coffee.SoftMaskForUGUI.Editor.csproj">
       <Project>{81402af7-e1f7-c3ee-3160-fd45120cecfa}</Project>
       <Name>Coffee.SoftMaskForUGUI.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="PhotonUnityNetworking.Editor.csproj">
-      <Project>{981130e6-da90-c820-2842-a0c56a9ea080}</Project>
-      <Name>PhotonUnityNetworking.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="PhotonUnityNetworking.Utilities.PhotonPlayer.Editor.csproj">
-      <Project>{4565ba55-f4f5-b9d7-70b9-736b7e02dc2e}</Project>
-      <Name>PhotonUnityNetworking.Utilities.PhotonPlayer.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="PunDemos.DemoHubEditor.csproj">
-      <Project>{16703af0-4fe2-6e1e-cab3-0338a5722cac}</Project>
-      <Name>PunDemos.DemoHubEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="PhotonRealtime.csproj">
-      <Project>{d628a7f4-bb51-3e7e-38e4-c8f68fbd78bd}</Project>
-      <Name>PhotonRealtime</Name>
-    </ProjectReference>
-    <ProjectReference Include="PhotonUnityNetworking.Utilities.csproj">
-      <Project>{5494e5db-6f46-facb-3c42-39428df50b19}</Project>
-      <Name>PhotonUnityNetworking.Utilities</Name>
-    </ProjectReference>
-    <ProjectReference Include="PhotonUnityNetworking.csproj">
-      <Project>{5ffd62d9-4560-82da-d853-01a7a63bffa4}</Project>
-      <Name>PhotonUnityNetworking</Name>
     </ProjectReference>
     <ProjectReference Include="Coffee.UIParticle.csproj">
       <Project>{b0a15342-0b73-2d37-3664-eba9146d83c4}</Project>
@@ -815,18 +799,6 @@
     <ProjectReference Include="Coffee.SoftMaskForUGUI.csproj">
       <Project>{a38124eb-0139-0416-d58b-aaf76c7d219a}</Project>
       <Name>Coffee.SoftMaskForUGUI</Name>
-    </ProjectReference>
-    <ProjectReference Include="PhotonUnityNetworking.Demos.csproj">
-      <Project>{298edcc3-01ea-ae9b-8580-7c3328cc0dde}</Project>
-      <Name>PhotonUnityNetworking.Demos</Name>
-    </ProjectReference>
-    <ProjectReference Include="PunDemos.DemoSlotcarEditor.csproj">
-      <Project>{88928cf6-a277-8d2c-5742-1759370f8382}</Project>
-      <Name>PunDemos.DemoSlotcarEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="PhotonUnityNetworking.Utilities.Culling.Editor.csproj">
-      <Project>{12c9aa05-0e31-07da-72b0-fa3431f81bff}</Project>
-      <Name>PhotonUnityNetworking.Utilities.Culling.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

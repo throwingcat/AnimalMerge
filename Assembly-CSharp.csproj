@@ -52,15 +52,11 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Photon\PhotonRealtime\Demos\DemoLoadBalancing\ConnectAndJoinRandomLb.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Manager\UIManager.cs" />
      <Compile Include="Assets\Script\UI\VFXCombo.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\DOTweenProShortcuts.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\MonoObjectPool.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\DOTweenTextMeshPro.cs" />
-     <Compile Include="Assets\Photon\PhotonLibs\WebSocket\WebSocket.cs" />
-     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\TextButtonTransition.cs" />
-     <Compile Include="Assets\Photon\PhotonLibs\WebSocket\SocketWebTcp.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\Define.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ShadowStyle.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUICanvasFitter.cs" />
@@ -73,8 +69,6 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\MaterialOps.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\Packer.cs" />
      <Compile Include="Assets\Script\SyncManager.cs" />
-     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\ChatAppIdCheckerUI.cs" />
-     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\AppSettingsExtensions.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Audio\AudioItem.cs" />
      <Compile Include="Assets\Script\EnemyScreen.cs" />
      <Compile Include="Assets\Script\UI\PanelIngame.cs" />
@@ -84,7 +78,7 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ColorMode.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ToneMode.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIEffect.cs" />
-     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\NamePickGui.cs" />
+     <Compile Include="Assets\Script\UI\IngameBadBlock.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIGradient.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\EditorCoroutine\EditorCoroutines.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Manager\MonoBehaviourPool.cs" />
@@ -102,7 +96,6 @@
      <Compile Include="Assets\Script\TextPreset.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIScrollSnap.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\MaterialCache.cs" />
-     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\ChannelSelector.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUISlider.cs" />
      <Compile Include="Assets\Script\Data\Unit.cs" />
      <Compile Include="Assets\Script\PartBase.cs" />
@@ -112,14 +105,12 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\DOTweenTk2d.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIDragRect.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Manager\ResourceManager.cs" />
-     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\IgnoreUiRaycastWhenInactive.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUILetterSpacing.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\MUI\MToggle.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\CSVGenerator\CSVDownloadConfig.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUITouchable.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\EffectArea.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\Singleton.cs" />
-     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\EventSystemSpawner.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPressButton.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\ICSVDataBase.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ParameterTexture.cs" />
@@ -128,7 +119,6 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\MaterialReplacements.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\FXController.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIToggle.cs" />
-     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\FriendItem.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModulePhysics.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPanel.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\SubscribeBase.cs" />
@@ -138,7 +128,6 @@
      <Compile Include="Assets\Submodules\Violet\Violet\Common\Utils.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\MonoObjectPoolManager.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
-     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\ChatGui.cs" />
      <Compile Include="Assets\Script\SyncUnitBase.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleUI.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\JoyStick\Script\JoyStickReceiver.cs" />
@@ -149,13 +138,11 @@
      <Compile Include="Assets\Script\Define.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Manager\TableManager.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUITween.cs" />
-     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\TextToggleIsOnTransition.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIDissolve.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\UI\CanvasLayerTag.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleAudio.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\BlurMode.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\Matrix2x3.cs" />
-     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\OnStartDelete.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIDragSlider.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\UI\UITracker.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Manager\RenderTextureManager.cs" />
@@ -164,11 +151,10 @@
      <Compile Include="Assets\Script\GameCore.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIFlip.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPanelInfo.cs" />
-     <Compile Include="Assets\Script\UI\IngameBadBlock.cs" />
+     <Compile Include="Assets\TheBackend\Toolkit\SendQueueMgr.cs" />
+     <Compile Include="Assets\Script\UI\PanelLobby.cs" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
-     <None Include="Assets\Photon\PhotonLibs\netstandard2.0\Photon3Unity3D.xml" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\SoftMask.cginc" />
-     <None Include="Assets\Photon\PhotonUnityNetworking\changelog.txt" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Dissolve.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Shaders\SoftMaskTemplate.cginc" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.0.7\Shaders\UIAdditive.shader" />
@@ -182,16 +168,12 @@
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Shaders\SoftMaskETC1.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\Shaders\Resources\UI-Default-SoftMask.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect.shader" />
-     <None Include="Assets\Photon\PhotonLibs\changes-library.txt" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\Shaders\Resources\SoftMask.shader" />
-     <None Include="Assets\Photon\PhotonUnityNetworking\readme.txt" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-EffectCapture.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\readme.txt" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DemiLib\Core\DemiLib.xml" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\readme.txt" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Shaders\SoftMask.shader" />
-     <None Include="Assets\Photon\PhotonLibs\Photon3Unity3D.xml" />
-     <None Include="Assets\Photon\PhotonUnityNetworking\link.xml" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-HSV.shader" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -412,17 +394,26 @@
  <Reference Include="Newtonsoft.Json">
  <HintPath>C:/Git/AnimalMerge/Assets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
  </Reference>
- <Reference Include="websocket-sharp">
- <HintPath>C:/Git/AnimalMerge/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
- </Reference>
- <Reference Include="Photon3Unity3D">
- <HintPath>C:/Git/AnimalMerge/Assets/Photon/PhotonLibs/netstandard2.0/Photon3Unity3D.dll</HintPath>
- </Reference>
  <Reference Include="DOTween">
  <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTween/DOTween.dll</HintPath>
  </Reference>
  <Reference Include="DOTweenPro">
  <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
+ </Reference>
+ <Reference Include="TheBackendSettings">
+ <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/Settings/TheBackendSettings.dll</HintPath>
+ </Reference>
+ <Reference Include="TheBackendHashKeySettings">
+ <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/Settings/TheBackendHashKeySettings.dll</HintPath>
+ </Reference>
+ <Reference Include="LitJSON">
+ <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/LitJSON.dll</HintPath>
+ </Reference>
+ <Reference Include="TheBackend.iOS">
+ <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/Android/TheBackend.iOS.dll</HintPath>
+ </Reference>
+ <Reference Include="Backend">
+ <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/Backend.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -858,37 +849,9 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="PhotonChat.csproj">
-      <Project>{144e77d9-b317-9935-f416-87833869ead2}</Project>
-      <Name>PhotonChat</Name>
-    </ProjectReference>
     <ProjectReference Include="Coffee.SoftMaskForUGUI.Editor.csproj">
       <Project>{81402af7-e1f7-c3ee-3160-fd45120cecfa}</Project>
       <Name>Coffee.SoftMaskForUGUI.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="PhotonUnityNetworking.Editor.csproj">
-      <Project>{981130e6-da90-c820-2842-a0c56a9ea080}</Project>
-      <Name>PhotonUnityNetworking.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="PhotonUnityNetworking.Utilities.PhotonPlayer.Editor.csproj">
-      <Project>{4565ba55-f4f5-b9d7-70b9-736b7e02dc2e}</Project>
-      <Name>PhotonUnityNetworking.Utilities.PhotonPlayer.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="PunDemos.DemoHubEditor.csproj">
-      <Project>{16703af0-4fe2-6e1e-cab3-0338a5722cac}</Project>
-      <Name>PunDemos.DemoHubEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="PhotonRealtime.csproj">
-      <Project>{d628a7f4-bb51-3e7e-38e4-c8f68fbd78bd}</Project>
-      <Name>PhotonRealtime</Name>
-    </ProjectReference>
-    <ProjectReference Include="PhotonUnityNetworking.Utilities.csproj">
-      <Project>{5494e5db-6f46-facb-3c42-39428df50b19}</Project>
-      <Name>PhotonUnityNetworking.Utilities</Name>
-    </ProjectReference>
-    <ProjectReference Include="PhotonUnityNetworking.csproj">
-      <Project>{5ffd62d9-4560-82da-d853-01a7a63bffa4}</Project>
-      <Name>PhotonUnityNetworking</Name>
     </ProjectReference>
     <ProjectReference Include="Coffee.UIParticle.csproj">
       <Project>{b0a15342-0b73-2d37-3664-eba9146d83c4}</Project>
@@ -897,18 +860,6 @@
     <ProjectReference Include="Coffee.SoftMaskForUGUI.csproj">
       <Project>{a38124eb-0139-0416-d58b-aaf76c7d219a}</Project>
       <Name>Coffee.SoftMaskForUGUI</Name>
-    </ProjectReference>
-    <ProjectReference Include="PhotonUnityNetworking.Demos.csproj">
-      <Project>{298edcc3-01ea-ae9b-8580-7c3328cc0dde}</Project>
-      <Name>PhotonUnityNetworking.Demos</Name>
-    </ProjectReference>
-    <ProjectReference Include="PunDemos.DemoSlotcarEditor.csproj">
-      <Project>{88928cf6-a277-8d2c-5742-1759370f8382}</Project>
-      <Name>PunDemos.DemoSlotcarEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="PhotonUnityNetworking.Utilities.Culling.Editor.csproj">
-      <Project>{12c9aa05-0e31-07da-72b0-fa3431f81bff}</Project>
-      <Name>PhotonUnityNetworking.Utilities.Culling.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
