@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using BackEnd;
 using Define;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,9 +8,10 @@ using UnityEngine.Rendering;
 using Violet;
 
 public class GameManager : MonoBehaviour
-{    
+{   
     public static GameManager Instance;
-
+    public CSVDownloadConfig CSVDownloadConfig;
+    
     public static eLanguage CurrentLangauge = eLanguage.Korean;
 
     public static Vector2 Resolution = new Vector2(1280, 720);
@@ -41,6 +43,8 @@ public class GameManager : MonoBehaviour
             case eGAME_STATE.Intro:
                 break;
             case eGAME_STATE.Lobby:
+                break;
+            case eGAME_STATE.Battle:
                 GameCore.Instance.OnUpdate(delta);
                 break;
         }
@@ -70,6 +74,9 @@ public class GameManager : MonoBehaviour
         //기본 데이터 다운로드
         yield return StartCoroutine(LoadSheetData());
 
+        //서버 접속
+        yield return StartCoroutine(ConnectionServer());
+        
         //게임 시작
         yield return StartCoroutine(InitializeGame());
         
@@ -80,7 +87,7 @@ public class GameManager : MonoBehaviour
     {
         var isDone = false;
 
-        GameCore.Instance.CSVDownloadConfig.Download(this, delegate { }, () =>
+        CSVDownloadConfig.Download(this, delegate { }, () =>
         {
             TableManager.Instance.Load();
             isDone = true;
@@ -89,9 +96,24 @@ public class GameManager : MonoBehaviour
             yield return null;
     }
 
+    private IEnumerator ConnectionServer()
+    {
+        //뒤끝 SDK 초기화
+        var bro = Backend.Initialize(true);
+        if (bro.IsSuccess())
+        {
+            
+        }
+        else
+        {
+            Application.Quit();
+        }
+        yield break;
+    }
+        
     private IEnumerator InitializeGame()
     {
-        ChangeGameState(eGAME_STATE.Lobby);
+        ChangeGameState(eGAME_STATE.Battle);
         yield break;
     }
 
@@ -105,6 +127,9 @@ public class GameManager : MonoBehaviour
             case eGAME_STATE.Lobby:
                 StartCoroutine(OnLeaveLobby());
                 break;
+            case eGAME_STATE.Battle:
+                StartCoroutine(OnLeaveBattle());
+                break;
         }
 
         CurrentGameState = state;
@@ -117,16 +142,30 @@ public class GameManager : MonoBehaviour
             case eGAME_STATE.Lobby:
                 StartCoroutine(OnEnterLobby());
                 break;
+            case eGAME_STATE.Battle:
+                StartCoroutine(OnEnterBattle());
+                break;
         }
     }
 
     private IEnumerator OnEnterLobby()
     {
-        GameCore.Instance.Initialize();
+        UIManager.Instance.Show<PanelLobby>();
         yield break;
     }
 
     private IEnumerator OnLeaveLobby()
+    {
+        yield break;
+    }
+
+    private IEnumerator OnEnterBattle()
+    {
+        GameCore.Instance.Initialize();
+        yield break;
+    }
+
+    private IEnumerator OnLeaveBattle()
     {
         yield break;
     }

@@ -17,20 +17,14 @@ public class GameCore : MonoSingleton<GameCore>
     private float _syncCaptureDelta = 0f;
 
     #endregion
-
-    public CSVDownloadConfig CSVDownloadConfig;
-
-    #region Enemy
-
+    #region Screen
+    public GameObject PlayerScreen;
     public EnemyScreen EnemyScreen;
-
     #endregion
 
     #region UI
-
     public Canvas Canvas;
-    public PanelIngame panelIngame;
-
+    private PanelIngame panelIngame;
     #endregion
 
     #region Unit Value
@@ -57,6 +51,8 @@ public class GameCore : MonoSingleton<GameCore>
 
     public void Initialize()
     {
+        PlayerScreen.SetActive(true);
+        EnemyScreen.gameObject.SetActive(true);
         SyncManager.Instance.OnSyncCapture = OnCaptureSyncPacket;
         SyncManager.Instance.OnSyncReceive = OnReceiveSyncPacket;
 
@@ -84,6 +80,7 @@ public class GameCore : MonoSingleton<GameCore>
         });
         MAX_BADBLOCK_VALUE = _badBlockSheet[0].score * 5;
 
+        panelIngame = UIManager.Instance.Show<PanelIngame>();
         panelIngame.RefreshScore(0, 0);
     }
 
@@ -392,4 +389,10 @@ public class GameCore : MonoSingleton<GameCore>
     }
 
     #endregion
+
+    public void OnLeave()
+    {
+        PlayerScreen.SetActive(false);
+        EnemyScreen.gameObject.SetActive(false);
+    }
 }
