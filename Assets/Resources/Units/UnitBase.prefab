@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1537196816447645680}
   - component: {fileID: 2537128621336165077}
   - component: {fileID: 1537196816447645681}
-  - component: {fileID: 3204513019704742002}
+  - component: {fileID: 6740308982621135423}
   m_Layer: 9
   m_Name: UnitBase
   m_TagString: Untagged
@@ -50,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Texture: {fileID: 6291141622077723643}
   Rigidbody2D: {fileID: 1537196816447645681}
-  CircleCollider2D: {fileID: 0}
+  Collider2D: {fileID: 6740308982621135423}
   VFXSpawn: {fileID: 1838538806351483783}
   VFXMerge: {fileID: 9110641130909522519}
   GUID: 
@@ -75,7 +75,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!70 &3204513019704742002
+--- !u!70 &6740308982621135423
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,7 +89,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 2.1, y: 1.8}
+  m_Size: {x: 2.25, y: 1.92}
   m_Direction: 1
 --- !u!1 &1838538806351483783
 GameObject:

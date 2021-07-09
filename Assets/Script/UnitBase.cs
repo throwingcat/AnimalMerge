@@ -9,7 +9,7 @@ public class UnitBase : MonoBehaviour
 {
     public SpriteRenderer Texture;
     public Rigidbody2D Rigidbody2D;
-    public CircleCollider2D CircleCollider2D;
+    public Collider2D Collider2D;
 
     public GameObject VFXSpawn;
     public GameObject VFXMerge;
@@ -24,8 +24,8 @@ public class UnitBase : MonoBehaviour
 
         if (Rigidbody2D != null)
             Rigidbody2D.gravityScale = 0;
-        if (CircleCollider2D != null)
-            CircleCollider2D.enabled = false;
+        if (Collider2D != null)
+            Collider2D.enabled = false;
 
         Texture.sprite = GetSprite(unit_key);
         transform.localScale = Vector3.zero;
@@ -58,8 +58,8 @@ public class UnitBase : MonoBehaviour
         if (Rigidbody2D != null)
             Rigidbody2D.gravityScale = 1;
 
-        if (CircleCollider2D != null)
-            CircleCollider2D.enabled = true;
+        if (Collider2D != null)
+            Collider2D.enabled = true;
 
         Rigidbody2D.AddTorque(Random.Range(-5, 5));
     }
