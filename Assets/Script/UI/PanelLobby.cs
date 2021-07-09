@@ -1,6 +1,7 @@
 using System.Collections;
 using BackEnd;
 using BackEnd.Tcp;
+using Define;
 using UnityEngine;
 using Violet;
 
@@ -83,10 +84,13 @@ public class PanelLobby : SUIPanel
         if (MatchingStep != eMatchingStep.JOIN_GAMEROOM_COMPLETE)
         {
             Debug.LogError("게임룸 접속 실패");
+            yield break;
         }
 
-
-        //매칭 성공
+        //매칭 성공 , 게임 시작
+        Backend.Match.Poll();
+        Backend.Match.OnMatchInGameStart -= OnMatchInGameStart;
+        Backend.Match.OnMatchInGameStart += OnMatchInGameStart;
     }
 
     public void OnMatchingCancel()
@@ -295,5 +299,12 @@ public class PanelLobby : SUIPanel
             MatchingStep = eMatchingStep.ERROR;
     }
 
+    #endregion
+    
+    #region 게임 시작
+    private void OnMatchInGameStart()
+    {
+        GameManager.Instance.ChangeGameState(eGAME_STATE.Battle);
+    }
     #endregion
 }

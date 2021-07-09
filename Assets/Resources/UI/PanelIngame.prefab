@@ -857,12 +857,12 @@ GameObject:
   - component: {fileID: 8435129183160151267}
   - component: {fileID: 8435129185173657453}
   m_Layer: 5
-  m_Name: Ingame
+  m_Name: PanelIngame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8435129183160151267
 RectTransform:
   m_ObjectHideFlags: 0
@@ -901,6 +901,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5720774ff1a9ed4280b757fe423832e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  safeRect: {fileID: 0}
+  _tweens: []
+  WithCurtain: 0
   VFXComboParent: {fileID: 3883802203961777354}
   VFXComboPrefab: {fileID: 3779920667239857559, guid: dda9493c1a7012f4fb279c1df73ecce4, type: 3}
   BadBlockParent: {fileID: 9014811964360404769}
@@ -1070,7 +1073,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8435129184176552492
 RectTransform:
   m_ObjectHideFlags: 0
