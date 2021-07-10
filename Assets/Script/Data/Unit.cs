@@ -6,6 +6,8 @@ namespace SheetData
 { 
 	public string group { get; set; }
 
+	public int index { get; set; }
+
 	public string grow_unit { get; set; }
 
 	public int size { get; set; }

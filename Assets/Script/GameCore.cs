@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Define;
@@ -5,6 +6,7 @@ using SheetData;
 using UnityEngine;
 using Violet;
 using Violet.Audio;
+using Random = UnityEngine.Random;
 
 public class GameCore : MonoSingleton<GameCore>
 {
@@ -76,10 +78,30 @@ public class GameCore : MonoSingleton<GameCore>
         #endregion
     }
 
+    public int SpawnLevel = 1;
     private UnitBase SpawnUnit(string key = "")
     {
         if (key.IsNullOrEmpty())
-            key = "cat1";
+        {
+            int pick = 0;
+            switch (SpawnLevel)
+            {
+                case 1:
+                    pick = 1;
+                    break;
+                case 2:
+                    pick = Utils.RandomPick(new List<double>(){70,30}) + 1;
+                    break;
+                case 3:
+                    pick = Utils.RandomPick(new List<double>(){50,30,20}) + 1;
+                    break;
+                default:
+                    pick = 1;
+                    break;
+            }
+            
+            key = string.Format("cat{0}", Random.Range(1, pick));
+        }
 
         var pool = GameObjectPool.GetPool(key);
         if (pool == null)
@@ -113,12 +135,25 @@ public class GameCore : MonoSingleton<GameCore>
 
     private void RemoveUnit(UnitBase unit)
     {
-        for (var i = 0; i < UnitsInField.Count; i++)
-            if (UnitsInField[i].GUID == unit.GUID)
-            {
-                UnitsInField.RemoveAt(i);
-                break;
-            }
+        if (unit.eUnitType == eUnitType.Nomral)
+        {
+            for (var i = 0; i < UnitsInField.Count; i++)
+                if (UnitsInField[i].GUID == unit.GUID)
+                {
+                    UnitsInField.RemoveAt(i);
+                    break;
+                }
+        }
+
+        if (unit.eUnitType == eUnitType.Bad)
+        {
+            for (var i = 0; i < BadUnits.Count; i++)
+                if (BadUnits[i].GUID == unit.GUID)
+                {
+                    BadUnits.RemoveAt(i);
+                    break;
+                }
+        }
 
         var pool = GameObjectPool.GetPool(unit.Sheet.key);
         if (pool != null)
@@ -205,7 +240,13 @@ public class GameCore : MonoSingleton<GameCore>
             a.transform.localPosition.z);
 
         if (a.Sheet.grow_unit.IsNullOrEmpty() == false)
+        {
             UnitsInField.Add(SpawnUnit(a.Sheet.grow_unit, pos));
+
+            if (SpawnLevel < a.Sheet.index)
+                SpawnLevel = a.Sheet.index;
+            SpawnLevel = Mathf.Clamp(SpawnLevel, 1, 3);
+        }
 
         IgnoreUnitGUID.Remove(cached_guid_a);
         IgnoreUnitGUID.Remove(cached_guid_b);
@@ -219,6 +260,39 @@ public class GameCore : MonoSingleton<GameCore>
         //스코어 갱신
         var gain = (a.Sheet.score + b.Sheet.score) * 10 * Combo;
         OnGainScore(gain);
+
+        int comboBonus =  Combo > 3 ? (18 * Combo) : 0;
+        var badBlock = (a.Sheet.score + b.Sheet.score) * Combo + comboBonus;
+        OnReceiveBadBlock(badBlock);
+
+        //방해블록 타이머 1초 감소
+        ReduceBadBlockTimer(1f);
+        
+        //주변 방해블록 삭제
+        List<UnitBase> remove_bad_units = new List<UnitBase>();
+            
+        foreach (var unit in BadUnits)
+        {
+            if (IgnoreUnitGUID.Contains(unit.GUID)) continue;
+            
+            if (unit.eUnitType == eUnitType.Bad)
+            {
+                var distance = Vector3.Distance(a.transform.localPosition, unit.transform.localPosition);
+                if (distance <= a.transform.localScale.x * 1.26 * 2 + 5)
+                {
+                    IgnoreUnitGUID.Add(unit.GUID);
+                    remove_bad_units.Add(unit);
+                }
+            }
+        }
+
+        for (int i = 0; i < remove_bad_units.Count;i++)
+        {
+            IgnoreUnitGUID.Remove(remove_bad_units[i].GUID);
+            RemoveUnit(remove_bad_units[i]);
+            remove_bad_units.RemoveAt(i--);
+            
+        }
     }
 
     private void OnGainScore(int gain)
@@ -227,8 +301,6 @@ public class GameCore : MonoSingleton<GameCore>
         Score += gain;
 
         panelIngame.RefreshScore(before, Score);
-
-        OnReceiveBadBlock(gain);
         return;
 
         //내 방해블록 제거
@@ -284,6 +356,7 @@ public class GameCore : MonoSingleton<GameCore>
     public Transform UnitParent;
     public UnitBase UnitPrefab;
     public List<UnitBase> UnitsInField = new List<UnitBase>();
+    public List<UnitBase> BadUnits = new List<UnitBase>();
     public Vector3 UnitSpawnPosition;
 
     #endregion
@@ -304,7 +377,7 @@ public class GameCore : MonoSingleton<GameCore>
     #region BadBlock
 
     //방해블록 타이머
-    private float _badBlockDropDelta;
+    private float _badBlockTimerDelta;
 
     //방해블록 한줄 최대치
     private const int _badBlockFloorMaxUnit = 6;
@@ -327,14 +400,19 @@ public class GameCore : MonoSingleton<GameCore>
 
     private void BadBlockUpdate(float delta)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            DropBadBlock(Random.Range(1, 18));
         if (0 < BadBlockValue)
         {
-            _badBlockDropDelta += delta;
-            if (_badBlockDropDelta < EnvironmentValue.BAD_BLOCK_TIMER)
+            panelIngame.SetActiveBadBlockTimer(true);
+            
+            _badBlockTimerDelta += delta;
+            
+            panelIngame.UpdateBadBlockTimer(
+                EnvironmentValue.BAD_BLOCK_TIMER - _badBlockTimerDelta,
+                EnvironmentValue.BAD_BLOCK_TIMER);
+            
+            if (EnvironmentValue.BAD_BLOCK_TIMER < _badBlockTimerDelta)
             {
-                _badBlockDropDelta = 0f;
+                _badBlockTimerDelta = 0f;
 
                 //쌓인 방해블록 소모 
                 var drop = 0;
@@ -353,6 +431,17 @@ public class GameCore : MonoSingleton<GameCore>
                 RefreshBadBlockUI();
             }
         }
+        else
+        {
+            panelIngame.SetActiveBadBlockTimer(false);
+        }
+    }
+
+    private void ReduceBadBlockTimer(float reduce)
+    {
+        _badBlockTimerDelta -= reduce;
+        if (_badBlockTimerDelta < 0)
+            _badBlockTimerDelta = 0;
     }
 
     private void DropBadBlock(int count)
@@ -383,8 +472,10 @@ public class GameCore : MonoSingleton<GameCore>
             var floor = i / _badBlockFloorMaxUnit;
             var index = i % _badBlockFloorMaxUnit;
 
+            unit.eUnitType = eUnitType.Bad;
             unit.SetPosition(shuffled_floor[floor][index]);
             unit.Drop();
+            BadUnits.Add(unit);
         }
     }
 

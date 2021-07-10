@@ -14,10 +14,16 @@ public class PanelIngame : SUIPanel
 
     public Transform BadBlockParent;
     public GameObject BadBlockPrefab;
-
+    
+    public GameObject BadBlockTimerRoot;
+    public Image BadBlockTimer;
+    public Text BadBlockTimerText;
+    
     public Text Score;
+
     private List<IngameBadBlock> _badBlocks = new List<IngameBadBlock>();
 
+    
     public void RefreshScore(int before,int after)
     {
         int score = before;
@@ -92,5 +98,16 @@ public class PanelIngame : SUIPanel
         Utils.WorldToCanvas(ref vfxCombo.RectTransform, Camera.main, worldPosition,
             GameCore.Instance.Canvas.GetComponent<RectTransform>());
         vfxCombo.Play();
+    }
+
+    public void SetActiveBadBlockTimer(bool isActive)
+    {
+        if(BadBlockTimerRoot.activeSelf != isActive)
+            BadBlockTimerRoot.SetActive(isActive);    
+    }
+    public void UpdateBadBlockTimer(float remain, float max)
+    {
+        BadBlockTimer.fillAmount = remain / max;
+        BadBlockTimerText.text = ((int) remain).ToString();
     }
 }

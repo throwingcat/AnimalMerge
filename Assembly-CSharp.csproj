@@ -111,7 +111,6 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUITouchable.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\EffectArea.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\Singleton.cs" />
-     <Compile Include="Assets\Script\Unit\BadBlock.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPressButton.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\ICSVDataBase.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ParameterTexture.cs" />
