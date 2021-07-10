@@ -90,10 +90,10 @@ public class GameCore : MonoSingleton<GameCore>
                     pick = 1;
                     break;
                 case 2:
-                    pick = Utils.RandomPick(new List<double>(){70,30}) + 1;
+                    pick = Utils.RandomPick(new List<double>(){50,50}) + 1;
                     break;
                 case 3:
-                    pick = Utils.RandomPick(new List<double>(){50,30,20}) + 1;
+                    pick = Utils.RandomPick(new List<double>(){34,33,33}) + 1;
                     break;
                 default:
                     pick = 1;
