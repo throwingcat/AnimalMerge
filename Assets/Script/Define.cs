@@ -17,6 +17,12 @@ namespace Define
         English,
     }
 
+    public enum eUnitType
+    {
+        Nomral,
+        Bad,
+        None,
+    }
     public class EnvironmentValue
     {
         public static float UNIT_SPAWN_DELAY = 1f;
@@ -25,6 +31,7 @@ namespace Define
         public static float WORLD_RATIO = 0.00521f;
 
         public static float SYNC_CAPTURE_DELAY = 1f;
+        public static float BAD_BLOCK_TIMER = 5f;
     }
 }
 

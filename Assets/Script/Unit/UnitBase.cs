@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
+using Define;
 using SheetData;
 using UnityEngine;
 using Violet;
@@ -17,6 +19,8 @@ public class UnitBase : MonoBehaviour
     public string GUID;
     public Unit Sheet;
 
+    public eUnitType eUnitType = eUnitType.None;
+    
     public virtual UnitBase OnSpawn(string unit_key)
     {
         Sheet = TableManager.Instance.GetData<Unit>(unit_key);
@@ -38,6 +42,8 @@ public class UnitBase : MonoBehaviour
 
         var size = Vector3.one * Sheet.size;
         transform.DOScale(size, 0.5f).SetEase(Ease.OutBack).Play();
+
+        eUnitType = eUnitType.Nomral;
         return this;
     }
 
@@ -61,7 +67,9 @@ public class UnitBase : MonoBehaviour
         if (Collider2D != null)
             Collider2D.enabled = true;
 
-        Rigidbody2D.AddTorque(Random.Range(-5, 5));
+        SetActivePhysics(true);
+        
+        Rigidbody2D.AddTorque(Random.Range(-0.25f, 0.25f));
     }
 
     protected static Sprite GetSprite(string unit_key)
