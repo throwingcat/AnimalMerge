@@ -383,7 +383,7 @@ public class GameCore : MonoSingleton<GameCore>
     private const int _badBlockFloorMaxUnit = 6;
 
     //방해블록 최대 층
-    private const int _badBlockMaxFloor = 6;
+    private const int _badBlockMaxFloor = 4;
 
     private int _badBlockMaxDropOneTime => (int) (_badBlockFloorMaxUnit * _badBlockMaxFloor);
 
