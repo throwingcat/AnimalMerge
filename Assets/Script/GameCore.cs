@@ -308,24 +308,21 @@ public class GameCore : MonoSingleton<GameCore>
         Score += gain;
 
         panelIngame.RefreshScore(before, Score);
-        return;
 
         //내 방해블록 제거
-        if (0 < BadBlockValue)
+        if (0 < MyBadBlockValue)
         {
-            BadBlockValue -= gain;
-
+            MyBadBlockValue -= gain;
+        
             RefreshBadBlockUI();
             //내 방해블록 제거 + 상대방에게 공격
-            if (BadBlockValue <= 0)
-            {
-            }
+            if (MyBadBlockValue <= 0)
+                AttackBadBlockValue = Mathf.Abs(MyBadBlockValue);
         }
         //상대방에게 공격
         else
         {
-            BadBlockValue += gain;
-            RefreshBadBlockUI();
+            AttackBadBlockValue += gain;
         }
     }
 
@@ -381,7 +378,8 @@ public class GameCore : MonoSingleton<GameCore>
 
     public int Score;
     public int MAX_BADBLOCK_VALUE;
-    public int BadBlockValue;
+    public int MyBadBlockValue;
+    public int AttackBadBlockValue;
     public bool isMergeProcess;
     public int Combo;
     public List<string> IgnoreUnitGUID = new List<string>();
@@ -416,7 +414,7 @@ public class GameCore : MonoSingleton<GameCore>
 
     private void BadBlockUpdate(float delta)
     {
-        if (0 < BadBlockValue)
+        if (0 < MyBadBlockValue)
         {
             panelIngame.SetActiveBadBlockTimer(true);
 
@@ -432,15 +430,15 @@ public class GameCore : MonoSingleton<GameCore>
 
                 //쌓인 방해블록 소모 
                 var drop = 0;
-                if (BadBlockValue >= _badBlockMaxDropOneTime)
+                if (MyBadBlockValue >= _badBlockMaxDropOneTime)
                 {
-                    BadBlockValue -= _badBlockMaxDropOneTime;
+                    MyBadBlockValue -= _badBlockMaxDropOneTime;
                     drop = _badBlockMaxDropOneTime;
                 }
                 else
                 {
-                    drop = BadBlockValue;
-                    BadBlockValue = 0;
+                    drop = MyBadBlockValue;
+                    MyBadBlockValue = 0;
                 }
 
                 DropBadBlock(drop);
@@ -556,9 +554,9 @@ public class GameCore : MonoSingleton<GameCore>
 
     private void OnReceiveBadBlock(int value)
     {
-        BadBlockValue += value;
+        MyBadBlockValue += value;
 
-        BadBlockValue = Mathf.Clamp(BadBlockValue, 0, MAX_BADBLOCK_VALUE);
+        MyBadBlockValue = Mathf.Clamp(MyBadBlockValue, 0, MAX_BADBLOCK_VALUE);
         RefreshBadBlockUI();
     }
 
@@ -566,7 +564,7 @@ public class GameCore : MonoSingleton<GameCore>
     {
         var blocks = new List<Unit>();
 
-        var current = BadBlockValue;
+        var current = MyBadBlockValue;
         foreach (var bad in _badBlockSheet)
         {
             var count = current / bad.score;
@@ -593,6 +591,9 @@ public class GameCore : MonoSingleton<GameCore>
     public void OnReceiveSyncPacket(SyncManager.SyncPacket packet)
     {
         RefreshEnemy(packet);
+        
+        MyBadBlockValue += packet.BadBlockValue;
+        RefreshBadBlockUI();
     }
 
     public void RefreshEnemy(SyncManager.SyncPacket packet)

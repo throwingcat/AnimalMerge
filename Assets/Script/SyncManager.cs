@@ -33,6 +33,7 @@ public class SyncManager
         }
 
         public List<UnitData> UnitsDatas = new List<UnitData>();
+        public int BadBlockValue = 0;
     }
 
     [System.Serializable]
@@ -79,6 +80,9 @@ public class SyncManager
             packet.UnitsDatas.Add(u);
         }
 
+        packet.BadBlockValue = GameCore.Instance.AttackBadBlockValue;
+        GameCore.Instance.AttackBadBlockValue = 0;
+        
         OnSyncCapture?.Invoke(packet);
 
         //매치 서버로 송신
