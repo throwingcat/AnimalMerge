@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using SheetData;
-using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.UI;
 using Violet;
@@ -9,36 +8,35 @@ using Violet.Audio;
 
 public class PanelIngame : SUIPanel
 {
-    public Transform VFXComboParent;
-    public GameObject VFXComboPrefab;
+    private readonly List<IngameBadBlock> _badBlocks = new List<IngameBadBlock>();
 
     public Transform BadBlockParent;
     public GameObject BadBlockPrefab;
-    
-    public GameObject BadBlockTimerRoot;
     public Image BadBlockTimer;
+
+    public GameObject BadBlockTimerRoot;
     public Text BadBlockTimerText;
-    
+
     public Text Score;
+    public Transform VFXComboParent;
+    public GameObject VFXComboPrefab;
 
-    private List<IngameBadBlock> _badBlocks = new List<IngameBadBlock>();
 
-    
-    public void RefreshScore(int before,int after)
+    public void RefreshScore(int before, int after)
     {
-        int score = before;
+        var score = before;
         DOTween.To(() => score, x =>
         {
             score = x;
             Score.text = Utils.ParseComma(score);
         }, after, 0.5f);
     }
+
     public void RefreshBadBlock(List<Unit> blocks)
     {
-        string key = "BadBlockPool";
+        var key = "BadBlockPool";
         var pool = GameObjectPool.GetPool(key);
         if (pool == null)
-        {
             pool = GameObjectPool.CreatePool(key, () =>
             {
                 var go = Instantiate(BadBlockPrefab);
@@ -47,8 +45,7 @@ public class PanelIngame : SUIPanel
                 go.gameObject.SetActive(false);
 
                 return go;
-            },1,BadBlockParent.gameObject);
-        }
+            }, 1, BadBlockParent.gameObject);
 
         //이전에 사용한 블록 반납
         foreach (var block in _badBlocks)
@@ -61,21 +58,21 @@ public class PanelIngame : SUIPanel
             if (b.score < a.score) return 1;
             return 0;
         });
-        
+
         foreach (var block in blocks)
         {
             var b = pool.Get();
             b.SetActive(true);
             b.transform.LocalReset();
             b.transform.SetAsLastSibling();
-            
+
             var component = b.GetComponent<IngameBadBlock>();
             component.Set(block);
-            
+
             _badBlocks.Add(component);
         }
-        
     }
+
     public void PlayCombo(Vector3 worldPosition, int combo)
     {
         var path = string.Format("Sound/Combo Sound/Default/combo_{0}", Mathf.Clamp(combo, 1, 11));
@@ -102,9 +99,10 @@ public class PanelIngame : SUIPanel
 
     public void SetActiveBadBlockTimer(bool isActive)
     {
-        if(BadBlockTimerRoot.activeSelf != isActive)
-            BadBlockTimerRoot.SetActive(isActive);    
+        if (BadBlockTimerRoot.activeSelf != isActive)
+            BadBlockTimerRoot.SetActive(isActive);
     }
+
     public void UpdateBadBlockTimer(float remain, float max)
     {
         BadBlockTimer.fillAmount = remain / max;
