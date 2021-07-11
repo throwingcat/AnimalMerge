@@ -113,8 +113,33 @@ public class GameManager : MonoBehaviour
         
     private IEnumerator InitializeGame()
     {
-        ChangeGameState(eGAME_STATE.Battle);
-        yield break;
+        bool isDone = false;
+        //로그인
+        NetworkManager.Instance.Login();
+        
+        string indate = Backend.UserInDate;
+        string nickname = Backend.UserNickName;
+        
+        //닉네임 생성
+        if (nickname.IsNullOrEmpty())
+        {
+            var popup = UIManager.Instance.ShowPopup<PopupLogin>();
+            popup.OnFinish = (text) =>
+            {
+                bool result = NetworkManager.Instance.CreateNickname(text);
+                if (result)
+                {
+                    SUIPanel.BackPressForce();
+                    isDone = true;
+                }
+            };
+        }
+        else
+            isDone = true;
+        while (isDone == false)
+            yield return null;
+        
+        ChangeGameState(eGAME_STATE.Lobby);
     }
 
     public void ChangeGameState(eGAME_STATE state)

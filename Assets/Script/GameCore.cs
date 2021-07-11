@@ -1,17 +1,17 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using BackEnd;
 using Define;
 using DG.Tweening;
 using SheetData;
 using UnityEngine;
 using Violet;
 using Violet.Audio;
-using Random = UnityEngine.Random;
 
 public class GameCore : MonoSingleton<GameCore>
 {
+    public int SpawnLevel = 1;
+
     public void Initialize()
     {
         PlayerScreen.SetActive(true);
@@ -22,6 +22,9 @@ public class GameCore : MonoSingleton<GameCore>
         AudioManager.Instance.ChangeBGMVolume(0.3f);
         AudioManager.Instance.ChangeSFXVolume(0.3f);
         AudioManager.Instance.Play("Sound/bgm", eAUDIO_TYPE.BGM);
+
+        Backend.Match.OnMatchRelay -= SyncManager.Instance.OnReceiveMatchRelay;
+        Backend.Match.OnMatchRelay += SyncManager.Instance.OnReceiveMatchRelay;
 
         //방해 블록 초기화
         var table = TableManager.Instance.GetTable<Unit>();
@@ -59,7 +62,7 @@ public class GameCore : MonoSingleton<GameCore>
         BadBlockUpdate(delta);
 
         ComboUpdate(delta);
-        
+
         #region Sync
 
         if (_syncCaptureDelta <= 0f)
@@ -75,28 +78,27 @@ public class GameCore : MonoSingleton<GameCore>
         #endregion
     }
 
-    public int SpawnLevel = 1;
     private UnitBase SpawnUnit(string key = "")
     {
         if (key.IsNullOrEmpty())
         {
-            int pick = 0;
+            var pick = 0;
             switch (SpawnLevel)
             {
                 case 1:
                     pick = 1;
                     break;
                 case 2:
-                    pick = Utils.RandomPick(new List<double>(){50,50}) + 1;
+                    pick = Utils.RandomPick(new List<double> {50, 50}) + 1;
                     break;
                 case 3:
-                    pick = Utils.RandomPick(new List<double>(){34,33,33}) + 1;
+                    pick = Utils.RandomPick(new List<double> {34, 33, 33}) + 1;
                     break;
                 default:
                     pick = 1;
                     break;
             }
-            
+
             key = string.Format("cat{0}", Random.Range(1, pick));
         }
 
@@ -133,24 +135,20 @@ public class GameCore : MonoSingleton<GameCore>
     private void RemoveUnit(UnitBase unit)
     {
         if (unit.eUnitType == eUnitType.Nomral)
-        {
             for (var i = 0; i < UnitsInField.Count; i++)
                 if (UnitsInField[i].GUID == unit.GUID)
                 {
                     UnitsInField.RemoveAt(i);
                     break;
                 }
-        }
 
         if (unit.eUnitType == eUnitType.Bad)
-        {
             for (var i = 0; i < BadUnits.Count; i++)
                 if (BadUnits[i].GUID == unit.GUID)
                 {
                     BadUnits.RemoveAt(i);
                     break;
                 }
-        }
 
         var pool = GameObjectPool.GetPool(unit.Sheet.key);
         if (pool != null)
@@ -201,7 +199,7 @@ public class GameCore : MonoSingleton<GameCore>
         isMergeProcess = false;
     }
 
-    public void CollisionEnter(UnitBase a,UnitBase b)
+    public void CollisionEnter(UnitBase a, UnitBase b)
     {
         if (IgnoreUnitGUID.Contains(a.GUID) ||
             IgnoreUnitGUID.Contains(b.GUID)) return;
@@ -229,10 +227,10 @@ public class GameCore : MonoSingleton<GameCore>
 
         a.transform.DOScale(a.transform.localScale * 0.2f, 0.3f).SetRelative().SetEase(Ease.OutElastic).Play();
         b.transform.DOScale(a.transform.localScale * 0.2f, 0.3f).SetRelative().SetEase(Ease.OutElastic).Play();
-        
         yield return new WaitForSeconds(0.35f);
+
         a.transform.position = cached_pos_a;
-        b.transform.DOMove(cached_pos_a, (0.15f)).SetEase(Ease.OutCubic).Play();
+        b.transform.DOMove(cached_pos_a, 0.15f).SetEase(Ease.OutCubic).Play();
         b.transform.DOLocalRotate(a.transform.localRotation.eulerAngles, 0.15f).SetEase(Ease.OutCubic).Play();
         yield return new WaitForSeconds(0.15f);
 
@@ -266,25 +264,25 @@ public class GameCore : MonoSingleton<GameCore>
         //콤보 출력
         panelIngame.PlayCombo(a.transform.position, Combo);
         _comboDelta = EnvironmentValue.COMBO_DURATION;
-        
+
         //스코어 갱신
         var gain = (a.Sheet.score + b.Sheet.score) * 10 * Combo;
         OnGainScore(gain);
 
-        int comboBonus =  Combo > 3 ? (18 * Combo) : 0;
+        var comboBonus = Combo > 3 ? 18 * Combo : 0;
         var badBlock = (a.Sheet.score + b.Sheet.score) * Combo + comboBonus;
         OnReceiveBadBlock(badBlock);
 
         //방해블록 타이머 1초 감소
         ReduceBadBlockTimer(1f);
-        
+
         //주변 방해블록 삭제
-        List<UnitBase> remove_bad_units = new List<UnitBase>();
-            
+        var remove_bad_units = new List<UnitBase>();
+
         foreach (var unit in BadUnits)
         {
             if (IgnoreUnitGUID.Contains(unit.GUID)) continue;
-            
+
             if (unit.eUnitType == eUnitType.Bad)
             {
                 var distance = Vector3.Distance(a.transform.localPosition, unit.transform.localPosition);
@@ -296,12 +294,11 @@ public class GameCore : MonoSingleton<GameCore>
             }
         }
 
-        for (int i = 0; i < remove_bad_units.Count;i++)
+        for (var i = 0; i < remove_bad_units.Count; i++)
         {
             IgnoreUnitGUID.Remove(remove_bad_units[i].GUID);
             RemoveUnit(remove_bad_units[i]);
             remove_bad_units.RemoveAt(i--);
-            
         }
     }
 
@@ -339,6 +336,7 @@ public class GameCore : MonoSingleton<GameCore>
         else
             _comboDelta -= delta;
     }
+
     public void OnLeave()
     {
         PlayerScreen.SetActive(false);
@@ -346,10 +344,12 @@ public class GameCore : MonoSingleton<GameCore>
     }
 
     #region Timer Value
+
     private float _mergeDelayDelta;
     private float _unitSpawnDelayDelta;
     private float _syncCaptureDelta;
-    private float _comboDelta = 0f;
+    private float _comboDelta;
+
     #endregion
 
     #region Screen
@@ -401,7 +401,7 @@ public class GameCore : MonoSingleton<GameCore>
     //방해블록 최대 층
     private const int _badBlockMaxFloor = 4;
 
-    private int _badBlockMaxDropOneTime => (int) (_badBlockFloorMaxUnit * _badBlockMaxFloor);
+    private int _badBlockMaxDropOneTime => _badBlockFloorMaxUnit * _badBlockMaxFloor;
 
     //방해블록 가로영역 크기
     private const float _badBlockWidth = 880;
@@ -419,13 +419,13 @@ public class GameCore : MonoSingleton<GameCore>
         if (0 < BadBlockValue)
         {
             panelIngame.SetActiveBadBlockTimer(true);
-            
+
             _badBlockTimerDelta += delta;
-            
+
             panelIngame.UpdateBadBlockTimer(
                 EnvironmentValue.BAD_BLOCK_TIMER - _badBlockTimerDelta,
                 EnvironmentValue.BAD_BLOCK_TIMER);
-            
+
             if (EnvironmentValue.BAD_BLOCK_TIMER < _badBlockTimerDelta)
             {
                 _badBlockTimerDelta = 0f;
@@ -591,7 +591,6 @@ public class GameCore : MonoSingleton<GameCore>
 
     public void OnCaptureSyncPacket(SyncManager.SyncPacket packet)
     {
-        SyncManager.Instance.Receive(packet);
     }
 
     public void OnReceiveSyncPacket(SyncManager.SyncPacket packet)
