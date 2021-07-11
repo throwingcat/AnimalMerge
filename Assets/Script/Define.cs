@@ -32,6 +32,8 @@ namespace Define
 
         public static float SYNC_CAPTURE_DELAY = 1f;
         public static float BAD_BLOCK_TIMER = 5f;
+        
+        public static float COMBO_DURATION = 2f;
 
     }
 }

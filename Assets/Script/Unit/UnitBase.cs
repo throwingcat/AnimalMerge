@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
@@ -6,6 +7,7 @@ using SheetData;
 using UnityEngine;
 using Violet;
 using DG.Tweening;
+using Random = UnityEngine.Random;
 
 public class UnitBase : MonoBehaviour
 {
@@ -91,5 +93,16 @@ public class UnitBase : MonoBehaviour
         SetActivePhysics(false);
         if (VFXMerge != null)
             VFXMerge.SetActive(true);
+    }
+
+    public void OnCollisionEnter2D(Collision2D other)
+    {
+        var target = other.gameObject.GetComponent<UnitBase>();
+        if (target != null)
+        {
+            if (eUnitType == eUnitType.Nomral && target.eUnitType == eUnitType.Nomral)
+                GameCore.Instance.CollisionEnter(this,target);
+        }
+        
     }
 }

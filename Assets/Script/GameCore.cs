@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Define;
+using DG.Tweening;
 using SheetData;
 using UnityEngine;
 using Violet;
@@ -48,21 +50,16 @@ public class GameCore : MonoSingleton<GameCore>
         InputUpdate();
 
         if (_unit == null && _unitSpawnDelayDelta <= 0f)
-        {
             _unit = SpawnUnit();
-
-            //콤보 초기화
-            Combo = 0;
-        }
         else
-        {
             _unitSpawnDelayDelta -= delta;
-        }
 
         MergeUpdate(delta);
 
         BadBlockUpdate(delta);
 
+        ComboUpdate(delta);
+        
         #region Sync
 
         if (_syncCaptureDelta <= 0f)
@@ -168,7 +165,7 @@ public class GameCore : MonoSingleton<GameCore>
             return;
         }
 
-        for (var i = 0; i < UnitsInField.Count; i++)
+        /*for (var i = 0; i < UnitsInField.Count; i++)
         {
             var unit = UnitsInField[i];
 
@@ -184,7 +181,7 @@ public class GameCore : MonoSingleton<GameCore>
                     if (unit.Sheet.key != friend.Sheet.key) continue;
 
                     var distance = Vector3.Distance(unit.transform.localPosition, friend.transform.localPosition);
-                    if (distance <= unit.transform.localScale.x * 1.26 * 2 + 5)
+                    if (distance <= unit.transform.localScale.x * 2 + 10)
                     {
                         isMergeProcess = true;
                         StartCoroutine(MergeProcess(unit, friend));
@@ -200,8 +197,21 @@ public class GameCore : MonoSingleton<GameCore>
                     break;
             }
         }
-
+        */
         isMergeProcess = false;
+    }
+
+    public void CollisionEnter(UnitBase a,UnitBase b)
+    {
+        if (IgnoreUnitGUID.Contains(a.GUID) ||
+            IgnoreUnitGUID.Contains(b.GUID)) return;
+
+        if (a.Sheet.key == b.Sheet.key)
+        {
+            StartCoroutine(MergeProcess(a, b));
+            _mergeDelayDelta = EnvironmentValue.MERGE_DELAY;
+            _unitSpawnDelayDelta = EnvironmentValue.UNIT_SPAWN_DELAY;
+        }
     }
 
     private IEnumerator MergeProcess(UnitBase a, UnitBase b)
@@ -217,15 +227,14 @@ public class GameCore : MonoSingleton<GameCore>
         a.PlayMerge();
         b.PlayMerge();
 
-        var delta = 0f;
-        var duration = 0.5f;
-        while (delta < duration)
-        {
-            a.transform.position = cached_pos_a;
-            b.transform.position = Vector3.Lerp(cached_pos_b, cached_pos_a, delta / (duration * 0.7f));
-            delta += Time.deltaTime;
-            yield return null;
-        }
+        a.transform.DOScale(a.transform.localScale * 0.2f, 0.3f).SetRelative().SetEase(Ease.OutElastic).Play();
+        b.transform.DOScale(a.transform.localScale * 0.2f, 0.3f).SetRelative().SetEase(Ease.OutElastic).Play();
+        
+        yield return new WaitForSeconds(0.35f);
+        a.transform.position = cached_pos_a;
+        b.transform.DOMove(cached_pos_a, (0.15f)).SetEase(Ease.OutCubic).Play();
+        b.transform.DOLocalRotate(a.transform.localRotation.eulerAngles, 0.15f).SetEase(Ease.OutCubic).Play();
+        yield return new WaitForSeconds(0.15f);
 
         //콤보 출력
         Combo++;
@@ -256,7 +265,8 @@ public class GameCore : MonoSingleton<GameCore>
     {
         //콤보 출력
         panelIngame.PlayCombo(a.transform.position, Combo);
-
+        _comboDelta = EnvironmentValue.COMBO_DURATION;
+        
         //스코어 갱신
         var gain = (a.Sheet.score + b.Sheet.score) * 10 * Combo;
         OnGainScore(gain);
@@ -322,6 +332,13 @@ public class GameCore : MonoSingleton<GameCore>
         }
     }
 
+    private void ComboUpdate(float delta)
+    {
+        if (_comboDelta <= 0f)
+            Combo = 0;
+        else
+            _comboDelta -= delta;
+    }
     public void OnLeave()
     {
         PlayerScreen.SetActive(false);
@@ -329,11 +346,10 @@ public class GameCore : MonoSingleton<GameCore>
     }
 
     #region Timer Value
-
     private float _mergeDelayDelta;
     private float _unitSpawnDelayDelta;
     private float _syncCaptureDelta;
-
+    private float _comboDelta = 0f;
     #endregion
 
     #region Screen
