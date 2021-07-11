@@ -221,8 +221,21 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         //완료대기
         while (true)
         {
-            if (MatchingStep == eMatchingStep.MATCHING_COMPLETE || MatchingStep == eMatchingStep.ERROR && _matchMakingResponseEventArgs != null)
-                break;
+            if (_matchMakingResponseEventArgs != null)
+            {
+                if (_matchMakingResponseEventArgs.ErrInfo == ErrorCode.Success)
+                {
+                    MatchingStep = eMatchingStep.MATCHING_COMPLETE;
+                    break;
+                }
+
+                if (_matchMakingResponseEventArgs.ErrInfo != ErrorCode.Success &&
+                    _matchMakingResponseEventArgs.ErrInfo != ErrorCode.Match_InProgress)
+                {
+                    MatchingStep = eMatchingStep.ERROR;
+                    break;
+                }
+            }
             yield return null;
         }
     }
@@ -230,10 +243,6 @@ public class NetworkManager : MonoSingleton<NetworkManager>
     private void OnMatchMakingResponse(MatchMakingResponseEventArgs args)
     {
         _matchMakingResponseEventArgs = args;
-        if (args.ErrInfo == ErrorCode.Success || args.ErrInfo == ErrorCode.Match_InProgress)
-            MatchingStep = eMatchingStep.MATCHING_COMPLETE;
-        else
-            MatchingStep = eMatchingStep.ERROR;
     }
 
     #endregion
