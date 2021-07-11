@@ -114,7 +114,8 @@ public class SyncManager
 
     public void OnReceiveMatchRelay(MatchRelayEventArgs args)
     {
-        var packet = MessagePackSerializer.Deserialize<SyncPacket>(args.BinaryUserData);
+        var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
+        var packet = MessagePackSerializer.Deserialize<SyncPacket>(args.BinaryUserData,lz4Options);
 
         if (args.From.NickName != Backend.UserNickName)
             Receive(packet);
