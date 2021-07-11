@@ -187,7 +187,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         //완료대기
         while (true)
         {
-            if (MatchingStep == eMatchingStep.MATCHSERVER_CONNECT_COMPLETE || MatchingStep == eMatchingStep.ERROR)
+            if (MatchingStep == eMatchingStep.WAITROOM_CREATE_COMPLETE || MatchingStep == eMatchingStep.ERROR)
                 break;
             yield return null;
         }
