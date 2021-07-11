@@ -12,7 +12,17 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
     public bool Login()
     {
-        BackendReturnObject bro = Backend.BMember.GuestLogin();
+        BackendReturnObject bro = null;
+        if (GameManager.Instance.GUID.IsNullOrEmpty())
+        {
+            bro = Backend.BMember.GuestLogin();
+        }
+        else
+        {
+            bro = Backend.BMember.CustomSignUp(GameManager.Instance.GUID, "1234");
+            if (bro.IsSuccess())
+                bro = Backend.BMember.CustomLogin(GameManager.Instance.GUID, "1234");
+        }
         if (bro.IsSuccess())
         {
             Debug.Log("로그인 성공");

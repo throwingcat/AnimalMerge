@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     private float _loadingProgress = 0f;
 
     public bool isSinglePlay = true;
+    public string GUID = "";
     public void Awake()
     {
         Instance = this;
