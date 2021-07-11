@@ -82,9 +82,12 @@ public class SyncManager
         OnSyncCapture?.Invoke(packet);
 
         //매치 서버로 송신
-        var message = JsonConvert.SerializeObject(packet, Formatting.None);
-        var bytes = Encoding.UTF8.GetBytes(message);
-        Backend.Match.SendDataToInGameRoom(bytes);
+        if(Backend.Match.IsMatchServerConnect() && Backend.Match.IsInGameServerConnect())
+        {
+            var message = JsonConvert.SerializeObject(packet, Formatting.None);
+            var bytes = Encoding.UTF8.GetBytes(message);
+            Backend.Match.SendDataToInGameRoom(bytes);
+        }
         return packet;
     }
 

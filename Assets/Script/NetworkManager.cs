@@ -20,8 +20,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         else
         {
             bro = Backend.BMember.CustomSignUp(GameManager.Instance.GUID, "1234");
-            if (bro.IsSuccess())
-                bro = Backend.BMember.CustomLogin(GameManager.Instance.GUID, "1234");
+            bro = Backend.BMember.CustomLogin(GameManager.Instance.GUID, "1234");
         }
         if (bro.IsSuccess())
         {
