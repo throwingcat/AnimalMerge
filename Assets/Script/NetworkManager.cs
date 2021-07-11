@@ -256,18 +256,10 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         //인게임서버 접속 신청
         var serverAddress = _matchMakingResponseEventArgs.RoomInfo.m_inGameServerEndPoint.m_address;
         var serverPort = _matchMakingResponseEventArgs.RoomInfo.m_inGameServerEndPoint.m_port;
-        var isReconnect = true;
+        var isReconnect = false;
         ErrorInfo errorInfo = null;
 
         bool isDone = false;
-        Backend.Match.OnLeaveInGameServer += (args) =>
-        {
-            isDone = true;
-        };
-        Backend.Match.LeaveGameServer();
-        while (isDone == false)
-            yield return null;
-        
         if (Backend.Match.JoinGameServer(serverAddress, serverPort, isReconnect, out errorInfo))
         {
             //인게임서버 접속 응답 이벤트 등록
