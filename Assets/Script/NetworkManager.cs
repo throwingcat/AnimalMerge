@@ -259,13 +259,12 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         var isReconnect = true;
         ErrorInfo errorInfo = null;
 
-        Backend.Match.LeaveGameServer();
-
         bool isDone = false;
         Backend.Match.OnLeaveInGameServer += (args) =>
         {
             isDone = true;
         };
+        Backend.Match.LeaveGameServer();
         while (isDone == false)
             yield return null;
         
