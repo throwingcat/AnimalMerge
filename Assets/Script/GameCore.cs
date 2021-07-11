@@ -270,8 +270,23 @@ public class GameCore : MonoSingleton<GameCore>
         OnGainScore(gain);
 
         var comboBonus = Combo > 3 ? 18 * Combo : 0;
-        var badBlock = (a.Sheet.score + b.Sheet.score) * Combo + comboBonus;
-        OnReceiveBadBlock(badBlock);
+        int badBlock = (a.Sheet.score + b.Sheet.score) * Combo + comboBonus;
+        //내 방해블록 제거
+        if (0 < MyBadBlockValue)
+        {
+            MyBadBlockValue -= badBlock;
+        
+            RefreshBadBlockUI();
+            //내 방해블록 제거 + 상대방에게 공격
+            if (MyBadBlockValue <= 0)
+                AttackBadBlockValue = Mathf.Abs(MyBadBlockValue);
+        }
+        //상대방에게 공격
+        else
+        {
+            AttackBadBlockValue += badBlock;
+        }
+        
 
         //방해블록 타이머 1초 감소
         ReduceBadBlockTimer(1f);
@@ -308,22 +323,6 @@ public class GameCore : MonoSingleton<GameCore>
         Score += gain;
 
         panelIngame.RefreshScore(before, Score);
-
-        //내 방해블록 제거
-        if (0 < MyBadBlockValue)
-        {
-            MyBadBlockValue -= gain;
-        
-            RefreshBadBlockUI();
-            //내 방해블록 제거 + 상대방에게 공격
-            if (MyBadBlockValue <= 0)
-                AttackBadBlockValue = Mathf.Abs(MyBadBlockValue);
-        }
-        //상대방에게 공격
-        else
-        {
-            AttackBadBlockValue += gain;
-        }
     }
 
     private void ComboUpdate(float delta)
@@ -555,8 +554,8 @@ public class GameCore : MonoSingleton<GameCore>
     private void OnReceiveBadBlock(int value)
     {
         MyBadBlockValue += value;
-
         MyBadBlockValue = Mathf.Clamp(MyBadBlockValue, 0, MAX_BADBLOCK_VALUE);
+        
         RefreshBadBlockUI();
     }
 
@@ -592,7 +591,7 @@ public class GameCore : MonoSingleton<GameCore>
     {
         RefreshEnemy(packet);
         
-        MyBadBlockValue += packet.BadBlockValue;
+        OnReceiveBadBlock(packet.BadBlockValue);
         RefreshBadBlockUI();
     }
 
