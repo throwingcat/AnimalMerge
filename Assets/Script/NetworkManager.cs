@@ -221,7 +221,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         //완료대기
         while (true)
         {
-            if (MatchingStep == eMatchingStep.MATCHING_COMPLETE || MatchingStep == eMatchingStep.ERROR)
+            if (MatchingStep == eMatchingStep.MATCHING_COMPLETE || MatchingStep == eMatchingStep.ERROR && _matchMakingResponseEventArgs != null)
                 break;
             yield return null;
         }
