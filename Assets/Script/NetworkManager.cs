@@ -230,7 +230,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
     private void OnMatchMakingResponse(MatchMakingResponseEventArgs args)
     {
         _matchMakingResponseEventArgs = args;
-        if (args.ErrInfo == ErrorCode.Success)
+        if (args.ErrInfo == ErrorCode.Success || args.ErrInfo == ErrorCode.Match_InProgress)
             MatchingStep = eMatchingStep.MATCHING_COMPLETE;
         else
             MatchingStep = eMatchingStep.ERROR;
