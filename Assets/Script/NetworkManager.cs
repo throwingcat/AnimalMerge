@@ -259,6 +259,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         var isReconnect = true;
         ErrorInfo errorInfo = null;
 
+        Backend.Match.LeaveGameServer();
         if (Backend.Match.JoinGameServer(serverAddress, serverPort, isReconnect, out errorInfo))
         {
             //인게임서버 접속 응답 이벤트 등록
