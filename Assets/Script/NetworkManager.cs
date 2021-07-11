@@ -261,20 +261,22 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
         if (Backend.Match.JoinGameServer(serverAddress, serverPort, isReconnect, out errorInfo))
         {
+            //인게임서버 접속 응답 이벤트 등록
+            Backend.Match.OnSessionJoinInServer -= OnSessionJoinInServer;
+            Backend.Match.OnSessionJoinInServer += OnSessionJoinInServer;
+
+            //완료대기
+            while (true)
+            {
+                if (MatchingStep == eMatchingStep.INGAMESERVER_CONNECT_COMPLETE || MatchingStep == eMatchingStep.ERROR)
+                    break;
+                yield return null;
+            }
+        }
+        else
+        {
             MatchingStep = eMatchingStep.ERROR;
             yield break;
-        }
-
-        //인게임서버 접속 응답 이벤트 등록
-        Backend.Match.OnSessionJoinInServer -= OnSessionJoinInServer;
-        Backend.Match.OnSessionJoinInServer += OnSessionJoinInServer;
-
-        //완료대기
-        while (true)
-        {
-            if (MatchingStep == eMatchingStep.INGAMESERVER_CONNECT_COMPLETE || MatchingStep == eMatchingStep.ERROR)
-                break;
-            yield return null;
         }
     }
 
