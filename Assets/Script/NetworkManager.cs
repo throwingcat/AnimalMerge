@@ -260,6 +260,15 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         ErrorInfo errorInfo = null;
 
         Backend.Match.LeaveGameServer();
+
+        bool isDone = false;
+        Backend.Match.OnLeaveInGameServer += (args) =>
+        {
+            isDone = true;
+        };
+        while (isDone == false)
+            yield return null;
+        
         if (Backend.Match.JoinGameServer(serverAddress, serverPort, isReconnect, out errorInfo))
         {
             //인게임서버 접속 응답 이벤트 등록
@@ -280,7 +289,6 @@ public class NetworkManager : MonoSingleton<NetworkManager>
             yield break;
         }
     }
-
     private void OnSessionJoinInServer(JoinChannelEventArgs args)
     {
         if (args.ErrInfo == ErrorInfo.Success)
