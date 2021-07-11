@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
         while (isDone == false)
             yield return null;
         
-        ChangeGameState(eGAME_STATE.Lobby);
+        ChangeGameState(eGAME_STATE.Battle);
     }
 
     public void ChangeGameState(eGAME_STATE state)

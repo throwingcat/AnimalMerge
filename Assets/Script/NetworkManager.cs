@@ -65,8 +65,11 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
     public void Update()
     {
-        if(Backend.Match != null)
-            Backend.Match.Poll();
+        if (Backend.Match != null)
+        {
+            if(Backend.Match.IsMatchServerConnect())  
+                Backend.Match.Poll();
+        }
     }
     
     private IEnumerator MatchingProcess()

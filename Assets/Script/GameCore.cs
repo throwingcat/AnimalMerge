@@ -554,10 +554,6 @@ public class GameCore : MonoSingleton<GameCore>
 
     #region Attack
 
-    private void OnSendBadBlock(int value)
-    {
-    }
-
     private void OnReceiveBadBlock(int value)
     {
         BadBlockValue += value;
@@ -591,6 +587,7 @@ public class GameCore : MonoSingleton<GameCore>
 
     public void OnCaptureSyncPacket(SyncManager.SyncPacket packet)
     {
+        
     }
 
     public void OnReceiveSyncPacket(SyncManager.SyncPacket packet)
