@@ -5,6 +5,7 @@ using System.Text;
 using BackEnd;
 using BackEnd.Tcp;
 using Define;
+using MessagePack;
 using Newtonsoft.Json;
 using UnityEngine;
 using Violet;
@@ -23,23 +24,34 @@ public class SyncManager
         }
     }
 
+    [MessagePackObject]
+    public class UnitData
+    {
+        [Key(0)]
+        public string UnitKey;
+        [Key(1)]
+        public SVector3 UnitPosition;
+        [Key(2)]
+        public SVector3 UnitRotation;
+    }
+    [MessagePackObject]
     public class SyncPacket
     {
-        public class UnitData
-        {
-            public string UnitKey;
-            public SVector3 UnitPosition;
-            public SVector3 UnitRotation;
-        }
-
+        [Key(0)]
         public List<UnitData> UnitsDatas = new List<UnitData>();
+        [Key(1)]
         public int BadBlockValue = 0;
     }
 
-    [System.Serializable]
+    [System.Serializable ,MessagePackObject]
     public class SVector3
     {
-        public float x, y, z;
+        [Key(0)]
+        public float x;
+        [Key(1)]
+        public float y;
+        [Key(2)]
+        public float z;
 
         public SVector3()
         {
@@ -72,7 +84,7 @@ public class SyncManager
         units.AddRange(GameCore.Instance.BadUnits);
         foreach (var unit in units)
         {
-            SyncPacket.UnitData u = new SyncPacket.UnitData();
+            UnitData u = new UnitData();
             u.UnitKey = unit.Sheet.key;
             u.UnitPosition = new SVector3(unit.transform.localPosition);
             u.UnitRotation = new SVector3(unit.transform.localRotation.eulerAngles);
@@ -88,8 +100,8 @@ public class SyncManager
         //매치 서버로 송신
         if(Backend.Match.IsMatchServerConnect() && Backend.Match.IsInGameServerConnect())
         {
-            var message = JsonConvert.SerializeObject(packet, Formatting.None);
-            var bytes = Encoding.UTF8.GetBytes(message);
+            var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
+            var bytes = MessagePackSerializer.Serialize(packet, lz4Options);
             Backend.Match.SendDataToInGameRoom(bytes);
         }
         return packet;
@@ -102,8 +114,7 @@ public class SyncManager
 
     public void OnReceiveMatchRelay(MatchRelayEventArgs args)
     {
-        var message = Encoding.UTF8.GetString(args.BinaryUserData);
-        var packet = JsonConvert.DeserializeObject<SyncPacket>(message);
+        var packet = MessagePackSerializer.Deserialize<SyncPacket>(args.BinaryUserData);
 
         if (args.From.NickName != Backend.UserNickName)
             Receive(packet);

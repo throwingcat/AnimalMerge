@@ -417,6 +417,18 @@
  <Reference Include="DOTweenPro">
  <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
  </Reference>
+ <Reference Include="System.Memory">
+ <HintPath>C:/Git/AnimalMerge/Assets/Plugins/System.Memory.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Threading.Tasks.Extensions">
+ <HintPath>C:/Git/AnimalMerge/Assets/Plugins/System.Threading.Tasks.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Buffers">
+ <HintPath>C:/Git/AnimalMerge/Assets/Plugins/System.Buffers.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Runtime.CompilerServices.Unsafe">
+ <HintPath>C:/Git/AnimalMerge/Assets/Plugins/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+ </Reference>
  <Reference Include="netstandard">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
  </Reference>
@@ -862,6 +874,14 @@
     <ProjectReference Include="Coffee.SoftMaskForUGUI.csproj">
       <Project>{a38124eb-0139-0416-d58b-aaf76c7d219a}</Project>
       <Name>Coffee.SoftMaskForUGUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="MessagePack.csproj">
+      <Project>{2618d3d5-7a04-4dc7-ba81-fe7e6ec15d12}</Project>
+      <Name>MessagePack</Name>
+    </ProjectReference>
+    <ProjectReference Include="MessagePack.Annotations.csproj">
+      <Project>{0c84f949-ed2f-f0f9-fbea-2ff681d75e71}</Project>
+      <Name>MessagePack.Annotations</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
