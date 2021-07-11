@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     private string _loadingDescription = "";
     private float _loadingProgress = 0f;
 
+    public bool isSinglePlay = true;
     public void Awake()
     {
         Instance = this;
@@ -139,7 +140,10 @@ public class GameManager : MonoBehaviour
         while (isDone == false)
             yield return null;
         
-        ChangeGameState(eGAME_STATE.Battle);
+        if(isSinglePlay)
+            ChangeGameState(eGAME_STATE.Battle);
+        else
+            ChangeGameState(eGAME_STATE.Lobby);
     }
 
     public void ChangeGameState(eGAME_STATE state)

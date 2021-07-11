@@ -21,6 +21,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
         return false;
     }
+
     public bool CreateNickname(string nickname)
     {
         BackendReturnObject bro = Backend.BMember.CreateNickname(nickname);
@@ -32,9 +33,11 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
         return false;
     }
+
     #endregion
-    
+
     #region 매칭
+
     public enum eMatchingStep
     {
         DISCONNECTED,
@@ -53,13 +56,13 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         AREADY_CONNECT,
         ERROR
     }
-    
+
     public eMatchingStep MatchingStep = eMatchingStep.DISCONNECTED;
     private MatchMakingResponseEventArgs _matchMakingResponseEventArgs;
 
     public void OnMatchingStart()
     {
-        if (MatchingStep == eMatchingStep.DISCONNECTED) 
+        if (MatchingStep == eMatchingStep.DISCONNECTED)
             StartCoroutine(MatchingProcess());
     }
 
@@ -67,11 +70,11 @@ public class NetworkManager : MonoSingleton<NetworkManager>
     {
         if (Backend.Match != null)
         {
-            if(Backend.Match.IsMatchServerConnect())  
+            if (Backend.Match.IsMatchServerConnect())
                 Backend.Match.Poll();
         }
     }
-    
+
     private IEnumerator MatchingProcess()
     {
         //매치 서버 접속
@@ -122,8 +125,9 @@ public class NetworkManager : MonoSingleton<NetworkManager>
             yield break;
         }
     }
-    
+
     #region 매치서버 접속
+
     private IEnumerator ConnectionMatchServer()
     {
         MatchingStep = eMatchingStep.MATCHSERVER_CONNECT;
@@ -156,6 +160,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         else
             MatchingStep = eMatchingStep.ERROR;
     }
+
     #endregion
 
     #region 대기방 생성
@@ -196,7 +201,10 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         MatchingStep = eMatchingStep.MATCHING;
 
         //매치 메이킹 신청
-        Backend.Match.RequestMatchMaking(MatchType.Random, MatchModeType.OneOnOne, "2021-07-09T14:49:03.759Z");
+        BackendReturnObject bro = Backend.Match.GetMatchList();
+        string indate = bro.GetInDate();
+        Debug.LogFormat("Match Making InDate : {0}", indate);
+        Backend.Match.RequestMatchMaking(MatchType.Random, MatchModeType.OneOnOne, indate);
         //매치 메이킹 응답 이벤트 등록
         Backend.Match.OnMatchMakingResponse -= OnMatchMakingResponse;
         Backend.Match.OnMatchMakingResponse += OnMatchMakingResponse;
@@ -292,7 +300,6 @@ public class NetworkManager : MonoSingleton<NetworkManager>
     }
 
     #endregion
-    
+
     #endregion
-    
 }
