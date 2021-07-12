@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 25507523}
   - component: {fileID: 25507522}
-  - component: {fileID: 25507521}
   - component: {fileID: 25507520}
   m_Layer: 5
   m_Name: UI Camera
@@ -154,14 +153,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efb96a0fed1fc7749a61c52d6d0b3914, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!81 &25507521
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 25507519}
-  m_Enabled: 1
 --- !u!20 &25507522
 Camera:
   m_ObjectHideFlags: 0
