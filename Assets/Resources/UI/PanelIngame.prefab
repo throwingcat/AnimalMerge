@@ -497,11 +497,11 @@ RectTransform:
   m_Father: {fileID: 8435129183160151267}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 232.1, y: 729.6}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 232, y: -200}
   m_SizeDelta: {x: 64, y: 64}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &3635733534317682129
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,11 +535,11 @@ RectTransform:
   m_Father: {fileID: 8435129183160151267}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 441.5, y: 712}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -26.3, y: -174.3}
   m_SizeDelta: {x: 147.3999, y: 147.3999}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 1}
 --- !u!1 &3840321700268763437
 GameObject:
   m_ObjectHideFlags: 0
@@ -571,11 +571,11 @@ RectTransform:
   m_Father: {fileID: 8435129183160151267}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000024796, y: 728}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -196}
   m_SizeDelta: {x: 400, y: 72}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &3180054990319701011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -633,11 +633,11 @@ RectTransform:
   m_Father: {fileID: 8435129183160151267}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 440, y: 856}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -50, y: -54}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 1}
 --- !u!1 &4433827546635985842
 GameObject:
   m_ObjectHideFlags: 0
@@ -1191,14 +1191,14 @@ MonoBehaviour:
   safeRect: {fileID: 0}
   _tweens: []
   WithCurtain: 0
-  VFXComboParent: {fileID: 3883802203961777354}
-  VFXComboPrefab: {fileID: 3779920667239857559, guid: dda9493c1a7012f4fb279c1df73ecce4, type: 3}
   BadBlockParent: {fileID: 9014811964360404769}
   BadBlockPrefab: {fileID: 3658138090632839645, guid: bc217a2f289c6434d89355d83b0ced12, type: 3}
-  BadBlockTimerRoot: {fileID: 3461916318397198700}
   BadBlockTimer: {fileID: 2565221199433917340}
+  BadBlockTimerRoot: {fileID: 3461916318397198700}
   BadBlockTimerText: {fileID: 4980708546008717462}
   Score: {fileID: 3264694007071157488}
+  VFXComboParent: {fileID: 3883802203961777354}
+  VFXComboPrefab: {fileID: 3779920667239857559, guid: dda9493c1a7012f4fb279c1df73ecce4, type: 3}
 --- !u!1 &8435129183249425925
 GameObject:
   m_ObjectHideFlags: 0
