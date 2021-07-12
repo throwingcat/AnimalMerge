@@ -80,7 +80,8 @@ public class SyncManager
     {
         SyncPacket packet = new SyncPacket();
 
-        var units = GameCore.Instance.UnitsInField;
+        List<UnitBase> units = new List<UnitBase>();
+        units.AddRange(GameCore.Instance.UnitsInField);
         units.AddRange(GameCore.Instance.BadUnits);
         foreach (var unit in units)
         {

@@ -12,23 +12,32 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
     public bool Login()
     {
-        BackendReturnObject bro = null;
+        Debug.Log("로그인 시작");
+        Debug.Log(Backend.Utils.GetGoogleHash());
         if (GameManager.Instance.GUID.IsNullOrEmpty())
-        {
-            bro = Backend.BMember.GuestLogin();
-        }
-        else
-        {
-            bro = Backend.BMember.CustomSignUp(GameManager.Instance.GUID, "1234");
-            bro = Backend.BMember.CustomLogin(GameManager.Instance.GUID, "1234");
-        }
+            GameManager.Instance.GUID = SystemInfo.deviceUniqueIdentifier;
+
+        bool isLoginComplete = false;
+
+        //액세스 토큰 로그인 시도
+        var bro = Backend.BMember.LoginWithTheBackendToken();
         if (bro.IsSuccess())
         {
             Debug.Log("로그인 성공");
-            return true;
+            isLoginComplete = true;
+        }
+        else
+        {
+            Debug.LogFormat("로그인 실패 : {0} / {1}" , bro.GetErrorCode() , bro.GetMessage());
+            
+            //회원가입 진행
+            bro = Backend.BMember.CustomSignUp(GameManager.Instance.GUID, "1234");
+            if(bro.IsSuccess() == false)
+                Debug.LogFormat("회원가입 실패 : {0} / {1}" , bro.GetErrorCode() , bro.GetMessage());
+            isLoginComplete = false;
         }
 
-        return false;
+        return isLoginComplete;
     }
 
     public bool CreateNickname(string nickname)
@@ -236,6 +245,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
                     break;
                 }
             }
+
             yield return null;
         }
     }
@@ -280,6 +290,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
             yield break;
         }
     }
+
     private void OnSessionJoinInServer(JoinChannelEventArgs args)
     {
         if (args.ErrInfo == ErrorInfo.Success)

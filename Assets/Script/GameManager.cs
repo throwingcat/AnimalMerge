@@ -69,6 +69,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator InitalizeProcess()
     {
+        Screen.SetResolution(1080,1920,true);
+        
         PartSceneChange.OnShow();
         
         ChangeGameState(eGAME_STATE.Intro);
@@ -117,8 +119,13 @@ public class GameManager : MonoBehaviour
     {
         bool isDone = false;
         //로그인
-        NetworkManager.Instance.Login();
-        
+        bool result = NetworkManager.Instance.Login();
+        while(result == false)
+        {
+            Debug.Log("로그인 재시도");
+            yield return new WaitForSeconds(1f);
+            result = NetworkManager.Instance.Login();
+        }
         string indate = Backend.UserInDate;
         string nickname = Backend.UserNickName;
         
