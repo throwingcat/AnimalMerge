@@ -722,7 +722,7 @@ public class GameCore : MonoSingleton<GameCore>
             isWin = true;
             //게임 오버 처리해서 플레이 정지
             this.isGameOver = true;
-            GameOverTime = time.AddSeconds(-100);
+            GameOverTime = time.AddSeconds(100);
         }
 
         isGameFinish = true;

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using BackEnd;
 using Define;
 using UnityEngine;
@@ -8,10 +9,10 @@ using UnityEngine.Rendering;
 using Violet;
 
 public class GameManager : MonoBehaviour
-{   
+{
     public static GameManager Instance;
     public CSVDownloadConfig CSVDownloadConfig;
-    
+
     public static eLanguage CurrentLangauge = eLanguage.Korean;
 
     public static Vector2 Resolution = new Vector2(1280, 720);
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
 
     public bool isSinglePlay = true;
     public string GUID = "";
+
     public void Awake()
     {
         Instance = this;
@@ -50,6 +52,17 @@ public class GameManager : MonoBehaviour
                 GameCore.Instance.OnUpdate(delta);
                 break;
         }
+
+        for (int i = 0; i < _delayInvokeList.Count; i++)
+        {
+            _delayInvokeList[i].delta += delta;
+            if (_delayInvokeList[i].t <= _delayInvokeList[i].delta)
+            {
+                _delayInvokeList[i].action?.Invoke();
+                _delayInvokeList.RemoveAt(i);
+                i--;
+            }
+        }
     }
 
     private void OnGUI()
@@ -69,10 +82,10 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator InitalizeProcess()
     {
-        Screen.SetResolution(1080,1920,true);
-        
+        Screen.SetResolution(1080, 1920, true);
+
         PartSceneChange.OnShow();
-        
+
         ChangeGameState(eGAME_STATE.Intro);
 
         //기본 데이터 다운로드
@@ -80,10 +93,10 @@ public class GameManager : MonoBehaviour
 
         //서버 접속
         yield return StartCoroutine(ConnectionServer());
-        
+
         //게임 시작
         yield return StartCoroutine(InitializeGame());
-        
+
         PartSceneChange.OnHide();
     }
 
@@ -106,29 +119,30 @@ public class GameManager : MonoBehaviour
         var bro = Backend.Initialize(true);
         if (bro.IsSuccess())
         {
-            
         }
         else
         {
             Application.Quit();
         }
+
         yield break;
     }
-        
+
     private IEnumerator InitializeGame()
     {
         bool isDone = false;
         //로그인
         bool result = NetworkManager.Instance.Login();
-        while(result == false)
+        while (result == false)
         {
             Debug.Log("로그인 재시도");
             yield return new WaitForSeconds(1f);
             result = NetworkManager.Instance.Login();
         }
+
         string indate = Backend.UserInDate;
         string nickname = Backend.UserNickName;
-        
+
         //닉네임 생성
         if (nickname.IsNullOrEmpty())
         {
@@ -145,10 +159,11 @@ public class GameManager : MonoBehaviour
         }
         else
             isDone = true;
+
         while (isDone == false)
             yield return null;
-        
-        if(isSinglePlay)
+
+        if (isSinglePlay)
             ChangeGameState(eGAME_STATE.Battle);
         else
             ChangeGameState(eGAME_STATE.Lobby);
@@ -239,15 +254,23 @@ public class GameManager : MonoBehaviour
         return DateTime.UtcNow;
     }
 
+    private static List<DelayInvokeData> _delayInvokeList = new List<DelayInvokeData>();
+
     public static void DelayInvoke(Action action, float t)
     {
-        Instance.StartCoroutine(Instance.DelayInvokeProcess(action, t));
+        _delayInvokeList.Add(new DelayInvokeData()
+        {
+            action = action,
+            t = t,
+            delta = 0f,
+        });
     }
 
-    private IEnumerator DelayInvokeProcess(Action action, float t)
+    public class DelayInvokeData
     {
-        yield return new WaitForSeconds(t);
-        action?.Invoke();
+        public Action action = null;
+        public float t = 0f;
+        public float delta = 0f;
     }
 
     #endregion
