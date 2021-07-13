@@ -15,15 +15,16 @@ using Random = UnityEngine.Random;
 public class GameCore : MonoSingleton<GameCore>
 {
     public int SpawnLevel = 1;
+    public bool isGameFinish = false;
 
     public void Initialize()
     {
         isGameOver = false;
-        
+        isGameFinish = false;
         PlayerScreen.SetActive(true);
         EnemyScreen.gameObject.SetActive(true);
         SetEnableDeadline(false);
-        
+
         SyncManager.Instance.OnSyncCapture = OnCaptureSyncPacket;
         SyncManager.Instance.OnSyncReceive = OnReceiveSyncPacket;
 
@@ -64,10 +65,10 @@ public class GameCore : MonoSingleton<GameCore>
                 _unit = SpawnUnit();
             else
                 _unitSpawnDelayDelta -= delta;
-        
-            if(Input.GetKeyDown(KeyCode.Space))
+
+            if (Input.GetKeyDown(KeyCode.Space))
                 OnReceiveBadBlock(10);
-            
+
             InputUpdate();
 
             MergeUpdate(delta);
@@ -77,21 +78,21 @@ public class GameCore : MonoSingleton<GameCore>
             ComboUpdate(delta);
 
             GameOverUpdate(delta);
-            
-            #region Sync
-
-            if (_syncCaptureDelta <= 0f)
-            {
-                _syncCaptureDelta = EnvironmentValue.SYNC_CAPTURE_DELAY;
-                SyncManager.Instance.Capture();
-            }
-            else
-            {
-                _syncCaptureDelta -= delta;
-            }
-
-            #endregion
         }
+
+        #region Sync
+
+        if (_syncCaptureDelta <= 0f)
+        {
+            _syncCaptureDelta = EnvironmentValue.SYNC_CAPTURE_DELAY;
+            SyncManager.Instance.Capture();
+        }
+        else
+        {
+            _syncCaptureDelta -= delta;
+        }
+
+        #endregion
     }
 
     private UnitBase SpawnUnit(string key = "")
@@ -238,7 +239,7 @@ public class GameCore : MonoSingleton<GameCore>
                 break;
             }
         }
-        
+
         if (isEnable == false)
         {
             foreach (var unit in UnitsInField)
@@ -686,10 +687,9 @@ public class GameCore : MonoSingleton<GameCore>
 
         OnReceiveBadBlock(packet.BadBlockValue);
 
-        if (packet.isGameOver)
-        {
+        if (packet.isGameOver && isGameFinish == false)
             OnReceiveGameOver(packet.isGameOver, packet.GameOverTime);
-        }
+
         RefreshBadBlockUI();
     }
 
@@ -698,7 +698,7 @@ public class GameCore : MonoSingleton<GameCore>
         EnemyScreen.Refresh(packet);
     }
 
-    public void OnReceiveGameOver(bool isGameOver,DateTime time)
+    public void OnReceiveGameOver(bool isGameOver, DateTime time)
     {
         bool isWin = false;
         //나도 게임오버인 경우
@@ -722,10 +722,15 @@ public class GameCore : MonoSingleton<GameCore>
             isWin = true;
             //게임 오버 처리해서 플레이 정지
             this.isGameOver = true;
+            GameOverTime = time.AddSeconds(-100);
         }
+
+        isGameFinish = true;
+
         var popup = UIManager.Instance.ShowPopup<PopupGameResult>();
         popup.SetResult(isWin);
     }
+
     #endregion
 
     #region VFX

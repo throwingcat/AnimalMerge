@@ -46,6 +46,11 @@ public class SyncManager
         public bool isGameOver = false;
         [Key(3)]
         public DateTime GameOverTime = new DateTime();
+
+        [Key(4)]
+        public bool isGameFinish = false;
+        [Key(5)]
+        public string WinPlayer = "";
     }
 
     [System.Serializable ,MessagePackObject]
@@ -106,6 +111,8 @@ public class SyncManager
             packet.isGameOver = true;
             packet.GameOverTime = GameCore.Instance.GameOverTime;
         }
+
+        packet.isGameFinish = GameCore.Instance.isGameFinish;
         
         OnSyncCapture?.Invoke(packet);
 
