@@ -34,7 +34,12 @@ namespace Define
         public static float BAD_BLOCK_TIMER = 5f;
         
         public static float COMBO_DURATION = 2f;
+    }
 
+    public class VFX
+    {
+        public const string MERGE_ATTACK_TRAIL = "VFX@AttackTrail";
+        public const string MERGE_ATTACK_BOMB = "VFX@AttackBomb";
     }
 }
 

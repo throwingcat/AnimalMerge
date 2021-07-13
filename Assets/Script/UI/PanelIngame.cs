@@ -21,6 +21,9 @@ public class PanelIngame : SUIPanel
     public Transform VFXComboParent;
     public GameObject VFXComboPrefab;
 
+    public Transform MyBadBlockVFXPoint;
+    public Transform EnemyBadBlockVFXPoint;
+
 
     public void RefreshScore(int before, int after)
     {

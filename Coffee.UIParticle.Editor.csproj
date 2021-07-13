@@ -52,10 +52,11 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.0.7\Scripts\Editor\UIParticleMenu.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.0.7\Scripts\Editor\AsmdefEx.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.0.7\Scripts\Editor\UIParticleEditor.cs" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.0.7\Scripts\Editor\Coffee.UIParticle.Editor.asmdef" />
+     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Scripts\Editor\UIParticleMenu.cs" />
+     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Scripts\Editor\AnimatedPropertiesEditor.cs" />
+     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Scripts\Editor\UIParticleEditor.cs" />
+     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Scripts\Editor\ImportSampleMenu.cs" />
+     <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Scripts\Editor\Coffee.UIParticle.Editor.asmdef" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

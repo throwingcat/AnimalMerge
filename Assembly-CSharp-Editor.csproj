@@ -808,10 +808,6 @@
       <Project>{c9f8e04d-e9e1-8195-3c36-995387e41d4c}</Project>
       <Name>LunarConsoleEditor</Name>
     </ProjectReference>
-    <ProjectReference Include="Coffee.UIParticle.csproj">
-      <Project>{b0a15342-0b73-2d37-3664-eba9146d83c4}</Project>
-      <Name>Coffee.UIParticle</Name>
-    </ProjectReference>
     <ProjectReference Include="Coffee.SoftMaskForUGUI.csproj">
       <Project>{a38124eb-0139-0416-d58b-aaf76c7d219a}</Project>
       <Name>Coffee.SoftMaskForUGUI</Name>
@@ -827,6 +823,10 @@
     <ProjectReference Include="MessagePack.Annotations.csproj">
       <Project>{0c84f949-ed2f-f0f9-fbea-2ff681d75e71}</Project>
       <Name>MessagePack.Annotations</Name>
+    </ProjectReference>
+    <ProjectReference Include="Coffee.UIParticle.csproj">
+      <Project>{b0a15342-0b73-2d37-3664-eba9146d83c4}</Project>
+      <Name>Coffee.UIParticle</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

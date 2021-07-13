@@ -5,6 +5,7 @@ using Define;
 using DG.Tweening;
 using SheetData;
 using UnityEngine;
+using UnityEngine.U2D;
 using Violet;
 using Violet.Audio;
 
@@ -50,6 +51,8 @@ public class GameCore : MonoSingleton<GameCore>
 
     public void OnUpdate(float delta)
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+            OnReceiveBadBlock(20);
         InputUpdate();
 
         if (_unit == null && _unitSpawnDelayDelta <= 0f)
@@ -275,18 +278,36 @@ public class GameCore : MonoSingleton<GameCore>
         if (0 < MyBadBlockValue)
         {
             MyBadBlockValue -= badBlock;
-        
-            RefreshBadBlockUI();
+
             //내 방해블록 제거 + 상대방에게 공격
             if (MyBadBlockValue <= 0)
+            {
                 AttackBadBlockValue = Mathf.Abs(MyBadBlockValue);
+
+                PlayMergeAttackVFX(a.transform.position, panelIngame.MyBadBlockVFXPoint.position,0.5f, () =>
+                {
+                    //블록 갱신
+                    RefreshBadBlockUI();
+
+                    PlayMergeAttackVFX(panelIngame.MyBadBlockVFXPoint.position,
+                        panelIngame.EnemyBadBlockVFXPoint.position,
+                        0.3f,() => { });
+                });
+            }
+            //내 방해블록만 제거
+            else
+            {
+                PlayMergeAttackVFX(a.transform.position, panelIngame.MyBadBlockVFXPoint.position,0.5f,
+                    () => { RefreshBadBlockUI(); });
+            }
         }
         //상대방에게 공격
         else
         {
+            PlayMergeAttackVFX(a.transform.position, panelIngame.EnemyBadBlockVFXPoint.position,0.5f, () => { });
             AttackBadBlockValue += badBlock;
         }
-        
+
 
         //방해블록 타이머 1초 감소
         ReduceBadBlockTimer(1f);
@@ -555,7 +576,7 @@ public class GameCore : MonoSingleton<GameCore>
     {
         MyBadBlockValue += value;
         MyBadBlockValue = Mathf.Clamp(MyBadBlockValue, 0, MAX_BADBLOCK_VALUE);
-        
+
         RefreshBadBlockUI();
     }
 
@@ -584,13 +605,12 @@ public class GameCore : MonoSingleton<GameCore>
 
     public void OnCaptureSyncPacket(SyncManager.SyncPacket packet)
     {
-        
     }
 
     public void OnReceiveSyncPacket(SyncManager.SyncPacket packet)
     {
         RefreshEnemy(packet);
-        
+
         OnReceiveBadBlock(packet.BadBlockValue);
         RefreshBadBlockUI();
     }
@@ -598,6 +618,53 @@ public class GameCore : MonoSingleton<GameCore>
     public void RefreshEnemy(SyncManager.SyncPacket packet)
     {
         EnemyScreen.Refresh(packet);
+    }
+
+    #endregion
+
+    #region VFX
+
+    public void PlayMergeAttackVFX(Vector3 from, Vector3 to,float duration, System.Action onFinish = null)
+    {
+        var vfx = ResourceManager.Instance.GetUIVFX(Define.VFX.MERGE_ATTACK_TRAIL);
+        vfx.transform.position = Utils.WorldToCanvas(Camera.main, from, UIManager.Instance.CanvasRect);
+        vfx.SetActive(true);
+        to.z = from.z;
+        StartCoroutine(PlayBezier(vfx, from, to, duration, () =>
+        {
+            var bomb = ResourceManager.Instance.GetUIVFX(Define.VFX.MERGE_ATTACK_BOMB);
+            bomb.transform.position = to;
+            bomb.SetActive(true);
+            
+            GameManager.DelayInvoke(() =>
+            {
+                ResourceManager.Instance.RestoreUIVFX(vfx);
+                ResourceManager.Instance.RestoreUIVFX(bomb);
+            },3f);
+            
+            onFinish?.Invoke();
+        }));
+    }
+
+    #endregion
+
+    #region Utility
+
+    public IEnumerator PlayBezier(GameObject go, Vector3 from, Vector3 to, float duration, System.Action onFinish)
+    {
+        float delta = 0f;
+        while (delta < duration)
+        {
+            float t = delta / duration;
+            var st = (from - to).normalized;
+            var et = (to - from).normalized;
+            go.transform.position = BezierUtility.BezierPoint(from, st, et, to, t);
+
+            delta += Time.deltaTime;
+            yield return null;
+        }
+
+        onFinish?.Invoke();
     }
 
     #endregion

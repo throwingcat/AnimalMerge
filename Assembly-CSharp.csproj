@@ -135,6 +135,7 @@
      <Compile Include="Assets\Submodules\Violet\Violet\JoyStick\Script\JoyStickReceiver.cs" />
      <Compile Include="Assets\Script\GameManager.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\Logger.cs" />
+     <Compile Include="Assets\Script\Uitls\CameraResolution.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIShadow.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\CSVGenerator\CSVDownloader.cs" />
      <Compile Include="Assets\Script\Define.cs" />
@@ -155,13 +156,11 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIFlip.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPanelInfo.cs" />
      <Compile Include="Assets\Script\UI\PanelLobby.cs" />
-     <Compile Include="Assets\Script\Uitls\CameraResolution.cs" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\SoftMask.cginc" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Dissolve.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Shaders\SoftMaskTemplate.cginc" />
      <None Include="Assets\LunarConsole\readme.txt" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.0.7\Shaders\UIAdditive.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\Shaders\TMP_SDF (SoftMaskable).shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect.cginc" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\Shaders\TMP_Sprite (SoftMaskable).shader" />
@@ -176,6 +175,7 @@
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-EffectCapture.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\readme.txt" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DemiLib\Core\DemiLib.xml" />
+     <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Shaders\UIAdditive.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\readme.txt" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Shaders\SoftMask.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-HSV.shader" />
@@ -873,10 +873,6 @@
       <Project>{c9f8e04d-e9e1-8195-3c36-995387e41d4c}</Project>
       <Name>LunarConsoleEditor</Name>
     </ProjectReference>
-    <ProjectReference Include="Coffee.UIParticle.csproj">
-      <Project>{b0a15342-0b73-2d37-3664-eba9146d83c4}</Project>
-      <Name>Coffee.UIParticle</Name>
-    </ProjectReference>
     <ProjectReference Include="Coffee.SoftMaskForUGUI.csproj">
       <Project>{a38124eb-0139-0416-d58b-aaf76c7d219a}</Project>
       <Name>Coffee.SoftMaskForUGUI</Name>
@@ -892,6 +888,10 @@
     <ProjectReference Include="MessagePack.Annotations.csproj">
       <Project>{0c84f949-ed2f-f0f9-fbea-2ff681d75e71}</Project>
       <Name>MessagePack.Annotations</Name>
+    </ProjectReference>
+    <ProjectReference Include="Coffee.UIParticle.csproj">
+      <Project>{b0a15342-0b73-2d37-3664-eba9146d83c4}</Project>
+      <Name>Coffee.UIParticle</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
