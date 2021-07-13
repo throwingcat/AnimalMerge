@@ -346,8 +346,10 @@ public class NetworkManager : MonoSingleton<NetworkManager>
     }
     public void DisconnectMatchServer()
     {
-        Backend.Match.LeaveMatchMakingServer();
         MatchingStep = eMatchingStep.DISCONNECTED;
+        _matchMakingResponseEventArgs = null;
+        Backend.Match.LeaveMatchMakingServer();
+        
     }
     public void DisconnectIngameServer()
     {
