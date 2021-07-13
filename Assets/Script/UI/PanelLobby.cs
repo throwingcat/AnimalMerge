@@ -10,6 +10,15 @@ public class PanelLobby : SUIPanel
 {
     public GameObject Matching;
     public Text MatchingState;
+
+    protected override void OnShow()
+    {
+        base.OnShow();
+        
+        Matching.SetActive(false);
+        
+    }
+
     public void OnMatchingCancel()
     {
         Backend.Match.LeaveMatchMakingServer();
