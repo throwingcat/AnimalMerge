@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using BackEnd;
@@ -6,8 +7,10 @@ using DG.Tweening;
 using SheetData;
 using UnityEngine;
 using UnityEngine.U2D;
+using UnityEngine.UI;
 using Violet;
 using Violet.Audio;
+using Random = UnityEngine.Random;
 
 public class GameCore : MonoSingleton<GameCore>
 {
@@ -15,8 +18,12 @@ public class GameCore : MonoSingleton<GameCore>
 
     public void Initialize()
     {
+        isGameOver = false;
+        
         PlayerScreen.SetActive(true);
         EnemyScreen.gameObject.SetActive(true);
+        SetEnableDeadline(false);
+        
         SyncManager.Instance.OnSyncCapture = OnCaptureSyncPacket;
         SyncManager.Instance.OnSyncReceive = OnReceiveSyncPacket;
 
@@ -51,34 +58,40 @@ public class GameCore : MonoSingleton<GameCore>
 
     public void OnUpdate(float delta)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            OnReceiveBadBlock(20);
-        InputUpdate();
-
-        if (_unit == null && _unitSpawnDelayDelta <= 0f)
-            _unit = SpawnUnit();
-        else
-            _unitSpawnDelayDelta -= delta;
-
-        MergeUpdate(delta);
-
-        BadBlockUpdate(delta);
-
-        ComboUpdate(delta);
-
-        #region Sync
-
-        if (_syncCaptureDelta <= 0f)
+        if (isGameOver == false)
         {
-            _syncCaptureDelta = EnvironmentValue.SYNC_CAPTURE_DELAY;
-            SyncManager.Instance.Capture();
-        }
-        else
-        {
-            _syncCaptureDelta -= delta;
-        }
+            if (_unit == null && _unitSpawnDelayDelta <= 0f)
+                _unit = SpawnUnit();
+            else
+                _unitSpawnDelayDelta -= delta;
+        
+            if(Input.GetKeyDown(KeyCode.Space))
+                OnReceiveBadBlock(10);
+            
+            InputUpdate();
 
-        #endregion
+            MergeUpdate(delta);
+
+            BadBlockUpdate(delta);
+
+            ComboUpdate(delta);
+
+            GameOverUpdate(delta);
+            
+            #region Sync
+
+            if (_syncCaptureDelta <= 0f)
+            {
+                _syncCaptureDelta = EnvironmentValue.SYNC_CAPTURE_DELAY;
+                SyncManager.Instance.Capture();
+            }
+            else
+            {
+                _syncCaptureDelta -= delta;
+            }
+
+            #endregion
+        }
     }
 
     private UnitBase SpawnUnit(string key = "")
@@ -158,11 +171,11 @@ public class GameCore : MonoSingleton<GameCore>
             pool.Restore(unit.gameObject);
     }
 
-    private void MergeUpdate(float dleta)
+    private void MergeUpdate(float delta)
     {
         if (0 < _mergeDelayDelta)
         {
-            _mergeDelayDelta -= dleta;
+            _mergeDelayDelta -= delta;
             return;
         }
 
@@ -201,6 +214,67 @@ public class GameCore : MonoSingleton<GameCore>
         */
         isMergeProcess = false;
     }
+
+
+    #region GameOver
+
+    public GameObject GameOverLine;
+    public float GameoverTimeoutDelta = 0f;
+    public bool isGameOver = false;
+    public DateTime GameOverTime = new DateTime();
+
+    private void GameOverUpdate(float delta)
+    {
+        if (isGameOver) return;
+
+        bool isEnable = false;
+
+        foreach (var unit in BadUnits)
+        {
+            if (unit.isDropComplete == false) continue;
+            if (GameOverLine.transform.position.y <= unit.transform.position.y)
+            {
+                isEnable = true;
+                break;
+            }
+        }
+        
+        if (isEnable == false)
+        {
+            foreach (var unit in UnitsInField)
+            {
+                if (unit.isDropComplete == false) continue;
+                if (GameOverLine.transform.position.y <= unit.transform.position.y)
+                {
+                    isEnable = true;
+                    break;
+                }
+            }
+        }
+
+        SetEnableDeadline(isEnable);
+
+        if (GameOverLine.activeSelf)
+        {
+            GameoverTimeoutDelta += delta;
+            if (EnvironmentValue.GAME_OVER_TIME_OUT <= GameoverTimeoutDelta)
+            {
+                isGameOver = true;
+                GameOverTime = DateTime.UtcNow;
+            }
+        }
+    }
+
+    public void SetEnableDeadline(bool isEnable)
+    {
+        if (GameOverLine.activeSelf != isEnable)
+        {
+            GameOverLine.SetActive(isEnable);
+            GameoverTimeoutDelta = 0f;
+        }
+    }
+
+    #endregion
 
     public void CollisionEnter(UnitBase a, UnitBase b)
     {
@@ -284,27 +358,27 @@ public class GameCore : MonoSingleton<GameCore>
             {
                 AttackBadBlockValue = Mathf.Abs(MyBadBlockValue);
 
-                PlayMergeAttackVFX(a.transform.position, panelIngame.MyBadBlockVFXPoint.position,0.5f, () =>
+                PlayMergeAttackVFX(a.transform.position, panelIngame.MyBadBlockVFXPoint.position, 0.5f, () =>
                 {
                     //블록 갱신
                     RefreshBadBlockUI();
 
                     PlayMergeAttackVFX(panelIngame.MyBadBlockVFXPoint.position,
                         panelIngame.EnemyBadBlockVFXPoint.position,
-                        0.3f,() => { });
+                        0.3f, () => { });
                 });
             }
             //내 방해블록만 제거
             else
             {
-                PlayMergeAttackVFX(a.transform.position, panelIngame.MyBadBlockVFXPoint.position,0.5f,
+                PlayMergeAttackVFX(a.transform.position, panelIngame.MyBadBlockVFXPoint.position, 0.5f,
                     () => { RefreshBadBlockUI(); });
             }
         }
         //상대방에게 공격
         else
         {
-            PlayMergeAttackVFX(a.transform.position, panelIngame.EnemyBadBlockVFXPoint.position,0.5f, () => { });
+            PlayMergeAttackVFX(a.transform.position, panelIngame.EnemyBadBlockVFXPoint.position, 0.5f, () => { });
             AttackBadBlockValue += badBlock;
         }
 
@@ -406,7 +480,6 @@ public class GameCore : MonoSingleton<GameCore>
     private readonly List<Unit> _badBlockSheet = new List<Unit>();
 
     #endregion
-
 
     #region BadBlock
 
@@ -612,6 +685,11 @@ public class GameCore : MonoSingleton<GameCore>
         RefreshEnemy(packet);
 
         OnReceiveBadBlock(packet.BadBlockValue);
+
+        if (packet.isGameOver)
+        {
+            OnReceiveGameOver(packet.isGameOver, packet.GameOverTime);
+        }
         RefreshBadBlockUI();
     }
 
@@ -620,11 +698,39 @@ public class GameCore : MonoSingleton<GameCore>
         EnemyScreen.Refresh(packet);
     }
 
+    public void OnReceiveGameOver(bool isGameOver,DateTime time)
+    {
+        bool isWin = false;
+        //나도 게임오버인 경우
+        if (this.isGameOver)
+        {
+            //상대가 더 늦게 죽음
+            if (GameOverTime < time)
+            {
+                //패배
+                isWin = false;
+            }
+            else
+            {
+                //승리
+                isWin = true;
+            }
+        }
+        else
+        {
+            //승리
+            isWin = true;
+            //게임 오버 처리해서 플레이 정지
+            this.isGameOver = true;
+        }
+        var popup = UIManager.Instance.ShowPopup<PopupGameResult>();
+        popup.SetResult(isWin);
+    }
     #endregion
 
     #region VFX
 
-    public void PlayMergeAttackVFX(Vector3 from, Vector3 to,float duration, System.Action onFinish = null)
+    public void PlayMergeAttackVFX(Vector3 from, Vector3 to, float duration, System.Action onFinish = null)
     {
         var vfx = ResourceManager.Instance.GetUIVFX(Define.VFX.MERGE_ATTACK_TRAIL);
         vfx.transform.position = Utils.WorldToCanvas(Camera.main, from, UIManager.Instance.CanvasRect);
@@ -635,13 +741,13 @@ public class GameCore : MonoSingleton<GameCore>
             var bomb = ResourceManager.Instance.GetUIVFX(Define.VFX.MERGE_ATTACK_BOMB);
             bomb.transform.position = to;
             bomb.SetActive(true);
-            
+
             GameManager.DelayInvoke(() =>
             {
                 ResourceManager.Instance.RestoreUIVFX(vfx);
                 ResourceManager.Instance.RestoreUIVFX(bomb);
-            },3f);
-            
+            }, 3f);
+
             onFinish?.Invoke();
         }));
     }

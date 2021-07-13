@@ -34,6 +34,8 @@ namespace Define
         public static float BAD_BLOCK_TIMER = 5f;
         
         public static float COMBO_DURATION = 2f;
+
+        public static float GAME_OVER_TIME_OUT = 5f;
     }
 
     public class VFX

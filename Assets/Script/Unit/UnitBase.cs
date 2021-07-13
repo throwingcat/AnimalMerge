@@ -21,13 +21,15 @@ public class UnitBase : MonoBehaviour
     public string GUID;
     public Unit Sheet;
 
+    public bool isDropComplete = false;
+
     public eUnitType eUnitType = eUnitType.None;
     
     public virtual UnitBase OnSpawn(string unit_key)
     {
         Sheet = TableManager.Instance.GetData<Unit>(unit_key);
         GUID = System.Guid.NewGuid().ToString();
-
+        isDropComplete = false;
         if (Rigidbody2D != null)
             Rigidbody2D.gravityScale = 0;
         if (Collider2D != null)
@@ -46,6 +48,8 @@ public class UnitBase : MonoBehaviour
         transform.DOScale(size, 0.5f).SetEase(Ease.OutBack).Play();
 
         eUnitType = eUnitType.Nomral;
+        
+        
         return this;
     }
 
@@ -72,6 +76,8 @@ public class UnitBase : MonoBehaviour
         SetActivePhysics(true);
         
         Rigidbody2D.AddTorque(Random.Range(-0.25f, 0.25f));
+        
+        GameManager.DelayInvoke(() => { isDropComplete = true;},3f);
     }
 
     protected static Sprite GetSprite(string unit_key)
@@ -103,6 +109,5 @@ public class UnitBase : MonoBehaviour
             if (eUnitType == eUnitType.Nomral && target.eUnitType == eUnitType.Nomral)
                 GameCore.Instance.CollisionEnter(this,target);
         }
-        
     }
 }

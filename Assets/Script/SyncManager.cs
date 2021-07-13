@@ -41,6 +41,11 @@ public class SyncManager
         public List<UnitData> UnitsDatas = new List<UnitData>();
         [Key(1)]
         public int BadBlockValue = 0;
+
+        [Key(2)]
+        public bool isGameOver = false;
+        [Key(3)]
+        public DateTime GameOverTime = new DateTime();
     }
 
     [System.Serializable ,MessagePackObject]
@@ -95,6 +100,12 @@ public class SyncManager
 
         packet.BadBlockValue = GameCore.Instance.AttackBadBlockValue;
         GameCore.Instance.AttackBadBlockValue = 0;
+
+        if (GameCore.Instance.isGameOver)
+        {
+            packet.isGameOver = true;
+            packet.GameOverTime = GameCore.Instance.GameOverTime;
+        }
         
         OnSyncCapture?.Invoke(packet);
 
