@@ -16,6 +16,7 @@ public class PopupGameResult : SUIPanel
 
     public void OnClickExit()
     {
+        BackPress();
         GameManager.Instance.ChangeGameState(eGAME_STATE.Lobby);
     }
 }

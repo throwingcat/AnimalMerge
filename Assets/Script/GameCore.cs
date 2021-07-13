@@ -782,6 +782,9 @@ public class GameCore : MonoSingleton<GameCore>
         //변수 초기화
         isGameOver = false;
         isGameFinish = false;
+        UnitsInField.Clear();
+        BadUnits.Clear();
+        _unit = null;
         
         //UI 초기화
         PlayerScreen.SetActive(false);
