@@ -23,6 +23,14 @@ namespace Define
         Bad,
         None,
     }
+
+    public enum eUnitDropState
+    {
+        Ready,
+        Falling,
+        Complete,
+    }
+    
     public class EnvironmentValue
     {
         public static float UNIT_SPAWN_DELAY = 1f;
@@ -38,10 +46,17 @@ namespace Define
         public static float GAME_OVER_TIME_OUT = 5f;
     }
 
-    public class VFX
+    public class Key
     {
-        public const string MERGE_ATTACK_TRAIL = "VFX@AttackTrail";
-        public const string MERGE_ATTACK_BOMB = "VFX@AttackBomb";
+        #region Pool Category
+        public const string IngamePoolCategory = "ingame";
+        public const string UIVFXPoolCategory = "ui_vfx";
+        #endregion
+        
+        #region VFX
+        public const string VFX_MERGE_ATTACK_TRAIL = "VFX@AttackTrail";
+        public const string VFX_MERGE_ATTACK_BOMB = "VFX@AttackBomb";
+        #endregion
     }
 }
 

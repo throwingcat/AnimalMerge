@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Define;
 using UnityEngine;
 using Violet;
 
@@ -11,5 +12,10 @@ public class PopupGameResult : SUIPanel
     {
         Victory.SetActive(isWin);
         Defeat.SetActive(!isWin);
+    }
+
+    public void OnClickExit()
+    {
+        GameManager.Instance.ChangeGameState(eGAME_STATE.Lobby);
     }
 }

@@ -38,7 +38,7 @@ public class EnemyScreen : MonoBehaviour
                     go.transform.LocalReset();
                     go.gameObject.SetActive(false);
                     return go.gameObject;
-                }, 1);
+                }, 1,category:Define.Key.IngamePoolCategory);
             }
 
             var go = pool.Get();

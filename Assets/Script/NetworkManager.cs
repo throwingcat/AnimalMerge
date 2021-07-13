@@ -333,4 +333,29 @@ public class NetworkManager : MonoSingleton<NetworkManager>
     #endregion
 
     #endregion
+    
+    #region 종료
+
+    public void ClearEvent()
+    {
+        Backend.Match.OnJoinMatchMakingServer -= OnJoinMatchMakingServer;
+        Backend.Match.OnMatchMakingRoomCreate -= OnMatchMakingRoomCreate;
+        Backend.Match.OnMatchMakingResponse -= OnMatchMakingResponse;
+        Backend.Match.OnSessionJoinInServer -= OnSessionJoinInServer;
+        Backend.Match.OnSessionListInServer -= OnSessionListInServer;
+    }
+    public void DisconnectMatchServer()
+    {
+        Backend.Match.LeaveMatchMakingServer();
+    }
+    public void DisconnectIngameServer()
+    {
+        Backend.Match.LeaveGameServer();
+    }
+
+    public void DisconnectGameRoom()
+    {
+        Backend.Match.LeaveMatchRoom();
+    }
+    #endregion
 }

@@ -90,7 +90,7 @@ public class PanelIngame : SUIPanel
                 go.gameObject.SetActive(false);
 
                 return go;
-            }, 1, VFXComboParent.gameObject);
+            }, 1, VFXComboParent.gameObject,Define.Key.IngamePoolCategory);
 
         var vfx = pool.Get();
         var vfxCombo = vfx.GetComponent<VFXCombo>();

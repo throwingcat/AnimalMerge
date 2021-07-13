@@ -219,6 +219,15 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator OnLeaveBattle()
     {
+        //게임 오브젝트 삭제
+        GameCore.Instance.Clear();
+        
+        //네트워크 종료
+        NetworkManager.Instance.ClearEvent();
+        NetworkManager.Instance.DisconnectIngameServer();
+        NetworkManager.Instance.DisconnectGameRoom();
+        NetworkManager.Instance.DisconnectMatchServer();
+        
         yield break;
     }
 

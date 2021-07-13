@@ -21,15 +21,14 @@ public class UnitBase : MonoBehaviour
     public string GUID;
     public Unit Sheet;
 
-    public bool isDropComplete = false;
-
     public eUnitType eUnitType = eUnitType.None;
-    
+    public eUnitDropState eUnitDropState = eUnitDropState.Ready;
     public virtual UnitBase OnSpawn(string unit_key)
     {
         Sheet = TableManager.Instance.GetData<Unit>(unit_key);
         GUID = System.Guid.NewGuid().ToString();
-        isDropComplete = false;
+        eUnitDropState = eUnitDropState.Ready;
+        
         if (Rigidbody2D != null)
             Rigidbody2D.gravityScale = 0;
         if (Collider2D != null)
@@ -67,6 +66,7 @@ public class UnitBase : MonoBehaviour
 
     public void Drop()
     {
+        eUnitDropState = eUnitDropState.Falling;
         if (Rigidbody2D != null)
             Rigidbody2D.gravityScale = 1;
 
@@ -77,7 +77,11 @@ public class UnitBase : MonoBehaviour
         
         Rigidbody2D.AddTorque(Random.Range(-0.25f, 0.25f));
         
-        GameManager.DelayInvoke(() => { isDropComplete = true;},3f);
+        GameManager.DelayInvoke(() =>
+        {
+            if (eUnitDropState == eUnitDropState.Falling)
+                eUnitDropState = eUnitDropState.Complete;
+        },2f);
     }
 
     protected static Sprite GetSprite(string unit_key)

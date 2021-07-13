@@ -7,15 +7,14 @@ using DG.Tweening;
 using SheetData;
 using UnityEngine;
 using UnityEngine.U2D;
-using UnityEngine.UI;
 using Violet;
 using Violet.Audio;
 using Random = UnityEngine.Random;
 
 public class GameCore : MonoSingleton<GameCore>
 {
+    public bool isGameFinish;
     public int SpawnLevel = 1;
-    public bool isGameFinish = false;
 
     public void Initialize()
     {
@@ -36,6 +35,8 @@ public class GameCore : MonoSingleton<GameCore>
         Backend.Match.OnMatchRelay += SyncManager.Instance.OnReceiveMatchRelay;
 
         //방해 블록 초기화
+        _badBlockSheet.Clear();
+        
         var table = TableManager.Instance.GetTable<Unit>();
         foreach (var sheet in table)
         {
@@ -126,7 +127,7 @@ public class GameCore : MonoSingleton<GameCore>
                 var go = Instantiate(UnitPrefab, UnitParent);
                 go.gameObject.SetActive(false);
                 return go.gameObject;
-            }, 1, UnitParent.gameObject);
+            }, 1, UnitParent.gameObject , Key.IngamePoolCategory);
 
         var unit = pool.Get();
         unit.transform.SetAsLastSibling();
@@ -216,67 +217,6 @@ public class GameCore : MonoSingleton<GameCore>
         isMergeProcess = false;
     }
 
-
-    #region GameOver
-
-    public GameObject GameOverLine;
-    public float GameoverTimeoutDelta = 0f;
-    public bool isGameOver = false;
-    public DateTime GameOverTime = new DateTime();
-
-    private void GameOverUpdate(float delta)
-    {
-        if (isGameOver) return;
-
-        bool isEnable = false;
-
-        foreach (var unit in BadUnits)
-        {
-            if (unit.isDropComplete == false) continue;
-            if (GameOverLine.transform.position.y <= unit.transform.position.y)
-            {
-                isEnable = true;
-                break;
-            }
-        }
-
-        if (isEnable == false)
-        {
-            foreach (var unit in UnitsInField)
-            {
-                if (unit.isDropComplete == false) continue;
-                if (GameOverLine.transform.position.y <= unit.transform.position.y)
-                {
-                    isEnable = true;
-                    break;
-                }
-            }
-        }
-
-        SetEnableDeadline(isEnable);
-
-        if (GameOverLine.activeSelf)
-        {
-            GameoverTimeoutDelta += delta;
-            if (EnvironmentValue.GAME_OVER_TIME_OUT <= GameoverTimeoutDelta)
-            {
-                isGameOver = true;
-                GameOverTime = DateTime.UtcNow;
-            }
-        }
-    }
-
-    public void SetEnableDeadline(bool isEnable)
-    {
-        if (GameOverLine.activeSelf != isEnable)
-        {
-            GameOverLine.SetActive(isEnable);
-            GameoverTimeoutDelta = 0f;
-        }
-    }
-
-    #endregion
-
     public void CollisionEnter(UnitBase a, UnitBase b)
     {
         if (IgnoreUnitGUID.Contains(a.GUID) ||
@@ -348,7 +288,7 @@ public class GameCore : MonoSingleton<GameCore>
         OnGainScore(gain);
 
         var comboBonus = Combo > 3 ? 18 * Combo : 0;
-        int badBlock = (a.Sheet.score + b.Sheet.score) * Combo + comboBonus;
+        var badBlock = (a.Sheet.score + b.Sheet.score) * Combo + comboBonus;
         //내 방해블록 제거
         if (0 < MyBadBlockValue)
         {
@@ -434,6 +374,91 @@ public class GameCore : MonoSingleton<GameCore>
         PlayerScreen.SetActive(false);
         EnemyScreen.gameObject.SetActive(false);
     }
+
+    #region VFX
+
+    public void PlayMergeAttackVFX(Vector3 from, Vector3 to, float duration, Action onFinish = null)
+    {
+        var vfx = ResourceManager.Instance.GetUIVFX(Key.VFX_MERGE_ATTACK_TRAIL);
+        vfx.transform.position = Utils.WorldToCanvas(Camera.main, from, UIManager.Instance.CanvasRect);
+        vfx.SetActive(true);
+        to.z = from.z;
+        StartCoroutine(PlayBezier(vfx, from, to, duration, () =>
+        {
+            var bomb = ResourceManager.Instance.GetUIVFX(Key.VFX_MERGE_ATTACK_BOMB);
+            bomb.transform.position = to;
+            bomb.SetActive(true);
+
+            GameManager.DelayInvoke(() =>
+            {
+                ResourceManager.Instance.RestoreUIVFX(vfx);
+                ResourceManager.Instance.RestoreUIVFX(bomb);
+            }, 3f);
+
+            onFinish?.Invoke();
+        }));
+    }
+
+    #endregion
+
+
+    #region GameOver
+
+    public GameObject GameOverLine;
+    public float GameoverTimeoutDelta;
+    public bool isGameOver;
+    public DateTime GameOverTime;
+
+    private void GameOverUpdate(float delta)
+    {
+        if (isGameOver) return;
+
+        var isEnable = false;
+
+        foreach (var unit in BadUnits)
+        {
+            if (unit.eUnitDropState != eUnitDropState.Complete) continue;
+            if (GameOverLine.transform.position.y <= unit.transform.position.y)
+            {
+                isEnable = true;
+                break;
+            }
+        }
+
+        if (isEnable == false)
+            foreach (var unit in UnitsInField)
+            {
+                if (unit.eUnitDropState != eUnitDropState.Complete) continue;
+                if (GameOverLine.transform.position.y <= unit.transform.position.y)
+                {
+                    isEnable = true;
+                    break;
+                }
+            }
+
+        SetEnableDeadline(isEnable);
+
+        if (GameOverLine.activeSelf)
+        {
+            GameoverTimeoutDelta += delta;
+            if (EnvironmentValue.GAME_OVER_TIME_OUT <= GameoverTimeoutDelta)
+            {
+                isGameOver = true;
+                GameOverTime = DateTime.UtcNow;
+            }
+        }
+    }
+
+    public void SetEnableDeadline(bool isEnable)
+    {
+        if (GameOverLine.activeSelf != isEnable)
+        {
+            GameOverLine.SetActive(isEnable);
+            GameoverTimeoutDelta = 0f;
+        }
+    }
+
+    #endregion
 
     #region Timer Value
 
@@ -700,21 +725,17 @@ public class GameCore : MonoSingleton<GameCore>
 
     public void OnReceiveGameOver(bool isGameOver, DateTime time)
     {
-        bool isWin = false;
+        var isWin = false;
         //나도 게임오버인 경우
         if (this.isGameOver)
         {
             //상대가 더 늦게 죽음
             if (GameOverTime < time)
-            {
                 //패배
                 isWin = false;
-            }
             else
-            {
                 //승리
                 isWin = true;
-            }
         }
         else
         {
@@ -733,40 +754,14 @@ public class GameCore : MonoSingleton<GameCore>
 
     #endregion
 
-    #region VFX
-
-    public void PlayMergeAttackVFX(Vector3 from, Vector3 to, float duration, System.Action onFinish = null)
-    {
-        var vfx = ResourceManager.Instance.GetUIVFX(Define.VFX.MERGE_ATTACK_TRAIL);
-        vfx.transform.position = Utils.WorldToCanvas(Camera.main, from, UIManager.Instance.CanvasRect);
-        vfx.SetActive(true);
-        to.z = from.z;
-        StartCoroutine(PlayBezier(vfx, from, to, duration, () =>
-        {
-            var bomb = ResourceManager.Instance.GetUIVFX(Define.VFX.MERGE_ATTACK_BOMB);
-            bomb.transform.position = to;
-            bomb.SetActive(true);
-
-            GameManager.DelayInvoke(() =>
-            {
-                ResourceManager.Instance.RestoreUIVFX(vfx);
-                ResourceManager.Instance.RestoreUIVFX(bomb);
-            }, 3f);
-
-            onFinish?.Invoke();
-        }));
-    }
-
-    #endregion
-
     #region Utility
 
-    public IEnumerator PlayBezier(GameObject go, Vector3 from, Vector3 to, float duration, System.Action onFinish)
+    public IEnumerator PlayBezier(GameObject go, Vector3 from, Vector3 to, float duration, Action onFinish)
     {
-        float delta = 0f;
+        var delta = 0f;
         while (delta < duration)
         {
-            float t = delta / duration;
+            var t = delta / duration;
             var st = (from - to).normalized;
             var et = (to - from).normalized;
             go.transform.position = BezierUtility.BezierPoint(from, st, et, to, t);
@@ -776,6 +771,30 @@ public class GameCore : MonoSingleton<GameCore>
         }
 
         onFinish?.Invoke();
+    }
+
+    public void Clear()
+    {
+        //전투 풀 모두 삭제
+        GameObjectPool.DestroyPools(Key.IngamePoolCategory);
+        GameObjectPool.DestroyPools(Key.UIVFXPoolCategory);
+        
+        //변수 초기화
+        isGameOver = false;
+        isGameFinish = false;
+        
+        //UI 초기화
+        PlayerScreen.SetActive(false);
+        EnemyScreen.gameObject.SetActive(false);
+        SetEnableDeadline(false);
+
+        //이벤트 초기화
+        SyncManager.Instance.OnSyncCapture = null;
+        SyncManager.Instance.OnSyncReceive = null;
+        Backend.Match.OnMatchRelay -= SyncManager.Instance.OnReceiveMatchRelay;
+        
+        //오디오 종료
+        AudioManager.Instance.StopBGM();
     }
 
     #endregion
