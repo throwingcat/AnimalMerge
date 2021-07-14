@@ -58,7 +58,7 @@ SpriteAtlas:
     - {fileID: 102900000, guid: c7b50fe91a6b74b4bb2934041f78addd, type: 3}
     - {fileID: 102900000, guid: 0dcf213ce157a314080be094c25a343a, type: 3}
     - {fileID: 102900000, guid: faf346794701d2946b6c2c15ba0b2997, type: 3}
-    totalSpriteSurfaceArea: 1651939
+    totalSpriteSurfaceArea: 1674439
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -82,6 +82,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 9c0a1ae4a7a69354fba2dde8c530744b, type: 3}
   - {fileID: 21300000, guid: c50bc2f418ad4d046a1a7c25b34d1e79, type: 3}
   - {fileID: 21300000, guid: 4d4dfb555bc8936478b3d98033075ab8, type: 3}
+  - {fileID: 21300000, guid: eb44ee75ec9305a49a6716afa5305860, type: 3}
   - {fileID: 21300000, guid: 5e798895ee8aa3c49a5c55d7d6dab0ad, type: 3}
   - {fileID: 21300000, guid: 46d2e7f5d7190fc4ab883a401b0f1ddf, type: 3}
   - {fileID: 21300000, guid: 1e918fd6656443545aafd2f608b563ce, type: 3}
@@ -139,6 +140,7 @@ SpriteAtlas:
   - cat_03
   - gauge_exp_fg_2
   - rat_02
+  - slot_item
   - rat_00
   - btn_start_h
   - img_Rank_02
