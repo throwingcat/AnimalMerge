@@ -1519,6 +1519,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGameFinish: 0
+  isPauseBadBlockTimer: 0
+  isPauseGameOverTimer: 0
   SpawnLevel: 1
   GameOverLine: {fileID: 1571814341}
   GameoverTimeoutDelta: 0
@@ -1539,7 +1541,6 @@ MonoBehaviour:
   Combo: 0
   IgnoreUnitGUID: []
   SkillGaugeValue: 0
-  isPauseBadBlockTimer: 0
   SHAKE_FORCE: 100
 --- !u!1 &1010748260
 GameObject:
@@ -2035,7 +2036,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: -953739350185866478, guid: 68d2219e9ce66fb498f48845fb64c418, type: 2}
+  m_Material: {fileID: 4483333270666232514, guid: 151fd29d8b1f45247a8de5dd0556db0e, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -2043,7 +2044,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e1213acfd08570b47922d1f394fa07a6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0a1ced061383529459b32bc79acdc2be, type: 3}
   m_Type: 2
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2074,7 +2075,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Version: 300
-  m_EffectMaterial: {fileID: -953739350185866478, guid: 68d2219e9ce66fb498f48845fb64c418, type: 2}
+  m_EffectMaterial: {fileID: 4483333270666232514, guid: 151fd29d8b1f45247a8de5dd0556db0e, type: 2}
   m_EffectFactor: 1
   m_ColorFactor: 1
   m_BlurFactor: 1
