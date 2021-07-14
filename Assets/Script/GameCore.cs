@@ -385,7 +385,7 @@ public class GameCore : MonoSingleton<GameCore>
 
                     PlayMergeAttackVFX(panelIngame.MyBadBlockVFXPoint.position,
                         panelIngame.EnemyBadBlockVFXPoint.position,
-                        0.3f, () => { });
+                        0.5f, () => { });
                 });
             }
             //내 방해블록만 제거
