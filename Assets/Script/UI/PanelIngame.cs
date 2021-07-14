@@ -28,7 +28,9 @@ public class PanelIngame : SUIPanel
     public Image SkillGauge;
     public Image SkillIcon;
 
-
+    public Image NextBlock;
+    public Image AfterNextBlock;
+    
     public void RefreshScore(int before, int after)
     {
         var score = before;
@@ -126,5 +128,17 @@ public class PanelIngame : SUIPanel
     public void OnClickSkill()
     {
         GameCore.Instance.UseSkill();
+    }
+
+    public void RefreshWaitBlocks(string next, string afterNext)
+    {
+        NextBlock.gameObject.SetActive(false);
+        AfterNextBlock.gameObject.SetActive(false);
+        
+        NextBlock.sprite = next.ToSprite();
+        AfterNextBlock.sprite = afterNext.ToSprite();
+        
+        NextBlock.gameObject.SetActive(true);
+        AfterNextBlock.gameObject.SetActive(true);
     }
 }

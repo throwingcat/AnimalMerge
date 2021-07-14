@@ -17,7 +17,9 @@ public class GameCore : MonoSingleton<GameCore>
     public bool isPauseBadBlockTimer = false;
     public bool isPauseGameOverTimer = false;
     public int SpawnLevel = 1;
-
+    public string PlayerUnitGroup = "Cat";
+    public List<Unit> PlayerUnitGroupList = new List<Unit>();
+    
     public void Initialize()
     {
         isGameOver = false;
@@ -29,6 +31,8 @@ public class GameCore : MonoSingleton<GameCore>
         MyBadBlockValue = 0;
         Score = 0;
         SkillGaugeValue = 0;
+        SpawnLevel = 1;
+        NextUnitList.Clear();
         
         SyncManager.Instance.OnSyncCapture = OnCaptureSyncPacket;
         SyncManager.Instance.OnSyncReceive = OnReceiveSyncPacket;
@@ -58,6 +62,27 @@ public class GameCore : MonoSingleton<GameCore>
             if (b.score < a.score) return -1;
             return 0;
         });
+        
+        //플레이어가 선택한 유닛 그룹 초기화
+        PlayerUnitGroupList.Clear();
+        var unitTable = TableManager.Instance.GetTable<Unit>();
+        foreach (var sheet in unitTable)
+        {
+            var unit = sheet.Value as Unit;
+            if (unit.group.Equals(PlayerUnitGroup))
+                PlayerUnitGroupList.Add(unit);
+        }
+        PlayerUnitGroupList.Sort((a,b) =>
+        {
+            if (a.index < b.index) return -1;
+            if (a.index > b.index) return 1;
+            return 0;
+        });
+        
+        //유닛 큐 초기화
+        NextUnitList.Add(PlayerUnitGroupList[0]);
+        NextUnitList.Add(PlayerUnitGroupList[0]);
+        
         MAX_BADBLOCK_VALUE = _badBlockSheet[0].score * 5;
 
         panelIngame = UIManager.Instance.Show<PanelIngame>();
@@ -111,8 +136,14 @@ public class GameCore : MonoSingleton<GameCore>
 
     private UnitBase SpawnUnit(string key = "")
     {
+        //key가 없는 경우는 기본 생성 로직 
         if (key.IsNullOrEmpty())
         {
+            //다음 유닛 리스트에서 하나 빼옴
+            key = NextUnitList[0].key;
+            NextUnitList.RemoveAt(0);
+            
+            //유닛 리스트에 새로운 유닛 추가
             var pick = 0;
             switch (SpawnLevel)
             {
@@ -120,19 +151,21 @@ public class GameCore : MonoSingleton<GameCore>
                     pick = 1;
                     break;
                 case 2:
-                    pick = Utils.RandomPick(new List<double> {50, 50}) + 1;
+                    pick = Utils.RandomPick(new List<double> {70, 30});
                     break;
                 case 3:
-                    pick = Utils.RandomPick(new List<double> {34, 33, 33}) + 1;
+                    pick = Utils.RandomPick(new List<double> {50, 30, 20});
                     break;
                 default:
                     pick = 1;
                     break;
             }
-
-            key = string.Format("cat{0}", Random.Range(1, pick));
+            NextUnitList.Add(PlayerUnitGroupList[pick]);
+            
+            //유닛 대기열 UI 갱신
+            panelIngame.RefreshWaitBlocks(NextUnitList[0].face_texture,NextUnitList[1].face_texture);
         }
-
+        
         var pool = GameObjectPool.GetPool(key);
         if (pool == null)
             pool = GameObjectPool.CreatePool(key, () =>
@@ -517,7 +550,7 @@ public class GameCore : MonoSingleton<GameCore>
     public List<UnitBase> UnitsInField = new List<UnitBase>();
     public List<UnitBase> BadUnits = new List<UnitBase>();
     public Vector3 UnitSpawnPosition;
-
+    public List<Unit> NextUnitList = new List<Unit>();
     #endregion
 
     #region Player Data

@@ -70,6 +70,7 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\Packer.cs" />
      <Compile Include="Assets\Script\SyncManager.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Audio\AudioItem.cs" />
+     <Compile Include="Assets\Script\UI\PopupGameResult.cs" />
      <Compile Include="Assets\Script\EnemyScreen.cs" />
      <Compile Include="Assets\Script\UI\PanelIngame.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIHsvModifier.cs" />
@@ -156,7 +157,6 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIFlip.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPanelInfo.cs" />
      <Compile Include="Assets\Script\UI\PanelLobby.cs" />
-     <Compile Include="Assets\Script\UI\PopupGameResult.cs" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\SoftMask.cginc" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Dissolve.shader" />
@@ -886,13 +886,13 @@
       <Project>{1067a6a7-68bf-a9f5-6bf9-3f3c41685e3b}</Project>
       <Name>LunarConsole</Name>
     </ProjectReference>
-    <ProjectReference Include="MessagePack.Annotations.csproj">
-      <Project>{0c84f949-ed2f-f0f9-fbea-2ff681d75e71}</Project>
-      <Name>MessagePack.Annotations</Name>
-    </ProjectReference>
     <ProjectReference Include="Coffee.UIParticle.csproj">
       <Project>{b0a15342-0b73-2d37-3664-eba9146d83c4}</Project>
       <Name>Coffee.UIParticle</Name>
+    </ProjectReference>
+    <ProjectReference Include="MessagePack.Annotations.csproj">
+      <Project>{0c84f949-ed2f-f0f9-fbea-2ff681d75e71}</Project>
+      <Name>MessagePack.Annotations</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

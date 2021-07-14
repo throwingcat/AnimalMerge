@@ -52,9 +52,9 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Scripts\Editor\UIParticleMenu.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Scripts\Editor\AnimatedPropertiesEditor.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Scripts\Editor\UIParticleEditor.cs" />
+     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Scripts\Editor\UIParticleMenu.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Scripts\Editor\ImportSampleMenu.cs" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Scripts\Editor\Coffee.UIParticle.Editor.asmdef" />
  <Reference Include="UnityEngine">

@@ -1519,7 +1519,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGameFinish: 0
+  isPauseBadBlockTimer: 0
+  isPauseGameOverTimer: 0
   SpawnLevel: 1
+  PlayerUnitGroup: Cat
   GameOverLine: {fileID: 1571814341}
   GameoverTimeoutDelta: 0
   isGameOver: 0
@@ -1539,8 +1542,7 @@ MonoBehaviour:
   Combo: 0
   IgnoreUnitGUID: []
   SkillGaugeValue: 0
-  isPauseBadBlockTimer: 0
-  SHAKE_FORCE: 100
+  SHAKE_FORCE: 200
 --- !u!1 &1010748260
 GameObject:
   m_ObjectHideFlags: 0

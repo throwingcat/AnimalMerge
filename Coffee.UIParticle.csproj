@@ -52,14 +52,14 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Scripts\UIParticle.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Scripts\MeshHelper.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Scripts\ModifiedMaterial.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Scripts\BakingCamera.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Scripts\UIParticleUpdater.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Scripts\CombineInstanceEx.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Scripts\AnimatableProperty.cs" />
+     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Scripts\UIParticle.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Scripts\Utils.cs" />
+     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Scripts\BakingCamera.cs" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Scripts\Coffee.UIParticle.asmdef" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
