@@ -14,6 +14,8 @@ using Random = UnityEngine.Random;
 public class GameCore : MonoSingleton<GameCore>
 {
     public bool isGameFinish;
+    public bool isPauseBadBlockTimer = false;
+    public bool isPauseGameOverTimer = false;
     public int SpawnLevel = 1;
 
     public void Initialize()
@@ -435,7 +437,8 @@ public class GameCore : MonoSingleton<GameCore>
     private void GameOverUpdate(float delta)
     {
         if (isGameOver) return;
-
+        if (isPauseGameOverTimer) return;
+        
         var isEnable = false;
 
         foreach (var unit in BadUnits)
@@ -555,7 +558,7 @@ public class GameCore : MonoSingleton<GameCore>
 
     private readonly List<List<Vector3>> Floors = new List<List<Vector3>>();
 
-    public bool isPauseBadBlockTimer = false;
+    
     private void BadBlockUpdate(float delta)
     {
         if (isPauseBadBlockTimer) return;
@@ -841,6 +844,8 @@ public class GameCore : MonoSingleton<GameCore>
     {
         //방해블록 타이머 퍼지
         isPauseBadBlockTimer = true;
+        //게임오버 타이머 퍼지
+        isPauseGameOverTimer = true;
         // //모든 방해블록 삭제
         // for (int i = 0; i < BadUnits.Count; i++)
         // {
@@ -865,6 +870,7 @@ public class GameCore : MonoSingleton<GameCore>
         }
 
         isPauseBadBlockTimer = false;
+        isPauseGameOverTimer = false;
         
         yield break;
     }
