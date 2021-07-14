@@ -24,6 +24,10 @@ public class PanelIngame : SUIPanel
     public Transform MyBadBlockVFXPoint;
     public Transform EnemyBadBlockVFXPoint;
 
+    public GameObject SkillRoot;
+    public Image SkillGauge;
+    public Image SkillIcon;
+
 
     public void RefreshScore(int before, int after)
     {
@@ -109,6 +113,18 @@ public class PanelIngame : SUIPanel
     public void UpdateBadBlockTimer(float remain, float max)
     {
         BadBlockTimer.fillAmount = remain / max;
-        BadBlockTimerText.text = ((int) remain).ToString();
+        BadBlockTimerText.text = ((int) remain + 1).ToString();
+    }
+
+    public void RefreshSkillGauge(float t)
+    {
+        SkillGauge.fillAmount = t;
+        SkillIcon.color =
+            t <= 1f ? Color.gray : Color.white;
+    }
+
+    public void OnClickSkill()
+    {
+        GameCore.Instance.UseSkill();
     }
 }

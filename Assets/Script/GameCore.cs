@@ -23,7 +23,11 @@ public class GameCore : MonoSingleton<GameCore>
         PlayerScreen.SetActive(true);
         EnemyScreen.gameObject.SetActive(true);
         SetEnableDeadline(false);
-
+        AttackBadBlockValue = 0;
+        MyBadBlockValue = 0;
+        Score = 0;
+        SkillGaugeValue = 0;
+        
         SyncManager.Instance.OnSyncCapture = OnCaptureSyncPacket;
         SyncManager.Instance.OnSyncReceive = OnReceiveSyncPacket;
 
@@ -56,6 +60,8 @@ public class GameCore : MonoSingleton<GameCore>
 
         panelIngame = UIManager.Instance.Show<PanelIngame>();
         panelIngame.RefreshScore(0, 0);
+        panelIngame.RefreshSkillGauge(0f);
+        RefreshBadBlockUI();
     }
 
     public void OnUpdate(float delta)
@@ -69,6 +75,11 @@ public class GameCore : MonoSingleton<GameCore>
 
             if (Input.GetKeyDown(KeyCode.Space))
                 OnReceiveBadBlock(10);
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                ChargeSkillGauge(SKILL_CHARGE_VALUE);
+                UseSkill();
+            }
 
             InputUpdate();
 
@@ -287,8 +298,41 @@ public class GameCore : MonoSingleton<GameCore>
         var gain = (a.Sheet.score + b.Sheet.score) * 10 * Combo;
         OnGainScore(gain);
 
+        //획득 스코어만큼 스킬게이지 충전
+        ChargeSkillGauge(gain);
+        
+        //주변 방해블록 삭제
+        var remove_bad_units = new List<UnitBase>();
+
+        foreach (var unit in BadUnits)
+        {
+            if (IgnoreUnitGUID.Contains(unit.GUID)) continue;
+
+            if (unit.eUnitType == eUnitType.Bad)
+            {
+                var distance = Vector3.Distance(a.transform.localPosition, unit.transform.localPosition);
+                var r1 = a.transform.localScale.x * 1.8f;
+                var r2 = unit.transform.localScale.x * 1.8f;
+                if (distance <= (r1 + r2))
+                {
+                    IgnoreUnitGUID.Add(unit.GUID);
+                    remove_bad_units.Add(unit);
+                }
+            }
+        }
+
+        for (var i = 0; i < remove_bad_units.Count; i++)
+        {
+            IgnoreUnitGUID.Remove(remove_bad_units[i].GUID);
+            RemoveUnit(remove_bad_units[i]);
+            remove_bad_units.RemoveAt(i--);
+        }
+
+        int remove_badblock = remove_bad_units.Count;
+        
         var comboBonus = Combo > 3 ? 18 * Combo : 0;
-        var badBlock = (a.Sheet.score + b.Sheet.score) * Combo + comboBonus;
+        var badBlock = (a.Sheet.score + b.Sheet.score) * Combo + comboBonus + (remove_badblock * 2);
+        
         //내 방해블록 제거
         if (0 < MyBadBlockValue)
         {
@@ -323,34 +367,8 @@ public class GameCore : MonoSingleton<GameCore>
             AttackBadBlockValue += badBlock;
         }
 
-
         //방해블록 타이머 1초 감소
         ReduceBadBlockTimer(1f);
-
-        //주변 방해블록 삭제
-        var remove_bad_units = new List<UnitBase>();
-
-        foreach (var unit in BadUnits)
-        {
-            if (IgnoreUnitGUID.Contains(unit.GUID)) continue;
-
-            if (unit.eUnitType == eUnitType.Bad)
-            {
-                var distance = Vector3.Distance(a.transform.localPosition, unit.transform.localPosition);
-                if (distance <= a.transform.localScale.x * 1.26 * 2 + 5)
-                {
-                    IgnoreUnitGUID.Add(unit.GUID);
-                    remove_bad_units.Add(unit);
-                }
-            }
-        }
-
-        for (var i = 0; i < remove_bad_units.Count; i++)
-        {
-            IgnoreUnitGUID.Remove(remove_bad_units[i].GUID);
-            RemoveUnit(remove_bad_units[i]);
-            remove_bad_units.RemoveAt(i--);
-        }
     }
 
     private void OnGainScore(int gain)
@@ -369,6 +387,11 @@ public class GameCore : MonoSingleton<GameCore>
             _comboDelta -= delta;
     }
 
+    private void ChargeSkillGauge(int value)
+    {
+        SkillGaugeValue += value;
+        panelIngame.RefreshSkillGauge( (SkillGaugeValue / (float)SKILL_CHARGE_VALUE));
+    }
     public void OnLeave()
     {
         PlayerScreen.SetActive(false);
@@ -504,7 +527,8 @@ public class GameCore : MonoSingleton<GameCore>
     public int Combo;
     public List<string> IgnoreUnitGUID = new List<string>();
     private readonly List<Unit> _badBlockSheet = new List<Unit>();
-
+    public const int SKILL_CHARGE_VALUE = 3000;
+    public int SkillGaugeValue = 0;
     #endregion
 
     #region BadBlock
@@ -531,8 +555,11 @@ public class GameCore : MonoSingleton<GameCore>
 
     private readonly List<List<Vector3>> Floors = new List<List<Vector3>>();
 
+    public bool isPauseBadBlockTimer = false;
     private void BadBlockUpdate(float delta)
     {
+        if (isPauseBadBlockTimer) return;
+        
         if (0 < MyBadBlockValue)
         {
             panelIngame.SetActiveBadBlockTimer(true);
@@ -615,7 +642,6 @@ public class GameCore : MonoSingleton<GameCore>
     #endregion
 
     #region Input
-
     private bool isPress;
 
     private void InputUpdate()
@@ -666,7 +692,6 @@ public class GameCore : MonoSingleton<GameCore>
             _unitSpawnDelayDelta = EnvironmentValue.UNIT_SPAWN_DELAY;
         }
     }
-
     #endregion
 
     #region Attack
@@ -785,6 +810,8 @@ public class GameCore : MonoSingleton<GameCore>
         UnitsInField.Clear();
         BadUnits.Clear();
         _unit = null;
+        AttackBadBlockValue = 0;
+        MyBadBlockValue = 0;
         
         //UI 초기화
         PlayerScreen.SetActive(false);
@@ -801,4 +828,44 @@ public class GameCore : MonoSingleton<GameCore>
     }
 
     #endregion
+
+    public void UseSkill()
+    {
+        if (SkillGaugeValue < SKILL_CHARGE_VALUE) return;
+        SkillGaugeValue = 0;
+        StartCoroutine(RunSkill_Shake());
+    }
+
+    public float SHAKE_FORCE = 10f;
+    private IEnumerator RunSkill_Shake()
+    {
+        //방해블록 타이머 퍼지
+        isPauseBadBlockTimer = true;
+        // //모든 방해블록 삭제
+        // for (int i = 0; i < BadUnits.Count; i++)
+        // {
+        //     RemoveUnit(BadUnits[i--]);
+        //     yield return null;
+        // }
+        //모든 블록 위로 튕겨냄
+        //모든 방해블록 삭제
+        for (int i = 0; i < BadUnits.Count; i++)
+        {
+            var direction = Vector2.up * SHAKE_FORCE;
+            direction.x = Random.Range(-0.3f, 0.3f);
+            BadUnits[i].Rigidbody2D.velocity = Vector2.zero;
+            BadUnits[i].Rigidbody2D.AddForce(direction);
+        }
+        foreach (var unit in UnitsInField)
+        {
+            var direction = Vector2.up * SHAKE_FORCE;
+            direction.x = Random.Range(-0.3f, 0.3f);
+            unit.Rigidbody2D.velocity = Vector2.zero;
+            unit.Rigidbody2D.AddForce(direction);
+        }
+
+        isPauseBadBlockTimer = false;
+        
+        yield break;
+    }
 }

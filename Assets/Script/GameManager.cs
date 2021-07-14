@@ -31,11 +31,6 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         SceneDirector.OnApplicationInitialize();
-        NavMesh.avoidancePredictionTime = 0.5f;
-    }
-
-    public void Start()
-    {
         StartCoroutine(InitalizeProcess());
     }
 
@@ -82,8 +77,6 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator InitalizeProcess()
     {
-        Screen.SetResolution(1080, 1920, true);
-
         PartSceneChange.OnShow();
 
         ChangeGameState(eGAME_STATE.Intro);
