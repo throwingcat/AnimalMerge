@@ -438,9 +438,12 @@ public class GameCore : MonoSingleton<GameCore>
     public void PlayMergeAttackVFX(Vector3 from, Vector3 to, float duration, Action onFinish = null)
     {
         var vfx = ResourceManager.Instance.GetUIVFX(Key.VFX_MERGE_ATTACK_TRAIL);
-        vfx.transform.position = Utils.WorldToCanvas(Camera.main, from, UIManager.Instance.CanvasRect);
-        vfx.SetActive(true);
-        to.z = from.z;
+        
+        from.z = 1f;
+        to.z = 1f;
+        //vfx.transform.position = Utils.WorldToCanvas(Camera.main, from, UIManager.Instance.CanvasRect);
+        vfx.transform.position = from;
+        
         StartCoroutine(PlayBezier(vfx, from, to, duration, () =>
         {
             var bomb = ResourceManager.Instance.GetUIVFX(Key.VFX_MERGE_ATTACK_BOMB);
@@ -455,6 +458,7 @@ public class GameCore : MonoSingleton<GameCore>
 
             onFinish?.Invoke();
         }));
+        vfx.SetActive(true);
     }
 
     #endregion
@@ -823,8 +827,8 @@ public class GameCore : MonoSingleton<GameCore>
         while (delta < duration)
         {
             var t = delta / duration;
-            var st = (from - to).normalized;
-            var et = (to - from).normalized;
+            var st = (from - to) / 2;
+            var et = (to - from) / 2;
             go.transform.position = BezierUtility.BezierPoint(from, st, et, to, t);
 
             delta += Time.deltaTime;
