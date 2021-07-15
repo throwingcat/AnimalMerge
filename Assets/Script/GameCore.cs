@@ -15,8 +15,6 @@ public class GameCore : MonoSingleton<GameCore>
 {
     public bool isGameFinish;
     public bool isPauseBadBlockTimer = false;
-    public bool isRunningSkill = false;
-    public bool isRunningMerge = false;
 
     public int SpawnLevel = 1;
     public string PlayerUnitGroup = "Cat";
@@ -221,6 +219,8 @@ public class GameCore : MonoSingleton<GameCore>
         var pool = GameObjectPool.GetPool(unit.Sheet.key);
         if (pool != null)
             pool.Restore(unit.gameObject);
+
+        unit.OnRemove();
     }
 
     private void MergeUpdate(float delta)
@@ -481,8 +481,9 @@ public class GameCore : MonoSingleton<GameCore>
     private void GameOverUpdate(float delta)
     {
         if (isGameOver) return;
-        if (isRunningMerge || isRunningSkill) return;
 
+        if (GameManager.ContainsTimer(Key.SIMPLE_TIMER_RUNNING_SKILL)) return;
+        
         var isEnable = false;
 
         foreach (var unit in BadUnits)
@@ -516,6 +517,7 @@ public class GameCore : MonoSingleton<GameCore>
                 isGameOver = true;
                 GameOverTime = DateTime.UtcNow;
             }
+
             PanelIngame.SetGameOverTimer(GameoverTimeoutDelta / EnvironmentValue.GAME_OVER_TIME_OUT);
         }
     }
@@ -592,7 +594,8 @@ public class GameCore : MonoSingleton<GameCore>
     //방해블록 타이머
     private float _badBlockTimerDelta;
 
-    private int _badBlockMaxDropOneTime => EnvironmentValue.BAD_BLOCK_HORIZONTAL_MAX_COUNT * EnvironmentValue.BAD_BLOCK_VERTICAL_MAX_COUNT;
+    private int _badBlockMaxDropOneTime => EnvironmentValue.BAD_BLOCK_HORIZONTAL_MAX_COUNT *
+                                           EnvironmentValue.BAD_BLOCK_VERTICAL_MAX_COUNT;
 
     private readonly List<List<Vector3>> Floors = new List<List<Vector3>>();
 
@@ -654,7 +657,8 @@ public class GameCore : MonoSingleton<GameCore>
                 for (var j = 0; j < EnvironmentValue.BAD_BLOCK_HORIZONTAL_MAX_COUNT; j++)
                 {
                     var start = -(EnvironmentValue.BAD_BLOCK_AREA_WIDTH * 0.5f);
-                    var spacing = EnvironmentValue.BAD_BLOCK_AREA_WIDTH / (EnvironmentValue.BAD_BLOCK_HORIZONTAL_MAX_COUNT - 1);
+                    var spacing = EnvironmentValue.BAD_BLOCK_AREA_WIDTH /
+                                  (EnvironmentValue.BAD_BLOCK_HORIZONTAL_MAX_COUNT - 1);
 
                     Floors[i].Add(new Vector3(
                         start + spacing * j,
@@ -866,6 +870,7 @@ public class GameCore : MonoSingleton<GameCore>
         PlayerScreen.SetActive(false);
         EnemyScreen.gameObject.SetActive(false);
         SetEnableDeadline(false);
+        PanelIngame.Clear();
 
         //이벤트 초기화
         SyncManager.Instance.OnSyncCapture = null;
@@ -887,7 +892,7 @@ public class GameCore : MonoSingleton<GameCore>
 
     private IEnumerator RunSkill_Shake()
     {
-        isRunningSkill = true;
+        GameManager.SimpleTimer(Key.SIMPLE_TIMER_RUNNING_SKILL, 3f);
 
         // //모든 방해블록 삭제
         // for (int i = 0; i < BadUnits.Count; i++)
@@ -911,9 +916,18 @@ public class GameCore : MonoSingleton<GameCore>
             direction.x = Random.Range(-0.3f, 0.3f);
             unit.Rigidbody2D.velocity = Vector2.zero;
             unit.Rigidbody2D.AddForce(direction);
-            unit.Rigidbody2D.AddTorque(Random.Range(-EnvironmentValue.SHAKE_SKILL_TORQUE_POWER,EnvironmentValue.SHAKE_SKILL_TORQUE_POWER));
-        }
 
+            float range = EnvironmentValue.SHAKE_SKILL_TORQUE_MAX_POWER -
+                          EnvironmentValue.SHAKE_SKILL_TORQUE_MIN_POWER;
+            float torque = Random.Range(-range, range);
+            if (torque < 0)
+                torque -= EnvironmentValue.SHAKE_SKILL_TORQUE_MIN_POWER;
+            else
+                torque += EnvironmentValue.SHAKE_SKILL_TORQUE_MIN_POWER;
+
+            unit.Rigidbody2D.AddTorque(torque);
+        }
+        
         yield break;
     }
 }

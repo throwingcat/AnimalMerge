@@ -23,6 +23,7 @@ public class UnitBase : MonoBehaviour
 
     public eUnitType eUnitType = eUnitType.None;
     public eUnitDropState eUnitDropState = eUnitDropState.Ready;
+    private string _dropInvokeGUID = "";
     public virtual UnitBase OnSpawn(string unit_key)
     {
         Sheet = TableManager.Instance.GetData<Unit>(unit_key);
@@ -47,7 +48,6 @@ public class UnitBase : MonoBehaviour
         transform.DOScale(size, 0.5f).SetEase(Ease.OutBack).Play();
 
         eUnitType = eUnitType.Nomral;
-        
         
         return this;
     }
@@ -77,7 +77,7 @@ public class UnitBase : MonoBehaviour
         
         Rigidbody2D.AddTorque(Random.Range(-0.25f, 0.25f));
         
-        GameManager.DelayInvoke(() =>
+        _dropInvokeGUID = GameManager.DelayInvoke(() =>
         {
             if (eUnitDropState == eUnitDropState.Falling)
                 eUnitDropState = eUnitDropState.Complete;
@@ -113,5 +113,10 @@ public class UnitBase : MonoBehaviour
             if (eUnitType == eUnitType.Nomral && target.eUnitType == eUnitType.Nomral)
                 GameCore.Instance.CollisionEnter(this,target);
         }
+    }
+
+    public void OnRemove()
+    {
+        GameManager.DelayInvokeCancel(_dropInvokeGUID);
     }
 }

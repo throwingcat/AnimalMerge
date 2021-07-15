@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
+        //지연 이벤트 호출 업데이트
         for (int i = 0; i < _delayInvokeList.Count; i++)
         {
             _delayInvokeList[i].delta += delta;
@@ -55,6 +56,17 @@ public class GameManager : MonoBehaviour
             {
                 _delayInvokeList[i].action?.Invoke();
                 _delayInvokeList.RemoveAt(i);
+                i--;
+            }
+        }
+        
+        //심플 타이머 업데이트
+        for (int i = 0; i < _simpleTimerList.Count; i++)
+        {
+            _simpleTimerList[i].delta += delta;
+            if (_simpleTimerList[i].t <= _simpleTimerList[i].delta)
+            {
+                _simpleTimerList.RemoveAt(i);
                 i--;
             }
         }
@@ -258,22 +270,81 @@ public class GameManager : MonoBehaviour
 
     private static List<DelayInvokeData> _delayInvokeList = new List<DelayInvokeData>();
 
-    public static void DelayInvoke(Action action, float t)
+    public static string DelayInvoke(Action action, float t)
     {
-        _delayInvokeList.Add(new DelayInvokeData()
+        var invoke = new DelayInvokeData()
         {
+            GUID = Guid.NewGuid().ToString(),
             action = action,
             t = t,
             delta = 0f,
-        });
+        };
+        _delayInvokeList.Add(invoke);
+        
+        return invoke.GUID;
+    }
+
+    public static void DelayInvokeCancel(string guid)
+    {
+        for (int i = 0; i < _delayInvokeList.Count; i++)
+        {
+            if (_delayInvokeList[i].GUID == guid)
+            {
+                _delayInvokeList.RemoveAt(i);
+                break;
+            }
+        }
     }
 
     public class DelayInvokeData
     {
+        public string GUID = "";
         public Action action = null;
         public float t = 0f;
         public float delta = 0f;
     }
 
+    private static List<SimpleTimerData> _simpleTimerList =new List<SimpleTimerData>();
+    public static void SimpleTimer(string key, float t)
+    {
+        if (ContainsTimer(key))
+        {
+            for (int i = 0; i < _simpleTimerList.Count; i++)
+            {
+                if (_simpleTimerList[i].Key == key)
+                {
+                    _simpleTimerList[i].t = t;
+                    _simpleTimerList[i].delta = 0f;
+                    break;
+                }
+            }
+        }
+        else
+        {
+             _simpleTimerList.Add(new SimpleTimerData()
+             {
+                 Key = key,
+                 t = t,
+                 delta = 0f,
+             });
+        }
+    }
+
+    public static bool ContainsTimer(string key)
+    {
+        for (int i = 0; i < _simpleTimerList.Count; i++)
+        {
+            if (_simpleTimerList[i].Key == key)
+                return true;
+        }
+
+        return false;
+    }
+    public class SimpleTimerData
+    {
+        public string Key;
+        public float t = 0f;
+        public float delta = 0f;
+    }
     #endregion
 }

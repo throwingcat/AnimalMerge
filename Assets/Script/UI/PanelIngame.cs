@@ -23,7 +23,6 @@ public class PanelIngame : SUIPanel
 
     public Transform MyBadBlockVFXPoint;
 
-
     public GameObject SkillRoot;
     public Image SkillGauge;
     public Image SkillIcon;
@@ -219,5 +218,11 @@ public class PanelIngame : SUIPanel
     public void SetGameOverTimer(float t)
     {
         GameOverTimerGauge.value = 1f - t;
+    }
+
+    public void Clear()
+    {
+        _badBlocks.Clear();
+        _enemyBadBlocks.Clear();
     }
 }

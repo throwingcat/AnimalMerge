@@ -55,7 +55,8 @@ namespace Define
         #endregion
         #region Skill
         public static float SHAKE_SKILL_FORCE_POWER = 100f;
-        public static float SHAKE_SKILL_TORQUE_POWER = 0.3f;
+        public static float SHAKE_SKILL_TORQUE_MAX_POWER = 2f;
+        public static float SHAKE_SKILL_TORQUE_MIN_POWER = 1f;
         public static int SKILL_CHARGE_MAX_VALUE = 3000;
         #endregion
         
@@ -71,6 +72,12 @@ namespace Define
         #region VFX
         public const string VFX_MERGE_ATTACK_TRAIL = "VFX@AttackTrail";
         public const string VFX_MERGE_ATTACK_BOMB = "VFX@AttackBomb";
+        #endregion
+        
+        #region Simple Timer
+
+        public const string SIMPLE_TIMER_RUNNING_SKILL = "running_skill";
+
         #endregion
     }
 }

@@ -19,9 +19,11 @@ namespace SheetData
                 switch (fieldType)
                 {
                     case "bool":
+                    case "boolean":
                         field.SetValue(null, bool.Parse(value));
                         break;
                     case "int":
+                    case "int32":
                         field.SetValue(null, int.Parse(value));
                         break;
                     case "float":
