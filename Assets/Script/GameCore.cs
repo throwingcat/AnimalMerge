@@ -107,7 +107,7 @@ public class GameCore : MonoSingleton<GameCore>
                 OnReceiveBadBlock(10);
             if (Input.GetKeyDown(KeyCode.A))
             {
-                ChargeSkillGauge(SKILL_CHARGE_VALUE);
+                ChargeSkillGauge(EnvironmentValue.SKILL_CHARGE_MAX_VALUE);
                 UseSkill();
             }
 
@@ -431,7 +431,7 @@ public class GameCore : MonoSingleton<GameCore>
     private void ChargeSkillGauge(int value)
     {
         SkillGaugeValue += value;
-        PanelIngame.RefreshSkillGauge((SkillGaugeValue / (float) SKILL_CHARGE_VALUE));
+        PanelIngame.RefreshSkillGauge((SkillGaugeValue / (float) EnvironmentValue.SKILL_CHARGE_MAX_VALUE));
     }
 
     public void OnLeave()
@@ -583,7 +583,6 @@ public class GameCore : MonoSingleton<GameCore>
     public int Combo;
     public List<string> IgnoreUnitGUID = new List<string>();
     public readonly List<Unit> BadBlockSheet = new List<Unit>();
-    public const int SKILL_CHARGE_VALUE = 3000;
     public int SkillGaugeValue = 0;
 
     #endregion
@@ -593,22 +592,7 @@ public class GameCore : MonoSingleton<GameCore>
     //방해블록 타이머
     private float _badBlockTimerDelta;
 
-    //방해블록 한줄 최대치
-    private const int _badBlockFloorMaxUnit = 6;
-
-    //방해블록 최대 층
-    private const int _badBlockMaxFloor = 4;
-
-    private int _badBlockMaxDropOneTime => _badBlockFloorMaxUnit * _badBlockMaxFloor;
-
-    //방해블록 가로영역 크기
-    private const float _badBlockWidth = 880;
-
-    //Y축 시작 지점
-    private const float _badBlockY = 1050;
-
-    //Y축 증가량
-    private const float _badBlockFloorHeight = 150;
+    private int _badBlockMaxDropOneTime => EnvironmentValue.BAD_BLOCK_HORIZONTAL_MAX_COUNT * EnvironmentValue.BAD_BLOCK_VERTICAL_MAX_COUNT;
 
     private readonly List<List<Vector3>> Floors = new List<List<Vector3>>();
 
@@ -664,17 +648,17 @@ public class GameCore : MonoSingleton<GameCore>
     private void DropBadBlock(int count)
     {
         if (Floors.Count == 0)
-            for (var i = 0; i < _badBlockMaxFloor; i++)
+            for (var i = 0; i < EnvironmentValue.BAD_BLOCK_VERTICAL_MAX_COUNT; i++)
             {
                 Floors.Add(new List<Vector3>());
-                for (var j = 0; j < _badBlockFloorMaxUnit; j++)
+                for (var j = 0; j < EnvironmentValue.BAD_BLOCK_HORIZONTAL_MAX_COUNT; j++)
                 {
-                    var start = -(_badBlockWidth * 0.5f);
-                    var spacing = _badBlockWidth / (_badBlockFloorMaxUnit - 1);
+                    var start = -(EnvironmentValue.BAD_BLOCK_AREA_WIDTH * 0.5f);
+                    var spacing = EnvironmentValue.BAD_BLOCK_AREA_WIDTH / (EnvironmentValue.BAD_BLOCK_HORIZONTAL_MAX_COUNT - 1);
 
                     Floors[i].Add(new Vector3(
                         start + spacing * j,
-                        _badBlockY + _badBlockFloorHeight * i,
+                        EnvironmentValue.BAD_BLOCK_SPAWN_Y + EnvironmentValue.BAD_BLOCK_VERTICAL_OFFSET * i,
                         -1f));
                 }
             }
@@ -686,8 +670,8 @@ public class GameCore : MonoSingleton<GameCore>
         for (var i = 0; i < count; i++)
         {
             var unit = SpawnUnit("bad");
-            var floor = i / _badBlockFloorMaxUnit;
-            var index = i % _badBlockFloorMaxUnit;
+            var floor = i / EnvironmentValue.BAD_BLOCK_HORIZONTAL_MAX_COUNT;
+            var index = i % EnvironmentValue.BAD_BLOCK_HORIZONTAL_MAX_COUNT;
 
             unit.eUnitType = eUnitType.Bad;
             unit.SetPosition(shuffled_floor[floor][index]);
@@ -896,12 +880,10 @@ public class GameCore : MonoSingleton<GameCore>
 
     public void UseSkill()
     {
-        if (SkillGaugeValue < SKILL_CHARGE_VALUE) return;
+        if (SkillGaugeValue < EnvironmentValue.SKILL_CHARGE_MAX_VALUE) return;
         SkillGaugeValue = 0;
         StartCoroutine(RunSkill_Shake());
     }
-
-    public float SHAKE_FORCE = 10f;
 
     private IEnumerator RunSkill_Shake()
     {
@@ -917,7 +899,7 @@ public class GameCore : MonoSingleton<GameCore>
         //모든 방해블록 삭제
         for (int i = 0; i < BadUnits.Count; i++)
         {
-            var direction = Vector2.up * SHAKE_FORCE;
+            var direction = Vector2.up * EnvironmentValue.SHAKE_SKILL_POWER;
             direction.x = Random.Range(-0.3f, 0.3f);
             BadUnits[i].Rigidbody2D.velocity = Vector2.zero;
             BadUnits[i].Rigidbody2D.AddForce(direction);
@@ -925,7 +907,7 @@ public class GameCore : MonoSingleton<GameCore>
 
         foreach (var unit in UnitsInField)
         {
-            var direction = Vector2.up * SHAKE_FORCE;
+            var direction = Vector2.up * EnvironmentValue.SHAKE_SKILL_POWER;
             direction.x = Random.Range(-0.3f, 0.3f);
             unit.Rigidbody2D.velocity = Vector2.zero;
             unit.Rigidbody2D.AddForce(direction);
