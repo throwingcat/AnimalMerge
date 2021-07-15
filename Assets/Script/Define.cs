@@ -53,8 +53,11 @@ namespace Define
         public static float BAD_BLOCK_VERTICAL_OFFSET = 150;
         
         #endregion
-        public static float SHAKE_SKILL_POWER = 100f;
+        #region Skill
+        public static float SHAKE_SKILL_FORCE_POWER = 100f;
+        public static float SHAKE_SKILL_TORQUE_POWER = 0.3f;
         public static int SKILL_CHARGE_MAX_VALUE = 3000;
+        #endregion
         
     }
 

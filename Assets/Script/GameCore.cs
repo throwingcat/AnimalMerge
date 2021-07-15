@@ -899,7 +899,7 @@ public class GameCore : MonoSingleton<GameCore>
         //모든 방해블록 삭제
         for (int i = 0; i < BadUnits.Count; i++)
         {
-            var direction = Vector2.up * EnvironmentValue.SHAKE_SKILL_POWER;
+            var direction = Vector2.up * EnvironmentValue.SHAKE_SKILL_FORCE_POWER;
             direction.x = Random.Range(-0.3f, 0.3f);
             BadUnits[i].Rigidbody2D.velocity = Vector2.zero;
             BadUnits[i].Rigidbody2D.AddForce(direction);
@@ -907,10 +907,11 @@ public class GameCore : MonoSingleton<GameCore>
 
         foreach (var unit in UnitsInField)
         {
-            var direction = Vector2.up * EnvironmentValue.SHAKE_SKILL_POWER;
+            var direction = Vector2.up * EnvironmentValue.SHAKE_SKILL_FORCE_POWER;
             direction.x = Random.Range(-0.3f, 0.3f);
             unit.Rigidbody2D.velocity = Vector2.zero;
             unit.Rigidbody2D.AddForce(direction);
+            unit.Rigidbody2D.AddTorque(Random.Range(-EnvironmentValue.SHAKE_SKILL_TORQUE_POWER,EnvironmentValue.SHAKE_SKILL_TORQUE_POWER));
         }
 
         yield break;
