@@ -15,11 +15,13 @@ public class GameCore : MonoSingleton<GameCore>
 {
     public bool isGameFinish;
     public bool isPauseBadBlockTimer = false;
-    public bool isPauseGameOverTimer = false;
+    public bool isRunningSkill = false;
+    public bool isRunningMerge = false;
+
     public int SpawnLevel = 1;
     public string PlayerUnitGroup = "Cat";
     public List<Unit> PlayerUnitGroupList = new List<Unit>();
-    
+
     public void Initialize()
     {
         isGameOver = false;
@@ -33,7 +35,7 @@ public class GameCore : MonoSingleton<GameCore>
         SkillGaugeValue = 0;
         SpawnLevel = 1;
         NextUnitList.Clear();
-        
+
         SyncManager.Instance.OnSyncCapture = OnCaptureSyncPacket;
         SyncManager.Instance.OnSyncReceive = OnReceiveSyncPacket;
 
@@ -45,24 +47,24 @@ public class GameCore : MonoSingleton<GameCore>
         Backend.Match.OnMatchRelay += SyncManager.Instance.OnReceiveMatchRelay;
 
         //방해 블록 초기화
-        _badBlockSheet.Clear();
-        
+        BadBlockSheet.Clear();
+
         var table = TableManager.Instance.GetTable<Unit>();
         foreach (var sheet in table)
         {
             var unit = sheet.Value as Unit;
             if (unit != null)
                 if (unit.group == "Rat")
-                    _badBlockSheet.Add(unit);
+                    BadBlockSheet.Add(unit);
         }
 
-        _badBlockSheet.Sort((a, b) =>
+        BadBlockSheet.Sort((a, b) =>
         {
             if (a.score < b.score) return 1;
             if (b.score < a.score) return -1;
             return 0;
         });
-        
+
         //플레이어가 선택한 유닛 그룹 초기화
         PlayerUnitGroupList.Clear();
         var unitTable = TableManager.Instance.GetTable<Unit>();
@@ -72,22 +74,23 @@ public class GameCore : MonoSingleton<GameCore>
             if (unit.group.Equals(PlayerUnitGroup))
                 PlayerUnitGroupList.Add(unit);
         }
-        PlayerUnitGroupList.Sort((a,b) =>
+
+        PlayerUnitGroupList.Sort((a, b) =>
         {
             if (a.index < b.index) return -1;
             if (a.index > b.index) return 1;
             return 0;
         });
-        
+
         //유닛 큐 초기화
         NextUnitList.Add(PlayerUnitGroupList[0]);
         NextUnitList.Add(PlayerUnitGroupList[0]);
-        
-        MAX_BADBLOCK_VALUE = _badBlockSheet[0].score * 5;
 
-        panelIngame = UIManager.Instance.Show<PanelIngame>();
-        panelIngame.RefreshScore(0, 0);
-        panelIngame.RefreshSkillGauge(0f);
+        MAX_BADBLOCK_VALUE = BadBlockSheet[0].score * 5;
+
+        PanelIngame = UIManager.Instance.Show<PanelIngame>();
+        PanelIngame.RefreshScore(0, 0);
+        PanelIngame.RefreshSkillGauge(0f);
         RefreshBadBlockUI();
     }
 
@@ -142,7 +145,7 @@ public class GameCore : MonoSingleton<GameCore>
             //다음 유닛 리스트에서 하나 빼옴
             key = NextUnitList[0].key;
             NextUnitList.RemoveAt(0);
-            
+
             //유닛 리스트에 새로운 유닛 추가
             var pick = 0;
             switch (SpawnLevel)
@@ -160,12 +163,13 @@ public class GameCore : MonoSingleton<GameCore>
                     pick = 1;
                     break;
             }
+
             NextUnitList.Add(PlayerUnitGroupList[pick]);
-            
+
             //유닛 대기열 UI 갱신
-            panelIngame.RefreshWaitBlocks(NextUnitList[0].face_texture,NextUnitList[1].face_texture);
+            PanelIngame.RefreshWaitBlocks(NextUnitList[0].face_texture, NextUnitList[1].face_texture);
         }
-        
+
         var pool = GameObjectPool.GetPool(key);
         if (pool == null)
             pool = GameObjectPool.CreatePool(key, () =>
@@ -173,7 +177,7 @@ public class GameCore : MonoSingleton<GameCore>
                 var go = Instantiate(UnitPrefab, UnitParent);
                 go.gameObject.SetActive(false);
                 return go.gameObject;
-            }, 1, UnitParent.gameObject , Key.IngamePoolCategory);
+            }, 1, UnitParent.gameObject, Key.IngamePoolCategory);
 
         var unit = pool.Get();
         unit.transform.SetAsLastSibling();
@@ -326,7 +330,7 @@ public class GameCore : MonoSingleton<GameCore>
     private void OnMergeEvent(UnitBase a, UnitBase b, int Combo)
     {
         //콤보 출력
-        panelIngame.PlayCombo(a.transform.position, Combo);
+        PanelIngame.PlayCombo(a.transform.position, Combo);
         _comboDelta = EnvironmentValue.COMBO_DURATION;
 
         //스코어 갱신
@@ -335,7 +339,7 @@ public class GameCore : MonoSingleton<GameCore>
 
         //획득 스코어만큼 스킬게이지 충전
         ChargeSkillGauge(gain);
-        
+
         //주변 방해블록 삭제
         var remove_bad_units = new List<UnitBase>();
 
@@ -364,10 +368,10 @@ public class GameCore : MonoSingleton<GameCore>
         }
 
         int remove_badblock = remove_bad_units.Count;
-        
+
         var comboBonus = Combo > 3 ? 18 * Combo : 0;
         var badBlock = (a.Sheet.score + b.Sheet.score) * Combo + comboBonus + (remove_badblock * 2);
-        
+
         //내 방해블록 제거
         if (0 < MyBadBlockValue)
         {
@@ -378,32 +382,34 @@ public class GameCore : MonoSingleton<GameCore>
             {
                 AttackBadBlockValue = Mathf.Abs(MyBadBlockValue);
 
-                PlayMergeAttackVFX(a.transform.position, panelIngame.MyBadBlockVFXPoint.position, 0.5f, () =>
+                PlayMergeAttackVFX(a.transform.position, PanelIngame.MyBadBlockVFXPoint.position, 0.5f, () =>
                 {
                     //블록 갱신
                     RefreshBadBlockUI();
 
-                    PlayMergeAttackVFX(panelIngame.MyBadBlockVFXPoint.position,
-                        panelIngame.EnemyBadBlockVFXPoint.position,
+                    PlayMergeAttackVFX(PanelIngame.MyBadBlockVFXPoint.position,
+                        PanelIngame.EnemyBadBlockVFXPoint.position,
                         0.5f, () => { });
                 });
             }
             //내 방해블록만 제거
             else
             {
-                PlayMergeAttackVFX(a.transform.position, panelIngame.MyBadBlockVFXPoint.position, 0.5f,
+                PlayMergeAttackVFX(a.transform.position, PanelIngame.MyBadBlockVFXPoint.position, 0.5f,
                     () => { RefreshBadBlockUI(); });
             }
         }
         //상대방에게 공격
         else
         {
-            PlayMergeAttackVFX(a.transform.position, panelIngame.EnemyBadBlockVFXPoint.position, 0.5f, () => { });
+            PlayMergeAttackVFX(a.transform.position, PanelIngame.EnemyBadBlockVFXPoint.position, 0.5f, () => { });
             AttackBadBlockValue += badBlock;
         }
 
         //방해블록 타이머 1초 감소
         ReduceBadBlockTimer(1f);
+        //게임오버 타이머 1초 감소
+        ReduceGameOverTimer(1f);
     }
 
     private void OnGainScore(int gain)
@@ -411,7 +417,7 @@ public class GameCore : MonoSingleton<GameCore>
         var before = Score;
         Score += gain;
 
-        panelIngame.RefreshScore(before, Score);
+        PanelIngame.RefreshScore(before, Score);
     }
 
     private void ComboUpdate(float delta)
@@ -425,8 +431,9 @@ public class GameCore : MonoSingleton<GameCore>
     private void ChargeSkillGauge(int value)
     {
         SkillGaugeValue += value;
-        panelIngame.RefreshSkillGauge( (SkillGaugeValue / (float)SKILL_CHARGE_VALUE));
+        PanelIngame.RefreshSkillGauge((SkillGaugeValue / (float) SKILL_CHARGE_VALUE));
     }
+
     public void OnLeave()
     {
         PlayerScreen.SetActive(false);
@@ -438,12 +445,12 @@ public class GameCore : MonoSingleton<GameCore>
     public void PlayMergeAttackVFX(Vector3 from, Vector3 to, float duration, Action onFinish = null)
     {
         var vfx = ResourceManager.Instance.GetUIVFX(Key.VFX_MERGE_ATTACK_TRAIL);
-        
+
         from.z = 1f;
         to.z = 1f;
         //vfx.transform.position = Utils.WorldToCanvas(Camera.main, from, UIManager.Instance.CanvasRect);
         vfx.transform.position = from;
-        
+
         StartCoroutine(PlayBezier(vfx, from, to, duration, () =>
         {
             var bomb = ResourceManager.Instance.GetUIVFX(Key.VFX_MERGE_ATTACK_BOMB);
@@ -474,8 +481,8 @@ public class GameCore : MonoSingleton<GameCore>
     private void GameOverUpdate(float delta)
     {
         if (isGameOver) return;
-        if (isPauseGameOverTimer) return;
-        
+        if (isRunningMerge || isRunningSkill) return;
+
         var isEnable = false;
 
         foreach (var unit in BadUnits)
@@ -500,7 +507,7 @@ public class GameCore : MonoSingleton<GameCore>
             }
 
         SetEnableDeadline(isEnable);
-
+        PanelIngame.SetActiveGameOverTimer(isEnable);
         if (GameOverLine.activeSelf)
         {
             GameoverTimeoutDelta += delta;
@@ -509,6 +516,7 @@ public class GameCore : MonoSingleton<GameCore>
                 isGameOver = true;
                 GameOverTime = DateTime.UtcNow;
             }
+            PanelIngame.SetGameOverTimer(GameoverTimeoutDelta / EnvironmentValue.GAME_OVER_TIME_OUT);
         }
     }
 
@@ -519,6 +527,13 @@ public class GameCore : MonoSingleton<GameCore>
             GameOverLine.SetActive(isEnable);
             GameoverTimeoutDelta = 0f;
         }
+    }
+
+    private void ReduceGameOverTimer(float delta)
+    {
+        GameoverTimeoutDelta -= delta;
+        if (GameoverTimeoutDelta <= 0f)
+            GameoverTimeoutDelta = 0f;
     }
 
     #endregion
@@ -542,7 +557,7 @@ public class GameCore : MonoSingleton<GameCore>
     #region UI
 
     public Canvas Canvas;
-    private PanelIngame panelIngame;
+    public PanelIngame PanelIngame;
 
     #endregion
 
@@ -555,6 +570,7 @@ public class GameCore : MonoSingleton<GameCore>
     public List<UnitBase> BadUnits = new List<UnitBase>();
     public Vector3 UnitSpawnPosition;
     public List<Unit> NextUnitList = new List<Unit>();
+
     #endregion
 
     #region Player Data
@@ -566,9 +582,10 @@ public class GameCore : MonoSingleton<GameCore>
     public bool isMergeProcess;
     public int Combo;
     public List<string> IgnoreUnitGUID = new List<string>();
-    private readonly List<Unit> _badBlockSheet = new List<Unit>();
+    public readonly List<Unit> BadBlockSheet = new List<Unit>();
     public const int SKILL_CHARGE_VALUE = 3000;
     public int SkillGaugeValue = 0;
+
     #endregion
 
     #region BadBlock
@@ -595,18 +612,18 @@ public class GameCore : MonoSingleton<GameCore>
 
     private readonly List<List<Vector3>> Floors = new List<List<Vector3>>();
 
-    
+
     private void BadBlockUpdate(float delta)
     {
         if (isPauseBadBlockTimer) return;
-        
+
         if (0 < MyBadBlockValue)
         {
-            panelIngame.SetActiveBadBlockTimer(true);
+            PanelIngame.SetActiveBadBlockTimer(true);
 
             _badBlockTimerDelta += delta;
 
-            panelIngame.UpdateBadBlockTimer(
+            PanelIngame.UpdateBadBlockTimer(
                 EnvironmentValue.BAD_BLOCK_TIMER - _badBlockTimerDelta,
                 EnvironmentValue.BAD_BLOCK_TIMER);
 
@@ -633,7 +650,7 @@ public class GameCore : MonoSingleton<GameCore>
         }
         else
         {
-            panelIngame.SetActiveBadBlockTimer(false);
+            PanelIngame.SetActiveBadBlockTimer(false);
         }
     }
 
@@ -682,6 +699,7 @@ public class GameCore : MonoSingleton<GameCore>
     #endregion
 
     #region Input
+
     private bool isPress;
 
     private void InputUpdate()
@@ -732,6 +750,7 @@ public class GameCore : MonoSingleton<GameCore>
             _unitSpawnDelayDelta = EnvironmentValue.UNIT_SPAWN_DELAY;
         }
     }
+
     #endregion
 
     #region Attack
@@ -749,7 +768,7 @@ public class GameCore : MonoSingleton<GameCore>
         var blocks = new List<Unit>();
 
         var current = MyBadBlockValue;
-        foreach (var bad in _badBlockSheet)
+        foreach (var bad in BadBlockSheet)
         {
             var count = current / bad.score;
 
@@ -760,7 +779,10 @@ public class GameCore : MonoSingleton<GameCore>
             current = current % bad.score;
         }
 
-        panelIngame.RefreshBadBlock(blocks);
+        PanelIngame.RefreshBadBlock(blocks);
+
+        if (GameManager.Instance.isSinglePlay)
+            PanelIngame.RefreshEnemyBadBlock(MyBadBlockValue);
     }
 
     #endregion
@@ -775,7 +797,10 @@ public class GameCore : MonoSingleton<GameCore>
     {
         RefreshEnemy(packet);
 
-        OnReceiveBadBlock(packet.BadBlockValue);
+        OnReceiveBadBlock(packet.AttackDamage);
+
+        if (PanelIngame != null)
+            PanelIngame.RefreshEnemyBadBlock(packet.StackDamage);
 
         if (packet.isGameOver && isGameFinish == false)
             OnReceiveGameOver(packet.isGameOver, packet.GameOverTime);
@@ -843,7 +868,7 @@ public class GameCore : MonoSingleton<GameCore>
         //전투 풀 모두 삭제
         GameObjectPool.DestroyPools(Key.IngamePoolCategory);
         GameObjectPool.DestroyPools(Key.UIVFXPoolCategory);
-        
+
         //변수 초기화
         isGameOver = false;
         isGameFinish = false;
@@ -852,7 +877,7 @@ public class GameCore : MonoSingleton<GameCore>
         _unit = null;
         AttackBadBlockValue = 0;
         MyBadBlockValue = 0;
-        
+
         //UI 초기화
         PlayerScreen.SetActive(false);
         EnemyScreen.gameObject.SetActive(false);
@@ -862,7 +887,7 @@ public class GameCore : MonoSingleton<GameCore>
         SyncManager.Instance.OnSyncCapture = null;
         SyncManager.Instance.OnSyncReceive = null;
         Backend.Match.OnMatchRelay -= SyncManager.Instance.OnReceiveMatchRelay;
-        
+
         //오디오 종료
         AudioManager.Instance.StopBGM();
     }
@@ -877,12 +902,11 @@ public class GameCore : MonoSingleton<GameCore>
     }
 
     public float SHAKE_FORCE = 10f;
+
     private IEnumerator RunSkill_Shake()
     {
-        //방해블록 타이머 퍼지
-        isPauseBadBlockTimer = true;
-        //게임오버 타이머 퍼지
-        isPauseGameOverTimer = true;
+        isRunningSkill = true;
+
         // //모든 방해블록 삭제
         // for (int i = 0; i < BadUnits.Count; i++)
         // {
@@ -898,6 +922,7 @@ public class GameCore : MonoSingleton<GameCore>
             BadUnits[i].Rigidbody2D.velocity = Vector2.zero;
             BadUnits[i].Rigidbody2D.AddForce(direction);
         }
+
         foreach (var unit in UnitsInField)
         {
             var direction = Vector2.up * SHAKE_FORCE;
@@ -906,9 +931,6 @@ public class GameCore : MonoSingleton<GameCore>
             unit.Rigidbody2D.AddForce(direction);
         }
 
-        isPauseBadBlockTimer = false;
-        isPauseGameOverTimer = false;
-        
         yield break;
     }
 }

@@ -10,8 +10,9 @@ public class EnemyScreen : MonoBehaviour
     [SerializeField]private RenderTexture _renderTexture;
     [SerializeField]private SyncUnitBase _syncUnitPrefab;
     [SerializeField]private Transform _unitParent;
+    
     private List<UnitBase> _units = new List<UnitBase>();
-
+    
     public void Refresh(SyncManager.SyncPacket packet)
     {
         //Restore
@@ -53,7 +54,7 @@ public class EnemyScreen : MonoBehaviour
             _units.Add(unitBase);
         }
     }
-
+    
     public RenderTexture Capture()
     {
         return _renderTexture;
