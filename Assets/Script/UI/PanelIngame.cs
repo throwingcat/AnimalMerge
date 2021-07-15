@@ -22,7 +22,7 @@ public class PanelIngame : SUIPanel
     public GameObject VFXComboPrefab;
 
     public Transform MyBadBlockVFXPoint;
-    public Transform EnemyBadBlockVFXPoint;
+
 
     public GameObject SkillRoot;
     public Image SkillGauge;
@@ -30,7 +30,17 @@ public class PanelIngame : SUIPanel
 
     public Image NextBlock;
     public Image AfterNextBlock;
-    
+
+    public Slider GameOverTimerGauge;
+
+    #region Enemy Screen
+
+    private readonly List<IngameBadBlock> _enemyBadBlocks = new List<IngameBadBlock>();
+    public Transform EnemyBadBlockParent;
+    public Transform EnemyBadBlockVFXPoint;
+
+    #endregion
+
     public void RefreshScore(int before, int after)
     {
         var score = before;
@@ -54,7 +64,7 @@ public class PanelIngame : SUIPanel
                 go.gameObject.SetActive(false);
 
                 return go;
-            }, 1, BadBlockParent.gameObject);
+            }, 1, BadBlockParent.gameObject, Define.Key.IngamePoolCategory);
 
         //이전에 사용한 블록 반납
         foreach (var block in _badBlocks)
@@ -63,8 +73,8 @@ public class PanelIngame : SUIPanel
 
         blocks.Sort((a, b) =>
         {
-            if (a.score < b.score) return -1;
-            if (b.score < a.score) return 1;
+            if (a.score < b.score) return 1;
+            if (b.score < a.score) return -1;
             return 0;
         });
 
@@ -73,12 +83,70 @@ public class PanelIngame : SUIPanel
             var b = pool.Get();
             b.SetActive(true);
             b.transform.LocalReset();
-            b.transform.SetAsLastSibling();
+            b.transform.SetAsFirstSibling();
 
             var component = b.GetComponent<IngameBadBlock>();
             component.Set(block);
 
             _badBlocks.Add(component);
+            if (6 <= _badBlocks.Count) break;
+        }
+    }
+
+    public void RefreshEnemyBadBlock(int damage)
+    {
+        var blocks = new List<Unit>();
+
+        var current = damage;
+        foreach (var bad in GameCore.Instance.BadBlockSheet)
+        {
+            var count = current / bad.score;
+
+            if (0 < count)
+                for (var i = 0; i < count; i++)
+                    blocks.Add(bad);
+
+            current = current % bad.score;
+        }
+
+        var key = "EnemyBadBlockPool";
+        var pool = GameObjectPool.GetPool(key);
+        if (pool == null)
+            pool = GameObjectPool.CreatePool(key, () =>
+            {
+                var go = Instantiate(BadBlockPrefab);
+                go.transform.SetParent(EnemyBadBlockParent);
+                go.transform.LocalReset();
+                go.gameObject.SetActive(false);
+
+                return go;
+            }, 1, EnemyBadBlockParent.gameObject, Define.Key.IngamePoolCategory);
+
+        //이전에 사용한 블록 반납
+        foreach (var block in _enemyBadBlocks)
+            pool.Restore(block.gameObject);
+        _enemyBadBlocks.Clear();
+
+
+        blocks.Sort((a, b) =>
+        {
+            if (a.score < b.score) return 1;
+            if (b.score < a.score) return -1;
+            return 0;
+        });
+
+        foreach (var block in blocks)
+        {
+            var b = pool.Get();
+            b.SetActive(true);
+            b.transform.LocalReset();
+            b.transform.SetAsFirstSibling();
+
+            var component = b.GetComponent<IngameBadBlock>();
+            component.Set(block);
+
+            _enemyBadBlocks.Add(component);
+            if (6 <= _enemyBadBlocks.Count) break;
         }
     }
 
@@ -96,7 +164,7 @@ public class PanelIngame : SUIPanel
                 go.gameObject.SetActive(false);
 
                 return go;
-            }, 1, VFXComboParent.gameObject,Define.Key.IngamePoolCategory);
+            }, 1, VFXComboParent.gameObject, Define.Key.IngamePoolCategory);
 
         var vfx = pool.Get();
         var vfxCombo = vfx.GetComponent<VFXCombo>();
@@ -134,11 +202,22 @@ public class PanelIngame : SUIPanel
     {
         NextBlock.gameObject.SetActive(false);
         AfterNextBlock.gameObject.SetActive(false);
-        
+
         NextBlock.sprite = next.ToSprite();
         AfterNextBlock.sprite = afterNext.ToSprite();
-        
+
         NextBlock.gameObject.SetActive(true);
         AfterNextBlock.gameObject.SetActive(true);
+    }
+
+    public void SetActiveGameOverTimer(bool isActive)
+    {
+        if (GameOverTimerGauge.gameObject.activeSelf != isActive)
+            GameOverTimerGauge.gameObject.SetActive(isActive);
+    }
+
+    public void SetGameOverTimer(float t)
+    {
+        GameOverTimerGauge.value = 1f - t;
     }
 }

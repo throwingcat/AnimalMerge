@@ -40,16 +40,18 @@ public class SyncManager
         [Key(0)]
         public List<UnitData> UnitsDatas = new List<UnitData>();
         [Key(1)]
-        public int BadBlockValue = 0;
-
+        public int AttackDamage = 0;
         [Key(2)]
-        public bool isGameOver = false;
+        public int StackDamage = 0;
+        
         [Key(3)]
+        public bool isGameOver = false;
+        [Key(4)]
         public DateTime GameOverTime = new DateTime();
 
-        [Key(4)]
-        public bool isGameFinish = false;
         [Key(5)]
+        public bool isGameFinish = false;
+        [Key(6)]
         public string WinPlayer = "";
     }
 
@@ -103,7 +105,8 @@ public class SyncManager
             packet.UnitsDatas.Add(u);
         }
 
-        packet.BadBlockValue = GameCore.Instance.AttackBadBlockValue;
+        packet.AttackDamage = GameCore.Instance.AttackBadBlockValue;
+        packet.StackDamage = GameCore.Instance.MyBadBlockValue;
         GameCore.Instance.AttackBadBlockValue = 0;
 
         if (GameCore.Instance.isGameOver)
