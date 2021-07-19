@@ -67,7 +67,11 @@ public class PanelIngame : SUIPanel
 
         //이전에 사용한 블록 반납
         foreach (var block in _badBlocks)
-            pool.Restore(block.gameObject);
+        {
+            if(block.gameObject)
+                pool.Restore(block.gameObject);
+        }
+
         _badBlocks.Clear();
 
         blocks.Sort((a, b) =>

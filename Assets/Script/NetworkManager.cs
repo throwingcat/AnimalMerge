@@ -1,13 +1,33 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using BackEnd;
 using BackEnd.Tcp;
+using MessagePack;
+using Packet;
 using UnityEngine;
 using Violet;
 
 public class NetworkManager : MonoSingleton<NetworkManager>
 {
+    public void Update()
+    {
+        //일반 통신 업데이트
+        for (int i = 0; i < _reservedPacket.Count; i++)
+        {
+            SendPacket(_reservedPacket[i]);
+            _reservedPacket.RemoveAt(i--);
+        }
+
+        //매칭 업데이트
+        if (Backend.Match != null)
+        {
+            if (Backend.Match.IsMatchServerConnect())
+                Backend.Match.Poll();
+        }
+    }
+
     #region 로그인
 
     public bool Login()
@@ -28,12 +48,12 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         }
         else
         {
-            Debug.LogFormat("로그인 실패 : {0} / {1}" , bro.GetErrorCode() , bro.GetMessage());
-            
+            Debug.LogFormat("로그인 실패 : {0} / {1}", bro.GetErrorCode(), bro.GetMessage());
+
             //회원가입 진행
             bro = Backend.BMember.CustomSignUp(GameManager.Instance.GUID, "1234");
-            if(bro.IsSuccess() == false)
-                Debug.LogFormat("회원가입 실패 : {0} / {1}" , bro.GetErrorCode() , bro.GetMessage());
+            if (bro.IsSuccess() == false)
+                Debug.LogFormat("회원가입 실패 : {0} / {1}", bro.GetErrorCode(), bro.GetMessage());
             isLoginComplete = false;
         }
 
@@ -82,15 +102,6 @@ public class NetworkManager : MonoSingleton<NetworkManager>
     {
         if (MatchingStep == eMatchingStep.DISCONNECTED)
             StartCoroutine(MatchingProcess());
-    }
-
-    public void Update()
-    {
-        if (Backend.Match != null)
-        {
-            if (Backend.Match.IsMatchServerConnect())
-                Backend.Match.Poll();
-        }
     }
 
     private IEnumerator MatchingProcess()
@@ -333,7 +344,59 @@ public class NetworkManager : MonoSingleton<NetworkManager>
     #endregion
 
     #endregion
+
+    #region 일반
+
+    private List<PacketBase> _reservedPacket = new List<PacketBase>();
+    private Dictionary<string, Action<PacketBase>> _waitingPacket = new Dictionary<string, Action<PacketBase>>();
     
+    public void Request(PacketBase packet, Action<PacketBase> onReceive)
+    {
+        bool isContains = false;
+        foreach (var r in _reservedPacket)
+        {
+            if (r.PacketType == packet.PacketType)
+            {
+                isContains = true;
+                break;
+            }
+        }
+
+        if (isContains)
+            return;
+        string packetGUID = Guid.NewGuid().ToString();
+        
+        packet.hash.Add("player_guid",GameManager.Instance.GUID);
+        packet.hash.Add("packet_guid",packetGUID);
+        
+        //패킷 송신 예약
+        _reservedPacket.Add(packet);
+        
+        //응답 대기열 등록
+        if(_waitingPacket.ContainsKey(packetGUID)==false)
+            _waitingPacket.Add(packetGUID, onReceive);
+    }
+
+    private void SendPacket(PacketBase packet)
+    {
+        //서버로 데이터 송신
+        var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
+        var bytes = MessagePackSerializer.Serialize(packet, lz4Options);
+        
+        AnimalMergeServer.Instance.ReceivePacket(bytes);
+    }
+
+    private void OnReceivePacket(ReceivePacket packet)
+    {
+        if (_waitingPacket.ContainsKey(packet.GUID))
+        {
+            _waitingPacket[packet.GUID]?.Invoke(packet.packet);
+            _waitingPacket.Remove(packet.GUID);
+        }
+    }
+    
+    #endregion
+
     #region 종료
 
     public void ClearEvent()
@@ -344,21 +407,25 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         Backend.Match.OnSessionJoinInServer -= OnSessionJoinInServer;
         Backend.Match.OnSessionListInServer -= OnSessionListInServer;
     }
+
     public void DisconnectMatchServer()
     {
         MatchingStep = eMatchingStep.DISCONNECTED;
         _matchMakingResponseEventArgs = null;
-        Backend.Match.LeaveMatchMakingServer();
-        
+        if (Backend.Match.IsMatchServerConnect())
+            Backend.Match.LeaveMatchMakingServer();
     }
+
     public void DisconnectIngameServer()
     {
-        Backend.Match.LeaveGameServer();
+        if (Backend.Match.IsInGameServerConnect())
+            Backend.Match.LeaveGameServer();
     }
 
     public void DisconnectGameRoom()
     {
         Backend.Match.LeaveMatchRoom();
     }
+
     #endregion
 }

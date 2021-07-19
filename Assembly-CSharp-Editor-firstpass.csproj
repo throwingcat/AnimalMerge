@@ -13,11 +13,11 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{5f280f4f-ded8-c4e3-9383-451a5a520da2}</ProjectGuid>
+    <ProjectGuid>{1193d599-c79a-ee73-ee00-614026603a39}</ProjectGuid>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-CSharp-Editor-firstpass</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -52,139 +52,31 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Submodules\Violet\Violet\Manager\UIManager.cs" />
-     <Compile Include="Assets\Script\UI\VFXCombo.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\DOTweenProShortcuts.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\MonoObjectPool.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\DOTweenTextMeshPro.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\Define.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ShadowStyle.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUICanvasFitter.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\CSVGenerator\CSVGenerator.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\SoftMaskable.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIMultiLoopScroll.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\JoyStick\Script\JoyStick.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UITransitionEffect.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\CSVDataBase.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\MaterialOps.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\Packer.cs" />
-     <Compile Include="Assets\Script\SyncManager.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Audio\AudioItem.cs" />
-     <Compile Include="Assets\Script\UI\PopupGameResult.cs" />
-     <Compile Include="Assets\Script\EnemyScreen.cs" />
-     <Compile Include="Assets\Script\UI\PanelIngame.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIHsvModifier.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\MaterialResolver.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIShiny.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ColorMode.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ToneMode.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIEffect.cs" />
-     <Compile Include="Assets\Script\UI\IngameBadBlock.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIGradient.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\EditorCoroutine\EditorCoroutines.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Manager\MonoBehaviourPool.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\EditorCoroutine\EditorCoroutineExtensions.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIButton.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIFlow.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIFitter.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\SoftMask.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\EffectPlayer.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIFlowText.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Manager\SceneDirector.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIEffectCapturedImage.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Audio\AudioManager.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\ISoftMask.cs" />
-     <Compile Include="Assets\Script\TextPreset.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIScrollSnap.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\MaterialCache.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUISlider.cs" />
-     <Compile Include="Assets\Script\Packet\PlayerInfo.cs" />
-     <Compile Include="Assets\Script\Data\Unit.cs" />
-     <Compile Include="Assets\Script\PartBase.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\StringUtils.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModulePhysics2D.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\DOTweenTk2d.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIDragRect.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Manager\ResourceManager.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUILetterSpacing.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\MUI\MToggle.cs" />
-     <Compile Include="Assets\Script\UI\PopupLogin.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\CSVGenerator\CSVDownloadConfig.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUITouchable.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\EffectArea.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\Singleton.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPressButton.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\ICSVDataBase.cs" />
-     <Compile Include="Assets\Script\NetworkManager.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ParameterTexture.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUILoopScroll.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\UI\PartCurtain.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\MaterialReplacements.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\FXController.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIToggle.cs" />
-     <Compile Include="Assets\Script\Data\EnvironmentValueSheet.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModulePhysics.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPanel.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\SubscribeBase.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\UIEffectBase.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleSprite.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\Utils.cs" />
-     <Compile Include="Assets\Script\Server\AnimalMergeServer.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\MonoObjectPoolManager.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
-     <Compile Include="Assets\Script\Unit\SyncUnitBase.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleUI.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\JoyStick\Script\JoyStickReceiver.cs" />
-     <Compile Include="Assets\Script\GameManager.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\Logger.cs" />
-     <Compile Include="Assets\Script\Uitls\CameraResolution.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIShadow.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\CSVGenerator\CSVDownloader.cs" />
-     <Compile Include="Assets\Script\Define.cs" />
-     <Compile Include="Assets\TheBackend\Toolkit\SendQueueMgr.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Manager\TableManager.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUITween.cs" />
-     <Compile Include="Assets\Script\Packet\PacketBase.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIDissolve.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\UI\CanvasLayerTag.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleAudio.cs" />
-     <Compile Include="Assets\Script\Data\Partial\EnvironmentValueSheet.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\BlurMode.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\Matrix2x3.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIDragSlider.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\UI\UITracker.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Manager\RenderTextureManager.cs" />
-     <Compile Include="Assets\Script\Unit\UnitBase.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\CSVGenerator\CSVDownloadConfigCore.cs" />
-     <Compile Include="Assets\Script\GameCore.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIFlip.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPanelInfo.cs" />
-     <Compile Include="Assets\Script\UI\PanelLobby.cs" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\SoftMask.cginc" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Dissolve.shader" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Shaders\SoftMaskTemplate.cginc" />
-     <None Include="Assets\LunarConsole\readme.txt" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\Shaders\TMP_SDF (SoftMaskable).shader" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect.cginc" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\Shaders\TMP_Sprite (SoftMaskable).shader" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Transition.shader" />
-     <None Include="Assets\JsonDotNet\link.xml" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\Shaders\TMP_SDF-Mobile (SoftMaskable).shader" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Shaders\SoftMask.cginc" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Shaders\SoftMaskETC1.shader" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\Shaders\Resources\UI-Default-SoftMask.shader" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect.shader" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\Shaders\Resources\SoftMask.shader" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-EffectCapture.shader" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\readme.txt" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DemiLib\Core\DemiLib.xml" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Shaders\UIAdditive.shader" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\readme.txt" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Shaders\SoftMask.shader" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-HSV.shader" />
+     <Compile Include="Assets\Plugins\Easy Save 3\Editor\ES3PrefabEditor.cs" />
+     <Compile Include="Assets\Plugins\Easy Save 3\Editor\ES3AutoSaveMgrEditor.cs" />
+     <Compile Include="Assets\Plugins\Easy Save 3\Editor\ES3Window.cs" />
+     <Compile Include="Assets\Plugins\Easy Save 3\Editor\ES3SettingsEditor.cs" />
+     <Compile Include="Assets\Plugins\Easy Save 3\Editor\AddES3Prefab.cs" />
+     <Compile Include="Assets\Plugins\Easy Save 3\Editor\ES3AutoSaveEditor.cs" />
+     <Compile Include="Assets\Plugins\Easy Save 3\Editor\ES3InspectorInfoEditor.cs" />
+     <Compile Include="Assets\Plugins\Easy Save 3\Editor\ES3EditorUtility.cs" />
+     <Compile Include="Assets\Plugins\Easy Save 3\Editor\ES3GlobalReferencesEditor.cs" />
+     <Compile Include="Assets\Plugins\Easy Save 3\Editor\ReferencesWindow.cs" />
+     <Compile Include="Assets\Plugins\Easy Save 3\Editor\SettingsWindow.cs" />
+     <Compile Include="Assets\Plugins\Easy Save 3\Editor\TypesWindow.cs" />
+     <Compile Include="Assets\Plugins\Easy Save 3\Editor\ES3EditorStyle.cs" />
+     <Compile Include="Assets\Plugins\Easy Save 3\Editor\HomeWindow.cs" />
+     <Compile Include="Assets\Plugins\Easy Save 3\Editor\ES3ReferenceMgrEditor.cs" />
+     <Compile Include="Assets\Plugins\Easy Save 3\Editor\ToolsWindow.cs" />
+     <Compile Include="Assets\Plugins\Easy Save 3\Editor\ES3Postprocessor.cs" />
+     <Compile Include="Assets\Plugins\Easy Save 3\Editor\AutoSaveWindow.cs" />
+     <Compile Include="Assets\Plugins\Easy Save 3\Editor\ES3PlayMakerEditor.cs" />
+     <None Include="Assets\Plugins\Easy Save 3\Editor\ES3ValueTypeTemplate.txt" />
+     <None Include="Assets\Plugins\Easy Save 3\Editor\ES3ComponentTypeTemplate.txt" />
+     <None Include="Assets\Plugins\Easy Save 3\Editor\ES3TypeTemplate.txt" />
+     <None Include="Assets\Plugins\Easy Save 3\Editor\ES3Type_MaterialTemplate.txt" />
+     <None Include="Assets\Plugins\Easy Save 3\Editor\ES3ScriptableObjectTypeTemplate.txt" />
+     <None Include="Assets\Plugins\Easy Save 3\Editor\ES3ClassTypeTemplate.txt" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
@@ -211,6 +103,12 @@
  </Reference>
  <Reference Include="UnityEngine.ClothModule">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClothModule.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.ClusterInputModule">
+ <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterInputModule.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.ClusterRendererModule">
+ <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterRendererModule.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.CoreModule">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
@@ -365,6 +263,9 @@
  <Reference Include="UnityEngine.VideoModule">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.VideoModule.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEngine.VirtualTexturingModule">
+ <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.VirtualTexturingModule.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.WindModule">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.WindModule.dll</HintPath>
  </Reference>
@@ -398,11 +299,26 @@
  <Reference Include="UnityEditor.UnityConnectModule">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEditor.Graphs">
+ <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Android.Extensions">
+ <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.WindowsStandalone.Extensions">
+ <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+ </Reference>
  <Reference Include="TheBackendSettings">
  <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/Settings/TheBackendSettings.dll</HintPath>
  </Reference>
  <Reference Include="System.Buffers">
  <HintPath>C:/Git/AnimalMerge/Assets/Plugins/System.Buffers.dll</HintPath>
+ </Reference>
+ <Reference Include="DemiEditor">
+ <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DemiLib/Core/Editor/DemiEditor.dll</HintPath>
+ </Reference>
+ <Reference Include="TheBackendSettingEditor">
+ <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/Editor/TheBackendSettingEditor.dll</HintPath>
  </Reference>
  <Reference Include="TheBackend.iOS">
  <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/Android/TheBackend.iOS.dll</HintPath>
@@ -434,8 +350,17 @@
  <Reference Include="LitJSON">
  <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/LitJSON.dll</HintPath>
  </Reference>
+ <Reference Include="DOTweenProEditor">
+ <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTweenPro/Editor/DOTweenProEditor.dll</HintPath>
+ </Reference>
+ <Reference Include="DOTweenEditor">
+ <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
+ </Reference>
  <Reference Include="System.Runtime.CompilerServices.Unsafe">
  <HintPath>C:/Git/AnimalMerge/Assets/Plugins/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+ </Reference>
+ <Reference Include="nunit.framework">
+ <HintPath>C:/Git/AnimalMerge/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>
  <Reference Include="mscorlib">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -781,6 +706,12 @@
  </Reference>
  <Reference Include="System.Xml.XPath.XDocument">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Xml.XPath.XDocument.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.TestRunner">
+ <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.TestRunner">
+ <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Animation.Editor">
  <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using BackEnd;
 using Define;
 using DG.Tweening;
+using Packet;
 using SheetData;
 using UnityEngine;
 using UnityEngine.U2D;
@@ -826,8 +827,16 @@ public class GameCore : MonoSingleton<GameCore>
 
         isGameFinish = true;
 
-        var popup = UIManager.Instance.ShowPopup<PopupGameResult>();
-        popup.SetResult(isWin);
+        PacketBase packet = new PacketBase();
+        packet.PacketType = ePACKET_TYPE.REPORT_GAME_RESULT;
+        packet.hash.Add("is_win", isWin);
+
+        int beforeScore = PlayerInfo.Instance.RankScore;
+        NetworkManager.Instance.Request(packet, (res) =>
+        {
+            var popup = UIManager.Instance.ShowPopup<PopupGameResult>();
+            popup.SetResult(isWin,beforeScore);            
+        });
     }
 
     #endregion
@@ -894,14 +903,15 @@ public class GameCore : MonoSingleton<GameCore>
     {
         GameManager.SimpleTimer(Key.SIMPLE_TIMER_RUNNING_SKILL, 3f);
 
-        // //모든 방해블록 삭제
-        // for (int i = 0; i < BadUnits.Count; i++)
-        // {
-        //     RemoveUnit(BadUnits[i--]);
-        //     yield return null;
-        // }
+        //방해블록 삭제
+        for (int i = 0; i < 15; i++)
+        {
+            if (BadUnits.Count == 0) break;
+            int index = Random.Range(0, BadUnits.Count);
+            RemoveUnit(BadUnits[index]);
+        }
+        
         //모든 블록 위로 튕겨냄
-        //모든 방해블록 삭제
         for (int i = 0; i < BadUnits.Count; i++)
         {
             var direction = Vector2.up * EnvironmentValue.SHAKE_SKILL_FORCE_POWER;

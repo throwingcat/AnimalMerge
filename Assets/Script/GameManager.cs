@@ -4,28 +4,26 @@ using System.Collections.Generic;
 using BackEnd;
 using Define;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Rendering;
 using Violet;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public CSVDownloadConfig CSVDownloadConfig;
 
     public static eLanguage CurrentLangauge = eLanguage.Korean;
 
     public static Vector2 Resolution = new Vector2(1280, 720);
 
-    public PartBase PartSceneChange;
-
-    public eGAME_STATE CurrentGameState = eGAME_STATE.Intro;
-
     private string _loadingDescription = "";
     private float _loadingProgress = 0f;
+    public CSVDownloadConfig CSVDownloadConfig;
+
+    public eGAME_STATE CurrentGameState = eGAME_STATE.Intro;
+    public string GUID = "";
 
     public bool isSinglePlay = true;
-    public string GUID = "";
+
+    public PartBase PartSceneChange;
 
     public void Awake()
     {
@@ -49,7 +47,7 @@ public class GameManager : MonoBehaviour
         }
 
         //지연 이벤트 호출 업데이트
-        for (int i = 0; i < _delayInvokeList.Count; i++)
+        for (var i = 0; i < _delayInvokeList.Count; i++)
         {
             _delayInvokeList[i].delta += delta;
             if (_delayInvokeList[i].t <= _delayInvokeList[i].delta)
@@ -59,9 +57,9 @@ public class GameManager : MonoBehaviour
                 i--;
             }
         }
-        
+
         //심플 타이머 업데이트
-        for (int i = 0; i < _simpleTimerList.Count; i++)
+        for (var i = 0; i < _simpleTimerList.Count; i++)
         {
             _simpleTimerList[i].delta += delta;
             if (_simpleTimerList[i].t <= _simpleTimerList[i].delta)
@@ -70,6 +68,8 @@ public class GameManager : MonoBehaviour
                 i--;
             }
         }
+
+        AnimalMergeServer.Instance.OnUpdate();
     }
 
     private void OnGUI()
@@ -135,9 +135,9 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator InitializeGame()
     {
-        bool isDone = false;
+        var isDone = false;
         //로그인
-        bool result = NetworkManager.Instance.Login();
+        var result = NetworkManager.Instance.Login();
         while (result == false)
         {
             Debug.Log("로그인 재시도");
@@ -145,16 +145,16 @@ public class GameManager : MonoBehaviour
             result = NetworkManager.Instance.Login();
         }
 
-        string indate = Backend.UserInDate;
-        string nickname = Backend.UserNickName;
+        var indate = Backend.UserInDate;
+        var nickname = Backend.UserNickName;
 
         //닉네임 생성
         if (nickname.IsNullOrEmpty())
         {
             var popup = UIManager.Instance.ShowPopup<PopupLogin>();
-            popup.OnFinish = (text) =>
+            popup.OnFinish = text =>
             {
-                bool result = NetworkManager.Instance.CreateNickname(text);
+                var result = NetworkManager.Instance.CreateNickname(text);
                 if (result)
                 {
                     SUIPanel.BackPressForce();
@@ -163,7 +163,9 @@ public class GameManager : MonoBehaviour
             };
         }
         else
+        {
             isDone = true;
+        }
 
         while (isDone == false)
             yield return null;
@@ -226,13 +228,13 @@ public class GameManager : MonoBehaviour
     {
         //게임 오브젝트 삭제
         GameCore.Instance.Clear();
-        
+
         //네트워크 종료
         NetworkManager.Instance.ClearEvent();
         NetworkManager.Instance.DisconnectIngameServer();
         NetworkManager.Instance.DisconnectGameRoom();
         NetworkManager.Instance.DisconnectMatchServer();
-        
+
         yield break;
     }
 
@@ -268,83 +270,80 @@ public class GameManager : MonoBehaviour
         return DateTime.UtcNow;
     }
 
-    private static List<DelayInvokeData> _delayInvokeList = new List<DelayInvokeData>();
+    private static readonly List<DelayInvokeData> _delayInvokeList = new List<DelayInvokeData>();
 
     public static string DelayInvoke(Action action, float t)
     {
-        var invoke = new DelayInvokeData()
+        var invoke = new DelayInvokeData
         {
             GUID = Guid.NewGuid().ToString(),
             action = action,
             t = t,
-            delta = 0f,
+            delta = 0f
         };
         _delayInvokeList.Add(invoke);
-        
+
         return invoke.GUID;
     }
 
     public static void DelayInvokeCancel(string guid)
     {
-        for (int i = 0; i < _delayInvokeList.Count; i++)
-        {
+        for (var i = 0; i < _delayInvokeList.Count; i++)
             if (_delayInvokeList[i].GUID == guid)
             {
                 _delayInvokeList.RemoveAt(i);
                 break;
             }
-        }
     }
 
     public class DelayInvokeData
     {
+        public Action action;
+        public float delta;
         public string GUID = "";
-        public Action action = null;
-        public float t = 0f;
-        public float delta = 0f;
+        public float t;
     }
 
-    private static List<SimpleTimerData> _simpleTimerList =new List<SimpleTimerData>();
+    private static readonly List<SimpleTimerData> _simpleTimerList = new List<SimpleTimerData>();
+
     public static void SimpleTimer(string key, float t)
     {
         if (ContainsTimer(key))
         {
-            for (int i = 0; i < _simpleTimerList.Count; i++)
-            {
+            for (var i = 0; i < _simpleTimerList.Count; i++)
                 if (_simpleTimerList[i].Key == key)
                 {
                     _simpleTimerList[i].t = t;
                     _simpleTimerList[i].delta = 0f;
                     break;
                 }
-            }
         }
         else
         {
-             _simpleTimerList.Add(new SimpleTimerData()
-             {
-                 Key = key,
-                 t = t,
-                 delta = 0f,
-             });
+            _simpleTimerList.Add(new SimpleTimerData
+            {
+                Key = key,
+                t = t,
+                delta = 0f
+            });
         }
     }
 
     public static bool ContainsTimer(string key)
     {
-        for (int i = 0; i < _simpleTimerList.Count; i++)
-        {
+        for (var i = 0; i < _simpleTimerList.Count; i++)
             if (_simpleTimerList[i].Key == key)
                 return true;
-        }
 
         return false;
     }
+
     public class SimpleTimerData
     {
+        public float delta;
         public string Key;
-        public float t = 0f;
-        public float delta = 0f;
+        public float t;
     }
+
     #endregion
 }
