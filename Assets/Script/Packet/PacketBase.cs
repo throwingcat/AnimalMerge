@@ -24,7 +24,7 @@ namespace Packet
         [Key(0)]
         public ePACKET_TYPE PacketType;
         [Key(1)]
-        public Hashtable hash;
+        public Hashtable hash = new Hashtable();
     }
 
     public class ChestInfo
