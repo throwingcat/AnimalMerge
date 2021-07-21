@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using BackEnd;
 using Define;
@@ -9,15 +10,38 @@ public class PanelLobby : SUIPanel
 {
     public GameObject Matching;
     public Text RankScore;
+
+    public PartLobbyChest[] Chests;
+    private float _chest_update_delta = 0f;
+    private float _chest_update_delay = 0.5f;
     protected override void OnShow()
     {
         base.OnShow();
 
-        var hash = new Hashtable();
-        AnimalMergeServer.Instance.RefreshPlayerInfo();
+        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBPlayerInfo>(() =>
+        {
+            RankScore.text = PlayerInfo.Instance.RankScore.ToString();
+        });
+        
+        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBChestInventory>(() =>
+        {
+            foreach (var chest in Chests)
+                chest.OnUpdate();
+        });
 
         Matching.SetActive(false);
-        RankScore.text = PlayerInfo.Instance.RankScore.ToString();
+        
+    }
+
+    private void Update()
+    {
+        _chest_update_delta += Time.deltaTime;
+        if (_chest_update_delay <= _chest_update_delta)
+        {
+            foreach (var chest in Chests)
+                chest.OnUpdate();
+            _chest_update_delta = 0f;
+        }
     }
 
     public void OnMatchingCancel()

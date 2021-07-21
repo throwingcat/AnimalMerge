@@ -796,17 +796,9 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{304d171c-f4e7-4680-7776-c8e8aa6771cd}</Project>
-      <Name>Assembly-CSharp-firstpass</Name>
-    </ProjectReference>
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{5f280f4f-ded8-c4e3-9383-451a5a520da2}</Project>
       <Name>Assembly-CSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="Assembly-CSharp-Editor-firstpass.csproj">
-      <Project>{1193d599-c79a-ee73-ee00-614026603a39}</Project>
-      <Name>Assembly-CSharp-Editor-firstpass</Name>
     </ProjectReference>
     <ProjectReference Include="Coffee.SoftMaskForUGUI.Editor.csproj">
       <Project>{81402af7-e1f7-c3ee-3160-fd45120cecfa}</Project>

@@ -383,10 +383,10 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
         var bytes = MessagePackSerializer.Serialize(packet, lz4Options);
         
-        AnimalMergeServer.Instance.ReceivePacket(bytes);
+        Server.AnimalMergeServer.Instance.ReceivePacket(bytes);
     }
 
-    private void OnReceivePacket(ReceivePacket packet)
+    public void ReceivePacket(ReceivePacket packet)
     {
         if (_waitingPacket.ContainsKey(packet.GUID))
         {

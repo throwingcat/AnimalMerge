@@ -5,6 +5,9 @@
          "Name": "Unit"
       },
       {
+         "Name": "Chest"
+      },
+      {
          "Name": "EnvironmentValueSheet"
       }]
 }

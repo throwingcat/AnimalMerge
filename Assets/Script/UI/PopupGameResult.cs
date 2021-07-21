@@ -35,7 +35,7 @@ public class PopupGameResult : SUIPanel
         RankScoreRoot.SetActive(true);
 
         int add = PlayerInfo.Instance.RankScore - beforeScore;
-        AddRankScoreText.text = string.Format("{0}{1}", add >= 0 ? "+" : "-", add); 
+        AddRankScoreText.text = string.Format("{0}{1}", add >= 0 ? "+" : "", add); 
         var score = beforeScore;
         DOTween.To(() => score, x =>
         {

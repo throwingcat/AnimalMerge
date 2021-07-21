@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Reflection;
-using UnityEngine;
+using Define;
 
 namespace SheetData
 {
@@ -10,11 +7,11 @@ namespace SheetData
     {
         public override void Initialize()
         {
-            var type = typeof(Define.EnvironmentValue);
+            var type = typeof(EnvironmentValue);
             var field = type.GetField(key, BindingFlags.Public | BindingFlags.Static);
             if (field != null)
             {
-                string fieldType = field.FieldType.Name;
+                var fieldType = field.FieldType.Name;
                 fieldType = fieldType.ToLower();
                 switch (fieldType)
                 {
@@ -37,7 +34,6 @@ namespace SheetData
                         field.SetValue(null, value);
                         break;
                 }
-                
             }
 
             base.Initialize();

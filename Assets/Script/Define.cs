@@ -60,6 +60,12 @@ namespace Define
         public static int SKILL_CHARGE_MAX_VALUE = 3000;
         #endregion
         
+        #region Lobby
+
+        public static int CHEST_SLOT_MAX_COUNT = 4;
+
+        #endregion
+
     }
 
     public class Key

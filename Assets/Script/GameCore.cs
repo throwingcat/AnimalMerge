@@ -150,16 +150,16 @@ public class GameCore : MonoSingleton<GameCore>
             switch (SpawnLevel)
             {
                 case 1:
-                    pick = 1;
+                    pick = 0;
                     break;
                 case 2:
                     pick = Utils.RandomPick(new List<double> {80, 20});
                     break;
                 case 3:
-                    pick = Utils.RandomPick(new List<double> {70, 25, 5});
+                    pick = Utils.RandomPick(new List<double> {75, 20, 5});
                     break;
                 default:
-                    pick = 1;
+                    pick = 0;
                     break;
             }
 
@@ -319,8 +319,8 @@ public class GameCore : MonoSingleton<GameCore>
         {
             UnitsInField.Add(SpawnUnit(a.Sheet.grow_unit, pos));
 
-            if (SpawnLevel < a.Sheet.index)
-                SpawnLevel = a.Sheet.index;
+            if (SpawnLevel < a.Sheet.index + 2)
+                SpawnLevel = a.Sheet.index - 2;
             SpawnLevel = Mathf.Clamp(SpawnLevel, 1, 3);
         }
 

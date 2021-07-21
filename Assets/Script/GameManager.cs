@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        AnimalMergeServer.Instance.OnUpdate();
+        Server.AnimalMergeServer.Instance.OnUpdate();
     }
 
     private void OnGUI()
@@ -345,5 +345,32 @@ public class GameManager : MonoBehaviour
         public float t;
     }
 
+    public class TimeSystem
+    {
+        public DateTime CompleteTime { get; private set; }
+        public DateTime LastUpdatedTime;
+
+        public int MaxTime { get; private set; }
+
+        public int RemainSeconds => (int) (RemainMilliSeconds / 1000);
+
+        public float RemainMilliSeconds =>
+            Mathf.Clamp((float) (CompleteTime - GameManager.GetTime()).TotalMilliseconds, 0, float.MaxValue);
+
+        public float Progress => 1f - ((RemainMilliSeconds / 1000) / MaxTime);
+        public bool isComplete => 0 >= RemainMilliSeconds;
+
+        public void ReduceTime(int seconds)
+        {
+            CompleteTime = CompleteTime.AddSeconds(-seconds);
+        }
+
+        public void Set(int seconds)
+        {
+            CompleteTime = GameManager.GetTime().AddSeconds(seconds);
+            MaxTime = seconds;
+            LastUpdatedTime = GameManager.GetTime();
+        }
+    }
     #endregion
 }
