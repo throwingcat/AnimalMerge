@@ -94,5 +94,20 @@ public class ChestInventory
         public int Grade = 0;
         public DateTime StartTime;
         public DateTime GetTime;
+
+        public SheetData.Chest Sheet => Key.ToTableData<SheetData.Chest>();
+        public int GetGoldMin()
+        {
+            return (int)(Sheet.gold_min * ((Grade + 1.5f) + 1f));
+        }
+        public int GetGoldMax()
+        {
+            return (int)(Sheet.gold_max * ((Grade + 1.5f) + 1f));
+        }
+
+        public int GetCardQuantity()
+        {
+            return (int)(Sheet.amount * ((Grade + 1.5f) + 1f));
+        }
     }
 }

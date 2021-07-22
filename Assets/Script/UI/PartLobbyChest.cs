@@ -5,6 +5,7 @@ using DG.Tweening;
 using SheetData;
 using UnityEngine;
 using UnityEngine.UI;
+using Violet;
 
 public class PartLobbyChest : MonoBehaviour
 {
@@ -140,7 +141,7 @@ public class PartLobbyChest : MonoBehaviour
 
     public void OnPress()
     {
-        Root.transform.DOScale(-0.1f, 0.2f).SetRelative(true).SetEase(Ease.OutElastic).Play();
+        Root.transform.DOScale(-0.05f, 0.2f).SetRelative(true).SetEase(Ease.OutElastic).Play();
     }
 
     public void OnRelease()
@@ -149,6 +150,10 @@ public class PartLobbyChest : MonoBehaviour
     }
     public void OnClick()
     {
-        Debug.Log("OnClick");   
+        if (Sheet != null)
+        {
+            var popup = UIManager.Instance.ShowPopup<PopupChestOpen>();
+            popup.Set(ChestInventory.Instance.Chests[Index]);
+        }
     }
 }

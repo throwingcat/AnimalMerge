@@ -66,11 +66,11 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Editor\UIEffectEditor.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Editor\UITransitionEffectEditor.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\Editor\SUIPressButtonInspector.cs" />
+     <Compile Include="Assets\Editor\VersionManager.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\Editor\SUITouchableInspector.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\Editor\SUIToggleInspector.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Editor\UIEffectCapturedImageEditor.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\Editor\SoftMaskEditor.cs" />
-     <Compile Include="Assets\Editor\VersionManager.cs" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DemiLib\Core\Editor\DemiEditor.xml" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -312,6 +312,9 @@
  <Reference Include="DemiEditor">
  <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DemiLib/Core/Editor/DemiEditor.dll</HintPath>
  </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>C:/Git/AnimalMerge/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
+ </Reference>
  <Reference Include="TheBackendSettingEditor">
  <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/Editor/TheBackendSettingEditor.dll</HintPath>
  </Reference>
@@ -350,9 +353,6 @@
  </Reference>
  <Reference Include="System.Runtime.CompilerServices.Unsafe">
  <HintPath>C:/Git/AnimalMerge/Assets/Plugins/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
- </Reference>
- <Reference Include="Newtonsoft.Json">
- <HintPath>C:/Git/AnimalMerge/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
  <HintPath>C:/Git/AnimalMerge/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>

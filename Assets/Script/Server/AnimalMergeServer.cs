@@ -121,30 +121,30 @@ namespace Server
 
                     ChestInventory.Instance.Insert(keys[index]);
 
-                    UpdateDB<DBChestInventory>(() =>
-                    {
-                        onFinish?.Invoke();
-                    });
+                    UpdateDB<DBChestInventory>(() => { onFinish?.Invoke(); });
                 }
                 else
                 {
                     //보유한 상자중에 선택
                     List<string> inDate = new List<string>();
-                    
+
                     foreach (var chest in ChestInventory.Instance.Chests)
                     {
                         if (chest.Grade < EnvironmentValue.CHEST_GRADE_MAX && chest.isChanged == false)
                             inDate.Add(chest.inDate);
                     }
 
-                    string pick = Utils.RandomPickDefault(inDate);
-                    ChestInventory.Instance.Upgrade(pick);
-                                                
-                    //DB 업데이트
-                    UpdateDB<DBChestInventory>(() =>
+                    if (0 < inDate.Count)
+                    {
+                        string pick = Utils.RandomPickDefault(inDate);
+                        ChestInventory.Instance.Upgrade(pick);
+                        //DB 업데이트
+                        UpdateDB<DBChestInventory>(() => { onFinish?.Invoke(); });
+                    }
+                    else
                     {
                         onFinish?.Invoke();
-                    });
+                    }
                 }
             });
         }
