@@ -28,4 +28,9 @@ public class PopupChestOpen : SUIPanel
         CardQuantity.text = _chest.GetCardQuantity().ToString();
         NeedTime.text = Utils.ParseSeconds(_chest.Sheet.time);
     }
+
+    public void OnClickBackground()
+    {
+        BackPress();
+    }
 }

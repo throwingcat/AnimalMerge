@@ -58,7 +58,7 @@ SpriteAtlas:
     - {fileID: 102900000, guid: c7b50fe91a6b74b4bb2934041f78addd, type: 3}
     - {fileID: 102900000, guid: 0dcf213ce157a314080be094c25a343a, type: 3}
     - {fileID: 102900000, guid: faf346794701d2946b6c2c15ba0b2997, type: 3}
-    totalSpriteSurfaceArea: 1724439
+    totalSpriteSurfaceArea: 1740823
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -115,6 +115,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 4f5faabcee61ee7479b6656b8bbdafa6, type: 3}
   - {fileID: 21300000, guid: 66c974bdcdcd170449941dd51831797e, type: 3}
   - {fileID: 21300000, guid: 5e96b20e223b0044ab60f4e4ed2df126, type: 3}
+  - {fileID: 21300000, guid: 1cbef52ec9dc4974d8f443763d97031b, type: 3}
   - {fileID: 21300000, guid: 9348d26e92dedd54784154afc99f141a, type: 3}
   - {fileID: 21300000, guid: 287f786e43289e746abe4182c4e8d4ce, type: 3}
   - {fileID: 21300000, guid: 43fbd96e985a7d54db3f60e63dc34dd4, type: 3}
@@ -178,6 +179,7 @@ SpriteAtlas:
   - btn_menu
   - rat_04
   - img_Rank_01
+  - icon_goldMark
   - gauge_timeOut_bg
   - icon_newDot
   - btn_menu_02.png
