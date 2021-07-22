@@ -736,13 +736,13 @@ PlayerSettings:
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
   cloudServicesEnabled:
-    Analytics: 1
-    Build: 1
+    Analytics: 0
+    Build: 0
     Collab: 0
     Game Performance: 0
     Purchasing: 0
     UDP: 0
-    Unity Ads: 1
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -756,10 +756,10 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 0
-  cloudProjectId: b07d7d49-9a24-4b60-9740-dc970deee6cc
+  cloudProjectId: 7fe497cd-8ae2-41b3-9fa1-6b7b703165bd
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: AnimalMerge
+  projectName: Animal Merge
   organizationId: simon-1603164
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
