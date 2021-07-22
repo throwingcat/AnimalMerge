@@ -60,8 +60,8 @@
      <Compile Include="Assets\LunarConsole\Scripts\LunarConsoleAction.cs" />
      <Compile Include="Assets\LunarConsole\Scripts\Actions\CVar.cs" />
      <Compile Include="Assets\LunarConsole\Scripts\Utils\BaseList.cs" />
-     <Compile Include="Assets\LunarConsole\Scripts\Utils\ClassUtils.cs" />
      <Compile Include="Assets\LunarConsole\Scripts\LunarConsole.cs" />
+     <Compile Include="Assets\LunarConsole\Scripts\Utils\ClassUtils.cs" />
      <Compile Include="Assets\LunarConsole\Scripts\Utils\StringUtils.cs" />
      <Compile Include="Assets\LunarConsole\Scripts\Actions\CAction.cs" />
      <Compile Include="Assets\LunarConsole\Scripts\Utils\FileUtils.cs" />
