@@ -123,4 +123,9 @@ public class PartLobbyChest : MonoBehaviour
         Progress.SetActive(state == eSTATE.Progress);
         Complete.SetActive(state == eSTATE.Complete);
     }
+
+    public void OnClick()
+    {
+        
+    }
 }
