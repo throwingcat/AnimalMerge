@@ -70,6 +70,7 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\Editor\SUIToggleInspector.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Editor\UIEffectCapturedImageEditor.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\Editor\SoftMaskEditor.cs" />
+     <Compile Include="Assets\Editor\VersionManager.cs" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DemiLib\Core\Editor\DemiEditor.xml" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
