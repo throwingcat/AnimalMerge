@@ -177,7 +177,6 @@
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect.cginc" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\Shaders\TMP_Sprite (SoftMaskable).shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Transition.shader" />
-     <None Include="Assets\JsonDotNet\link.xml" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\Shaders\TMP_SDF-Mobile (SoftMaskable).shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Shaders\SoftMask.cginc" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Shaders\SoftMaskETC1.shader" />
@@ -416,9 +415,6 @@
  <Reference Include="DOTween">
  <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTween/DOTween.dll</HintPath>
  </Reference>
- <Reference Include="Newtonsoft.Json">
- <HintPath>C:/Git/AnimalMerge/Assets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
- </Reference>
  <Reference Include="System.Memory">
  <HintPath>C:/Git/AnimalMerge/Assets/Plugins/System.Memory.dll</HintPath>
  </Reference>
@@ -442,6 +438,9 @@
  </Reference>
  <Reference Include="System.Runtime.CompilerServices.Unsafe">
  <HintPath>C:/Git/AnimalMerge/Assets/Plugins/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+ </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>C:/Git/AnimalMerge/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="mscorlib">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
