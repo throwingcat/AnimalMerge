@@ -383,15 +383,19 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
         var bytes = MessagePackSerializer.Serialize(packet, lz4Options);
         
-        Server.AnimalMergeServer.Instance.ReceivePacket(bytes);
+        Server.AnimalMergeServer.Instance.OnReceivePacket(bytes);
     }
 
-    public void ReceivePacket(ReceivePacket packet)
+    public void ReceivePacket(byte[] bytes)
     {
-        if (_waitingPacket.ContainsKey(packet.GUID))
+        var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
+        PacketBase packet = MessagePackSerializer.Deserialize<Packet.PacketBase>(bytes, lz4Options);
+
+        string guid = packet.hash["packet_guid"].ToString();
+        if (_waitingPacket.ContainsKey(guid))
         {
-            _waitingPacket[packet.GUID]?.Invoke(packet.packet);
-            _waitingPacket.Remove(packet.GUID);
+            _waitingPacket[guid]?.Invoke(packet);
+            _waitingPacket.Remove(guid);
         }
     }
     

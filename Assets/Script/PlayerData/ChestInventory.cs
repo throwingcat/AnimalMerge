@@ -62,7 +62,6 @@ public class ChestInventory
         }
     }
     
-
     public void Remove(string indate)
     {
         for (var i = 0; i < Chests.Count; i++)
