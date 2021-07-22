@@ -152,8 +152,15 @@ public class PartLobbyChest : MonoBehaviour
     {
         if (Sheet != null)
         {
-            var popup = UIManager.Instance.ShowPopup<PopupChestOpen>();
-            popup.Set(ChestInventory.Instance.Chests[Index]);
+            if (ChestInventory.Instance.Chests[Index].isProgress == false)
+            {
+                var popup = UIManager.Instance.ShowPopup<PopupChestOpen>();
+                popup.Set(ChestInventory.Instance.Chests[Index]);
+            }
+            else
+            {
+                //빠르게 열기
+            }
         }
     }
 }

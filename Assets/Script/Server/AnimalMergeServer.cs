@@ -3,11 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using BackEnd;
 using Define;
 using LitJson;
 using MessagePack;
-using Packet;
 using SheetData;
 using UnityEngine;
 using Violet;
@@ -45,21 +43,24 @@ namespace Server
             }
         }
 
-        public void ReceivePacket(byte[] bytes)
+        public void OnReceivePacket(byte[] bytes)
         {
             var lz4Options =
                 MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
-            var packet = MessagePackSerializer.Deserialize<PacketBase>(bytes, lz4Options);
+            PacketBase packet = MessagePackSerializer.Deserialize<PacketBase>(bytes, lz4Options);
 
             switch (packet.PacketType)
             {
-                case ePACKET_TYPE.GET_CHEST_LIST:
-                    break;
-                case ePACKET_TYPE.REPORT_GAME_RESULT:
+                case Packet.ePACKET_TYPE.REPORT_GAME_RESULT:
                     BattleResult(packet);
+                    break;
+                case Packet.ePACKET_TYPE.CHEST_PROGRESS:
+                    ProgressChest(packet);
                     break;
             }
         }
+
+        #region Battle Result
 
         private void BattleResult(PacketBase packet)
         {
@@ -71,27 +72,12 @@ namespace Server
                 PlayerInfo.Instance.RankScore -= 5;
 
                 //플레이어 정보 업데이트
-                UpdateDB<DBPlayerInfo>(
-                    () =>
-                    {
-                        NetworkManager.Instance.ReceivePacket(new ReceivePacket()
-                        {
-                            GUID = packet.hash["packet_guid"].ToString(),
-                            packet = new Packet.PacketBase(),
-                        });
-                    });
+                UpdateDB<DBPlayerInfo>(() => { SendPacket(packet); });
             }
             //승리 처리
             else
             {
-                BattleWinProcess(() =>
-                {
-                    NetworkManager.Instance.ReceivePacket(new ReceivePacket()
-                    {
-                        GUID = packet.hash["packet_guid"].ToString(),
-                        packet = new Packet.PacketBase(),
-                    });
-                });
+                BattleWinProcess(() => { SendPacket(packet);  });
             }
         }
 
@@ -130,7 +116,7 @@ namespace Server
 
                     foreach (var chest in ChestInventory.Instance.Chests)
                     {
-                        if (chest.Grade < EnvironmentValue.CHEST_GRADE_MAX && chest.isChanged == false)
+                        if (chest.Grade < EnvironmentValue.CHEST_GRADE_MAX && chest.isProgress == false)
                             inDate.Add(chest.inDate);
                     }
 
@@ -149,6 +135,26 @@ namespace Server
             });
         }
 
+        #endregion
+
+        #region Lobby - Chest
+
+        public void ProgressChest(PacketBase packet)
+        {
+            string inDate = packet.hash["inDate"].ToString();
+            ChestInventory.Instance.Progress(inDate);
+            UpdateDB<DBChestInventory>(() =>
+            {
+                SendPacket(packet); 
+            });
+        }
+
+        public void CompleteChest()
+        {
+        }
+
+        #endregion
+
         public void DownloadDB<T>(System.Action onFinish) where T : DBBase
         {
             var db = GetDB<T>();
@@ -159,6 +165,15 @@ namespace Server
         {
             var db = GetDB<T>();
             db.Update(onFinish);
+        }
+
+        public void SendPacket(PacketBase packet)
+        {
+            var lz4Options =
+                MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
+            var bytes = MessagePackSerializer.Serialize(packet, lz4Options);
+            
+            NetworkManager.Instance.ReceivePacket(bytes);
         }
 
         #region Utils
@@ -227,9 +242,8 @@ namespace Server
         [MessagePackObject]
         public class PacketBase
         {
+            [Key(0)] public Packet.ePACKET_TYPE PacketType;
             [Key(1)] public Hashtable hash;
-
-            [Key(0)] public ePACKET_TYPE PacketType;
         }
 
         public T GetDB<T>() where T : DBBase
