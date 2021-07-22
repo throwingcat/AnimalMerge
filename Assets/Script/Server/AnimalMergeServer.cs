@@ -35,7 +35,7 @@ namespace Server
             DBList.Add(new DBPlayerInfo());
             DBList.Add(new DBChestInventory());
         }
-        
+
         public void OnUpdate()
         {
             foreach (var DB in DBList)
@@ -69,7 +69,7 @@ namespace Server
             if (isWin == false)
             {
                 PlayerInfo.Instance.RankScore -= 5;
-                
+
                 //플레이어 정보 업데이트
                 UpdateDB<DBPlayerInfo>(
                     () =>
@@ -84,49 +84,71 @@ namespace Server
             //승리 처리
             else
             {
-                PlayerInfo.Instance.RankScore += 5; 
-
-                UpdateDB<DBPlayerInfo>(() =>
+                BattleWinProcess(() =>
                 {
-                    if (ChestInventory.Instance.Chests.Count < EnvironmentValue.CHEST_SLOT_MAX_COUNT)
+                    NetworkManager.Instance.ReceivePacket(new ReceivePacket()
                     {
-                        //상자 지급
-                        var default_chest = TableManager.Instance.GetTable<Chest>().Where(
-                            _ => (_.Value as Chest)?.group == "default");
-
-                        List<double> random = new List<double>();
-                        List<string> keys = new List<string>();
-                        foreach (var row in default_chest)
-                        {
-                            Chest chest = (row.Value as Chest);
-                            random.Add(chest.ratio);
-                            keys.Add(chest.key);
-                        }
-
-                        int index = Utils.RandomPick(random);
-                        ChestInventory.Instance.Insert(keys[index]);
-
-                        UpdateDB<DBChestInventory>(() =>
-                        {
-                            NetworkManager.Instance.ReceivePacket(new ReceivePacket()
-                            {
-                                GUID = packet.hash["packet_guid"].ToString(),
-                                packet = new Packet.PacketBase(),
-                            });
-                        });
-                    }
-                    else
-                    {
-                        NetworkManager.Instance.ReceivePacket(new ReceivePacket()
-                        {
-                            GUID = packet.hash["packet_guid"].ToString(),
-                            packet = new Packet.PacketBase(),
-                        });
-                    }
+                        GUID = packet.hash["packet_guid"].ToString(),
+                        packet = new Packet.PacketBase(),
+                    });
                 });
             }
         }
-    
+
+        public void BattleWinProcess(Action onFinish)
+        {
+            PlayerInfo.Instance.RankScore += 5;
+
+            UpdateDB<DBPlayerInfo>(() =>
+            {
+                //새로운 상자 추가
+                if (ChestInventory.Instance.Chests.Count < EnvironmentValue.CHEST_SLOT_MAX_COUNT)
+                {
+                    //랜덤 상자 선택
+                    var default_chest = TableManager.Instance.GetTable<Chest>().Where(
+                        _ => (_.Value as Chest)?.group == "default");
+
+                    List<double> random = new List<double>();
+                    List<string> keys = new List<string>();
+                    foreach (var row in default_chest)
+                    {
+                        Chest chest = (row.Value as Chest);
+                        random.Add(chest.ratio);
+                        keys.Add(chest.key);
+                    }
+
+                    int index = Utils.RandomPick(random);
+
+                    ChestInventory.Instance.Insert(keys[index]);
+
+                    UpdateDB<DBChestInventory>(() =>
+                    {
+                        onFinish?.Invoke();
+                    });
+                }
+                else
+                {
+                    //보유한 상자중에 선택
+                    List<string> inDate = new List<string>();
+                    
+                    foreach (var chest in ChestInventory.Instance.Chests)
+                    {
+                        if (chest.Grade < EnvironmentValue.CHEST_GRADE_MAX && chest.isChanged == false)
+                            inDate.Add(chest.inDate);
+                    }
+
+                    string pick = Utils.RandomPickDefault(inDate);
+                    ChestInventory.Instance.Upgrade(pick);
+                                                
+                    //DB 업데이트
+                    UpdateDB<DBChestInventory>(() =>
+                    {
+                        onFinish?.Invoke();
+                    });
+                }
+            });
+        }
+
         public void DownloadDB<T>(System.Action onFinish) where T : DBBase
         {
             var db = GetDB<T>();
@@ -138,7 +160,7 @@ namespace Server
             var db = GetDB<T>();
             db.Update(onFinish);
         }
-        
+
         #region Utils
 
         public static string WhichDataTypeIsIt(JsonData data, string key)
@@ -163,14 +185,14 @@ namespace Server
             return null;
         }
 
-        public static void ApplyField(FieldInfo field,object target,JsonData row,string key)
+        public static void ApplyField(FieldInfo field, object target, JsonData row, string key)
         {
             var type = WhichDataTypeIsIt(row, key);
             var value = row[key][type].ToString();
 
             var fieldType = field.FieldType.Name;
             fieldType = fieldType.ToLower();
-            
+
             switch (fieldType)
             {
                 case "bool":
@@ -199,6 +221,7 @@ namespace Server
                     break;
             }
         }
+
         #endregion
 
         [MessagePackObject]

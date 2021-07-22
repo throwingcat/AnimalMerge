@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Xml.Schema;
 using Define;
 
 public class ChestInventory
@@ -24,7 +25,7 @@ public class ChestInventory
         {
             var chest = new Chest();
             chest.Key = key;
-            chest.StartTime = GameManager.GetTime();
+            chest.GetTime = GameManager.GetTime();
             chest.isChanged = true;
 
             Chests.Add(chest);
@@ -32,6 +33,35 @@ public class ChestInventory
         }
         return false;
     }
+
+    public bool Upgrade(string inDate)
+    {
+        foreach (var chest in Chests)
+        {
+            if (chest.inDate == inDate)
+            {
+                chest.Grade++;
+                chest.isChanged = true;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void Progress(string inDate)
+    {
+        foreach (var chest in Chests)
+        {
+            if (chest.inDate == inDate)
+            {
+                chest.StartTime = GameManager.GetTime();
+                chest.isProgress = true;
+                chest.isChanged = true;
+                break;
+            }
+        }
+    }
+    
 
     public void Remove(string indate)
     {
@@ -61,6 +91,8 @@ public class ChestInventory
         public bool isChanged;
         public string Key;
         public bool isProgress = false;
+        public int Grade = 0;
         public DateTime StartTime;
+        public DateTime GetTime;
     }
 }

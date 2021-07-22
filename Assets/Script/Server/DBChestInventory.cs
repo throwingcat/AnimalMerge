@@ -95,13 +95,18 @@ namespace Server
                                         }
                                     }
                                 }
-
                                 break;
                             }
                         }
                     }
                 }
-
+                ChestInventory.Instance.Chests.Sort((a, b) =>
+                {
+                    if (a.GetTime < b.GetTime) return -1;
+                    if (a.GetTime > b.GetTime) return 1;
+                    return 0;
+                });
+                
                 onFinishDownload?.Invoke();
             });
         }

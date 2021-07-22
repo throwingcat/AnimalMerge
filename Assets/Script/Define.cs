@@ -63,6 +63,7 @@ namespace Define
         #region Lobby
 
         public static int CHEST_SLOT_MAX_COUNT = 4;
+        public static int CHEST_GRADE_MAX = 3;
 
         #endregion
 

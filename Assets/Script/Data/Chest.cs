@@ -16,5 +16,9 @@ namespace SheetData
 
 	public int time { get; set; }
 
+	public int gold_min { get; set; }
+
+	public int gold_max { get; set; }
+
 }
 }

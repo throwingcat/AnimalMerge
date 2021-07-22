@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using SheetData;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,10 @@ public class PartLobbyChest : MonoBehaviour
     public GameObject Progress;
     public GameObject Complete;
 
+    public GameObject[] ReadyGrade;
+    public GameObject[] ProgressGrade;
+
+    public GameObject Root;
     public enum eSTATE
     {
         Empty,
@@ -94,6 +99,11 @@ public class PartLobbyChest : MonoBehaviour
             SetActiveRoot(State);
             NeedTime.text = Utils.ParseSeconds(Sheet.time);
         }
+        int grade = ChestInventory.Instance.Chests[Index].Grade;
+        for (int i = 0; i < ReadyGrade.Length; i++)
+        {
+            ReadyGrade[i].SetActive(i < grade);
+        }
     }
 
     public void SetProgress(long remain_seconds)
@@ -102,8 +112,12 @@ public class PartLobbyChest : MonoBehaviour
         {
             State = eSTATE.Progress;
             SetActiveRoot(State);
+            int grade = ChestInventory.Instance.Chests[Index].Grade;
+            for (int i = 0; i < ProgressGrade.Length; i++)
+            {
+                ProgressGrade[i].SetActive(i < grade);
+            }
         }
-
         RemainTime.text = Utils.ParseSeconds(remain_seconds);
     }
 
@@ -124,8 +138,17 @@ public class PartLobbyChest : MonoBehaviour
         Complete.SetActive(state == eSTATE.Complete);
     }
 
+    public void OnPress()
+    {
+        Root.transform.DOScale(-0.1f, 0.2f).SetRelative(true).SetEase(Ease.OutElastic).Play();
+    }
+
+    public void OnRelease()
+    {
+        Root.transform.DOScale(1f, 0.2f).SetRelative(false).SetEase(Ease.OutElastic).Play();
+    }
     public void OnClick()
     {
-        
+        Debug.Log("OnClick");   
     }
 }

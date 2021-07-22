@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using BackEnd;
 using Define;
+using Server;
 using UnityEngine;
 using UnityEngine.UI;
 using Violet;
@@ -41,6 +42,15 @@ public class PanelLobby : SUIPanel
             foreach (var chest in Chests)
                 chest.OnUpdate();
             _chest_update_delta = 0f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            AnimalMergeServer.Instance.BattleWinProcess(() =>
+            {
+                foreach (var chest in Chests)
+                    chest.OnUpdate();
+            });
         }
     }
 
