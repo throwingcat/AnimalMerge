@@ -168,6 +168,7 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPanelInfo.cs" />
      <Compile Include="Assets\Script\UI\PanelLobby.cs" />
      <Compile Include="Assets\Script\PlayerData\ChestInventory.cs" />
+     <Compile Include="Assets\Script\Data\Localization.cs" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\SoftMask.cginc" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Dissolve.shader" />

@@ -9,5 +9,8 @@
       },
       {
          "Name": "EnvironmentValueSheet"
+      },
+      {
+         "Name": "Localization"
       }]
 }
