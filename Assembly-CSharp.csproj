@@ -121,8 +121,8 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPressButton.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\ICSVDataBase.cs" />
      <Compile Include="Assets\Script\NetworkManager.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ParameterTexture.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUILoopScroll.cs" />
+     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ParameterTexture.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\UI\PartCurtain.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\MaterialReplacements.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\FXController.cs" />
@@ -791,8 +791,8 @@
  <Reference Include="Unity.InternalAPIEngineBridge.001">
  <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.001.dll</HintPath>
  </Reference>
- <Reference Include="Unity.VSCode.Editor">
- <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+ <Reference Include="Unity.2D.Animation.Editor">
+ <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.PixelPerfect">
  <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/Unity.2D.PixelPerfect.dll</HintPath>
@@ -800,17 +800,11 @@
  <Reference Include="Unity.2D.Tilemap.Editor">
  <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
  </Reference>
- <Reference Include="Unity.2D.Animation.Editor">
- <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
- </Reference>
  <Reference Include="PsdPlugin">
  <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/PsdPlugin.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.VisualStudio.Editor">
- <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Timeline">
  <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
