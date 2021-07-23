@@ -169,11 +169,46 @@ public class GameManager : MonoBehaviour
 
         while (isDone == false)
             yield return null;
-
+        
         if (isSinglePlay)
             ChangeGameState(eGAME_STATE.Battle);
         else
+        {
+            yield return StartCoroutine(DownloadDB());
             ChangeGameState(eGAME_STATE.Lobby);
+        }
+    }
+
+    private IEnumerator DownloadDB()
+    {
+        bool isDone = false;
+
+        Debug.Log("Download PlayerInfo");
+        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBPlayerInfo>(() =>
+        {
+            isDone = true;
+        });
+        while (isDone == false)
+            yield return null;
+        isDone = false;
+        
+        Debug.Log("Download ChestInventory");
+        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBChestInventory>(() =>
+        {
+            isDone = true;
+        });
+        while (isDone == false)
+            yield return null;
+        isDone = false;
+        
+        Debug.Log("Download UnitInventory");
+        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBUnitInventory>(() =>
+        {
+            isDone = true;
+        });
+        while (isDone == false)
+            yield return null;
+        isDone = false;
     }
 
     public void ChangeGameState(eGAME_STATE state)

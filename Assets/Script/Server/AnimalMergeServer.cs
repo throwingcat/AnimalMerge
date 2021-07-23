@@ -32,6 +32,7 @@ namespace Server
         {
             DBList.Add(new DBPlayerInfo());
             DBList.Add(new DBChestInventory());
+            DBList.Add(new DBUnitInventory());
         }
 
         public void OnUpdate()

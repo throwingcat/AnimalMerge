@@ -54,7 +54,7 @@ namespace Server
                         PlayerInfo.Instance.NickName = Backend.UserNickName;
                         PlayerInfo.Instance.Level = 1;
                         PlayerInfo.Instance.RankScore = 1000;
-                        Update(null);
+                        Update(onFinishDownload);
                         return;
                     }
 

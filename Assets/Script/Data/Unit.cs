@@ -6,6 +6,8 @@ namespace SheetData
 { 
 	public string group { get; set; }
 
+	public bool isPlayerUnit { get; set; }
+
 	public int index { get; set; }
 
 	public string grow_unit { get; set; }

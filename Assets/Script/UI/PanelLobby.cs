@@ -19,19 +19,11 @@ public class PanelLobby : SUIPanel
     {
         base.OnShow();
 
-        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBPlayerInfo>(() =>
-        {
-            RankScore.text = PlayerInfo.Instance.RankScore.ToString();
-        });
-        
-        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBChestInventory>(() =>
-        {
-            foreach (var chest in Chests)
-                chest.OnUpdate();
-        });
-
         Matching.SetActive(false);
         
+        RankScore.text = PlayerInfo.Instance.RankScore.ToString();
+        foreach (var chest in Chests)
+            chest.OnUpdate();
     }
 
     private void Update()
