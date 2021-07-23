@@ -1,4 +1,5 @@
 using System;
+using System.Security.Permissions;
 using BackEnd;
 using LitJson;
 
@@ -24,7 +25,12 @@ namespace Server
                     {
                         if (field.Name == "inDate") continue;
                         if (field.Name == "isChanged") continue;
-                        param.Add(field.Name, field.GetValue(chest));
+                        
+                        if(field.FieldType == typeof(DateTime))
+                            param.Add(field.Name, field.GetValue(chest).ToString());
+                        else
+                            param.Add(field.Name, field.GetValue(chest));
+                            
                     }
 
                     if (chest.inDate.IsNullOrEmpty())

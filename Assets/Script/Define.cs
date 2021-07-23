@@ -79,6 +79,8 @@ namespace Define
         #region VFX
         public const string VFX_MERGE_ATTACK_TRAIL = "VFX@AttackTrail";
         public const string VFX_MERGE_ATTACK_BOMB = "VFX@AttackBomb";
+        public const string VFX_MERGE_ATTACK_TRAIL_Red = "VFX@AttackTrail_Red";
+        public const string VFX_MERGE_ATTACK_BOMB_Red = "VFX@AttackBomb_Red";
         #endregion
         
         #region Simple Timer

@@ -447,8 +447,8 @@ public class GameCore : MonoSingleton<GameCore>
     {
         var vfx = ResourceManager.Instance.GetUIVFX(Key.VFX_MERGE_ATTACK_TRAIL);
 
-        from.z = 1f;
-        to.z = 1f;
+        from.z = UIManager.Instance.GetLayer(UIManager.eUILayer.VFX).transform.position.z;
+        to.z = from.z;
         //vfx.transform.position = Utils.WorldToCanvas(Camera.main, from, UIManager.Instance.CanvasRect);
         vfx.transform.position = from;
 
@@ -457,7 +457,6 @@ public class GameCore : MonoSingleton<GameCore>
             var bomb = ResourceManager.Instance.GetUIVFX(Key.VFX_MERGE_ATTACK_BOMB);
             bomb.transform.position = to;
             bomb.SetActive(true);
-
             GameManager.DelayInvoke(() =>
             {
                 ResourceManager.Instance.RestoreUIVFX(vfx);
@@ -484,7 +483,7 @@ public class GameCore : MonoSingleton<GameCore>
         if (isGameOver) return;
 
         if (GameManager.ContainsTimer(Key.SIMPLE_TIMER_RUNNING_SKILL)) return;
-        
+
         var isEnable = false;
 
         foreach (var unit in BadUnits)
@@ -749,7 +748,25 @@ public class GameCore : MonoSingleton<GameCore>
         MyBadBlockValue += value;
         MyBadBlockValue = Mathf.Clamp(MyBadBlockValue, 0, MAX_BADBLOCK_VALUE);
 
-        RefreshBadBlockUI();
+        var trail = ResourceManager.Instance.GetUIVFX(Key.VFX_MERGE_ATTACK_TRAIL_Red);
+        Vector3 from = PanelIngame.EnemyBadBlockVFXPoint.position;
+        Vector3 to = PanelIngame.MyBadBlockVFXPoint.position;
+        trail.transform.position = from;
+        trail.SetActive(true);
+        
+        trail.transform.DOMove(to, 0.5f).SetEase(Ease.InQuart).OnComplete(() =>
+        {
+            var bomb = ResourceManager.Instance.GetUIVFX(Key.VFX_MERGE_ATTACK_BOMB_Red);
+            bomb.transform.position = to;
+            bomb.SetActive(true);
+            GameManager.DelayInvoke(() =>
+            {
+                ResourceManager.Instance.RestoreUIVFX(trail);
+                ResourceManager.Instance.RestoreUIVFX(bomb);
+            }, 3f);
+            
+            RefreshBadBlockUI();
+        }).Play();
     }
 
     private void RefreshBadBlockUI()
@@ -835,7 +852,7 @@ public class GameCore : MonoSingleton<GameCore>
         NetworkManager.Instance.Request(packet, (res) =>
         {
             var popup = UIManager.Instance.ShowPopup<PopupGameResult>();
-            popup.SetResult(isWin,beforeScore);            
+            popup.SetResult(isWin, beforeScore);
         });
     }
 
@@ -851,6 +868,8 @@ public class GameCore : MonoSingleton<GameCore>
             var t = delta / duration;
             var st = (from - to) / 2;
             var et = (to - from) / 2;
+            st.z = go.transform.position.z;
+            et.z = st.z;
             go.transform.position = BezierUtility.BezierPoint(from, st, et, to, t);
 
             delta += Time.deltaTime;
@@ -896,6 +915,7 @@ public class GameCore : MonoSingleton<GameCore>
     {
         if (SkillGaugeValue < EnvironmentValue.SKILL_CHARGE_MAX_VALUE) return;
         SkillGaugeValue = 0;
+        PanelIngame.RefreshSkillGauge(0f);
         StartCoroutine(RunSkill_Shake());
     }
 
@@ -910,7 +930,7 @@ public class GameCore : MonoSingleton<GameCore>
             int index = Random.Range(0, BadUnits.Count);
             RemoveUnit(BadUnits[index]);
         }
-        
+
         //모든 블록 위로 튕겨냄
         for (int i = 0; i < BadUnits.Count; i++)
         {
@@ -937,7 +957,7 @@ public class GameCore : MonoSingleton<GameCore>
 
             unit.Rigidbody2D.AddTorque(torque);
         }
-        
+
         yield break;
     }
 }

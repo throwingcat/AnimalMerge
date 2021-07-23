@@ -24,6 +24,7 @@ public class PanelIngame : SUIPanel
     public Transform MyBadBlockVFXPoint;
 
     public GameObject SkillRoot;
+    public GameObject SkillActivate;
     public Image SkillGauge;
     public Image SkillIcon;
 
@@ -68,7 +69,7 @@ public class PanelIngame : SUIPanel
         //이전에 사용한 블록 반납
         foreach (var block in _badBlocks)
         {
-            if(block.gameObject)
+            if (block.gameObject)
                 pool.Restore(block.gameObject);
         }
 
@@ -192,8 +193,8 @@ public class PanelIngame : SUIPanel
     public void RefreshSkillGauge(float t)
     {
         SkillGauge.fillAmount = t;
-        SkillIcon.color =
-            t <= 1f ? Color.gray : Color.white;
+        SkillIcon.color = t <= 1f ? Color.gray : Color.white;
+        SkillActivate.SetActive(t >= 1f);
     }
 
     public void OnClickSkill()

@@ -7323,6 +7323,7 @@ MonoBehaviour:
   VFXComboPrefab: {fileID: 3779920667239857559, guid: dda9493c1a7012f4fb279c1df73ecce4, type: 3}
   MyBadBlockVFXPoint: {fileID: 7011067894916479851}
   SkillRoot: {fileID: 3635733534317682129}
+  SkillActivate: {fileID: 4337392206883441759}
   SkillGauge: {fileID: 8239149961030477623}
   SkillIcon: {fileID: 3844404910212840029}
   NextBlock: {fileID: 4666680912342012608}
