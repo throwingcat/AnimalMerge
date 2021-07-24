@@ -104,7 +104,9 @@
      <Compile Include="Assets\Script\PlayerData\PlayerInfo.cs" />
      <Compile Include="Assets\Script\Data\Unit.cs" />
      <Compile Include="Assets\Script\PartBase.cs" />
+     <Compile Include="Assets\Script\Server\DBUnitInventory.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\StringUtils.cs" />
+     <Compile Include="Assets\Script\PlayerData\UnitInventory.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModulePhysics2D.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\DOTweenTk2d.cs" />
@@ -141,7 +143,7 @@
      <Compile Include="Assets\Script\Unit\SyncUnitBase.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleUI.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\JoyStick\Script\JoyStickReceiver.cs" />
-     <Compile Include="Assets\Script\UI\PopupChestOpen.cs" />
+     <Compile Include="Assets\Script\UI\PopupChestUnlock.cs" />
      <Compile Include="Assets\Script\GameManager.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\Logger.cs" />
      <Compile Include="Assets\Script\Uitls\CameraResolution.cs" />
@@ -160,6 +162,7 @@
      <Compile Include="Assets\Script\Data\Chest.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\BlurMode.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\Matrix2x3.cs" />
+     <Compile Include="Assets\Script\Data\UnitLevel.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIDragSlider.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\UI\UITracker.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Manager\RenderTextureManager.cs" />
@@ -170,9 +173,10 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPanelInfo.cs" />
      <Compile Include="Assets\Script\UI\PanelLobby.cs" />
      <Compile Include="Assets\Script\PlayerData\ChestInventory.cs" />
-     <Compile Include="Assets\Script\Data\UnitLevel.cs" />
-     <Compile Include="Assets\Script\PlayerData\UnitInventory.cs" />
-     <Compile Include="Assets\Script\Server\DBUnitInventory.cs" />
+     <Compile Include="Assets\Script\UI\SlicedFilledImage.cs" />
+     <Compile Include="Assets\Script\UI\PopupChestOpen.cs" />
+     <Compile Include="Assets\Script\UI\PartUnitCard.cs" />
+     <Compile Include="Assets\Script\Data\ItemInfo.cs" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\SoftMask.cginc" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Dissolve.shader" />

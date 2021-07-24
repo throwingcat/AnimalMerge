@@ -154,7 +154,7 @@ public class PartLobbyChest : MonoBehaviour
         {
             if (ChestInventory.Instance.Chests[Index].isProgress == false)
             {
-                var popup = UIManager.Instance.ShowPopup<PopupChestOpen>();
+                var popup = UIManager.Instance.ShowPopup<PopupChestUnlock>();
                 popup.Set(ChestInventory.Instance.Chests[Index]);
             }
             else
