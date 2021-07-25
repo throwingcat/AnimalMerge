@@ -30,6 +30,12 @@ namespace Define
         Falling,
         Complete,
     }
+
+    public enum eItemType
+    {
+        Currency,
+        Card,
+    }
     
     public class EnvironmentValue
     {

@@ -31,6 +31,7 @@ public class ChestInventory
             Chests.Add(chest);
             return true;
         }
+
         return false;
     }
 
@@ -45,6 +46,7 @@ public class ChestInventory
                 return true;
             }
         }
+
         return false;
     }
 
@@ -61,7 +63,7 @@ public class ChestInventory
             }
         }
     }
-    
+
     public void Remove(string indate)
     {
         for (var i = 0; i < Chests.Count; i++)
@@ -84,6 +86,17 @@ public class ChestInventory
         return false;
     }
 
+    public Chest Get(string inDate)
+    {
+        for (int i = 0; i < Chests.Count; i++)
+        {
+            if (Chests[i].inDate == inDate)
+                return Chests[i];
+        }
+
+        return null;
+    }
+
     public class Chest
     {
         public string inDate;
@@ -95,18 +108,20 @@ public class ChestInventory
         public DateTime GetTime;
 
         public SheetData.Chest Sheet => Key.ToTableData<SheetData.Chest>();
+
         public int GetGoldMin()
         {
-            return (int)(Sheet.gold_min * ((Grade + 1.5f) + 1f));
+            return (int) (Sheet.gold_min * ((Grade + 1.5f) + 1f));
         }
+
         public int GetGoldMax()
         {
-            return (int)(Sheet.gold_max * ((Grade + 1.5f) + 1f));
+            return (int) (Sheet.gold_max * ((Grade + 1.5f) + 1f));
         }
 
         public int GetCardQuantity()
         {
-            return (int)(Sheet.amount * ((Grade + 1.5f) + 1f));
+            return (int) (Sheet.amount * ((Grade + 1.5f) + 1f));
         }
     }
 }

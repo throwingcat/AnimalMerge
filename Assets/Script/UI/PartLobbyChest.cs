@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Packet;
 using SheetData;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,6 +23,7 @@ public class PartLobbyChest : MonoBehaviour
     public GameObject[] ProgressGrade;
 
     public GameObject Root;
+
     public enum eSTATE
     {
         Empty,
@@ -33,7 +35,7 @@ public class PartLobbyChest : MonoBehaviour
     public eSTATE State = eSTATE.Empty;
     public int Index = 0;
 
-    public Chest Sheet
+    public ChestInventory.Chest Chest
     {
         get
         {
@@ -41,28 +43,36 @@ public class PartLobbyChest : MonoBehaviour
             {
                 if (ChestInventory.Instance.Chests[Index].inDate.IsNullOrEmpty() == false &&
                     ChestInventory.Instance.Chests[Index].Key.IsNullOrEmpty() == false)
-                {
-                    return ChestInventory.Instance.Chests[Index].Key.ToTableData<Chest>();
-                }
+                    return ChestInventory.Instance.Chests[Index];
             }
+
+            return null;
+        }
+    }
+
+    public SheetData.Chest Sheet
+    {
+        get
+        {
+            if (Chest != null)
+                return Chest.Key.ToTableData<Chest>();
             return null;
         }
     }
 
     public void OnUpdate()
     {
-        if(Sheet == null)
+        if (Chest == null)
             SetEmpty();
         else
         {
             foreach (var t in Texture)
             {
-                var sheet = ChestInventory.Instance.Chests[Index].Key.ToTableData<Chest>();
-                t.sprite = sheet.texture.ToSprite();
+                t.sprite = Sheet.texture.ToSprite();
             }
 
             var chest = ChestInventory.Instance.Chests[Index];
-            
+
             //대기 상태
             if (chest.isProgress == false)
             {
@@ -71,11 +81,11 @@ public class PartLobbyChest : MonoBehaviour
             else
             {
                 var remain = chest.StartTime.AddSeconds(Sheet.time) - GameManager.GetTime();
-                
+
                 //진행중
                 if (0 < remain.TotalSeconds)
                 {
-                    SetProgress((long)remain.TotalSeconds);
+                    SetProgress((long) remain.TotalSeconds);
                 }
                 //완료
                 else
@@ -100,7 +110,8 @@ public class PartLobbyChest : MonoBehaviour
             SetActiveRoot(State);
             NeedTime.text = Utils.ParseSeconds(Sheet.time);
         }
-        int grade = ChestInventory.Instance.Chests[Index].Grade;
+
+        int grade = Chest.Grade;
         for (int i = 0; i < ReadyGrade.Length; i++)
         {
             ReadyGrade[i].SetActive(i < grade);
@@ -113,12 +124,13 @@ public class PartLobbyChest : MonoBehaviour
         {
             State = eSTATE.Progress;
             SetActiveRoot(State);
-            int grade = ChestInventory.Instance.Chests[Index].Grade;
+            int grade = Chest.Grade;
             for (int i = 0; i < ProgressGrade.Length; i++)
             {
                 ProgressGrade[i].SetActive(i < grade);
             }
         }
+
         RemainTime.text = Utils.ParseSeconds(remain_seconds);
     }
 
@@ -148,18 +160,35 @@ public class PartLobbyChest : MonoBehaviour
     {
         Root.transform.DOScale(1f, 0.2f).SetRelative(false).SetEase(Ease.OutElastic).Play();
     }
+
     public void OnClick()
     {
         if (Sheet != null)
         {
-            if (ChestInventory.Instance.Chests[Index].isProgress == false)
+            switch (State)
             {
-                var popup = UIManager.Instance.ShowPopup<PopupChestUnlock>();
-                popup.Set(ChestInventory.Instance.Chests[Index]);
-            }
-            else
-            {
-                //빠르게 열기
+                case eSTATE.Empty:
+                    break;
+                case eSTATE.Ready:
+                {
+                    var popup = UIManager.Instance.ShowPopup<PopupChestUnlock>();
+                    popup.Set(Chest);
+                }
+                    break;
+                case eSTATE.Progress:
+                    break;
+                case eSTATE.Complete:
+                {
+                    var packet = new PacketBase();
+                    packet.PacketType = ePACKET_TYPE.CHEST_COMPLETE;
+                    packet.hash.Add("inDate", Chest.inDate);
+                    NetworkManager.Instance.Request(packet, (res) =>
+                    {
+                        var popup = UIManager.Instance.ShowPopup<PopupChestUnlock>();
+                        popup.Set(Chest);
+                    });
+                }
+                    break;
             }
         }
     }

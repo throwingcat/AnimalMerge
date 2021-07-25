@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using BackEnd;
 using Define;
+using Packet;
 using Server;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,6 +44,26 @@ public class PanelLobby : SUIPanel
                 foreach (var chest in Chests)
                     chest.OnUpdate();
             });
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            foreach (var chest in ChestInventory.Instance.Chests)
+            {
+                if (chest.inDate.IsNullOrEmpty() == false && chest.Key.IsNullOrEmpty() == false)
+                {
+                    var packet = new PacketBase();
+                    packet.PacketType = ePACKET_TYPE.CHEST_COMPLETE;
+                    packet.hash= new Hashtable();
+                    packet.hash.Add("inDate",chest.inDate);
+                    NetworkManager.Instance.Request(packet, (res) =>
+                    {
+                        var resReward = res as PacketReward;
+                        Debug.Log(resReward.Rewards);
+                    });
+                    break;
+                }
+            }
         }
     }
 

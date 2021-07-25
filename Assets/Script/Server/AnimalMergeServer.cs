@@ -9,6 +9,7 @@ using MessagePack;
 using SheetData;
 using UnityEngine;
 using Violet;
+using Random = UnityEngine.Random;
 
 namespace Server
 {
@@ -58,6 +59,9 @@ namespace Server
                 case Packet.ePACKET_TYPE.CHEST_PROGRESS:
                     ProgressChest(packet);
                     break;
+                case Packet.ePACKET_TYPE.CHEST_COMPLETE:
+                    CompleteChest(packet);
+                    break;
             }
         }
 
@@ -78,7 +82,7 @@ namespace Server
             //승리 처리
             else
             {
-                BattleWinProcess(() => { SendPacket(packet);  });
+                BattleWinProcess(() => { SendPacket(packet); });
             }
         }
 
@@ -144,14 +148,101 @@ namespace Server
         {
             string inDate = packet.hash["inDate"].ToString();
             ChestInventory.Instance.Progress(inDate);
-            UpdateDB<DBChestInventory>(() =>
-            {
-                SendPacket(packet); 
-            });
+            UpdateDB<DBChestInventory>(() => { SendPacket(packet); });
         }
 
-        public void CompleteChest()
+        public void CompleteChest(PacketBase packet)
         {
+            string inDate = packet.hash["inDate"].ToString();
+            var chest = ChestInventory.Instance.Get(inDate);
+
+            CompleteChestProcess(chest, (rewards) =>
+            {
+                PacketReward packetReward = new PacketReward();
+                packetReward.PacketType = Packet.ePACKET_TYPE.CHEST_COMPLETE;
+                packetReward.hash = packet.hash;
+                packetReward.Rewards = rewards;
+                SendPacket(packetReward);
+            });
+
+            ChestInventory.Instance.Remove(inDate);
+        }
+
+        public void CompleteChestProcess(ChestInventory.Chest chest, Action<List<ItemInfo>> onFinish)
+        {
+            //받을수 있는 목록 정리
+            int max_exp = "13".ToTableData<UnitLevel>().total;
+            List<string> get_table = new List<string>();
+            foreach (var group in UnitInventory.Instance.Units)
+            {
+                foreach (var unit in group.Value)
+                {
+                    if (unit.Exp < max_exp)
+                        get_table.Add(unit.Key);
+                }
+            }
+
+            //무작위로 분리
+            int amount = chest.Sheet.amount;
+            int pick_count = Random.Range(3, 7);
+            List<int> randomize_spilt = new List<int>();
+            int total_redomize_value = 0;
+            for (int i = 0; i < pick_count; i++)
+            {
+                int rand = Random.Range(0, amount);
+                total_redomize_value += rand;
+                randomize_spilt.Add(rand);
+            }
+
+            //보상 추가
+            List<ItemInfo> rewards = new List<ItemInfo>();
+            for (int i = 0; i < pick_count; i++)
+            {
+                if (get_table.Count == 0) break;
+                var result = Utils.RandomPickDefault(get_table);
+                get_table.Remove(result);
+
+                ItemInfo itemInfo = new ItemInfo()
+                {
+                    Key = result,
+                    Type = eItemType.Card,
+                    Amount = (int)((randomize_spilt[i] / (float)total_redomize_value) * amount),
+                };
+                rewards.Add(itemInfo);
+            }
+
+            //보상 확인
+            int result_amount = 0;
+            int high_amount_reward = 0;
+            int high_amount_reward_index = -1;
+            for (int i = 0; i < rewards.Count; i++)
+            {
+                if (high_amount_reward < rewards[i].Amount)
+                {
+                    high_amount_reward = rewards[i].Amount;
+                    high_amount_reward_index = i;
+                }
+
+                result_amount += rewards[i].Amount;
+            }
+
+            result_amount = amount - result_amount;
+
+            //보상 숫자 정리
+            if (high_amount_reward_index != -1)
+                rewards[high_amount_reward_index].Amount -= result_amount;
+
+            //남은 보상만큼 골드 추가
+            ItemInfo gold = new ItemInfo()
+            {
+                Key = "Gold",
+                Type = eItemType.Currency,
+                Amount = (int) (Random.Range(chest.Sheet.gold_min, chest.Sheet.gold_max) + result_amount * 3f),
+            };
+
+            rewards.Add(gold);
+
+            onFinish?.Invoke(rewards);
         }
 
         #endregion
@@ -168,12 +259,11 @@ namespace Server
             db.Update(onFinish);
         }
 
-        public void SendPacket(PacketBase packet)
+        public void SendPacket<T>(T packet) where T : PacketBase
         {
-            var lz4Options =
-                MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
+            var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
             var bytes = MessagePackSerializer.Serialize(packet, lz4Options);
-            
+
             NetworkManager.Instance.ReceivePacket(bytes);
         }
 
@@ -245,6 +335,12 @@ namespace Server
         {
             [Key(0)] public Packet.ePACKET_TYPE PacketType;
             [Key(1)] public Hashtable hash;
+        }
+
+        [MessagePackObject]
+        public class PacketReward : PacketBase
+        {
+            [Key(2)] public List<ItemInfo> Rewards = new List<ItemInfo>();
         }
 
         public T GetDB<T>() where T : DBBase

@@ -7,7 +7,7 @@ public class PartUnitCard : MonoBehaviour
 {
     public CanvasGroup CardImageGroup;
     public CanvasGroup CardDescriptionGroup;
-    
+    public GameObject Root;
     public Image Frame;
     public Image Icon;
     public Text Level;

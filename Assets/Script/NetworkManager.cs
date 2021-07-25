@@ -392,9 +392,21 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         PacketBase packet = MessagePackSerializer.Deserialize<Packet.PacketBase>(bytes, lz4Options);
 
         string guid = packet.hash["packet_guid"].ToString();
+
         if (_waitingPacket.ContainsKey(guid))
         {
-            _waitingPacket[guid]?.Invoke(packet);
+            switch (packet.PacketType)
+            {
+                case ePACKET_TYPE.CHEST_COMPLETE:
+                {
+                    PacketReward res = MessagePackSerializer.Deserialize<Packet.PacketReward>(bytes, lz4Options);
+                    _waitingPacket[guid]?.Invoke(res);
+                }
+                    break;
+                default:
+                    _waitingPacket[guid]?.Invoke(packet);
+                    break;
+            }
             _waitingPacket.Remove(guid);
         }
     }
