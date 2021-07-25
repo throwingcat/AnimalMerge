@@ -58,7 +58,8 @@ SpriteAtlas:
     - {fileID: 102900000, guid: c7b50fe91a6b74b4bb2934041f78addd, type: 3}
     - {fileID: 102900000, guid: 0dcf213ce157a314080be094c25a343a, type: 3}
     - {fileID: 102900000, guid: faf346794701d2946b6c2c15ba0b2997, type: 3}
-    totalSpriteSurfaceArea: 2514729
+    - {fileID: 102900000, guid: 1683a1423fa098848928f6327a3515c7, type: 3}
+    totalSpriteSurfaceArea: 2559477
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -140,6 +141,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 035714ee130adea4a810c053a46df6db, type: 3}
   - {fileID: 21300000, guid: e8431c3ffbffb9148b56640b27609dd3, type: 3}
   - {fileID: 21300000, guid: f2b4ed4f57deeb24c823152088986f8f, type: 3}
+  - {fileID: 21300000, guid: aca9c25fb46f85149bb41c3630f80379, type: 3}
   - {fileID: 21300000, guid: 4d1a2b5f8c8456047a10d841d67c5f10, type: 3}
   - {fileID: 21300000, guid: bf7e5e7f023b51f489e5d7bb078c2700, type: 3}
   - {fileID: 21300000, guid: 2d1aa5af277162c4d8e8de2e4b827886, type: 3}
@@ -225,6 +227,7 @@ SpriteAtlas:
   - btn_bottom_menu_on
   - bg_container_inner
   - icon_goldMark_empty
+  - bad
   - btn_bottom_menu_off
   - piece_cat9
   - gauge_timeOut_fg
