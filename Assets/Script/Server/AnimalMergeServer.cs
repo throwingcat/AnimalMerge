@@ -8,6 +8,7 @@ using LitJson;
 using MessagePack;
 using SheetData;
 using UnityEngine;
+using UnityEngine.Monetization;
 using Violet;
 using Random = UnityEngine.Random;
 
@@ -158,14 +159,27 @@ namespace Server
 
             CompleteChestProcess(chest, (rewards) =>
             {
-                PacketReward packetReward = new PacketReward();
-                packetReward.PacketType = Packet.ePACKET_TYPE.CHEST_COMPLETE;
-                packetReward.hash = packet.hash;
-                packetReward.Rewards = rewards;
-                SendPacket(packetReward);
+                ChestInventory.Instance.Remove(inDate);
+                
+                UpdateDB<DBChestInventory>(() =>
+                {
+                    foreach (var reward in rewards)
+                    {
+                        if (reward.Type == eItemType.Card)
+                            UnitInventory.Instance.GainEXP(reward.Key, reward.Amount);        
+                    }
+                    UpdateDB<DBUnitInventory>(() =>
+                    {
+                        PacketReward packetReward = new PacketReward();
+                        packetReward.PacketType = Packet.ePACKET_TYPE.CHEST_COMPLETE;
+                        packetReward.hash = packet.hash;
+                        packetReward.Rewards = rewards;
+                        SendPacket(packetReward);    
+                    });
+                });
             });
 
-            ChestInventory.Instance.Remove(inDate);
+            
         }
 
         public void CompleteChestProcess(ChestInventory.Chest chest, Action<List<ItemInfo>> onFinish)

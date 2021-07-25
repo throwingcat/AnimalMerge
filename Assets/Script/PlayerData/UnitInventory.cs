@@ -56,7 +56,23 @@ public class UnitInventory
             ChangedGroup[group] = false;
         ChangedGroup[group] = true;
     }
-    
+
+    public void GainEXP(string key,int value)
+    {
+        var sheet = key.ToTableData<SheetData.Unit>();
+
+        if (Units.ContainsKey(sheet.group))
+        {
+            foreach (var unit in Units[sheet.group])
+            {
+                if (unit.Key == key)
+                {
+                    unit.Exp += value;
+                    SetChangedGroup(sheet.group);
+                }
+            }
+        }
+    }
     public class Unit
     {
         public string Key;
