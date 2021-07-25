@@ -745,6 +745,8 @@ public class GameCore : MonoSingleton<GameCore>
 
     private void OnReceiveBadBlock(int value)
     {
+        if (value == 0) return;
+        
         MyBadBlockValue += value;
         MyBadBlockValue = Mathf.Clamp(MyBadBlockValue, 0, MAX_BADBLOCK_VALUE);
 

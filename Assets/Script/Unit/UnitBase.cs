@@ -87,8 +87,7 @@ public class UnitBase : MonoBehaviour
     protected static Sprite GetSprite(string unit_key)
     {
         var sheet = TableManager.Instance.GetData<Unit>(unit_key);
-        string path = string.Format("AnimalMerge/{0}/{1}", sheet.group, sheet.face_texture);
-        return Resources.Load<Sprite>(path);
+        return sheet.face_texture.ToSprite();
     }
 
     public void SetActivePhysics(bool isActive)
