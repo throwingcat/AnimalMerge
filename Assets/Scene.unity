@@ -3331,7 +3331,7 @@ MonoBehaviour:
   CSVDownloadConfig: {fileID: 11400000, guid: 732f6322be387da4eb774aa90b9e20f1, type: 2}
   CurrentGameState: 0
   GUID: 
-  isSinglePlay: 1
+  isSinglePlay: 0
   PartSceneChange: {fileID: 457220826}
 --- !u!1 &1809615404
 GameObject:
