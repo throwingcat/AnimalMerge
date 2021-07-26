@@ -35,15 +35,15 @@ public class PartLobbyChest : MonoBehaviour
     public eSTATE State = eSTATE.Empty;
     public int Index = 0;
 
-    public ChestInventory.Chest Chest
+    public ChestInventory.ChestSlot ChestSlot
     {
         get
         {
-            if (Index < ChestInventory.Instance.Chests.Count)
+            if (Index < ChestInventory.Instance.ChestSlots.Length)
             {
-                if (ChestInventory.Instance.Chests[Index].inDate.IsNullOrEmpty() == false &&
-                    ChestInventory.Instance.Chests[Index].Key.IsNullOrEmpty() == false)
-                    return ChestInventory.Instance.Chests[Index];
+                if (ChestInventory.Instance.ChestSlots[Index].inDate.IsNullOrEmpty() == false &&
+                    ChestInventory.Instance.ChestSlots[Index].Key.IsNullOrEmpty() == false)
+                    return ChestInventory.Instance.ChestSlots[Index];
             }
 
             return null;
@@ -54,15 +54,15 @@ public class PartLobbyChest : MonoBehaviour
     {
         get
         {
-            if (Chest != null)
-                return Chest.Key.ToTableData<Chest>();
+            if (ChestSlot != null)
+                return ChestSlot.Key.ToTableData<Chest>();
             return null;
         }
     }
 
     public void OnUpdate()
     {
-        if (Chest == null)
+        if (ChestSlot == null)
             SetEmpty();
         else
         {
@@ -71,7 +71,7 @@ public class PartLobbyChest : MonoBehaviour
                 t.sprite = Sheet.texture.ToSprite();
             }
 
-            var chest = ChestInventory.Instance.Chests[Index];
+            var chest = ChestInventory.Instance.ChestSlots[Index];
 
             //대기 상태
             if (chest.isProgress == false)
@@ -111,7 +111,7 @@ public class PartLobbyChest : MonoBehaviour
             NeedTime.text = Utils.ParseSeconds(Sheet.time);
         }
 
-        int grade = Chest.Grade;
+        int grade = ChestSlot.Grade;
         for (int i = 0; i < ReadyGrade.Length; i++)
         {
             ReadyGrade[i].SetActive(i < grade);
@@ -124,7 +124,7 @@ public class PartLobbyChest : MonoBehaviour
         {
             State = eSTATE.Progress;
             SetActiveRoot(State);
-            int grade = Chest.Grade;
+            int grade = ChestSlot.Grade;
             for (int i = 0; i < ProgressGrade.Length; i++)
             {
                 ProgressGrade[i].SetActive(i < grade);
@@ -172,7 +172,7 @@ public class PartLobbyChest : MonoBehaviour
                 case eSTATE.Ready:
                 {
                     var popup = UIManager.Instance.ShowPopup<PopupChestUnlock>();
-                    popup.Set(Chest);
+                    popup.Set(ChestSlot);
                 }
                     break;
                 case eSTATE.Progress:
@@ -181,11 +181,15 @@ public class PartLobbyChest : MonoBehaviour
                 {
                     var packet = new PacketBase();
                     packet.PacketType = ePACKET_TYPE.CHEST_COMPLETE;
-                    packet.hash.Add("inDate", Chest.inDate);
+                    packet.hash = new Hashtable();
+                    packet.hash.Add("inDate", ChestSlot.inDate);
+                    packet.hash.Add("chest_key", ChestSlot.Key);
+                    
                     NetworkManager.Instance.Request(packet, (res) =>
                     {
-                        var popup = UIManager.Instance.ShowPopup<PopupChestUnlock>();
-                        popup.Set(Chest);
+                        var packet = res as PacketReward;
+                        var popup = UIManager.Instance.ShowPopup<PopupChestOpen>();
+                        popup.Set(res.hash["chest_key"].ToString(), packet.Rewards);
                     });
                 }
                     break;

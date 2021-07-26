@@ -7,52 +7,63 @@ public class ChestInventory
 {
     private static ChestInventory _instance;
 
-    public List<Chest> Chests = new List<Chest>();
+    public ChestSlot[] ChestSlots;
 
     public static ChestInventory Instance
     {
         get
         {
             if (_instance == null)
+            {
                 _instance = new ChestInventory();
+                _instance.ChestSlots = new ChestSlot[EnvironmentValue.CHEST_SLOT_MAX_COUNT];
+            }
+
             return _instance;
         }
     }
 
-    public bool Insert(string key)
+    public ChestSlot GetEmptySlot()
     {
-        if (Chests.Count < EnvironmentValue.CHEST_SLOT_MAX_COUNT)
+        foreach (var slot in ChestSlots)
         {
-            var chest = new Chest();
-            chest.Key = key;
-            chest.GetTime = GameManager.GetTime();
-            chest.isChanged = true;
-
-            Chests.Add(chest);
-            return true;
+            if (slot.Key.IsNullOrEmpty())
+                return slot;
         }
 
-        return false;
+        return null;
     }
 
-    public bool Upgrade(string inDate)
+    public void Insert(string key)
     {
-        foreach (var chest in Chests)
+        var slot = GetEmptySlot();
+        if (slot != null)
+        {
+            slot.Key = key;
+            slot.isProgress = false;
+            slot.Grade = 0;
+            slot.StartTime = new DateTime();
+            slot.GetTime = GameManager.GetTime();
+            
+            slot.isChanged = true;
+        }
+    }
+
+    public void Upgrade(string inDate)
+    {
+        foreach (var chest in ChestSlots)
         {
             if (chest.inDate == inDate)
             {
                 chest.Grade++;
                 chest.isChanged = true;
-                return true;
             }
         }
-
-        return false;
     }
 
     public void Progress(string inDate)
     {
-        foreach (var chest in Chests)
+        foreach (var chest in ChestSlots)
         {
             if (chest.inDate == inDate)
             {
@@ -64,40 +75,40 @@ public class ChestInventory
         }
     }
 
-    public void Remove(string indate)
+    public void Remove(string inDate)
     {
-        for (var i = 0; i < Chests.Count; i++)
-            if (Chests[i].inDate == indate)
+        for (var i = 0; i < ChestSlots.Length; i++)
+            if (ChestSlots[i].inDate == inDate)
             {
-                Chests[i].inDate = "";
-                Chests[i].Key = "";
-                Chests[i].isChanged = true;
+                ChestSlots[i].Key = "";
+                ChestSlots[i].isChanged = true;
             }
     }
 
     public bool isContains(string inDate)
     {
-        for (int i = 0; i < Chests.Count; i++)
+        for (int i = 0; i < ChestSlots.Length; i++)
         {
-            if (Chests[i].inDate == inDate)
+            if (ChestSlots[i] == null) continue;
+            if (ChestSlots[i].inDate == inDate)
                 return true;
         }
 
         return false;
     }
 
-    public Chest Get(string inDate)
+    public ChestSlot Get(string inDate)
     {
-        for (int i = 0; i < Chests.Count; i++)
+        for (int i = 0; i < ChestSlots.Length; i++)
         {
-            if (Chests[i].inDate == inDate)
-                return Chests[i];
+            if (ChestSlots[i].inDate == inDate)
+                return ChestSlots[i];
         }
 
         return null;
     }
 
-    public class Chest
+    public class ChestSlot
     {
         public string inDate;
         public bool isChanged;

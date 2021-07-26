@@ -2,6 +2,9 @@
    "BaseURL": "https://shdd.synology.me/Simon/Animal Merge/Sheet",
    "Files": [
       {
+         "Name": "Item"
+      },
+      {
          "Name": "Unit"
       },
       {

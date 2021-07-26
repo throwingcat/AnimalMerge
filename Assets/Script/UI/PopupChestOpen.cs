@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Define;
 using DG.Tweening;
 using SheetData;
 using UnityEngine;
@@ -47,19 +48,16 @@ public class PopupChestOpen : SUIPanel
         base.OnHide();
 
         _isInitialize = false;
-    }
-
-    private void OnEnable()
-    {
-        OnShow();
-        _isInitialize = true;
+        _inputEvent = null;
     }
 
     public void Set(string chest_key, List<ItemInfo> Rewards)
     {
         _rewards = Rewards;
 
-        Chest.sprite = chest_key.ToTableData<Chest>().texture.ToSprite();
+        var sheet = chest_key.ToTableData<Chest>();
+        if (sheet != null)
+            Chest.sprite = sheet.texture.ToSprite();
         _isInitialize = true;
     }
 
@@ -79,31 +77,7 @@ public class PopupChestOpen : SUIPanel
         bool isDone = false;
         _inputEvent = () => isDone = true;
         yield return new WaitUntil(() => isDone);
-
-        if (_rewards.Count == 0)
-        {
-            _rewards.Add(new ItemInfo()
-            {
-                Amount = 5,
-            });
-            _rewards.Add(new ItemInfo()
-            {
-                Amount = 20
-            });
-            _rewards.Add(new ItemInfo()
-            {
-                Amount = 100,
-            });
-            _rewards.Add(new ItemInfo()
-            {
-                Amount = 1000,
-            });
-            _rewards.Add(new ItemInfo()
-            {
-                Amount = 1,
-            });
-        }
-
+        
         //상자 아래로 이동
         Chest.transform.DOLocalMoveY(-120f, 0.5f).SetRelative(true).SetEase(Ease.OutQuad).Play();
 
@@ -118,6 +92,36 @@ public class PopupChestOpen : SUIPanel
         int open_index = 0;
         while (open_index < _rewards.Count)
         {
+            var reward = _rewards[open_index];
+            //아이템 정보 설정
+            switch (reward.Type)
+            {
+                case eItemType.Currency:
+                {
+                    var sheet = reward.Key.ToTableData<SheetData.Item>();
+                    GetCurrentReward.SetTexutre(sheet.Texture);
+                    GetCurrentReward.SetName(sheet.Name.ToLocalization());
+                    GetCurrentReward.SetGroup(sheet.Type.ToLocalization());
+                }
+                    break;
+                case eItemType.Card:
+                {
+                    var sheet = reward.Key.ToTableData<SheetData.Unit>();
+                    GetCurrentReward.SetTexutre(sheet.face_texture);
+                    GetCurrentReward.SetName(sheet.name.ToLocalization());
+                    GetCurrentReward.SetGroup(string.Format("group_{0}", sheet.group.ToLower()).ToLocalization());
+
+                    var unit = UnitInventory.Instance.Get(sheet.key);
+                    GetCurrentReward.SetLevel(unit.Level);
+                    var next_level_sheet = (unit.Level + 1).ToString().ToTableData<UnitLevel>();
+                    if(next_level_sheet != null)
+                        GetCurrentReward.SetExp(unit.Exp, next_level_sheet.exp);
+                    else
+                        GetCurrentReward.SetExp(1, 1);
+                }
+                    break;
+            }
+            
             DOTween.KillAll();
 
             var itemInfo = _rewards[open_index];
@@ -173,10 +177,7 @@ public class PopupChestOpen : SUIPanel
 
             int offset = current_exp - prev_exp;
             float sec = Mathf.Clamp(offset / 50f, 0.25f, 1.5f);
-            DOTween.To(() => prev_exp, x =>
-            {
-                GetCurrentReward.SetExp(x, 10);
-            }, current_exp, sec);
+            DOTween.To(() => prev_exp, x => { GetCurrentReward.SetExp(x, 10); }, current_exp, sec);
 
             isDone = false;
             _inputEvent = () => isDone = true;
@@ -195,6 +196,10 @@ public class PopupChestOpen : SUIPanel
             Rewards[i].Root.gameObject.SetActive(true);
             yield return new WaitForSeconds(0.1f);
         }
+
+        yield return new WaitForSeconds(0.5f);
+        _inputEvent = null;
+        _inputEvent = () => { BackPress(); };
     }
 
     public void OnClickTouchArea()

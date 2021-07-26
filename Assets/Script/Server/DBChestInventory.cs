@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Security.Permissions;
 using BackEnd;
+using Define;
 using LitJson;
 
 namespace Server
@@ -14,7 +16,7 @@ namespace Server
 
         public override void DoUpdate()
         {
-            foreach (var chest in ChestInventory.Instance.Chests)
+            foreach (var chest in ChestInventory.Instance.ChestSlots)
             {
                 if (chest.isChanged)
                 {
@@ -72,6 +74,9 @@ namespace Server
                 else
                 {
                     var rows = bro.Rows();
+                    
+                    ChestInventory.Instance.ChestSlots = new ChestInventory.ChestSlot[EnvironmentValue.CHEST_SLOT_MAX_COUNT];
+                    int index = 0;
                     foreach (JsonData row in rows)
                     {
                         string inDate = row["inDate"]["S"].ToString();
@@ -80,12 +85,12 @@ namespace Server
                         if (ChestInventory.Instance.isContains(inDate) == false)
                         {
                             //데이터 추가
-                            ChestInventory.Chest chest = new ChestInventory.Chest();
-                            chest.inDate = inDate;
-                            ChestInventory.Instance.Chests.Add(chest);
+                            ChestInventory.Instance.ChestSlots[index] = new ChestInventory.ChestSlot();
+                            ChestInventory.Instance.ChestSlots[index].inDate = inDate;
+                            index++;
                         }
-
-                        foreach (var chest in ChestInventory.Instance.Chests)
+                        
+                        foreach (var chest in ChestInventory.Instance.ChestSlots)
                         {
                             if (chest.inDate == inDate)
                             {
@@ -106,7 +111,9 @@ namespace Server
                         }
                     }
                 }
-                ChestInventory.Instance.Chests.Sort((a, b) =>
+                
+                Array.Sort(ChestInventory.Instance.ChestSlots,
+                (a, b) =>
                 {
                     if (a.GetTime < b.GetTime) return -1;
                     if (a.GetTime > b.GetTime) return 1;

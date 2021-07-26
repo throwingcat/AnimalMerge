@@ -48,18 +48,16 @@ public class PanelLobby : SUIPanel
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            foreach (var chest in ChestInventory.Instance.Chests)
+            foreach (var chest in ChestInventory.Instance.ChestSlots)
             {
                 if (chest.inDate.IsNullOrEmpty() == false && chest.Key.IsNullOrEmpty() == false)
                 {
-                    var packet = new PacketBase();
-                    packet.PacketType = ePACKET_TYPE.CHEST_COMPLETE;
-                    packet.hash= new Hashtable();
-                    packet.hash.Add("inDate",chest.inDate);
-                    NetworkManager.Instance.Request(packet, (res) =>
+                    chest.StartTime  = new DateTime();
+                    chest.isChanged = true;
+                    AnimalMergeServer.Instance.UpdateDB<DBChestInventory>(() =>
                     {
-                        var resReward = res as PacketReward;
-                        Debug.Log(resReward.Rewards);
+                        foreach (var chest in Chests)
+                            chest.OnUpdate();
                     });
                     break;
                 }

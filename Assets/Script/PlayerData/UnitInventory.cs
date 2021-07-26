@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Define;
 using UnityEngine;
 
 public class UnitInventory
@@ -72,6 +73,22 @@ public class UnitInventory
                 }
             }
         }
+    }
+
+    public Unit Get(string key)
+    {
+        var sheet = key.ToTableData<SheetData.Unit>();
+
+        if (Units.ContainsKey(sheet.group))
+        {
+            foreach (var unit in Units[sheet.group])
+            {
+                if (unit.Key == key)
+                    return unit;
+            }
+        }
+
+        return null;
     }
     public class Unit
     {

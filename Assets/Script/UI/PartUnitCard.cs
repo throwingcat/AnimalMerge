@@ -16,9 +16,9 @@ public class PartUnitCard : MonoBehaviour
     public Text Name;
     public SlicedFilledImage ExpGauge;
 
-    public void SetFace(SheetData.Unit unit)
+    public void SetTexutre(string texutre)
     {
-        Icon.sprite = unit.face_texture.ToSprite();
+        Icon.sprite = texutre.ToSprite();
     }
 
     public void SetName(string name)
@@ -32,18 +32,31 @@ public class PartUnitCard : MonoBehaviour
         if (Group != null)
             Group.text = group;
     }
-    
+
     public void SetLevel(int level)
     {
         if (Level != null)
+        {
+            if (Level.gameObject.activeSelf == false)
+                Level.gameObject.SetActive(true);
             Level.text = string.Format("{0} {1}", "Level".ToLocalization(), level);
+        }
     }
 
     public void SetExp(int current, int max)
     {
         if (Exp != null)
+        {
+            if (Exp.gameObject.activeSelf == false)
+                Exp.gameObject.SetActive(true);
             Exp.text = string.Format("{0}/{1}", current, max);
+        }
+
         if (ExpGauge != null)
+        {
+            if (ExpGauge.gameObject.activeSelf == false)
+                ExpGauge.gameObject.SetActive(true);
             ExpGauge.fillAmount = current / (float) max;
+        }
     }
 }

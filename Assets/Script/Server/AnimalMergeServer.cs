@@ -94,7 +94,8 @@ namespace Server
             UpdateDB<DBPlayerInfo>(() =>
             {
                 //새로운 상자 추가
-                if (ChestInventory.Instance.Chests.Count < EnvironmentValue.CHEST_SLOT_MAX_COUNT)
+                var emptySlot = ChestInventory.Instance.GetEmptySlot();
+                if (emptySlot != null)
                 {
                     //랜덤 상자 선택
                     var default_chest = TableManager.Instance.GetTable<Chest>().Where(
@@ -120,7 +121,7 @@ namespace Server
                     //보유한 상자중에 선택
                     List<string> inDate = new List<string>();
 
-                    foreach (var chest in ChestInventory.Instance.Chests)
+                    foreach (var chest in ChestInventory.Instance.ChestSlots)
                     {
                         if (chest.Grade < EnvironmentValue.CHEST_GRADE_MAX && chest.isProgress == false)
                             inDate.Add(chest.inDate);
@@ -182,7 +183,7 @@ namespace Server
             
         }
 
-        public void CompleteChestProcess(ChestInventory.Chest chest, Action<List<ItemInfo>> onFinish)
+        public void CompleteChestProcess(ChestInventory.ChestSlot chestSlot, Action<List<ItemInfo>> onFinish)
         {
             //받을수 있는 목록 정리
             int max_exp = "13".ToTableData<UnitLevel>().total;
@@ -197,7 +198,7 @@ namespace Server
             }
 
             //무작위로 분리
-            int amount = chest.Sheet.amount;
+            int amount = chestSlot.Sheet.amount;
             int pick_count = Random.Range(3, 7);
             List<int> randomize_spilt = new List<int>();
             int total_redomize_value = 0;
@@ -249,9 +250,9 @@ namespace Server
             //남은 보상만큼 골드 추가
             ItemInfo gold = new ItemInfo()
             {
-                Key = "Gold",
+                Key = "Coin",
                 Type = eItemType.Currency,
-                Amount = (int) (Random.Range(chest.Sheet.gold_min, chest.Sheet.gold_max) + result_amount * 3f),
+                Amount = (int) (Random.Range(chestSlot.Sheet.gold_min, chestSlot.Sheet.gold_max) + result_amount * 3f),
             };
 
             rewards.Add(gold);

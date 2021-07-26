@@ -18,5 +18,7 @@ namespace SheetData
 
 	public string face_texture { get; set; }
 
+	public string name { get; set; }
+
 }
 }
