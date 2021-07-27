@@ -76,19 +76,20 @@ namespace Server
                     var rows = bro.Rows();
                     
                     ChestInventory.Instance.ChestSlots = new ChestInventory.ChestSlot[EnvironmentValue.CHEST_SLOT_MAX_COUNT];
-                    int index = 0;
+                    for (int i = 0; i < EnvironmentValue.CHEST_SLOT_MAX_COUNT; i++)
+                    {
+                        ChestInventory.Instance.ChestSlots[i] = new ChestInventory.ChestSlot();
+                        ChestInventory.Instance.ChestSlots[i].Index = i;
+                    }
+
                     foreach (JsonData row in rows)
                     {
                         string inDate = row["inDate"]["S"].ToString();
-
+                        int index = int.Parse(row["Index"]["N"].ToString());
+                        
                         //로컬에 반영
                         if (ChestInventory.Instance.isContains(inDate) == false)
-                        {
-                            //데이터 추가
-                            ChestInventory.Instance.ChestSlots[index] = new ChestInventory.ChestSlot();
                             ChestInventory.Instance.ChestSlots[index].inDate = inDate;
-                            index++;
-                        }
                         
                         foreach (var chest in ChestInventory.Instance.ChestSlots)
                         {
@@ -115,8 +116,8 @@ namespace Server
                 Array.Sort(ChestInventory.Instance.ChestSlots,
                 (a, b) =>
                 {
-                    if (a.GetTime < b.GetTime) return -1;
-                    if (a.GetTime > b.GetTime) return 1;
+                    if (a.Index < b.Index) return -1;
+                    if (a.Index > b.Index) return 1;
                     return 0;
                 });
                 

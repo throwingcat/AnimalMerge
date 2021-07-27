@@ -112,6 +112,7 @@ public class ChestInventory
     {
         public string inDate;
         public bool isChanged;
+        public int Index;
         public string Key;
         public bool isProgress = false;
         public int Grade = 0;
@@ -122,17 +123,17 @@ public class ChestInventory
 
         public int GetGoldMin()
         {
-            return (int) (Sheet.gold_min * ((Grade + 1.5f) + 1f));
+            return (int) (Sheet.gold_min + ((Sheet.gold_min * 0.5f * Grade)));
         }
 
         public int GetGoldMax()
         {
-            return (int) (Sheet.gold_max * ((Grade + 1.5f) + 1f));
+            return (int) (Sheet.gold_max + ((Sheet.gold_max * 0.5f * Grade)));
         }
 
-        public int GetCardQuantity()
+        public int GetRewardAmount()
         {
-            return (int) (Sheet.amount * ((Grade + 1.5f) + 1f));
+            return (int) (Sheet.amount + ((Sheet.amount * 0.5f * Grade)));
         }
     }
 }

@@ -161,26 +161,25 @@ namespace Server
             CompleteChestProcess(chest, (rewards) =>
             {
                 ChestInventory.Instance.Remove(inDate);
-                
+
                 UpdateDB<DBChestInventory>(() =>
                 {
                     foreach (var reward in rewards)
                     {
                         if (reward.Type == eItemType.Card)
-                            UnitInventory.Instance.GainEXP(reward.Key, reward.Amount);        
+                            UnitInventory.Instance.GainEXP(reward.Key, reward.Amount);
                     }
+
                     UpdateDB<DBUnitInventory>(() =>
                     {
                         PacketReward packetReward = new PacketReward();
                         packetReward.PacketType = Packet.ePACKET_TYPE.CHEST_COMPLETE;
                         packetReward.hash = packet.hash;
                         packetReward.Rewards = rewards;
-                        SendPacket(packetReward);    
+                        SendPacket(packetReward);
                     });
                 });
             });
-
-            
         }
 
         public void CompleteChestProcess(ChestInventory.ChestSlot chestSlot, Action<List<ItemInfo>> onFinish)
@@ -198,13 +197,13 @@ namespace Server
             }
 
             //무작위로 분리
-            int amount = chestSlot.Sheet.amount;
+            int amount = chestSlot.GetRewardAmount();
             int pick_count = Random.Range(3, 7);
             List<int> randomize_spilt = new List<int>();
             int total_redomize_value = 0;
             for (int i = 0; i < pick_count; i++)
             {
-                int rand = Random.Range(0, amount);
+                int rand = Random.Range(3, amount - 3);
                 total_redomize_value += rand;
                 randomize_spilt.Add(rand);
             }
@@ -221,7 +220,7 @@ namespace Server
                 {
                     Key = result,
                     Type = eItemType.Card,
-                    Amount = (int)((randomize_spilt[i] / (float)total_redomize_value) * amount),
+                    Amount = (int) ((randomize_spilt[i] / (float) total_redomize_value) * amount),
                 };
                 rewards.Add(itemInfo);
             }
@@ -245,7 +244,9 @@ namespace Server
 
             //보상 숫자 정리
             if (high_amount_reward_index != -1)
-                rewards[high_amount_reward_index].Amount -= result_amount;
+            {
+                rewards[high_amount_reward_index].Amount += result_amount;
+            }
 
             //남은 보상만큼 골드 추가
             ItemInfo gold = new ItemInfo()
@@ -276,7 +277,8 @@ namespace Server
 
         public void SendPacket<T>(T packet) where T : PacketBase
         {
-            var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
+            var lz4Options =
+                MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
             var bytes = MessagePackSerializer.Serialize(packet, lz4Options);
 
             NetworkManager.Instance.ReceivePacket(bytes);

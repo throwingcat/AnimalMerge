@@ -27,7 +27,7 @@ public class PopupChestUnlock : SUIPanel
     public void Refresh()
     {
         GoldRange.text = string.Format("{0}~{1}", _chestSlot.GetGoldMin(), _chestSlot.GetGoldMax());
-        CardQuantity.text = _chestSlot.GetCardQuantity().ToString();
+        CardQuantity.text = _chestSlot.GetRewardAmount().ToString();
         NeedTime.text = Utils.ParseSeconds(_chestSlot.Sheet.time);
 
         for (int i = 0; i < Grade.Length; i++)

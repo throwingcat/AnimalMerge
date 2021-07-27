@@ -13,11 +13,10 @@ public class PopupChestOpen : SUIPanel
     public Image Chest;
     public Text RemainRewardCount;
 
-    public PartUnitCard GetCurrentReward;
-    public Text GetRewardAmount;
+    public PartItemCard GetCurrentReward;
 
     public GameObject RewardsRoot;
-    public List<PartUnitCard> Rewards = new List<PartUnitCard>();
+    public List<PartItemCard> Rewards = new List<PartItemCard>();
 
     private bool _isInitialize = false;
     private Action _inputEvent = null;
@@ -35,7 +34,7 @@ public class PopupChestOpen : SUIPanel
         RemainRewardCount.gameObject.gameObject.SetActive(false);
 
         GetCurrentReward.gameObject.SetActive(false);
-        GetRewardAmount.gameObject.SetActive(false);
+        
         RewardsRoot.SetActive(false);
         foreach (var reward in Rewards)
             reward.Root.SetActive(false);
@@ -68,9 +67,9 @@ public class PopupChestOpen : SUIPanel
 
         //상자 등장
         Chest.gameObject.SetActive(true);
+        Chest.transform.localPosition =new Vector3(0,-200,0);
         Chest.DOFade(0f, 0.3f).From().Play();
-
-        Chest.transform.DOLocalMoveY(-90f, 0.5f).From(true).SetEase(Ease.OutQuad).Play();
+        Chest.transform.DOLocalMoveY(-70f, 0.5f).From(true).SetEase(Ease.OutQuad).Play();
         yield return new WaitForSeconds(0.5f);
 
         //입력 대기
@@ -79,7 +78,7 @@ public class PopupChestOpen : SUIPanel
         yield return new WaitUntil(() => isDone);
         
         //상자 아래로 이동
-        Chest.transform.DOLocalMoveY(-120f, 0.5f).SetRelative(true).SetEase(Ease.OutQuad).Play();
+        Chest.transform.DOLocalMoveY(-240f, 0.5f).SetRelative(true).SetEase(Ease.OutQuad).Play();
 
         RemainRewardCount.gameObject.SetActive(true);
         RemainRewardCount.text = _rewards.Count.ToString();
@@ -89,48 +88,24 @@ public class PopupChestOpen : SUIPanel
         _inputEvent = () => isDone = true;
         yield return new Extention.WaitForSecondsOrEvent(0.5f, () => isDone);
 
+        List<Tweener> used_tweener = new List<Tweener>();
         int open_index = 0;
         while (open_index < _rewards.Count)
         {
-            var reward = _rewards[open_index];
-            //아이템 정보 설정
-            switch (reward.Type)
-            {
-                case eItemType.Currency:
-                {
-                    var sheet = reward.Key.ToTableData<SheetData.Item>();
-                    GetCurrentReward.SetTexutre(sheet.Texture);
-                    GetCurrentReward.SetName(sheet.Name.ToLocalization());
-                    GetCurrentReward.SetGroup(sheet.Type.ToLocalization());
-                }
-                    break;
-                case eItemType.Card:
-                {
-                    var sheet = reward.Key.ToTableData<SheetData.Unit>();
-                    GetCurrentReward.SetTexutre(sheet.face_texture);
-                    GetCurrentReward.SetName(sheet.name.ToLocalization());
-                    GetCurrentReward.SetGroup(string.Format("group_{0}", sheet.group.ToLower()).ToLocalization());
-
-                    var unit = UnitInventory.Instance.Get(sheet.key);
-                    GetCurrentReward.SetLevel(unit.Level);
-                    var next_level_sheet = (unit.Level + 1).ToString().ToTableData<UnitLevel>();
-                    if(next_level_sheet != null)
-                        GetCurrentReward.SetExp(unit.Exp, next_level_sheet.exp);
-                    else
-                        GetCurrentReward.SetExp(1, 1);
-                }
-                    break;
-            }
+            foreach (var t in used_tweener)
+                t.Kill();
+            used_tweener.Clear();
             
-            DOTween.KillAll();
+            var reward = _rewards[open_index];
 
-            var itemInfo = _rewards[open_index];
-
+            GetCurrentReward.Set(reward);
+            Rewards[open_index].Set(reward);
+            Rewards[open_index].SetAmount(reward.Amount);
             open_index++;
 
             int remain = _rewards.Count - open_index;
             RemainRewardCount.text = remain.ToString();
-            Chest.transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0), 0.2f, 10, 1f);
+            used_tweener.Add( Chest.transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0), 0.2f, 10, 1f));
 
             GetCurrentReward.CardImageGroup.transform.localPosition = Vector3.zero;
             GetCurrentReward.CardDescriptionGroup.transform.localPosition = Vector3.zero;
@@ -139,11 +114,11 @@ public class PopupChestOpen : SUIPanel
             GetCurrentReward.CardImageGroup.gameObject.SetActive(true);
             GetCurrentReward.CardDescriptionGroup.gameObject.SetActive(false);
             GetCurrentReward.CardImageGroup.alpha = 0f;
-            GetCurrentReward.CardImageGroup.DOFade(1, 0.3f).Play();
+            used_tweener.Add(GetCurrentReward.CardImageGroup.DOFade(1, 0.3f).Play());
             GetCurrentReward.CardImageGroup.transform.localPosition = new Vector3(150, -141, 0f);
-            GetCurrentReward.CardImageGroup.transform.DOLocalMoveY(0, 0.3f).SetEase(Ease.OutQuad).Play();
+            used_tweener.Add(GetCurrentReward.CardImageGroup.transform.DOLocalMoveY(0, 0.3f).SetEase(Ease.OutQuad).Play());
 
-            GetRewardAmount.gameObject.SetActive(false);
+            GetCurrentReward.Amount.gameObject.SetActive(false);
 
             yield return new WaitForSeconds(0.3f);
             isDone = false;
@@ -154,30 +129,41 @@ public class PopupChestOpen : SUIPanel
             yield return new WaitForSeconds(0.1f);
 
             GetCurrentReward.CardImageGroup.transform.localPosition = new Vector3(150, 0, 0);
-            GetCurrentReward.CardImageGroup.transform.DOLocalMoveX(0, 0.3f).SetEase(Ease.OutQuad).Play();
+            used_tweener.Add(GetCurrentReward.CardImageGroup.transform.DOLocalMoveX(0, 0.3f).SetEase(Ease.OutQuad).Play());
 
             GetCurrentReward.CardDescriptionGroup.gameObject.SetActive(true);
             GetCurrentReward.CardDescriptionGroup.alpha = 0f;
-            GetCurrentReward.CardDescriptionGroup.DOFade(1f, 0.2f).SetEase(Ease.OutQuad).Play();
-            GetCurrentReward.CardDescriptionGroup.transform.DOLocalMoveY(-0.1f, 0.2f).From().SetEase(Ease.OutQuad)
-                .Play();
+            used_tweener.Add(GetCurrentReward.CardDescriptionGroup.DOFade(1f, 0.2f).SetEase(Ease.OutQuad).Play());
+            used_tweener.Add(GetCurrentReward.CardDescriptionGroup.transform.DOLocalMoveY(-0.1f, 0.2f).From().SetEase(Ease.OutQuad).Play());
 
             int prev_exp = 0;
-            int current_exp = prev_exp + itemInfo.Amount;
-            GetCurrentReward.SetExp(prev_exp, 20);
-
+            int current_exp = 0;
+            
+            if (reward.Type == eItemType.Card)
+            {
+                var unit = UnitInventory.Instance.Get(reward.Key);
+                if (unit != null)
+                {
+                    current_exp = unit.Exp;
+                    prev_exp = current_exp - reward.Amount;
+                    GetCurrentReward.SetExp(prev_exp, unit.Level.ToString().ToTableData<SheetData.UnitLevel>().exp);
+                }
+            }
+            
             isDone = false;
             _inputEvent = null;
             _inputEvent = () => isDone = true;
             yield return new Extention.WaitForSecondsOrEvent(0.2f, () => isDone);
             _inputEvent = null;
 
-            GetRewardAmount.gameObject.SetActive(true);
-            GetRewardAmount.text = string.Format("X{0}", itemInfo.Amount);
-
+            GetCurrentReward.SetAmount(reward.Amount);
+            
             int offset = current_exp - prev_exp;
             float sec = Mathf.Clamp(offset / 50f, 0.25f, 1.5f);
-            DOTween.To(() => prev_exp, x => { GetCurrentReward.SetExp(x, 10); }, current_exp, sec);
+            used_tweener.Add(DOTween.To(() => prev_exp, x =>
+            {
+                GetCurrentReward.SetExp(x, 10);
+            }, current_exp, sec));
 
             isDone = false;
             _inputEvent = () => isDone = true;
