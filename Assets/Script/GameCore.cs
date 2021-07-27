@@ -320,7 +320,7 @@ public class GameCore : MonoSingleton<GameCore>
             UnitsInField.Add(SpawnUnit(a.Sheet.grow_unit, pos));
 
             if (SpawnLevel < a.Sheet.index + 2)
-                SpawnLevel = a.Sheet.index - 2;
+                SpawnLevel++;
             SpawnLevel = Mathf.Clamp(SpawnLevel, 1, 3);
         }
 
