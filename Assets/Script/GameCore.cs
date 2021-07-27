@@ -153,10 +153,10 @@ public class GameCore : MonoSingleton<GameCore>
                     pick = 0;
                     break;
                 case 2:
-                    pick = Utils.RandomPick(new List<double> {50, 50});
+                    pick = Utils.RandomPick(new List<double> {EnvironmentValue.SPAWN_PHASE_2_PICK_LEVEL_1, EnvironmentValue.SPAWN_PHASE_2_PICK_LEVEL_2});
                     break;
                 case 3:
-                    pick = Utils.RandomPick(new List<double> {75, 20, 5});
+                    pick = Utils.RandomPick(new List<double> {EnvironmentValue.SPAWN_PHASE_3_PICK_LEVEL_1, EnvironmentValue.SPAWN_PHASE_3_PICK_LEVEL_2, EnvironmentValue.SPAWN_PHASE_3_PICK_LEVEL_3});
                     break;
                 default:
                     pick = 0;
