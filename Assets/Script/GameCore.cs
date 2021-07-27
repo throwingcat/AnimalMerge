@@ -153,7 +153,7 @@ public class GameCore : MonoSingleton<GameCore>
                     pick = 0;
                     break;
                 case 2:
-                    pick = Utils.RandomPick(new List<double> {80, 20});
+                    pick = Utils.RandomPick(new List<double> {50, 50});
                     break;
                 case 3:
                     pick = Utils.RandomPick(new List<double> {75, 20, 5});
