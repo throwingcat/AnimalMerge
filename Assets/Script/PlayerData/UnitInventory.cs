@@ -75,7 +75,7 @@ public class UnitInventory
         }
     }
 
-    public Unit Get(string key)
+    public Unit GetUnit(string key)
     {
         var sheet = key.ToTableData<SheetData.Unit>();
 
@@ -88,6 +88,13 @@ public class UnitInventory
             }
         }
 
+        return null;
+    }
+
+    public List<Unit> GetGroup(string group)
+    {
+        if (Units.ContainsKey(group))
+            return Units[group];
         return null;
     }
     public class Unit

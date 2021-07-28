@@ -17,6 +17,8 @@ public class PartItemCard : MonoBehaviour
     public Text Group;
     public Text Name;
     public Text Amount;
+    public Text Grade;
+    public Image Piece;
     public SlicedFilledImage ExpGauge;
 
 
@@ -36,23 +38,29 @@ public class PartItemCard : MonoBehaviour
                 break;
             case eItemType.Card:
             {
-                var sheet = itemInfo.Key.ToTableData<SheetData.Unit>();
-                SetTexutre(sheet.face_texture);
-                SetName(sheet.name.ToLocalization());
-                SetGroup(string.Format("group_{0}",sheet.group.ToLower().ToLocalization()));
-
-                var unit = UnitInventory.Instance.Get(sheet.key);
-                SetLevel(unit.Level);
-                
-                var next_level_sheet = (unit.Level + 1).ToString().ToTableData<SheetData.UnitLevel>();
-                if (next_level_sheet != null)
-                    SetExp(unit.Exp, next_level_sheet.exp);
-                else
-                    SetExp(1, 1);
+                var unit = UnitInventory.Instance.GetUnit(itemInfo.Key);
+                Set(unit);
             }
                 break;
         }
     }
+
+    public void Set(UnitInventory.Unit unit)
+    {
+        SheetData.Unit sheet = unit.Key.ToTableData<SheetData.Unit>();
+        SetTexutre(sheet.face_texture);
+        SetName(sheet.name.ToLocalization());
+        SetGroup(string.Format("group_{0}",sheet.group.ToLower().ToLocalization()));
+        SetLevel(unit.Level);
+        var next_level_sheet = (unit.Level + 1).ToString().ToTableData<SheetData.UnitLevel>();
+        if (next_level_sheet != null)
+            SetExp(unit.Exp, next_level_sheet.exp);
+        else
+            SetExp(1, 1);
+        
+        SetPiece(sheet.piece_texture);
+    }
+    
     public void SetTexutre(string texutre)
     {
         Icon.sprite = texutre.ToSprite();
@@ -94,6 +102,14 @@ public class PartItemCard : MonoBehaviour
             if (ExpGauge.gameObject.activeSelf == false)
                 ExpGauge.gameObject.SetActive(true);
             ExpGauge.fillAmount = current / (float) max;
+        }
+    }
+
+    public void SetPiece(string piece)
+    {
+        if (Piece != null)
+        {
+            Piece.sprite = piece.ToSprite();
         }
     }
 

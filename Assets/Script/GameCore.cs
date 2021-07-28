@@ -370,6 +370,7 @@ public class GameCore : MonoSingleton<GameCore>
 
         int remove_badblock = remove_bad_units.Count;
 
+        
         var comboBonus = Combo > 3 ? 18 * Combo : 0;
         var badBlock = (a.Sheet.score + b.Sheet.score) * Combo + comboBonus + (remove_badblock * 2);
 

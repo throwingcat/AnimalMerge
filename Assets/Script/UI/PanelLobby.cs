@@ -1,68 +1,73 @@
-using System;
-using System.Collections;
-using BackEnd;
-using Define;
-using Packet;
-using Server;
+using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using Violet;
 
 public class PanelLobby : SUIPanel
 {
+    public LobbyPageBase PrevPage;
+    public LobbyPageBase CurrentPage;
     public GameObject Matching;
-    public Text RankScore;
+    public List<LobbyPageBase> Page = new List<LobbyPageBase>();
 
-    public PartLobbyChest[] Chests;
-    private float _chest_update_delta = 0f;
-    private float _chest_update_delay = 0.5f;
+    public ScrollRect PageScroll;
     protected override void OnShow()
     {
         base.OnShow();
 
         Matching.SetActive(false);
+
+        foreach (var page in Page)
+            page.Root.SetActive(false);
+            
+        CurrentPage = Page[2];
+        CurrentPage.Root.SetActive(true);
+        CurrentPage.OnShow();
         
-        RankScore.text = PlayerInfo.Instance.RankScore.ToString();
-        foreach (var chest in Chests)
-            chest.OnUpdate();
+        RefreshScroll();
     }
 
     private void Update()
     {
-        _chest_update_delta += Time.deltaTime;
-        if (_chest_update_delay <= _chest_update_delta)
-        {
-            foreach (var chest in Chests)
-                chest.OnUpdate();
-            _chest_update_delta = 0f;
-        }
+        if (CurrentPage != null) CurrentPage.OnUpdate(Time.deltaTime);
+    }
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            AnimalMergeServer.Instance.BattleWinProcess(() =>
-            {
-                foreach (var chest in Chests)
-                    chest.OnUpdate();
-            });
-        }
+    private void MovePage(int index)
+    {
+        if (CurrentPage.Index == index) return;
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            foreach (var chest in ChestInventory.Instance.ChestSlots)
+        PrevPage = CurrentPage;
+        
+        CurrentPage = Page[index];
+        CurrentPage.Root.SetActive(true);
+        CurrentPage.OnShow();
+        RefreshScroll();
+    }
+
+    public void RefreshScroll()
+    {
+        float destination = CurrentPage.Index == 0 ? 0f : (float) CurrentPage.Index / (Page.Count - 1);
+        DOTween.To(() => PageScroll.horizontalNormalizedPosition,
+            x => PageScroll.horizontalNormalizedPosition = x,
+            destination, 0.3f).SetEase(Ease.OutBack)
+            .OnComplete(() =>
             {
-                if (chest.inDate.IsNullOrEmpty() == false && chest.Key.IsNullOrEmpty() == false)
-                {
-                    chest.StartTime  = new DateTime();
-                    chest.isChanged = true;
-                    AnimalMergeServer.Instance.UpdateDB<DBChestInventory>(() =>
-                    {
-                        foreach (var chest in Chests)
-                            chest.OnUpdate();
-                    });
-                    break;
-                }
-            }
-        }
+                PrevPage.Root.SetActive(false);
+            })
+            .Play();
+    }
+
+    public void OnClickPageButton(int page)
+    {
+        MovePage(page);
+    }
+
+    #region 매칭 취소
+
+    public void OnClickMatchCancel()
+    {
+        OnMatchingCancel();
     }
 
     public void OnMatchingCancel()
@@ -72,27 +77,6 @@ public class PanelLobby : SUIPanel
         NetworkManager.Instance.DisconnectMatchServer();
 
         Matching.SetActive(false);
-    }
-
-    public void OnClickGameStart()
-    {
-        Backend.Match.OnMatchInGameStart -= OnMatchInGameStart;
-        Backend.Match.OnMatchInGameStart += OnMatchInGameStart;
-
-        NetworkManager.Instance.OnMatchingStart();
-        Matching.SetActive(true);
-    }
-
-    public void OnClickMatchCancel()
-    {
-        OnMatchingCancel();
-    }
-
-    #region 게임 시작
-
-    private void OnMatchInGameStart()
-    {
-        GameManager.Instance.ChangeGameState(eGAME_STATE.Battle);
     }
 
     #endregion

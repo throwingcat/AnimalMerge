@@ -18,6 +18,8 @@ namespace SheetData
 
 	public string face_texture { get; set; }
 
+	public string piece_texture { get; set; }
+
 	public string name { get; set; }
 
 }

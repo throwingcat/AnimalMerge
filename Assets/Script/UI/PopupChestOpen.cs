@@ -141,7 +141,7 @@ public class PopupChestOpen : SUIPanel
             
             if (reward.Type == eItemType.Card)
             {
-                var unit = UnitInventory.Instance.Get(reward.Key);
+                var unit = UnitInventory.Instance.GetUnit(reward.Key);
                 if (unit != null)
                 {
                     current_exp = unit.Exp;

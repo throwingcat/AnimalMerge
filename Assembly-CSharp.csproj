@@ -56,6 +56,7 @@
      <Compile Include="Assets\Script\UI\VFXCombo.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\DOTweenProShortcuts.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\MonoObjectPool.cs" />
+     <Compile Include="Assets\Script\Data\Item.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\DOTweenTextMeshPro.cs" />
      <Compile Include="Assets\Script\Server\DBChestInventory.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\Define.cs" />
@@ -76,7 +77,7 @@
      <Compile Include="Assets\Script\EnemyScreen.cs" />
      <Compile Include="Assets\Script\UI\PanelIngame.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIHsvModifier.cs" />
-     <Compile Include="Assets\Script\UI\PartUnitCard.cs" />
+     <Compile Include="Assets\Script\UI\PartItemCard.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\MaterialResolver.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIShiny.cs" />
      <Compile Include="Assets\Script\UI\PopupChestOpen.cs" />
@@ -120,6 +121,7 @@
      <Compile Include="Assets\Script\UI\PartLobbyChest.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\CSVGenerator\CSVDownloadConfig.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUITouchable.cs" />
+     <Compile Include="Assets\Script\UI\Lobby Page\LobbyPageCollection.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\EffectArea.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\Singleton.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPressButton.cs" />
@@ -177,7 +179,9 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPanelInfo.cs" />
      <Compile Include="Assets\Script\UI\PanelLobby.cs" />
      <Compile Include="Assets\Script\PlayerData\ChestInventory.cs" />
-     <Compile Include="Assets\Script\Data\Item.cs" />
+     <Compile Include="Assets\Script\Data\UnitGroup.cs" />
+     <Compile Include="Assets\Script\UI\Lobby Page\LobbyPageBase.cs" />
+     <Compile Include="Assets\Script\UI\Lobby Page\LobbyPageMain.cs" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\SoftMask.cginc" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Dissolve.shader" />
