@@ -12,6 +12,8 @@ namespace SheetData
 
 	public double upgrade_ratio { get; set; }
 
+	public bool max { get; set; }
+
 	public string comment { get; set; }
 
 }

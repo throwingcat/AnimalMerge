@@ -1,34 +1,36 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Define;
+using SheetData;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PartItemCard : MonoBehaviour
 {
-    public CanvasGroup CardImageGroup;
-    public CanvasGroup CardDescriptionGroup;
     public GameObject Root;
+    
+    public Text Amount;
+    public CanvasGroup CardDescriptionGroup;
+    public CanvasGroup CardImageGroup;
+    public Text Exp;
+    public SlicedFilledImage ExpGauge;
     public Image Frame;
+    public Text Grade;
+    public Text Group;
     public Image Icon;
     public Text Level;
-    public Text Exp;
-    public Text Group;
     public Text Name;
-    public Text Amount;
-    public Text Grade;
     public Image Piece;
-    public SlicedFilledImage ExpGauge;
+    public GameObject LevelUp;
 
-
+    public UnitInventory.Unit Unit; 
+    
     public void Set(ItemInfo itemInfo)
     {
         switch (itemInfo.Type)
         {
             case eItemType.Currency:
             {
-                var sheet = itemInfo.Key.ToTableData<SheetData.Item>();
+                var sheet = itemInfo.Key.ToTableData<Item>();
                 SetTexutre(sheet.Texture);
                 SetName(sheet.Name.ToLocalization());
                 SetGroup(sheet.Type.ToLocalization());
@@ -47,23 +49,28 @@ public class PartItemCard : MonoBehaviour
 
     public void Set(UnitInventory.Unit unit)
     {
-        SheetData.Unit sheet = unit.Key.ToTableData<SheetData.Unit>();
+        Unit = unit;
+        
+        var sheet = unit.Key.ToTableData<Unit>();
         SetTexutre(sheet.face_texture);
         SetName(sheet.name.ToLocalization());
-        SetGroup(string.Format("group_{0}",sheet.group.ToLower().ToLocalization()));
+        SetGroup(string.Format("group_{0}", sheet.group.ToLower().ToLocalization()));
         SetLevel(unit.Level);
-        var next_level_sheet = (unit.Level + 1).ToString().ToTableData<SheetData.UnitLevel>();
+        SetGrade(sheet.index);
+
+        var next_level_sheet = (unit.Level + 1).ToString().ToTableData<UnitLevel>();
         if (next_level_sheet != null)
             SetExp(unit.Exp, next_level_sheet.exp);
         else
-            SetExp(1, 1);
-        
+            SetMaxLevel();
+
         SetPiece(sheet.piece_texture);
     }
-    
+
     public void SetTexutre(string texutre)
     {
-        Icon.sprite = texutre.ToSprite();
+        if (Icon != null)
+            Icon.sprite = texutre.ToSprite();
     }
 
     public void SetName(string name)
@@ -103,23 +110,82 @@ public class PartItemCard : MonoBehaviour
                 ExpGauge.gameObject.SetActive(true);
             ExpGauge.fillAmount = current / (float) max;
         }
+
+        if (max <= current)
+            SetActiveLevelUp(true);
+        else
+            SetActiveLevelUp(false);
     }
 
     public void SetPiece(string piece)
     {
-        if (Piece != null)
-        {
-            Piece.sprite = piece.ToSprite();
-        }
+        if (Piece != null) Piece.sprite = piece.ToSprite();
     }
 
     public void SetAmount(int amount)
     {
         if (Amount != null)
         {
-            if(Amount.gameObject.activeSelf == false)
+            if (Amount.gameObject.activeSelf == false)
                 Amount.gameObject.SetActive(true);
             Amount.text = string.Format("X{0}", amount);
         }
+    }
+
+    public void SetGrade(int grade)
+    {
+        if (Grade != null)
+        {
+            if (Grade.gameObject.activeSelf == false)
+                Grade.gameObject.SetActive(true);
+            Grade.text = grade.ToString();
+        }
+    }
+
+    public void SetActiveLevelUp(bool isActive)
+    {
+        if (LevelUp != null)
+            LevelUp.SetActive(isActive);
+    }
+
+    public void SetMaxLevel()
+    {
+        if (Exp != null)
+        {
+            if (Exp.gameObject.activeSelf == false)
+                Exp.gameObject.SetActive(true);
+            Exp.text = "MAX";
+        }
+
+        if (ExpGauge != null)
+        {
+            if (ExpGauge.gameObject.activeSelf == false)
+                ExpGauge.gameObject.SetActive(true);
+            ExpGauge.fillAmount = 1f;
+        }
+
+        SetActiveLevelUp(false);
+    }
+
+    
+    private Action<UnitInventory.Unit> _onClickUnit;
+
+    public void SetClickEvent(Action<UnitInventory.Unit> onClick)
+    {
+        _onClickUnit = onClick;
+    }
+
+    public void OnPress()
+    {
+        Root.transform.ButtonPressPlay();
+    }
+
+    public void OnRelease()
+    {
+        Root.transform.ButtonReleasePlay();
+    }
+    public void OnClick()
+    {
+        _onClickUnit?.Invoke(Unit);
     }
 }

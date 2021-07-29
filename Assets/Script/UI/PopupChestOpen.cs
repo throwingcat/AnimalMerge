@@ -27,6 +27,8 @@ public class PopupChestOpen : SUIPanel
     {
         base.OnShow();
 
+        IgnoreBackPress = true;
+        
         //최초 설정값 
         Chest.rectTransform.anchoredPosition = new Vector2(0, -60);
         Chest.color = Color.white;
@@ -48,6 +50,7 @@ public class PopupChestOpen : SUIPanel
 
         _isInitialize = false;
         _inputEvent = null;
+        IgnoreBackPress = false;
     }
 
     public void Set(string chest_key, List<ItemInfo> Rewards)
@@ -120,6 +123,32 @@ public class PopupChestOpen : SUIPanel
 
             GetCurrentReward.Amount.gameObject.SetActive(false);
 
+            
+            //경험치 설정
+            int prev_exp = 0;
+            int current_exp = 0;
+            int max_exp = 0;
+            if (reward.Type == eItemType.Card)
+            {
+                var unit = UnitInventory.Instance.GetUnit(reward.Key);
+                if (unit != null)
+                {
+                    current_exp = unit.Exp;
+                    prev_exp = current_exp - reward.Amount;
+
+                    if (unit.IsMaxLevel())
+                    {
+                        max_exp = 0;
+                    }
+                    else
+                    {
+                        var levelSheet = (unit.Level + 1).ToString().ToTableData<UnitLevel>();
+                        max_exp = levelSheet.exp;
+                    }
+                    GetCurrentReward.SetExp(prev_exp, max_exp);
+                }
+            }
+            
             yield return new WaitForSeconds(0.3f);
             isDone = false;
             _inputEvent = null;
@@ -136,19 +165,7 @@ public class PopupChestOpen : SUIPanel
             used_tweener.Add(GetCurrentReward.CardDescriptionGroup.DOFade(1f, 0.2f).SetEase(Ease.OutQuad).Play());
             used_tweener.Add(GetCurrentReward.CardDescriptionGroup.transform.DOLocalMoveY(-0.1f, 0.2f).From().SetEase(Ease.OutQuad).Play());
 
-            int prev_exp = 0;
-            int current_exp = 0;
-            
-            if (reward.Type == eItemType.Card)
-            {
-                var unit = UnitInventory.Instance.GetUnit(reward.Key);
-                if (unit != null)
-                {
-                    current_exp = unit.Exp;
-                    prev_exp = current_exp - reward.Amount;
-                    GetCurrentReward.SetExp(prev_exp, unit.Level.ToString().ToTableData<SheetData.UnitLevel>().exp);
-                }
-            }
+            GetCurrentReward.SetAmount(reward.Amount);
             
             isDone = false;
             _inputEvent = null;
@@ -156,13 +173,13 @@ public class PopupChestOpen : SUIPanel
             yield return new Extention.WaitForSecondsOrEvent(0.2f, () => isDone);
             _inputEvent = null;
 
-            GetCurrentReward.SetAmount(reward.Amount);
+            
             
             int offset = current_exp - prev_exp;
             float sec = Mathf.Clamp(offset / 50f, 0.25f, 1.5f);
             used_tweener.Add(DOTween.To(() => prev_exp, x =>
             {
-                GetCurrentReward.SetExp(x, 10);
+                GetCurrentReward.SetExp(x, max_exp);
             }, current_exp, sec));
 
             isDone = false;
@@ -184,6 +201,9 @@ public class PopupChestOpen : SUIPanel
         }
 
         yield return new WaitForSeconds(0.5f);
+        
+        IgnoreBackPress = false;
+        
         _inputEvent = null;
         _inputEvent = () => { BackPress(); };
     }

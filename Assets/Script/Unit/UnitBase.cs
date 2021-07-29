@@ -20,6 +20,7 @@ public class UnitBase : MonoBehaviour
 
     public string GUID;
     public Unit Sheet;
+    public UnitInventory.Unit Info;
 
     public eUnitType eUnitType = eUnitType.None;
     public eUnitDropState eUnitDropState = eUnitDropState.Ready;
@@ -27,6 +28,14 @@ public class UnitBase : MonoBehaviour
     public virtual UnitBase OnSpawn(string unit_key)
     {
         Sheet = TableManager.Instance.GetData<Unit>(unit_key);
+        Info = UnitInventory.Instance.GetUnit(unit_key);
+        if(Info == null)
+            Info = new UnitInventory.Unit()
+            {
+                Key = unit_key,
+                Exp = 0,
+                Level = 1,
+            };
         GUID = System.Guid.NewGuid().ToString();
         eUnitDropState = eUnitDropState.Ready;
         

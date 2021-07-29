@@ -22,7 +22,9 @@ public class LobbyPageCollection : LobbyPageBase
     public override void OnShow()
     {
         base.OnShow();
-        
+
+        _groups.Clear();
+
         var sheet = TableManager.Instance.GetTable<UnitGroup>();
         foreach (var row in sheet)
         {
@@ -54,7 +56,7 @@ public class LobbyPageCollection : LobbyPageBase
     {
         var index = _currentGroup.index + direction;
         index = Mathf.Clamp(index, 0, _groups.Count);
-        
+
         SetGroup(index);
     }
 
@@ -72,7 +74,7 @@ public class LobbyPageCollection : LobbyPageBase
             _isLastGroup = true;
         else
             _isLastGroup = false;
-        
+
         EnableChangeGroupButtonLeft.SetActive(!_isFirstGroup);
         EnableChangeGroupButtonRight.SetActive(!_isLastGroup);
 
@@ -87,7 +89,14 @@ public class LobbyPageCollection : LobbyPageBase
         foreach (var unit in group)
         {
             PartItemCards[index].Set(unit);
+            PartItemCards[index].SetClickEvent(OnClickUnit);
             index++;
         }
+    }
+
+    public void OnClickUnit(UnitInventory.Unit unit)
+    {
+        var popup = UIManager.Instance.ShowPopup<PopupUnitInfo>();
+        popup.Set(unit);
     }
 }
