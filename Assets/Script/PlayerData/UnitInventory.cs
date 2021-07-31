@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Define;
+using SheetData;
 using UnityEngine;
+using Violet;
 
 public class UnitInventory
 {
@@ -18,14 +20,14 @@ public class UnitInventory
         }
     }
 
-    public Dictionary<string,List<Unit>> Units = new Dictionary<string, List<Unit>>();
-    public Dictionary<string,bool> ChangedGroup = new Dictionary<string, bool>();
-    
+    public Dictionary<string, List<Unit>> Units = new Dictionary<string, List<Unit>>();
+    public Dictionary<string, bool> ChangedGroup = new Dictionary<string, bool>();
+
     public void Insert(SheetData.Unit sheet)
     {
         if (Units.ContainsKey(sheet.group) == false)
         {
-            Units.Add(sheet.group,new List<Unit>());
+            Units.Add(sheet.group, new List<Unit>());
         }
 
         bool isContains = false;
@@ -58,7 +60,7 @@ public class UnitInventory
         ChangedGroup[group] = true;
     }
 
-    public void GainEXP(string key,int value)
+    public void GainEXP(string key, int value)
     {
         var sheet = key.ToTableData<SheetData.Unit>();
 
@@ -97,10 +99,63 @@ public class UnitInventory
             return Units[group];
         return null;
     }
+
+    public bool LevelUp(string key)
+    {
+        var unit = GetUnit(key);
+        if (unit.IsMaxLevel() == false && unit.AvaliableLevelUp())
+        {
+            unit.Level++;
+            var sheet = key.ToTableData<SheetData.Unit>();
+            SetChangedGroup(sheet.group);
+            return true;
+        }
+
+        return false;
+    }
+
     public class Unit
     {
         public string Key;
         public int Level;
         public int Exp;
+
+        //현재 레벨에서의 경험치
+        public int GetCurrentLevelEXP()
+        {
+            //현재 레벨 이하 모든 레벨업 경험치 합산
+            int total = 0;
+            for (int i = 1; i <= Level; i++)
+            {
+                var sheet = i.ToString().ToTableData<UnitLevel>();
+                total += sheet.exp;
+            }
+
+            return Exp - total;
+        }
+
+        //현재 레벨에서의 레벨업 필요 경험치
+        public int GetCurrentLevelUpExp()
+        {
+            var sheet = (Level + 1).ToString().ToTableData<UnitLevel>();
+            if (sheet != null)
+                return sheet.exp;
+            return -1;
+        }
+
+        //최대레벨 확인
+        public bool IsMaxLevel()
+        {
+            UnitLevel sheet = Level.ToString().ToTableData<UnitLevel>();
+            return sheet.max;
+        }
+
+        //레벨업 가능 여부 확인
+        public bool AvaliableLevelUp()
+        {
+            if (IsMaxLevel()) return false;
+            var sheet = (Level + 1).ToString().ToTableData<UnitLevel>();
+            return sheet.total <= Exp;
+        }
     }
 }

@@ -94,6 +94,11 @@ public class LobbyPageCollection : LobbyPageBase
         }
     }
 
+    public override void Refresh()
+    {
+        RefreshGroupList();
+    }
+
     public void OnClickUnit(UnitInventory.Unit unit)
     {
         var popup = UIManager.Instance.ShowPopup<PopupUnitInfo>();

@@ -20,4 +20,9 @@ public class LobbyPageBase : MonoBehaviour
     public virtual void OnHide()
     {
     }
+
+    public virtual void Refresh()
+    {
+        
+    }
 }

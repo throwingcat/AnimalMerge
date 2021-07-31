@@ -11,6 +11,7 @@ namespace Packet
         REPORT_GAME_RESULT,
         CHEST_PROGRESS,
         CHEST_COMPLETE,
+        UNIT_LEVEL_UP,
     }
 
     [MessagePackObject]
@@ -18,6 +19,13 @@ namespace Packet
     {
         [Key(0)] public ePACKET_TYPE PacketType;
         [Key(1)] public Hashtable hash = new Hashtable();
+
+        public bool isSuccess()
+        {
+            if (hash.ContainsKey("success"))
+                return bool.Parse(hash["success"].ToString());
+            return false;
+        }
     }
 
     [MessagePackObject]

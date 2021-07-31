@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PartItemCard : MonoBehaviour
 {
     public GameObject Root;
-    
+
     public Text Amount;
     public CanvasGroup CardDescriptionGroup;
     public CanvasGroup CardImageGroup;
@@ -22,8 +22,8 @@ public class PartItemCard : MonoBehaviour
     public Image Piece;
     public GameObject LevelUp;
 
-    public UnitInventory.Unit Unit; 
-    
+    public UnitInventory.Unit Unit;
+
     public void Set(ItemInfo itemInfo)
     {
         switch (itemInfo.Type)
@@ -50,7 +50,7 @@ public class PartItemCard : MonoBehaviour
     public void Set(UnitInventory.Unit unit)
     {
         Unit = unit;
-        
+
         var sheet = unit.Key.ToTableData<Unit>();
         SetTexutre(sheet.face_texture);
         SetName(sheet.name.ToLocalization());
@@ -58,9 +58,9 @@ public class PartItemCard : MonoBehaviour
         SetLevel(unit.Level);
         SetGrade(sheet.index);
 
-        var next_level_sheet = (unit.Level + 1).ToString().ToTableData<UnitLevel>();
-        if (next_level_sheet != null)
-            SetExp(unit.Exp, next_level_sheet.exp);
+        var need_exp = unit.GetCurrentLevelUpExp();
+        if(need_exp != -1)
+            SetExp(unit.GetCurrentLevelEXP(), need_exp);
         else
             SetMaxLevel();
 
@@ -167,7 +167,7 @@ public class PartItemCard : MonoBehaviour
         SetActiveLevelUp(false);
     }
 
-    
+
     private Action<UnitInventory.Unit> _onClickUnit;
 
     public void SetClickEvent(Action<UnitInventory.Unit> onClick)
@@ -184,6 +184,7 @@ public class PartItemCard : MonoBehaviour
     {
         Root.transform.ButtonReleasePlay();
     }
+
     public void OnClick()
     {
         _onClickUnit?.Invoke(Unit);

@@ -12,6 +12,7 @@ public class PanelLobby : SUIPanel
     public List<LobbyPageBase> Page = new List<LobbyPageBase>();
 
     public ScrollRect PageScroll;
+    
     protected override void OnShow()
     {
         base.OnShow();

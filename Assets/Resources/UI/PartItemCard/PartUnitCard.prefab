@@ -325,6 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bd908e3a62ba1247ad469d72ee889a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Root: {fileID: 0}
   Amount: {fileID: 0}
   CardDescriptionGroup: {fileID: 0}
   CardImageGroup: {fileID: 0}
@@ -337,7 +338,6 @@ MonoBehaviour:
   Level: {fileID: 7547543374074310177}
   Name: {fileID: 0}
   Piece: {fileID: 2913334844218523300}
-  Root: {fileID: 0}
   LevelUp: {fileID: 2768293443560841194}
 --- !u!1 &2768293443560841194
 GameObject:
@@ -457,6 +457,7 @@ GameObject:
   - component: {fileID: 7605843962876553014}
   - component: {fileID: 6601571591941146082}
   - component: {fileID: 7093143162151195827}
+  - component: {fileID: 4112652846568345049}
   - component: {fileID: 5286464686489263619}
   m_Layer: 0
   m_Name: animal
@@ -522,6 +523,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4112652846568345049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4215716875538294915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 40306178, guid: aa0b1eebb5db27a419fa4564bbe5c9c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preset: 0
+  onEnableBehaviour: 1
+  onDisableBehaviour: 2
 --- !u!114 &5286464686489263619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,7 +652,7 @@ MonoBehaviour:
   isRelative: 1
   isFrom: 0
   isIndependentUpdate: 0
-  autoKill: 1
+  autoKill: 0
   isActive: 1
   isValid: 1
   target: {fileID: 7605843962876553014}

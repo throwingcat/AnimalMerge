@@ -6,6 +6,7 @@ using System.Reflection;
 using Define;
 using LitJson;
 using MessagePack;
+using Packet;
 using SheetData;
 using UnityEngine;
 using UnityEngine.Monetization;
@@ -62,6 +63,9 @@ namespace Server
                     break;
                 case Packet.ePACKET_TYPE.CHEST_COMPLETE:
                     CompleteChest(packet);
+                    break;
+                case ePACKET_TYPE.UNIT_LEVEL_UP:
+                    UnitLevelUpProcess(packet);
                     break;
             }
         }
@@ -263,6 +267,20 @@ namespace Server
 
         #endregion
 
+        #region Lobby - Collection
+
+        public void UnitLevelUpProcess(PacketBase packet)
+        {
+            string unitKey = packet.hash["unit_key"].ToString();
+
+            bool isSuccess = UnitInventory.Instance.LevelUp(unitKey);
+            UpdateDB<DBUnitInventory>(() =>
+            {
+                packet.hash.Add("success",isSuccess);
+                SendPacket(packet);                
+            });
+        }
+        #endregion
         public void DownloadDB<T>(System.Action onFinish) where T : DBBase
         {
             var db = GetDB<T>();

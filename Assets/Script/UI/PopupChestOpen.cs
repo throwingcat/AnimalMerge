@@ -142,8 +142,7 @@ public class PopupChestOpen : SUIPanel
                     }
                     else
                     {
-                        var levelSheet = (unit.Level + 1).ToString().ToTableData<UnitLevel>();
-                        max_exp = levelSheet.exp;
+                        max_exp = unit.GetCurrentLevelUpExp();
                     }
                     GetCurrentReward.SetExp(prev_exp, max_exp);
                 }
@@ -190,7 +189,7 @@ public class PopupChestOpen : SUIPanel
 
         GetCurrentReward.gameObject.SetActive(false);
         RemainRewardCount.gameObject.SetActive(false);
-        Chest.transform.DOLocalMoveY(300f, 0.5f).SetRelative(true);
+        Chest.transform.DOLocalMoveY(500f, 0.5f).SetRelative(true);
 
         yield return new WaitForSeconds(0.3f);
         RewardsRoot.SetActive(true);
