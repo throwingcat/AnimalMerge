@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Define;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -80,5 +81,11 @@ public class PanelLobby : SUIPanel
         Matching.SetActive(false);
     }
 
+    public void MatchMakingAI()
+    {
+        OnMatchingCancel();
+        GameManager.Instance.isSinglePlay = true;
+        GameManager.Instance.ChangeGameState(eGAME_STATE.Battle);
+    }
     #endregion
 }

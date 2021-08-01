@@ -128,6 +128,7 @@
      <Compile Include="Assets\Script\UI\Lobby Page\LobbyPageCollection.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\EffectArea.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\Singleton.cs" />
+     <Compile Include="Assets\Script\AICore.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPressButton.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\ICSVDataBase.cs" />
      <Compile Include="Assets\Script\NetworkManager.cs" />
@@ -152,6 +153,7 @@
      <Compile Include="Assets\Script\Unit\SyncUnitBase.cs" />
      <Compile Include="Assets\Script\UI\SlicedFilledImage.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleUI.cs" />
+     <Compile Include="Assets\Script\Data\Partial\Unit.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\JoyStick\Script\JoyStickReceiver.cs" />
      <Compile Include="Assets\Script\UI\PopupChestUnlock.cs" />
      <Compile Include="Assets\Script\GameManager.cs" />

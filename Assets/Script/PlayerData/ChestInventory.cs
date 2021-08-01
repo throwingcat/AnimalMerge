@@ -25,8 +25,11 @@ public class ChestInventory
 
     public ChestSlot GetEmptySlot()
     {
+        if(ChestSlots == null)
+            ChestSlots = new ChestSlot[EnvironmentValue.CHEST_SLOT_MAX_COUNT];
         foreach (var slot in ChestSlots)
         {
+            if (slot == null) continue;
             if (slot.Key.IsNullOrEmpty())
                 return slot;
         }

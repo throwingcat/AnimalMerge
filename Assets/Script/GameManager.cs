@@ -25,6 +25,9 @@ public class GameManager : MonoBehaviour
 
     public PartBase PartSceneChange;
 
+    public GameCore GameCore;
+    public GameCore AICore;
+    
     public void Awake()
     {
         Instance = this;
@@ -42,7 +45,9 @@ public class GameManager : MonoBehaviour
             case eGAME_STATE.Lobby:
                 break;
             case eGAME_STATE.Battle:
-                GameCore.Instance.OnUpdate(delta);
+                GameCore.OnUpdate(delta);
+                if(isSinglePlay)
+                    AICore.OnUpdate(delta);
                 break;
         }
 
@@ -255,20 +260,36 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator OnEnterBattle()
     {
-        GameCore.Instance.Initialize();
+        GameCore.Initialize(true);
+        if (isSinglePlay)
+        {
+            AICore.Initialize(false);
+            GameCore.SyncManager.SetTo(AICore);
+            AICore.SyncManager.SetTo(GameCore);
+        }
+
         yield break;
     }
 
     private IEnumerator OnLeaveBattle()
     {
-        //게임 오브젝트 삭제
-        GameCore.Instance.Clear();
+        if (isSinglePlay)
+        {
+            GameCore.Clear();
+            AICore.Clear();
+            isSinglePlay = false;
+        }
+        else
+        {
+            //게임 오브젝트 삭제
+            GameCore.Clear();
 
-        //네트워크 종료
-        NetworkManager.Instance.ClearEvent();
-        NetworkManager.Instance.DisconnectIngameServer();
-        NetworkManager.Instance.DisconnectGameRoom();
-        NetworkManager.Instance.DisconnectMatchServer();
+            //네트워크 종료
+            NetworkManager.Instance.ClearEvent();
+            NetworkManager.Instance.DisconnectIngameServer();
+            NetworkManager.Instance.DisconnectGameRoom();
+            NetworkManager.Instance.DisconnectMatchServer();
+        }
 
         yield break;
     }

@@ -225,8 +225,11 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
     #region 매칭 신청
 
+    public float MatchMakingElapsed = 0f;
+
     private IEnumerator MatchMaking()
     {
+        MatchMakingElapsed = 0f;
         MatchingStep = eMatchingStep.MATCHING;
 
         //매치 메이킹 신청
@@ -241,6 +244,26 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         //완료대기
         while (true)
         {
+            MatchMakingElapsed += Time.deltaTime;
+
+            if (5f <= MatchMakingElapsed)
+            {
+                MatchMakingElapsed = 0f;
+
+                int index = 0;
+                while (true)
+                {
+                    var panel = SUIPanel.GetPanel(index++);
+                    if (panel == null) break;
+                    if (panel is PanelLobby)
+                    {
+                        (panel as PanelLobby).MatchMakingAI();
+                    }
+                }
+            }
+
+            if (MatchingStep == eMatchingStep.DISCONNECTED) break;
+
             if (_matchMakingResponseEventArgs != null)
             {
                 if (_matchMakingResponseEventArgs.ErrInfo == ErrorCode.Success)
@@ -349,7 +372,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
     private List<PacketBase> _reservedPacket = new List<PacketBase>();
     private Dictionary<string, Action<PacketBase>> _waitingPacket = new Dictionary<string, Action<PacketBase>>();
-    
+
     public void Request(PacketBase packet, Action<PacketBase> onReceive)
     {
         bool isContains = false;
@@ -365,15 +388,15 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         if (isContains)
             return;
         string packetGUID = Guid.NewGuid().ToString();
-        
-        packet.hash.Add("player_guid",GameManager.Instance.GUID);
-        packet.hash.Add("packet_guid",packetGUID);
-        
+
+        packet.hash.Add("player_guid", GameManager.Instance.GUID);
+        packet.hash.Add("packet_guid", packetGUID);
+
         //패킷 송신 예약
         _reservedPacket.Add(packet);
-        
+
         //응답 대기열 등록
-        if(_waitingPacket.ContainsKey(packetGUID)==false)
+        if (_waitingPacket.ContainsKey(packetGUID) == false)
             _waitingPacket.Add(packetGUID, onReceive);
     }
 
@@ -382,7 +405,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         //서버로 데이터 송신
         var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
         var bytes = MessagePackSerializer.Serialize(packet, lz4Options);
-        
+
         Server.AnimalMergeServer.Instance.OnReceivePacket(bytes);
     }
 
@@ -407,10 +430,11 @@ public class NetworkManager : MonoSingleton<NetworkManager>
                     _waitingPacket[guid]?.Invoke(packet);
                     break;
             }
+
             _waitingPacket.Remove(guid);
         }
     }
-    
+
     #endregion
 
     #region 종료
@@ -440,7 +464,8 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
     public void DisconnectGameRoom()
     {
-        Backend.Match.LeaveMatchRoom();
+        if (eMatchingStep.WAITROOM_CREATE_COMPLETE <= MatchingStep)
+            Backend.Match.LeaveMatchRoom();
     }
 
     #endregion

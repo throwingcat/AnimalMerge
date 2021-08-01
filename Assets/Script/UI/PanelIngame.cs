@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using SheetData;
@@ -102,7 +103,7 @@ public class PanelIngame : SUIPanel
         var blocks = new List<Unit>();
 
         var current = damage;
-        foreach (var bad in GameCore.Instance.BadBlockSheet)
+        foreach (var bad in Unit.BadBlocks)
         {
             var count = current / bad.score;
 
@@ -154,7 +155,7 @@ public class PanelIngame : SUIPanel
         }
     }
 
-    public void PlayCombo(Vector3 worldPosition, int combo)
+    public void PlayCombo(RectTransform canvas, Vector3 worldPosition, int combo)
     {
         var path = string.Format("Sound/Combo Sound/Default/combo_{0}", Mathf.Clamp(combo, 1, 11));
         AudioManager.Instance.Play(path);
@@ -173,8 +174,7 @@ public class PanelIngame : SUIPanel
         var vfx = pool.Get();
         var vfxCombo = vfx.GetComponent<VFXCombo>();
         vfxCombo.Set(combo);
-        Utils.WorldToCanvas(ref vfxCombo.RectTransform, Camera.main, worldPosition,
-            GameCore.Instance.Canvas.GetComponent<RectTransform>());
+        Utils.WorldToCanvas(ref vfxCombo.RectTransform, Camera.main, worldPosition, canvas);
         vfxCombo.Play();
     }
 
@@ -197,9 +197,10 @@ public class PanelIngame : SUIPanel
         SkillActivate.SetActive(t >= 1f);
     }
 
+    public Action OnClickSkillEvent;
     public void OnClickSkill()
     {
-        GameCore.Instance.UseSkill();
+        OnClickSkillEvent?.Invoke();
     }
 
     public void RefreshWaitBlocks(string next, string afterNext)

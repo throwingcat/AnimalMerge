@@ -7,28 +7,29 @@ using UnityEngine;
 
 public class SyncManager
 {
-    private static SyncManager _instance;
-
     public Action<SyncPacket> OnSyncCapture;
     public Action<SyncPacket> OnSyncReceive;
-
-    public static SyncManager Instance
+    
+    public GameCore From;
+    public GameCore To;
+    
+    public SyncManager(GameCore from)
     {
-        get
-        {
-            if (_instance == null)
-                _instance = new SyncManager();
-            return _instance;
-        }
+        From = from;
     }
 
+    public void SetTo(GameCore to)
+    {
+        To = to;
+    }
+    
     public SyncPacket Capture()
     {
         var packet = new SyncPacket();
 
         var units = new List<UnitBase>();
-        units.AddRange(GameCore.Instance.UnitsInField);
-        units.AddRange(GameCore.Instance.BadUnits);
+        units.AddRange(From.UnitsInField);
+        units.AddRange(From.BadUnits);
         foreach (var unit in units)
         {
             var u = new UnitData();
@@ -39,20 +40,27 @@ public class SyncManager
             packet.UnitsDatas.Add(u);
         }
 
-        packet.AttackDamage = GameCore.Instance.AttackBadBlockValue;
-        packet.StackDamage = GameCore.Instance.MyBadBlockValue;
-        GameCore.Instance.AttackBadBlockValue = 0;
+        packet.AttackDamage = From.AttackBadBlockValue;
+        packet.StackDamage =From.MyBadBlockValue;
+        From.AttackBadBlockValue = 0;
 
-        if (GameCore.Instance.isGameOver)
+        if (From.isGameOver)
         {
             packet.isGameOver = true;
-            packet.GameOverTime = GameCore.Instance.GameOverTime;
+            packet.GameOverTime = From.GameOverTime;
         }
 
-        packet.isGameFinish = GameCore.Instance.isGameFinish;
+        packet.isGameFinish = From.isGameFinish;
 
         OnSyncCapture?.Invoke(packet);
 
+        //싱글 플레이의 경우 From < - > To 끼리 바로 통신
+        if (GameManager.Instance.isSinglePlay)
+        {
+            To.SyncManager.Receive(packet);
+            return packet;
+        }
+        
         //매치 서버로 송신
         if (Backend.Match.IsMatchServerConnect() && Backend.Match.IsInGameServerConnect())
         {

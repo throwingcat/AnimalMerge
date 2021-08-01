@@ -25,11 +25,16 @@ public class UnitBase : MonoBehaviour
     public eUnitType eUnitType = eUnitType.None;
     public eUnitDropState eUnitDropState = eUnitDropState.Ready;
     private string _dropInvokeGUID = "";
-    public virtual UnitBase OnSpawn(string unit_key)
+
+    private Action<UnitBase, UnitBase> _collisionEvent;
+
+    public virtual UnitBase OnSpawn(string unit_key, Action<UnitBase, UnitBase> collisionEvent)
     {
+        _collisionEvent = collisionEvent;
+        
         Sheet = TableManager.Instance.GetData<Unit>(unit_key);
         Info = UnitInventory.Instance.GetUnit(unit_key);
-        if(Info == null)
+        if (Info == null)
             Info = new UnitInventory.Unit()
             {
                 Key = unit_key,
@@ -38,7 +43,7 @@ public class UnitBase : MonoBehaviour
             };
         GUID = System.Guid.NewGuid().ToString();
         eUnitDropState = eUnitDropState.Ready;
-        
+
         if (Rigidbody2D != null)
             Rigidbody2D.gravityScale = 0;
         if (Collider2D != null)
@@ -57,7 +62,7 @@ public class UnitBase : MonoBehaviour
         transform.DOScale(size, 0.5f).SetEase(Ease.OutBack).Play();
 
         eUnitType = eUnitType.Nomral;
-        
+
         return this;
     }
 
@@ -83,14 +88,14 @@ public class UnitBase : MonoBehaviour
             Collider2D.enabled = true;
 
         SetActivePhysics(true);
-        
+
         Rigidbody2D.AddTorque(Random.Range(-0.25f, 0.25f));
-        
+
         _dropInvokeGUID = GameManager.DelayInvoke(() =>
         {
             if (eUnitDropState == eUnitDropState.Falling)
                 eUnitDropState = eUnitDropState.Complete;
-        },2f);
+        }, 2f);
     }
 
     protected static Sprite GetSprite(string unit_key)
@@ -119,7 +124,7 @@ public class UnitBase : MonoBehaviour
         if (target != null)
         {
             if (eUnitType == eUnitType.Nomral && target.eUnitType == eUnitType.Nomral)
-                GameCore.Instance.CollisionEnter(this,target);
+                _collisionEvent?.Invoke(this, target);
         }
     }
 

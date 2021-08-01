@@ -6,13 +6,13 @@ using Violet;
 
 public class EnemyScreen : MonoBehaviour
 {
-    [SerializeField]private Camera _camera;
-    [SerializeField]private RenderTexture _renderTexture;
-    [SerializeField]private SyncUnitBase _syncUnitPrefab;
-    [SerializeField]private Transform _unitParent;
-    
+    [SerializeField] private Camera _camera;
+    [SerializeField] private RenderTexture _renderTexture;
+    [SerializeField] private SyncUnitBase _syncUnitPrefab;
+    [SerializeField] private Transform _unitParent;
+
     private List<UnitBase> _units = new List<UnitBase>();
-    
+
     public void Refresh(SyncManager.SyncPacket packet)
     {
         //Restore
@@ -20,11 +20,12 @@ public class EnemyScreen : MonoBehaviour
         {
             string pool_key = string.Format("{0}_{1}", "sync", unit.Sheet.key);
             var pool = GameObjectPool.GetPool(pool_key);
-            if(pool !=null)
+            if (pool != null)
                 pool.Restore(unit.gameObject);
         }
+
         _units.Clear();
-        
+
         //Get
         foreach (var unit in packet.UnitsDatas)
         {
@@ -39,22 +40,22 @@ public class EnemyScreen : MonoBehaviour
                     go.transform.LocalReset();
                     go.gameObject.SetActive(false);
                     return go.gameObject;
-                }, 1,category:Define.Key.IngamePoolCategory);
+                }, 1, category: Define.Key.IngamePoolCategory);
             }
 
             var go = pool.Get();
             var unitBase = go.GetComponent<UnitBase>();
-            
+
             unitBase.transform.SetParent(_unitParent);
-            unitBase.OnSpawn(unit.UnitKey)
+            unitBase.OnSpawn(unit.UnitKey, null)
                 .SetPosition(unit.UnitPosition.ToVector3())
                 .SetRotation(unit.UnitRotation.ToVector3());
             unitBase.gameObject.SetActive(true);
-            
+
             _units.Add(unitBase);
         }
     }
-    
+
     public RenderTexture Capture()
     {
         return _renderTexture;
