@@ -258,6 +258,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
                     if (panel is PanelLobby)
                     {
                         (panel as PanelLobby).MatchMakingAI();
+                        break;
                     }
                 }
             }

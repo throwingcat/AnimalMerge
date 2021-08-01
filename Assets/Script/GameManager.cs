@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 
     public GameCore GameCore;
     public GameCore AICore;
-    
+
     public void Awake()
     {
         Instance = this;
@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
                 break;
             case eGAME_STATE.Battle:
                 GameCore.OnUpdate(delta);
-                if(isSinglePlay)
+                if (isSinglePlay)
                     AICore.OnUpdate(delta);
                 break;
         }
@@ -174,7 +174,7 @@ public class GameManager : MonoBehaviour
 
         while (isDone == false)
             yield return null;
-        
+
         if (isSinglePlay)
             ChangeGameState(eGAME_STATE.Battle);
         else
@@ -189,28 +189,19 @@ public class GameManager : MonoBehaviour
         bool isDone = false;
 
         Debug.Log("Download PlayerInfo");
-        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBPlayerInfo>(() =>
-        {
-            isDone = true;
-        });
+        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBPlayerInfo>(() => { isDone = true; });
         while (isDone == false)
             yield return null;
         isDone = false;
-        
+
         Debug.Log("Download ChestInventory");
-        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBChestInventory>(() =>
-        {
-            isDone = true;
-        });
+        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBChestInventory>(() => { isDone = true; });
         while (isDone == false)
             yield return null;
         isDone = false;
-        
+
         Debug.Log("Download UnitInventory");
-        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBUnitInventory>(() =>
-        {
-            isDone = true;
-        });
+        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBUnitInventory>(() => { isDone = true; });
         while (isDone == false)
             yield return null;
         isDone = false;
@@ -249,6 +240,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator OnEnterLobby()
     {
+        while (0 < SUIPanel.StackCount)
+            SUIPanel.BackPressForce();
         UIManager.Instance.Show<PanelLobby>();
         yield break;
     }
@@ -428,5 +421,6 @@ public class GameManager : MonoBehaviour
             LastUpdatedTime = GameManager.GetTime();
         }
     }
+
     #endregion
 }
