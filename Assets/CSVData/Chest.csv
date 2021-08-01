@@ -1,0 +1,5 @@
+key,group,index,texture,ratio,amount,time,gold_min,gold_max
+chest_iron,default,1,Chest_Iron,70,19,3600,126,144
+chest_silver,default,2,Chest_Silver,25,42,7200,490,560
+chest_gold,default,3,Chest_Gold,4.9,102,14400,1408,1696
+chest_legend,default,4,Chest_Legend,0.1,792,43200,7128,8586

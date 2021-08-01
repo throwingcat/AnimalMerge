@@ -1,0 +1,25 @@
+key,value,Comment
+DEFAULT,TEXT,테이블 자동생성 STRING 세팅
+UNIT_SPAWN_DELAY,1,유닛 생성 딜레이
+MERGE_DELAY,0.15,유닛 머지 딜레이
+UNIT_SPRITE_BASE_SIZE,300,유닛 기본 크기
+WORLD_RATIO,0.00521,월드 배율
+SYNC_CAPTURE_DELAY,1,네트워크 동기화 딜레이
+COMBO_DURATION,2,콤보 유지 시간
+GAME_OVER_TIME_OUT,5,게임오버 타이머
+SPAWN_PHASE_2_PICK_LEVEL_1,80,플레이어 블록 소환 2페이즈 1레벨
+SPAWN_PHASE_2_PICK_LEVEL_2,20,플레이어 블록 소환 2페이즈 2레벨
+SPAWN_PHASE_3_PICK_LEVEL_1,75,플레이어 블록 소환 3페이즈 1레벨
+SPAWN_PHASE_3_PICK_LEVEL_2,20,플레이어 블록 소환 3페이즈 2레벨
+SPAWN_PHASE_3_PICK_LEVEL_3,5,플레이어 블록 소환 3페이즈 3레벨
+BAD_BLOCK_TIMER,5,방해블록 생성 딜레이
+BAD_BLOCK_HORIZONTAL_MAX_COUNT,6,1회 생성시 방해블록 한줄 최대치
+BAD_BLOCK_VERTICAL_MAX_COUNT,4,1회 생성시 방해블록 줄 최대치
+BAD_BLOCK_AREA_WIDTH,800,방해블록 영역 가로길이
+BAD_BLOCK_SPAWN_Y,1050,방해블록 생성 높이 시작위치
+BAD_BLOCK_VERTICAL_OFFSET,150,방해블록 높이 간격
+SKILL_CHARGE_MAX_VALUE,1500,스킬 활성화 충전량
+SHAKE_SKILL_FORCE_POWER,200,흔들기 스킬 상승 파워
+SHAKE_SKILL_TORQUE_MAX_POWER,7,흔들기 스킬 회전 최대 파워
+SHAKE_SKILL_TORQUE_MIN_POWER,3,흔들기 스킬 회전 최소 파워
+CHEST_SLOT_MAX_COUNT,4,로비 상자 인벤토리 슬롯
