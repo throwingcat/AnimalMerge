@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using BackEnd;
 using Define;
 using UnityEngine;
+using UnityEngine.Networking;
 using Violet;
 
 public class GameManager : MonoBehaviour
@@ -423,4 +424,13 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+    
+    public class BypassCertificate : CertificateHandler
+    {
+        protected override bool ValidateCertificate(byte[] certificateData)
+        {
+            //Simply return true no matter what
+            return true;
+        }
+    }
 }
