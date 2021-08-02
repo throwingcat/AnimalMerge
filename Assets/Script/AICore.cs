@@ -7,10 +7,19 @@ using UnityEngine;
 
 public class AICore : GameCore
 {
+    public int MMR = 1000;
+    public float InputDelayElapsed = 0f;
+    public float InputDelayDuration = 0f;
     public override void Initialize(bool isPlayer)
     {
         IsPlayer = isPlayer;
         Initialize();
+
+        MMR = PlayerInfo.Instance.RankScore;
+        float mmr_ratio = Mathf.InverseLerp(EnvironmentValue.AI_INPUT_DELAY_LOW_MMR, EnvironmentValue.AI_INPUT_DELAY_HIGH_MMR, MMR);
+
+        InputDelayDuration = Mathf.Lerp(EnvironmentValue.AI_INPUT_DELAY_MAX, EnvironmentValue.AI_INPUT_DELAY_MIN, mmr_ratio);
+        InputDelayElapsed = InputDelayDuration;
         gameObject.SetActive(true);
     }
 
@@ -23,6 +32,14 @@ public class AICore : GameCore
     {
         if (CurrentReadyUnit != null)
         {
+            if (InputDelayElapsed < InputDelayDuration)
+            {
+                InputDelayElapsed += Time.deltaTime;
+                return;
+            }
+
+            InputDelayElapsed = 0f;
+            
             var isFindFriend = false;
             Vector3 pos = UnitSpawnPosition;
             foreach (var unit in UnitsInField)
@@ -41,6 +58,8 @@ public class AICore : GameCore
             }
 
             CurrentReadyUnit.transform.localPosition = pos;
+            
+            
             OnRelease();
         }
     }

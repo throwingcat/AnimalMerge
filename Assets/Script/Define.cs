@@ -65,8 +65,17 @@ namespace Define
         public static float BAD_BLOCK_AREA_WIDTH = 800;
         public static float BAD_BLOCK_SPAWN_Y = 1050;
         public static float BAD_BLOCK_VERTICAL_OFFSET = 150;
+        #endregion
+        
+        #region AI
+
+        public static float AI_INPUT_DELAY_MAX = 3;
+        public static float AI_INPUT_DELAY_MIN = 0;
+        public static int AI_INPUT_DELAY_LOW_MMR = 1000;
+        public static int AI_INPUT_DELAY_HIGH_MMR = 1050;
         
         #endregion
+        
         #region Skill
         public static float SHAKE_SKILL_FORCE_POWER = 100f;
         public static float SHAKE_SKILL_TORQUE_MAX_POWER = 2f;
