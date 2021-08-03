@@ -71,6 +71,9 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\Editor\SUIToggleInspector.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Editor\UIEffectCapturedImageEditor.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\Editor\SoftMaskEditor.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Editor\CFX_SpawnSystemEditor.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Editor\CFX_InspectorHelpEditor.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX Easy Editor\Editor\CFXEasyEditor.cs" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DemiLib\Core\Editor\DemiEditor.xml" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -831,6 +834,22 @@
     <ProjectReference Include="MessagePack.Annotations.csproj">
       <Project>{0c84f949-ed2f-f0f9-fbea-2ff681d75e71}</Project>
       <Name>MessagePack.Annotations</Name>
+    </ProjectReference>
+    <ProjectReference Include="CFXREditor.csproj">
+      <Project>{cb0c5c62-3126-4983-743e-7846da511a1f}</Project>
+      <Name>CFXREditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="CFXRRuntime.csproj">
+      <Project>{f1580a4b-0e7f-8cd4-bfd5-a48861788752}</Project>
+      <Name>CFXRRuntime</Name>
+    </ProjectReference>
+    <ProjectReference Include="CFXRDemoEditor.csproj">
+      <Project>{a0000048-48df-36c2-1e91-c7669505ac87}</Project>
+      <Name>CFXRDemoEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="CFXRDemo.csproj">
+      <Project>{90098972-9133-f76e-b59d-8c7278d8a911}</Project>
+      <Name>CFXRDemo</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
