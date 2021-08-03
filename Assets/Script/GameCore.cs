@@ -166,13 +166,18 @@ public class GameCore : MonoBehaviour
                     break;
                 case 2:
                     pick = Utils.RandomPick(new List<double>
-                        {EnvironmentValue.SPAWN_PHASE_2_PICK_LEVEL_1, EnvironmentValue.SPAWN_PHASE_2_PICK_LEVEL_2});
+                    {
+                        EnvironmentValue.SPAWN_PHASE_2_PICK_LEVEL_1,
+                        EnvironmentValue.SPAWN_PHASE_2_PICK_LEVEL_2
+                    });
                     break;
                 case 3:
                     pick = Utils.RandomPick(new List<double>
                     {
-                        EnvironmentValue.SPAWN_PHASE_3_PICK_LEVEL_1, EnvironmentValue.SPAWN_PHASE_3_PICK_LEVEL_2,
-                        EnvironmentValue.SPAWN_PHASE_3_PICK_LEVEL_3
+                        EnvironmentValue.SPAWN_PHASE_3_PICK_LEVEL_1,
+                        EnvironmentValue.SPAWN_PHASE_3_PICK_LEVEL_2,
+                        EnvironmentValue.SPAWN_PHASE_3_PICK_LEVEL_3,
+                        EnvironmentValue.SPAWN_PHASE_3_PICK_LEVEL_4,
                     });
                     break;
                 default:
@@ -193,18 +198,18 @@ public class GameCore : MonoBehaviour
             GameObject root = new GameObject(key + "_pool");
             pool = GameObjectPool.CreatePool(key, () =>
             {
-                var go = Instantiate(UnitPrefab,root.transform);
+                var go = Instantiate(UnitPrefab, root.transform);
                 go.gameObject.SetActive(false);
                 return go.gameObject;
             }, 1, root, Key.IngamePoolCategory);
         }
 
         var unit = pool.Get();
-        
+
         unit.transform.SetParent(UnitParent);
         unit.transform.LocalReset();
         unit.transform.SetAsLastSibling();
-        
+
         var component = unit.GetComponent<UnitBase>();
 
         component.OnSpawn(key, CollisionEnter)
@@ -212,7 +217,7 @@ public class GameCore : MonoBehaviour
             .SetRotation(Vector3.zero);
 
         unit.SetActive(true);
-        
+
         return component;
     }
 
@@ -341,7 +346,7 @@ public class GameCore : MonoBehaviour
         {
             UnitsInField.Add(SpawnUnit(a.Sheet.grow_unit, pos));
 
-            if (SpawnLevel < a.Sheet.index + 2)
+            if (SpawnLevel + 2 < a.Sheet.index)
                 SpawnLevel++;
             SpawnLevel = Mathf.Clamp(SpawnLevel, 1, 3);
         }

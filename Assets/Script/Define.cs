@@ -57,6 +57,7 @@ namespace Define
         public static float SPAWN_PHASE_3_PICK_LEVEL_1 = 75f;
         public static float SPAWN_PHASE_3_PICK_LEVEL_2 = 20f;
         public static float SPAWN_PHASE_3_PICK_LEVEL_3 = 5f;
+        public static float SPAWN_PHASE_3_PICK_LEVEL_4 = 5f;
         #endregion
         #region BadBlock
         public static float BAD_BLOCK_TIMER = 5f;
