@@ -59,7 +59,7 @@ SpriteAtlas:
     - {fileID: 102900000, guid: 0dcf213ce157a314080be094c25a343a, type: 3}
     - {fileID: 102900000, guid: faf346794701d2946b6c2c15ba0b2997, type: 3}
     - {fileID: 102900000, guid: 1683a1423fa098848928f6327a3515c7, type: 3}
-    totalSpriteSurfaceArea: 2575861
+    totalSpriteSurfaceArea: 2583605
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -85,6 +85,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 1b3f418225e5e3346956f5c402292255, type: 3}
   - {fileID: 21300000, guid: 4505e1a20c948784bbc7aae1fccc70c3, type: 3}
   - {fileID: 21300000, guid: 2d988bb2f2defb145b33942733d57d72, type: 3}
+  - {fileID: 21300000, guid: daf105034455aef459c604d588acff1b, type: 3}
   - {fileID: 21300000, guid: eac45a64b2fca7f448fe0b082f7eb72d, type: 3}
   - {fileID: 21300000, guid: d80fdba47e9418a4e901ceaee62442ae, type: 3}
   - {fileID: 21300000, guid: 9c0a1ae4a7a69354fba2dde8c530744b, type: 3}
@@ -172,6 +173,7 @@ SpriteAtlas:
   - gauge_01
   - btn_disable
   - Chest_Wood
+  - icon_timmer
   - img_skill_cool_bg
   - icon_collect_1
   - cat_03

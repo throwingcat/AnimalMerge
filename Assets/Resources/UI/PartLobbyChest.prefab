@@ -1549,9 +1549,9 @@ MonoBehaviour:
   - {fileID: 4525248304304024616}
   - {fileID: 8291661192082203976}
   ProgressGrade:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 5920351228300227665}
+  - {fileID: 3891047401380572660}
+  - {fileID: 3141541295789005988}
   Root: {fileID: 183904760434518260}
   State: 0
   Index: 0

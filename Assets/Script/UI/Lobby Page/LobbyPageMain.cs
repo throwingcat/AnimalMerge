@@ -14,7 +14,7 @@ public class LobbyPageMain : LobbyPageBase
 
     public PartLobbyChest[] Chests;
     private float _chest_update_delta = 0f;
-    private float _chest_update_delay = 0.5f;
+    private float _chest_update_delay = 1f;
 
     public override void OnShow()
     {
