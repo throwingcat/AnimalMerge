@@ -97,6 +97,7 @@ public class GameCore : MonoBehaviour
         PanelIngame.OnClickSkillEvent += UseSkill;
         PanelIngame.RefreshScore(0, 0);
         PanelIngame.RefreshSkillGauge(0f);
+        PanelIngame.RefreshPassiveSkillGauge(0f);
         RefreshBadBlockUI();
 
         //매치 릴레이 세팅
@@ -127,6 +128,8 @@ public class GameCore : MonoBehaviour
             InputUpdate();
 
             MergeUpdate(delta);
+
+            OnUpdatePassiveSkill(delta);
 
             BadBlockUpdate(delta);
 
@@ -361,13 +364,19 @@ public class GameCore : MonoBehaviour
 
     private void OnMergeEvent(UnitBase a, UnitBase b, int Combo)
     {
-        //콤보 출력
-        if (PanelIngame != null)
-            PanelIngame.PlayCombo(Canvas.GetComponent<RectTransform>(), a.transform.position, Combo);
         _comboDelta = EnvironmentValue.COMBO_DURATION;
 
-        if (PanelIngame != null)
+        if (IsPlayer)
+        {
+            //콤보 출력
+            PanelIngame.PlayCombo(Canvas.GetComponent<RectTransform>(), a.transform.position, Combo);
+            //콤보 초상화 출력
             PanelIngame.PlayerComboPortrait.Play(Combo, false);
+
+            //패시브 스킬 발동
+            if (3 <= Combo)
+                ActivePassiveSkill();
+        }
 
         //스코어 갱신
         var gain = (a.Sheet.score + b.Sheet.score) * 10 * Combo;
@@ -845,6 +854,108 @@ public class GameCore : MonoBehaviour
 
     #endregion
 
+    #region Skill
+
+    private float PASSIVE_SKILL_COOL_TIME = 20f;
+    private float _passiveSkillCoolTime = 0f;
+    private bool isEnablePassiveSkill => _passiveSkillCoolTime <= 0f;
+
+    private void OnUpdatePassiveSkill(float delta)
+    {
+        _passiveSkillCoolTime -= delta;
+        if (_passiveSkillCoolTime <= 0)
+            _passiveSkillCoolTime = 0f;
+
+        if (IsPlayer)
+        {
+            PanelIngame.RefreshPassiveSkillGauge(1f - (_passiveSkillCoolTime / PASSIVE_SKILL_COOL_TIME));
+
+            if (Input.GetKeyDown(KeyCode.W))
+                ActivePassiveSkill();
+        }
+    }
+
+    private void ActivePassiveSkill()
+    {
+        if (isEnablePassiveSkill == false) return;
+
+        switch (PlayerUnitGroup)
+        {
+            case "Cat":
+            {
+                //쥐 탐색
+                if (0 < BadUnits.Count)
+                {
+                    PanelIngame.PlayerSkillVFX.SetActive(false);
+
+                    int pick = Random.Range(0, BadUnits.Count);
+
+                    var pos = BadUnits[pick].transform.position;
+
+                    var rt = PanelIngame.PlayerSkillVFX.GetComponent<RectTransform>();
+                    Utils.WorldToCanvas(ref rt, Camera.main, pos, Canvas.GetComponent<RectTransform>());
+
+                    PanelIngame.PlayerSkillVFX.SetActive(true);
+
+                    GameManager.DelayInvoke(() => { PanelIngame.PlayerSkillVFX.SetActive(false); }, 1f);
+
+                    Vector3 center = BadUnits[pick].transform.localPosition;
+                    float remove_range = 200f;
+                    float shake_range = 400f;
+                    List<string> remove_target = new List<string>();
+                    List<Tuple<string, Vector2>> shake_target = new List<Tuple<string, Vector2>>();
+
+                    foreach (var unit in BadUnits)
+                    {
+                        float distance = Vector3.Distance(center, unit.transform.localPosition);
+                        if (distance <= remove_range)
+                            remove_target.Add(unit.GUID);
+                        else if (distance <= shake_range)
+                            shake_target.Add(new Tuple<string, Vector2>(unit.GUID,
+                                (unit.transform.localPosition - center).normalized));
+                    }
+
+                    foreach (var guid in remove_target)
+                    {
+                        for (int i = 0; i < BadUnits.Count; i++)
+                        {
+                            if (BadUnits[i].GUID == guid)
+                            {
+                                RemoveUnit(BadUnits[i]);
+                                break;
+                            }
+                        }
+                    }
+
+                    foreach (var shake in shake_target)
+                    {
+                        for (int i = 0; i < BadUnits.Count; i++)
+                        {
+                            if (BadUnits[i].GUID == shake.Item1)
+                            {
+                                BadUnits[i].Rigidbody2D.velocity = Vector2.zero;
+                                BadUnits[i].Rigidbody2D.AddForce(shake.Item2 * 100f);
+                                break;
+                            }
+                        }
+                    }
+
+                    OnCompletePassiveSkill();
+                }
+            }
+                break;
+        }
+    }
+
+    private void OnCompletePassiveSkill()
+    {
+        //스킬 발동 성공
+        _passiveSkillCoolTime = PASSIVE_SKILL_COOL_TIME;
+        PanelIngame.RefreshPassiveSkillGauge(0f);
+    }
+
+    #endregion
+
     #region Sync
 
     public void OnCaptureSyncPacket(SyncManager.SyncPacket packet)
@@ -853,7 +964,7 @@ public class GameCore : MonoBehaviour
 
     public void OnReceiveSyncPacket(SyncManager.SyncPacket packet)
     {
-        OnReceiveBadBlock(packet.AttackDamage , packet.AttackCombo);
+        OnReceiveBadBlock(packet.AttackDamage, packet.AttackCombo);
 
         if (IsPlayer)
         {

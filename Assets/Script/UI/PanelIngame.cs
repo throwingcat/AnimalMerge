@@ -36,12 +36,16 @@ public class PanelIngame : SUIPanel
 
     public PartComboPortrait PlayerComboPortrait;
     public PartComboPortrait EnemyomboPortrait;
+    
+    public GameObject PlayerSkillVFXRoot;
+    public GameObject PlayerSkillVFX;
+    public Image PassiveSkillGauge;
+    public Image PassiveSkillIcon;
+    public GameObject PassiveSkillActivate;
     #region Enemy Screen
-
     private readonly List<IngameBadBlock> _enemyBadBlocks = new List<IngameBadBlock>();
     public Transform EnemyBadBlockParent;
     public Transform EnemyBadBlockVFXPoint;
-
     #endregion
 
     protected override void OnShow()
@@ -202,6 +206,14 @@ public class PanelIngame : SUIPanel
         SkillGauge.fillAmount = t;
         SkillIcon.color = t <= 1f ? Color.gray : Color.white;
         SkillActivate.SetActive(t >= 1f);
+    }
+
+    public void RefreshPassiveSkillGauge(float t)
+    {
+        PassiveSkillGauge.fillAmount = t;
+        PassiveSkillIcon.fillAmount = t;
+        PassiveSkillIcon.color = t <= 1f ? Color.gray : Color.white;
+        PassiveSkillActivate.SetActive(t >= 1f);
     }
 
     public Action OnClickSkillEvent;
