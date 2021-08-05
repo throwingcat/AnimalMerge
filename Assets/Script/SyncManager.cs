@@ -9,10 +9,10 @@ public class SyncManager
 {
     public Action<SyncPacket> OnSyncCapture;
     public Action<SyncPacket> OnSyncReceive;
-    
+
     public GameCore From;
     public GameCore To;
-    
+
     public SyncManager(GameCore from)
     {
         From = from;
@@ -22,7 +22,7 @@ public class SyncManager
     {
         To = to;
     }
-    
+
     public SyncPacket Capture()
     {
         var packet = new SyncPacket();
@@ -41,7 +41,8 @@ public class SyncManager
         }
 
         packet.AttackDamage = From.AttackBadBlockValue;
-        packet.StackDamage =From.MyBadBlockValue;
+        packet.AttackCombo = 0 < From.AttackBadBlockValue ? From.Combo : 0;
+        packet.StackDamage = From.MyBadBlockValue;
         From.AttackBadBlockValue = 0;
 
         if (From.isGameOver)
@@ -60,7 +61,7 @@ public class SyncManager
             To.SyncManager.Receive(packet);
             return packet;
         }
-        
+
         //매치 서버로 송신
         if (Backend.Match.IsMatchServerConnect() && Backend.Match.IsInGameServerConnect())
         {
@@ -100,19 +101,21 @@ public class SyncManager
     [MessagePackObject]
     public class SyncPacket
     {
-        [Key(1)] public int AttackDamage;
-
-        [Key(4)] public DateTime GameOverTime;
-
-        [Key(5)] public bool isGameFinish;
-
-        [Key(3)] public bool isGameOver;
-
-        [Key(2)] public int StackDamage;
-
         [Key(0)] public List<UnitData> UnitsDatas = new List<UnitData>();
 
-        [Key(6)] public string WinPlayer = "";
+        [Key(1)] public int AttackDamage;
+
+        [Key(2)] public int AttackCombo;
+
+        [Key(3)] public int StackDamage;
+
+        [Key(4)] public bool isGameOver;
+
+        [Key(5)] public DateTime GameOverTime;
+
+        [Key(6)] public bool isGameFinish;
+
+        [Key(7)] public string WinPlayer = "";
     }
 
     [Serializable]

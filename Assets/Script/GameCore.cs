@@ -26,6 +26,7 @@ public class GameCore : MonoBehaviour
     public SyncManager SyncManager;
 
     public string INGAME_BGM;
+
     protected virtual void Initialize()
     {
         #region 데이터 초기화
@@ -88,7 +89,7 @@ public class GameCore : MonoBehaviour
         //사운드 초기화
         AudioManager.Instance.ChangeBGMVolume(0.3f);
         AudioManager.Instance.ChangeSFXVolume(0.3f);
-        AudioManager.Instance.Play( string.Format("Sound/{0}",INGAME_BGM), eAUDIO_TYPE.BGM);
+        AudioManager.Instance.Play(string.Format("Sound/{0}", INGAME_BGM), eAUDIO_TYPE.BGM);
 
         //인게임 UI 초기화
         PanelIngame = UIManager.Instance.Show<PanelIngame>();
@@ -116,7 +117,7 @@ public class GameCore : MonoBehaviour
                 _unitSpawnDelayDelta -= delta;
 
             if (Input.GetKeyDown(KeyCode.Space))
-                OnReceiveBadBlock(10);
+                OnReceiveBadBlock(10, 1);
             if (Input.GetKeyDown(KeyCode.A))
             {
                 ChargeSkillGauge(EnvironmentValue.SKILL_CHARGE_MAX_VALUE);
@@ -364,6 +365,9 @@ public class GameCore : MonoBehaviour
         if (PanelIngame != null)
             PanelIngame.PlayCombo(Canvas.GetComponent<RectTransform>(), a.transform.position, Combo);
         _comboDelta = EnvironmentValue.COMBO_DURATION;
+
+        if (PanelIngame != null)
+            PanelIngame.PlayerComboPortrait.Play(Combo, false);
 
         //스코어 갱신
         var gain = (a.Sheet.score + b.Sheet.score) * 10 * Combo;
@@ -786,7 +790,7 @@ public class GameCore : MonoBehaviour
 
     #region Attack
 
-    private void OnReceiveBadBlock(int value)
+    private void OnReceiveBadBlock(int value, int combo)
     {
         if (value == 0) return;
 
@@ -814,6 +818,8 @@ public class GameCore : MonoBehaviour
 
                 RefreshBadBlockUI();
             }).Play();
+
+            PanelIngame.EnemyomboPortrait.Play(combo, true);
         }
     }
 
@@ -847,7 +853,7 @@ public class GameCore : MonoBehaviour
 
     public void OnReceiveSyncPacket(SyncManager.SyncPacket packet)
     {
-        OnReceiveBadBlock(packet.AttackDamage);
+        OnReceiveBadBlock(packet.AttackDamage , packet.AttackCombo);
 
         if (IsPlayer)
         {

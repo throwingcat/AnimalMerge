@@ -34,6 +34,8 @@ public class PanelIngame : SUIPanel
 
     public Slider GameOverTimerGauge;
 
+    public PartComboPortrait PlayerComboPortrait;
+    public PartComboPortrait EnemyomboPortrait;
     #region Enemy Screen
 
     private readonly List<IngameBadBlock> _enemyBadBlocks = new List<IngameBadBlock>();
