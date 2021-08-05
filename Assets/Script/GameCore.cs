@@ -25,6 +25,7 @@ public class GameCore : MonoBehaviour
 
     public SyncManager SyncManager;
 
+    public string INGAME_BGM;
     protected virtual void Initialize()
     {
         #region 데이터 초기화
@@ -87,7 +88,7 @@ public class GameCore : MonoBehaviour
         //사운드 초기화
         AudioManager.Instance.ChangeBGMVolume(0.3f);
         AudioManager.Instance.ChangeSFXVolume(0.3f);
-        AudioManager.Instance.Play("Sound/bgm", eAUDIO_TYPE.BGM);
+        AudioManager.Instance.Play( string.Format("Sound/{0}",INGAME_BGM), eAUDIO_TYPE.BGM);
 
         //인게임 UI 초기화
         PanelIngame = UIManager.Instance.Show<PanelIngame>();

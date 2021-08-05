@@ -59,7 +59,11 @@
      <Compile Include="Assets\Script\Data\Item.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\DOTweenTextMeshPro.cs" />
      <Compile Include="Assets\Script\Server\DBChestInventory.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_InspectorHelp.cs" />
      <Compile Include="Assets\Script\Data\UnitGroup.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RotateCamera.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_LightIntensityFade.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\Define.cs" />
      <Compile Include="Assets\Script\Server\DBBase.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ShadowStyle.cs" />
@@ -83,13 +87,16 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIShiny.cs" />
      <Compile Include="Assets\Script\UI\PopupChestOpen.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ColorMode.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutoRotate.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ToneMode.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIEffect.cs" />
      <Compile Include="Assets\Script\UI\IngameBadBlock.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIGradient.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutodestructWhenNoChildren.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\EditorCoroutine\EditorCoroutines.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Manager\MonoBehaviourPool.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\EditorCoroutine\EditorCoroutineExtensions.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Spawn System\CFX_SpawnSystem.cs" />
      <Compile Include="Assets\Script\UI\Lobby Page\LobbyPageMain.cs" />
      <Compile Include="Assets\Script\UI\PopupUnitInfo.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIButton.cs" />
@@ -100,6 +107,7 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\EffectPlayer.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIFlowText.cs" />
      <Compile Include="Assets\Script\UI\UIOffsetFlow.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Manager\SceneDirector.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIEffectCapturedImage.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\CSVReader.cs" />
@@ -111,6 +119,7 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUISlider.cs" />
      <Compile Include="Assets\Script\PlayerData\PlayerInfo.cs" />
      <Compile Include="Assets\Script\Data\Unit.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
      <Compile Include="Assets\Script\PartBase.cs" />
      <Compile Include="Assets\Script\Server\DBUnitInventory.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\StringUtils.cs" />
@@ -125,6 +134,7 @@
      <Compile Include="Assets\Script\UI\PopupLogin.cs" />
      <Compile Include="Assets\Script\UI\PartLobbyChest.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\CSVGenerator\CSVDownloadConfig.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDir.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUITouchable.cs" />
      <Compile Include="Assets\Script\UI\Lobby Page\LobbyPageCollection.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\EffectArea.cs" />
@@ -135,6 +145,7 @@
      <Compile Include="Assets\Script\NetworkManager.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUILoopScroll.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ParameterTexture.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_Translate.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\UI\PartCurtain.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\MaterialReplacements.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\FXController.cs" />
@@ -147,6 +158,7 @@
      <Compile Include="Assets\Script\UI\PopupUnitUpgrade.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleSprite.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_ShurikenThreadFix.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\Utils.cs" />
      <Compile Include="Assets\Script\Server\AnimalMergeServer.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\MonoObjectPoolManager.cs" />
@@ -157,6 +169,7 @@
      <Compile Include="Assets\Script\Data\Partial\Unit.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\JoyStick\Script\JoyStickReceiver.cs" />
      <Compile Include="Assets\Script\UI\PopupChestUnlock.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_New.cs" />
      <Compile Include="Assets\Script\GameManager.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\Logger.cs" />
      <Compile Include="Assets\Script\Uitls\CameraResolution.cs" />
@@ -168,6 +181,7 @@
      <Compile Include="Assets\Submodules\Violet\Violet\Manager\TableManager.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUITween.cs" />
      <Compile Include="Assets\Script\Packet\PacketBase.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutoDestructShuriken.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIDissolve.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\UI\CanvasLayerTag.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleAudio.cs" />
@@ -189,20 +203,6 @@
      <Compile Include="Assets\Script\Uitls\ScrollRectDisableDrag.cs" />
      <Compile Include="Assets\Script\UI\PanelLobby.cs" />
      <Compile Include="Assets\Script\PlayerData\ChestInventory.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_ShurikenThreadFix.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutoRotate.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_New.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RotateCamera.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDir.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_LightIntensityFade.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_Translate.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutodestructWhenNoChildren.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_InspectorHelp.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutoDestructShuriken.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Spawn System\CFX_SpawnSystem.cs" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\SoftMask.cginc" />
      <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Glow.shader" />
@@ -865,9 +865,6 @@
  <Reference Include="Unity.2D.IK.Editor">
  <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/Unity.2D.IK.Editor.dll</HintPath>
  </Reference>
- <Reference Include="Unity.2D.Sprite.Editor">
- <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
- </Reference>
  <Reference Include="Unity.2D.Psdimporter.Editor">
  <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/Unity.2D.Psdimporter.Editor.dll</HintPath>
  </Reference>
@@ -885,6 +882,9 @@
  </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.2D.Sprite.Editor">
+ <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Mathematics">
  <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
@@ -931,6 +931,18 @@
       <Project>{81402af7-e1f7-c3ee-3160-fd45120cecfa}</Project>
       <Name>Coffee.SoftMaskForUGUI.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="CFXRDemoEditor.csproj">
+      <Project>{a0000048-48df-36c2-1e91-c7669505ac87}</Project>
+      <Name>CFXRDemoEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="CFXREditor.csproj">
+      <Project>{cb0c5c62-3126-4983-743e-7846da511a1f}</Project>
+      <Name>CFXREditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="CFXRDemo.csproj">
+      <Project>{90098972-9133-f76e-b59d-8c7278d8a911}</Project>
+      <Name>CFXRDemo</Name>
+    </ProjectReference>
     <ProjectReference Include="LunarConsoleEditor.csproj">
       <Project>{c9f8e04d-e9e1-8195-3c36-995387e41d4c}</Project>
       <Name>LunarConsoleEditor</Name>
@@ -955,21 +967,9 @@
       <Project>{0c84f949-ed2f-f0f9-fbea-2ff681d75e71}</Project>
       <Name>MessagePack.Annotations</Name>
     </ProjectReference>
-    <ProjectReference Include="CFXREditor.csproj">
-      <Project>{cb0c5c62-3126-4983-743e-7846da511a1f}</Project>
-      <Name>CFXREditor</Name>
-    </ProjectReference>
     <ProjectReference Include="CFXRRuntime.csproj">
       <Project>{f1580a4b-0e7f-8cd4-bfd5-a48861788752}</Project>
       <Name>CFXRRuntime</Name>
-    </ProjectReference>
-    <ProjectReference Include="CFXRDemoEditor.csproj">
-      <Project>{a0000048-48df-36c2-1e91-c7669505ac87}</Project>
-      <Name>CFXRDemoEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="CFXRDemo.csproj">
-      <Project>{90098972-9133-f76e-b59d-8c7278d8a911}</Project>
-      <Name>CFXRDemo</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
