@@ -118,7 +118,7 @@ public class GameCore : MonoBehaviour
                 _unitSpawnDelayDelta -= delta;
 
             if (Input.GetKeyDown(KeyCode.Space))
-                OnReceiveBadBlock(10, 1);
+                OnReceiveBadBlock(10);
             if (Input.GetKeyDown(KeyCode.A))
             {
                 ChargeSkillGauge(EnvironmentValue.SKILL_CHARGE_MAX_VALUE);
@@ -377,6 +377,8 @@ public class GameCore : MonoBehaviour
             if (3 <= Combo)
                 ActivePassiveSkill();
         }
+
+        AttackComboValue = Combo;
 
         //스코어 갱신
         var gain = (a.Sheet.score + b.Sheet.score) * 10 * Combo;
@@ -642,6 +644,7 @@ public class GameCore : MonoBehaviour
     public int MAX_BADBLOCK_VALUE;
     public int MyBadBlockValue;
     public int AttackBadBlockValue;
+    public int AttackComboValue;
     public bool isMergeProcess;
     public int Combo;
     public List<string> IgnoreUnitGUID = new List<string>();
@@ -799,7 +802,7 @@ public class GameCore : MonoBehaviour
 
     #region Attack
 
-    private void OnReceiveBadBlock(int value, int combo)
+    private void OnReceiveBadBlock(int value)
     {
         if (value == 0) return;
 
@@ -828,10 +831,19 @@ public class GameCore : MonoBehaviour
                 RefreshBadBlockUI();
             }).Play();
 
-            PanelIngame.EnemyomboPortrait.Play(combo, true);
+            
         }
     }
 
+    private void OnReceiveCombo(int combo)
+    {
+        if (combo == 0) return;
+        if (IsPlayer)
+        {
+            PanelIngame.EnemyomboPortrait.Play(combo, true);
+        }
+    }
+    
     private void RefreshBadBlockUI()
     {
         var blocks = new List<Unit>();
@@ -964,8 +976,8 @@ public class GameCore : MonoBehaviour
 
     public void OnReceiveSyncPacket(SyncManager.SyncPacket packet)
     {
-        OnReceiveBadBlock(packet.AttackDamage, packet.AttackCombo);
-
+        OnReceiveBadBlock(packet.AttackDamage);
+        OnReceiveCombo(packet.AttackCombo);
         if (IsPlayer)
         {
             RefreshEnemy(packet);

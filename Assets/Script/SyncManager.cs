@@ -41,9 +41,10 @@ public class SyncManager
         }
 
         packet.AttackDamage = From.AttackBadBlockValue;
-        packet.AttackCombo = 0 < From.AttackBadBlockValue ? From.Combo : 0;
+        packet.AttackCombo = From.AttackComboValue;
         packet.StackDamage = From.MyBadBlockValue;
         From.AttackBadBlockValue = 0;
+        From.AttackComboValue = 0;
 
         if (From.isGameOver)
         {
