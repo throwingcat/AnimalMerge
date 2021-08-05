@@ -262,6 +262,8 @@ public class GameManager : MonoBehaviour
             AICore.SyncManager.SetTo(GameCore);
         }
 
+        SUIPanel.IgnoreBackPress = true;
+        
         yield break;
     }
 
@@ -285,6 +287,8 @@ public class GameManager : MonoBehaviour
             NetworkManager.Instance.DisconnectMatchServer();
         }
 
+        SUIPanel.IgnoreBackPress = false;
+        
         yield break;
     }
 

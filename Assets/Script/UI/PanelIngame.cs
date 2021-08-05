@@ -44,6 +44,11 @@ public class PanelIngame : SUIPanel
 
     #endregion
 
+    protected override void OnShow()
+    {
+        base.OnShow();
+    }
+
     public void RefreshScore(int before, int after)
     {
         var score = before;
