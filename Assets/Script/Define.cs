@@ -43,7 +43,6 @@ namespace Define
         public static float WORLD_RATIO = 0.00521f;
         
         public static float UNIT_SPAWN_DELAY = 1f;
-        public static float MERGE_DELAY = 0.15f;
         
         public static float COMBO_DURATION = 2f;
         public static float GAME_OVER_TIME_OUT = 5f;

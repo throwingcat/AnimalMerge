@@ -15,7 +15,7 @@ public class PartComboPortrait : MonoBehaviour
     private float Elapsed = 0f;
     private float Duration = 2f;
 
-    public void Play(int combo, bool isEnemy)
+    public void Play(int combo)
     {
         if (combo < 3) return;
         
