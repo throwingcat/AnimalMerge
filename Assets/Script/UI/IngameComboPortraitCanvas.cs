@@ -11,7 +11,7 @@ public class IngameComboPortraitCanvas : MonoBehaviour
 
     private float _elapsed = 0f;
     private float _duration = 0f;
-
+private bool isEnable = false;
     public void Initialize()
     {
         PlayerComboPortrait.gameObject.SetActive(false);
@@ -25,6 +25,7 @@ public class IngameComboPortraitCanvas : MonoBehaviour
         else
             EnemyComboPortrait.Play(combo);
 
+        isEnable = true;
         _elapsed = 0f;
         _duration = 3f;
         
@@ -34,12 +35,23 @@ public class IngameComboPortraitCanvas : MonoBehaviour
 
     public void Update()
     {
-        if (_duration <= _elapsed)
+        if (isEnable)
         {
-            Camera.SetActive(false);
-            Root.SetActive(false);
+            if (_duration <= _elapsed)
+            {
+                isEnable = false;
+                Camera.SetActive(false);
+                Root.SetActive(false);
+            }
         }
-        
         _elapsed += Time.deltaTime;
+    }
+
+    public void Exit()
+    {
+        PlayerComboPortrait.gameObject.SetActive(false);
+        EnemyComboPortrait.gameObject.SetActive(false);
+        Camera.SetActive(false);
+        Root.SetActive(false);
     }
 }

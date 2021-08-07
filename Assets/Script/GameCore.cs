@@ -1078,6 +1078,7 @@ public class GameCore : MonoBehaviour
             EnemyScreen.gameObject.SetActive(false);
             SetEnableDeadline(false);
             PanelIngame.Clear();
+            IngameComboPortraitCanvas.Exit();
             //이벤트 초기화
             SyncManager.OnSyncCapture = null;
             SyncManager.OnSyncReceive = null;
