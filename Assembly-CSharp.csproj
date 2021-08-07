@@ -131,6 +131,7 @@
      <Compile Include="Assets\Submodules\Violet\Violet\Manager\ResourceManager.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUILetterSpacing.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\MUI\MToggle.cs" />
+     <Compile Include="Assets\Script\UI\PartComboPortrait.cs" />
      <Compile Include="Assets\Script\UI\PopupLogin.cs" />
      <Compile Include="Assets\Script\UI\PartLobbyChest.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\CSVGenerator\CSVDownloadConfig.cs" />
@@ -166,6 +167,7 @@
      <Compile Include="Assets\Script\Unit\SyncUnitBase.cs" />
      <Compile Include="Assets\Script\UI\SlicedFilledImage.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleUI.cs" />
+     <Compile Include="Assets\Script\UI\IngameComboPortraitCanvas.cs" />
      <Compile Include="Assets\Script\Data\Partial\Unit.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\JoyStick\Script\JoyStickReceiver.cs" />
      <Compile Include="Assets\Script\UI\PopupChestUnlock.cs" />
@@ -203,7 +205,10 @@
      <Compile Include="Assets\Script\Uitls\ScrollRectDisableDrag.cs" />
      <Compile Include="Assets\Script\UI\PanelLobby.cs" />
      <Compile Include="Assets\Script\PlayerData\ChestInventory.cs" />
-     <Compile Include="Assets\Script\UI\PartComboPortrait.cs" />
+     <Compile Include="Assets\Script\Passive Skill\PassiveBase.cs" />
+     <Compile Include="Assets\Script\Passive Skill\CatPassive.cs" />
+     <Compile Include="Assets\Script\Active Skill\ActiveBase.cs" />
+     <Compile Include="Assets\Script\Active Skill\ActiveShake.cs" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\SoftMask.cginc" />
      <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Glow.shader" />

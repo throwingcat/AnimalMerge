@@ -34,10 +34,6 @@ public class PanelIngame : SUIPanel
 
     public Slider GameOverTimerGauge;
 
-    public PartComboPortrait PlayerComboPortrait;
-    public PartComboPortrait EnemyomboPortrait;
-    
-    public GameObject PlayerSkillVFXRoot;
     public GameObject PlayerSkillVFX;
     public Image PassiveSkillGauge;
     public Image PassiveSkillIcon;

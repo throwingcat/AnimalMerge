@@ -14,18 +14,12 @@ using Random = UnityEngine.Random;
 
 public class GameCore : MonoBehaviour
 {
-    public bool isGameFinish;
-    public bool isPauseBadBlockTimer = false;
+    #region Environment
 
-    public int SpawnLevel = 1;
-    public string PlayerUnitGroup = "Cat";
-    public List<Unit> PlayerUnitGroupList = new List<Unit>();
+    [Header("환경")] public string INGAME_BGM;
 
-    public bool IsPlayer = true;
+    #endregion
 
-    public SyncManager SyncManager;
-
-    public string INGAME_BGM;
 
     protected virtual void Initialize()
     {
@@ -36,7 +30,6 @@ public class GameCore : MonoBehaviour
         AttackBadBlockValue = 0;
         MyBadBlockValue = 0;
         Score = 0;
-        SkillGaugeValue = 0;
         SpawnLevel = 1;
         NextUnitList.Clear();
 
@@ -63,14 +56,19 @@ public class GameCore : MonoBehaviour
 
         MAX_BADBLOCK_VALUE = Unit.BadBlocks[0].score * 5;
 
+        switch (PlayerUnitGroup)
+        {
+            case "Cat":
+                Passive = new CatPassive(this);
+                break;
+        }
+
+        Active = new ActiveShake(this);
+
         #endregion
 
         #region 환경 초기화
 
-        if (PlayerScreen != null)
-            PlayerScreen.SetActive(true);
-        if (EnemyScreen != null)
-            EnemyScreen.gameObject.SetActive(true);
         SetEnableDeadline(false);
 
         SyncManager = new SyncManager(this);
@@ -92,6 +90,11 @@ public class GameCore : MonoBehaviour
         AudioManager.Instance.Play(string.Format("Sound/{0}", INGAME_BGM), eAUDIO_TYPE.BGM);
 
         //인게임 UI 초기화
+        if (PlayerScreen != null)
+            PlayerScreen.SetActive(true);
+        if (EnemyScreen != null)
+            EnemyScreen.gameObject.SetActive(true);
+
         PanelIngame = UIManager.Instance.Show<PanelIngame>();
         PanelIngame.OnClickSkillEvent -= UseSkill;
         PanelIngame.OnClickSkillEvent += UseSkill;
@@ -99,6 +102,7 @@ public class GameCore : MonoBehaviour
         PanelIngame.RefreshSkillGauge(0f);
         PanelIngame.RefreshPassiveSkillGauge(0f);
         RefreshBadBlockUI();
+        IngameComboPortraitCanvas.Initialize();
 
         //매치 릴레이 세팅
         if (GameManager.Instance.isSinglePlay == false)
@@ -126,8 +130,6 @@ public class GameCore : MonoBehaviour
             }
 
             InputUpdate();
-
-            MergeUpdate(delta);
 
             OnUpdatePassiveSkill(delta);
 
@@ -182,7 +184,7 @@ public class GameCore : MonoBehaviour
                         EnvironmentValue.SPAWN_PHASE_3_PICK_LEVEL_1,
                         EnvironmentValue.SPAWN_PHASE_3_PICK_LEVEL_2,
                         EnvironmentValue.SPAWN_PHASE_3_PICK_LEVEL_3,
-                        EnvironmentValue.SPAWN_PHASE_3_PICK_LEVEL_4,
+                        EnvironmentValue.SPAWN_PHASE_3_PICK_LEVEL_4
                     });
                     break;
                 default:
@@ -200,7 +202,7 @@ public class GameCore : MonoBehaviour
         var pool = GameObjectPool.GetPool(key);
         if (pool == null)
         {
-            GameObject root = new GameObject(key + "_pool");
+            var root = new GameObject(key + "_pool");
             pool = GameObjectPool.CreatePool(key, () =>
             {
                 var go = Instantiate(UnitPrefab, root.transform);
@@ -234,7 +236,7 @@ public class GameCore : MonoBehaviour
         return component;
     }
 
-    private void RemoveUnit(UnitBase unit)
+    public void RemoveUnit(UnitBase unit)
     {
         if (unit.eUnitType == eUnitType.Nomral)
             for (var i = 0; i < UnitsInField.Count; i++)
@@ -259,50 +261,6 @@ public class GameCore : MonoBehaviour
         unit.OnRemove();
     }
 
-    private void MergeUpdate(float delta)
-    {
-        if (0 < _mergeDelayDelta)
-        {
-            _mergeDelayDelta -= delta;
-            return;
-        }
-
-        /*for (var i = 0; i < UnitsInField.Count; i++)
-        {
-            var unit = UnitsInField[i];
-
-            if (unit.eUnitType == eUnitType.Nomral)
-            {
-                if (IgnoreUnitGUID.Contains(unit.GUID))
-                    continue;
-                foreach (var friend in UnitsInField)
-                {
-                    if (IgnoreUnitGUID.Contains(friend.GUID)) continue;
-                    if (friend.eUnitType == eUnitType.Bad) continue;
-                    if (unit.GUID == friend.GUID) continue;
-                    if (unit.Sheet.key != friend.Sheet.key) continue;
-
-                    var distance = Vector3.Distance(unit.transform.localPosition, friend.transform.localPosition);
-                    if (distance <= unit.transform.localScale.x * 2 + 10)
-                    {
-                        isMergeProcess = true;
-                        StartCoroutine(MergeProcess(unit, friend));
-
-                        _mergeDelayDelta = EnvironmentValue.MERGE_DELAY;
-                        _unitSpawnDelayDelta = EnvironmentValue.UNIT_SPAWN_DELAY;
-
-                        break;
-                    }
-                }
-
-                if (isMergeProcess)
-                    break;
-            }
-        }
-        */
-        isMergeProcess = false;
-    }
-
     public void CollisionEnter(UnitBase a, UnitBase b)
     {
         if (IgnoreUnitGUID.Contains(a.GUID) ||
@@ -311,7 +269,6 @@ public class GameCore : MonoBehaviour
         if (a.Sheet.key == b.Sheet.key)
         {
             StartCoroutine(MergeProcess(a, b));
-            _mergeDelayDelta = EnvironmentValue.MERGE_DELAY;
             _unitSpawnDelayDelta = EnvironmentValue.UNIT_SPAWN_DELAY;
         }
     }
@@ -371,12 +328,12 @@ public class GameCore : MonoBehaviour
             //콤보 출력
             PanelIngame.PlayCombo(Canvas.GetComponent<RectTransform>(), a.transform.position, Combo);
             //콤보 초상화 출력
-            PanelIngame.PlayerComboPortrait.Play(Combo, false);
-
-            //패시브 스킬 발동
-            if (3 <= Combo)
-                ActivePassiveSkill();
+            IngameComboPortraitCanvas.PlayComboPortrait(Combo, true);
         }
+
+        //패시브 스킬 발동
+        if (3 <= Combo)
+            Passive?.Run(OnCompletePassiveSkill);
 
         AttackComboValue = Combo;
 
@@ -399,7 +356,7 @@ public class GameCore : MonoBehaviour
                 var distance = Vector3.Distance(a.transform.localPosition, unit.transform.localPosition);
                 var r1 = a.transform.localScale.x * 1.8f;
                 var r2 = unit.transform.localScale.x * 1.8f;
-                if (distance <= (r1 + r2))
+                if (distance <= r1 + r2)
                 {
                     IgnoreUnitGUID.Add(unit.GUID);
                     remove_bad_units.Add(unit);
@@ -414,11 +371,11 @@ public class GameCore : MonoBehaviour
             remove_bad_units.RemoveAt(i--);
         }
 
-        int remove_badblock = remove_bad_units.Count;
+        var remove_badblock = remove_bad_units.Count;
 
         var comboBonus = Combo > 2 ? 18 * Combo : 0;
         var badBlock = (int) (Utils.GetUnitDamage(a.Sheet.score, a.Info.Level) * Combo + comboBonus +
-                              (remove_badblock * 3));
+                              remove_badblock * 3);
 
         //내 방해블록 제거
         if (0 < MyBadBlockValue)
@@ -431,7 +388,6 @@ public class GameCore : MonoBehaviour
                 AttackBadBlockValue = Mathf.Abs(MyBadBlockValue);
 
                 if (IsPlayer)
-                {
                     PlayMergeAttackVFX(a.transform.position, PanelIngame.MyBadBlockVFXPoint.position, 0.5f, () =>
                     {
                         //블록 갱신
@@ -441,25 +397,20 @@ public class GameCore : MonoBehaviour
                             PanelIngame.EnemyBadBlockVFXPoint.position,
                             0.5f, () => { });
                     });
-                }
             }
             //내 방해블록만 제거
             else
             {
                 if (IsPlayer)
-                {
                     PlayMergeAttackVFX(a.transform.position, PanelIngame.MyBadBlockVFXPoint.position, 0.5f,
                         () => { RefreshBadBlockUI(); });
-                }
             }
         }
         //상대방에게 공격
         else
         {
             if (IsPlayer)
-            {
                 PlayMergeAttackVFX(a.transform.position, PanelIngame.EnemyBadBlockVFXPoint.position, 0.5f, () => { });
-            }
 
             AttackBadBlockValue += badBlock;
         }
@@ -489,9 +440,9 @@ public class GameCore : MonoBehaviour
 
     private void ChargeSkillGauge(int value)
     {
-        SkillGaugeValue += value;
+        Active.Charge(value);
         if (IsPlayer)
-            PanelIngame.RefreshSkillGauge((SkillGaugeValue / (float) EnvironmentValue.SKILL_CHARGE_MAX_VALUE));
+            PanelIngame.RefreshSkillGauge(Active.Progress);
     }
 
     public void OnLeave()
@@ -532,12 +483,42 @@ public class GameCore : MonoBehaviour
 
     #endregion
 
-    #region GameOver
+    public void UseSkill()
+    {
+        Active.Run();
+        if (IsPlayer)
+            PanelIngame.RefreshSkillGauge(0f);
+    }
 
-    public GameObject GameOverLine;
+    #region System
+
+    [Header("시스템")] public bool isGameFinish;
+
+    public bool isPauseBadBlockTimer;
+    public int SpawnLevel = 1;
+    public string PlayerUnitGroup = "Cat";
+    public List<Unit> PlayerUnitGroupList = new List<Unit>();
+    public bool IsPlayer = true;
+    public SyncManager SyncManager;
+    [Header("시스템 - 게임오버")] public GameObject GameOverLine;
+
     public float GameoverTimeoutDelta;
     public bool isGameOver;
     public DateTime GameOverTime;
+
+    #endregion
+
+    #region UI
+
+    [Header("UI")] public Canvas Canvas;
+
+    public PanelIngame PanelIngame;
+
+    public IngameComboPortraitCanvas IngameComboPortraitCanvas;
+
+    #endregion
+
+    #region GameOver
 
     private void GameOverUpdate(float delta)
     {
@@ -619,17 +600,10 @@ public class GameCore : MonoBehaviour
 
     #endregion
 
-    #region UI
-
-    public Canvas Canvas;
-    public PanelIngame PanelIngame;
-
-    #endregion
-
     #region Unit Value
 
     protected UnitBase CurrentReadyUnit;
-    public Transform UnitParent;
+    [Header("유닛")] public Transform UnitParent;
     public UnitBase UnitPrefab;
     public List<UnitBase> UnitsInField = new List<UnitBase>();
     public List<UnitBase> BadUnits = new List<UnitBase>();
@@ -640,15 +614,17 @@ public class GameCore : MonoBehaviour
 
     #region Player Data
 
-    public int Score;
+    [Header("플레이어 데이터")] public int Score;
+
     public int MAX_BADBLOCK_VALUE;
     public int MyBadBlockValue;
     public int AttackBadBlockValue;
     public int AttackComboValue;
-    public bool isMergeProcess;
     public int Combo;
     public List<string> IgnoreUnitGUID = new List<string>();
-    public int SkillGaugeValue = 0;
+
+    public PassiveBase Passive;
+    public ActiveBase Active;
 
     #endregion
 
@@ -812,8 +788,8 @@ public class GameCore : MonoBehaviour
         if (IsPlayer)
         {
             var trail = ResourceManager.Instance.GetUIVFX(Key.VFX_MERGE_ATTACK_TRAIL_Red);
-            Vector3 from = PanelIngame.EnemyBadBlockVFXPoint.position;
-            Vector3 to = PanelIngame.MyBadBlockVFXPoint.position;
+            var from = PanelIngame.EnemyBadBlockVFXPoint.position;
+            var to = PanelIngame.MyBadBlockVFXPoint.position;
             trail.transform.position = from;
             trail.SetActive(true);
 
@@ -830,8 +806,6 @@ public class GameCore : MonoBehaviour
 
                 RefreshBadBlockUI();
             }).Play();
-
-            
         }
     }
 
@@ -839,11 +813,9 @@ public class GameCore : MonoBehaviour
     {
         if (combo == 0) return;
         if (IsPlayer)
-        {
-            PanelIngame.EnemyomboPortrait.Play(combo, true);
-        }
+            IngameComboPortraitCanvas.PlayComboPortrait(combo, false);
     }
-    
+
     private void RefreshBadBlockUI()
     {
         var blocks = new List<Unit>();
@@ -868,102 +840,30 @@ public class GameCore : MonoBehaviour
 
     #region Skill
 
-    private float PASSIVE_SKILL_COOL_TIME = 20f;
-    private float _passiveSkillCoolTime = 0f;
-    private bool isEnablePassiveSkill => _passiveSkillCoolTime <= 0f;
+    private readonly float PASSIVE_SKILL_COOL_TIME = 20f;
 
     private void OnUpdatePassiveSkill(float delta)
     {
-        _passiveSkillCoolTime -= delta;
-        if (_passiveSkillCoolTime <= 0)
-            _passiveSkillCoolTime = 0f;
+        Passive?.OnUpdate(delta);
 
         if (IsPlayer)
         {
-            PanelIngame.RefreshPassiveSkillGauge(1f - (_passiveSkillCoolTime / PASSIVE_SKILL_COOL_TIME));
-
-            if (Input.GetKeyDown(KeyCode.W))
-                ActivePassiveSkill();
-        }
-    }
-
-    private void ActivePassiveSkill()
-    {
-        if (isEnablePassiveSkill == false) return;
-
-        switch (PlayerUnitGroup)
-        {
-            case "Cat":
+            if (Passive != null)
             {
-                //쥐 탐색
-                if (0 < BadUnits.Count)
-                {
-                    PanelIngame.PlayerSkillVFX.SetActive(false);
+                PanelIngame.RefreshPassiveSkillGauge(1f - Passive.CoolTimeProgress);
 
-                    int pick = Random.Range(0, BadUnits.Count);
-
-                    var pos = BadUnits[pick].transform.position;
-
-                    var rt = PanelIngame.PlayerSkillVFX.GetComponent<RectTransform>();
-                    Utils.WorldToCanvas(ref rt, Camera.main, pos, Canvas.GetComponent<RectTransform>());
-
-                    PanelIngame.PlayerSkillVFX.SetActive(true);
-
-                    GameManager.DelayInvoke(() => { PanelIngame.PlayerSkillVFX.SetActive(false); }, 1f);
-
-                    Vector3 center = BadUnits[pick].transform.localPosition;
-                    float remove_range = 200f;
-                    float shake_range = 400f;
-                    List<string> remove_target = new List<string>();
-                    List<Tuple<string, Vector2>> shake_target = new List<Tuple<string, Vector2>>();
-
-                    foreach (var unit in BadUnits)
-                    {
-                        float distance = Vector3.Distance(center, unit.transform.localPosition);
-                        if (distance <= remove_range)
-                            remove_target.Add(unit.GUID);
-                        else if (distance <= shake_range)
-                            shake_target.Add(new Tuple<string, Vector2>(unit.GUID,
-                                (unit.transform.localPosition - center).normalized));
-                    }
-
-                    foreach (var guid in remove_target)
-                    {
-                        for (int i = 0; i < BadUnits.Count; i++)
-                        {
-                            if (BadUnits[i].GUID == guid)
-                            {
-                                RemoveUnit(BadUnits[i]);
-                                break;
-                            }
-                        }
-                    }
-
-                    foreach (var shake in shake_target)
-                    {
-                        for (int i = 0; i < BadUnits.Count; i++)
-                        {
-                            if (BadUnits[i].GUID == shake.Item1)
-                            {
-                                BadUnits[i].Rigidbody2D.velocity = Vector2.zero;
-                                BadUnits[i].Rigidbody2D.AddForce(shake.Item2 * 100f);
-                                break;
-                            }
-                        }
-                    }
-
-                    OnCompletePassiveSkill();
-                }
+                if (Input.GetKeyDown(KeyCode.W))
+                    Passive.Run(OnCompletePassiveSkill);
             }
-                break;
         }
     }
 
     private void OnCompletePassiveSkill()
     {
         //스킬 발동 성공
-        _passiveSkillCoolTime = PASSIVE_SKILL_COOL_TIME;
-        PanelIngame.RefreshPassiveSkillGauge(0f);
+
+        if (PanelIngame != null)
+            PanelIngame.RefreshPassiveSkillGauge(0f);
     }
 
     #endregion
@@ -1021,12 +921,12 @@ public class GameCore : MonoBehaviour
 
         if (IsPlayer)
         {
-            PacketBase packet = new PacketBase();
+            var packet = new PacketBase();
             packet.PacketType = ePACKET_TYPE.REPORT_GAME_RESULT;
             packet.hash.Add("is_win", isWin);
 
-            int beforeScore = PlayerInfo.Instance.RankScore;
-            NetworkManager.Instance.Request(packet, (res) =>
+            var beforeScore = PlayerInfo.Instance.RankScore;
+            NetworkManager.Instance.Request(packet, res =>
             {
                 var popup = UIManager.Instance.ShowPopup<PopupGameResult>();
                 popup.SetResult(isWin, beforeScore);
@@ -1079,6 +979,7 @@ public class GameCore : MonoBehaviour
             EnemyScreen.gameObject.SetActive(false);
             SetEnableDeadline(false);
             PanelIngame.Clear();
+            IngameComboPortraitCanvas.Exit();
             //이벤트 초기화
             SyncManager.OnSyncCapture = null;
             SyncManager.OnSyncReceive = null;
@@ -1090,56 +991,4 @@ public class GameCore : MonoBehaviour
     }
 
     #endregion
-
-    public void UseSkill()
-    {
-        if (SkillGaugeValue < EnvironmentValue.SKILL_CHARGE_MAX_VALUE) return;
-        SkillGaugeValue = 0;
-
-        if (IsPlayer)
-            PanelIngame.RefreshSkillGauge(0f);
-        StartCoroutine(RunSkill_Shake());
-    }
-
-    private IEnumerator RunSkill_Shake()
-    {
-        GameManager.SimpleTimer(Key.SIMPLE_TIMER_RUNNING_SKILL, 3f);
-
-        //방해블록 삭제
-        for (int i = 0; i < 15; i++)
-        {
-            if (BadUnits.Count == 0) break;
-            int index = Random.Range(0, BadUnits.Count);
-            RemoveUnit(BadUnits[index]);
-        }
-
-        //모든 블록 위로 튕겨냄
-        for (int i = 0; i < BadUnits.Count; i++)
-        {
-            var direction = Vector2.up * EnvironmentValue.SHAKE_SKILL_FORCE_POWER;
-            direction.x = Random.Range(-0.3f, 0.3f);
-            BadUnits[i].Rigidbody2D.velocity = Vector2.zero;
-            BadUnits[i].Rigidbody2D.AddForce(direction);
-        }
-
-        foreach (var unit in UnitsInField)
-        {
-            var direction = Vector2.up * EnvironmentValue.SHAKE_SKILL_FORCE_POWER;
-            direction.x = Random.Range(-0.3f, 0.3f);
-            unit.Rigidbody2D.velocity = Vector2.zero;
-            unit.Rigidbody2D.AddForce(direction);
-
-            float range = EnvironmentValue.SHAKE_SKILL_TORQUE_MAX_POWER -
-                          EnvironmentValue.SHAKE_SKILL_TORQUE_MIN_POWER;
-            float torque = Random.Range(-range, range);
-            if (torque < 0)
-                torque -= EnvironmentValue.SHAKE_SKILL_TORQUE_MIN_POWER;
-            else
-                torque += EnvironmentValue.SHAKE_SKILL_TORQUE_MIN_POWER;
-
-            unit.Rigidbody2D.AddTorque(torque);
-        }
-
-        yield break;
-    }
 }
