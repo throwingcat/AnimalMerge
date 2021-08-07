@@ -31,7 +31,7 @@ public class UnitBase : MonoBehaviour
     public virtual UnitBase OnSpawn(string unit_key, Action<UnitBase, UnitBase> collisionEvent)
     {
         _collisionEvent = collisionEvent;
-        
+
         Sheet = TableManager.Instance.GetData<Unit>(unit_key);
         Info = UnitInventory.Instance.GetUnit(unit_key);
         if (Info == null)
@@ -89,13 +89,18 @@ public class UnitBase : MonoBehaviour
 
         SetActivePhysics(true);
 
-        Rigidbody2D.AddTorque(Random.Range(-0.25f, 0.25f));
+        AddTorque(0.03f);
 
         _dropInvokeGUID = GameManager.DelayInvoke(() =>
         {
             if (eUnitDropState == eUnitDropState.Falling)
                 eUnitDropState = eUnitDropState.Complete;
         }, 2f);
+    }
+
+    public void AddTorque(float power)
+    {
+        Rigidbody2D.AddTorque(Random.Range(-power, power),ForceMode2D.Impulse);
     }
 
     protected static Sprite GetSprite(string unit_key)

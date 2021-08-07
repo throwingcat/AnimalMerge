@@ -10,15 +10,18 @@ public class AICore : GameCore
     public int MMR = 1000;
     public float InputDelayElapsed = 0f;
     public float InputDelayDuration = 0f;
+
     public override void Initialize(bool isPlayer)
     {
         IsPlayer = isPlayer;
         Initialize();
 
         MMR = PlayerInfo.Instance.RankScore;
-        float mmr_ratio = Mathf.InverseLerp(EnvironmentValue.AI_INPUT_DELAY_LOW_MMR, EnvironmentValue.AI_INPUT_DELAY_HIGH_MMR, MMR);
+        float mmr_ratio = Mathf.InverseLerp(EnvironmentValue.AI_INPUT_DELAY_LOW_MMR,
+            EnvironmentValue.AI_INPUT_DELAY_HIGH_MMR, MMR);
 
-        InputDelayDuration = Mathf.Lerp(EnvironmentValue.AI_INPUT_DELAY_MAX, EnvironmentValue.AI_INPUT_DELAY_MIN, mmr_ratio);
+        InputDelayDuration = Mathf.Lerp(EnvironmentValue.AI_INPUT_DELAY_MAX, EnvironmentValue.AI_INPUT_DELAY_MIN,
+            mmr_ratio);
         InputDelayElapsed = InputDelayDuration;
         gameObject.SetActive(true);
     }
@@ -39,7 +42,7 @@ public class AICore : GameCore
             }
 
             InputDelayElapsed = 0f;
-            
+
             var isFindFriend = false;
             Vector3 pos = UnitSpawnPosition;
             foreach (var unit in UnitsInField)
@@ -54,14 +57,16 @@ public class AICore : GameCore
             {
                 var horizontalLimit = 540f - EnvironmentValue.UNIT_SPRITE_BASE_SIZE * EnvironmentValue.WORLD_RATIO *
                     CurrentReadyUnit.Sheet.size;
-                pos.x  = Random.Range(-horizontalLimit, horizontalLimit);
+                pos.x = Random.Range(-horizontalLimit, horizontalLimit);
             }
 
             CurrentReadyUnit.transform.localPosition = pos;
-            
-            
+
             OnRelease();
         }
+
+        if (Active.isEnable)
+            Active.Run();
     }
 
     public override void Clear()
