@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     public void Awake()
     {
         Instance = this;
-        SceneDirector.OnApplicationInitialize();
+        //SceneDirector.OnApplicationInitialize();
         StartCoroutine(InitalizeProcess());
     }
 
