@@ -6,7 +6,7 @@ using Violet;
 
 public class SyncUnitBase : UnitBase
 {
-    public override UnitBase OnSpawn(string unit_key,System.Action<UnitBase, UnitBase> collisionEvent)
+    public override UnitBase OnSpawn(string unit_key,System.Action<UnitBase, UnitBase> collisionEvent,GameCore Core)
     {
         Sheet = TableManager.Instance.GetData<Unit>(unit_key);
         GUID = System.Guid.NewGuid().ToString();

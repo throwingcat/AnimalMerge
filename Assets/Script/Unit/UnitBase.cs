@@ -28,10 +28,12 @@ public class UnitBase : MonoBehaviour
 
     private Action<UnitBase, UnitBase> _collisionEvent;
 
-    public virtual UnitBase OnSpawn(string unit_key, Action<UnitBase, UnitBase> collisionEvent)
+    private GameCore ParentCore;
+    public virtual UnitBase OnSpawn(string unit_key, Action<UnitBase, UnitBase> collisionEvent , GameCore Core)
     {
         _collisionEvent = collisionEvent;
-
+        ParentCore = Core;
+        
         Sheet = TableManager.Instance.GetData<Unit>(unit_key);
         Info = UnitInventory.Instance.GetUnit(unit_key);
         if (Info == null)
@@ -41,7 +43,7 @@ public class UnitBase : MonoBehaviour
                 Exp = 0,
                 Level = 1,
             };
-        GUID = System.Guid.NewGuid().ToString();
+        GUID = Guid.NewGuid().ToString();
         eUnitDropState = eUnitDropState.Ready;
 
         if (Rigidbody2D != null)
@@ -52,11 +54,25 @@ public class UnitBase : MonoBehaviour
         Texture.sprite = GetSprite(unit_key);
         transform.localScale = Vector3.zero;
 
-        if (VFXSpawn != null)
-            VFXSpawn.SetActive(true);
-
-        if (VFXMerge != null)
-            VFXMerge.SetActive(false);
+        if (Core != null &&  Core.IsPlayer)
+        {
+            if (Sheet.isBadBlock)
+            {
+                if (VFXSpawn != null)
+                    VFXSpawn.SetActive(true);
+            }
+            else if (VFXSpawn != null)
+                VFXSpawn.SetActive(false);
+            if (VFXMerge != null)
+                VFXMerge.SetActive(false);
+        }
+        else
+        {
+            if (VFXSpawn != null)
+                VFXSpawn.SetActive(false);
+            if (VFXMerge != null)
+                VFXMerge.SetActive(false);
+        }
 
         var size = Vector3.one * Sheet.size;
         transform.DOScale(size, 0.5f).SetEase(Ease.OutBack).Play();
@@ -78,7 +94,7 @@ public class UnitBase : MonoBehaviour
         return this;
     }
 
-    public void Drop()
+    public void Drop(bool isAddTorque = false)
     {
         eUnitDropState = eUnitDropState.Falling;
         if (Rigidbody2D != null)
@@ -89,7 +105,8 @@ public class UnitBase : MonoBehaviour
 
         SetActivePhysics(true);
 
-        AddTorque(0.3f);
+        if(isAddTorque)
+            AddTorque(0.3f);
 
         _dropInvokeGUID = GameManager.DelayInvoke(() =>
         {
@@ -100,7 +117,7 @@ public class UnitBase : MonoBehaviour
 
     public void AddTorque(float power)
     {
-        Rigidbody2D.AddTorque(Random.Range(-power, power),ForceMode2D.Force);
+        Rigidbody2D.AddTorque(Random.Range(-power, power), ForceMode2D.Force);
     }
 
     protected static Sprite GetSprite(string unit_key)
@@ -119,8 +136,12 @@ public class UnitBase : MonoBehaviour
     public void PlayMerge()
     {
         SetActivePhysics(false);
-        if (VFXMerge != null)
-            VFXMerge.SetActive(true);
+
+        if (ParentCore != null && ParentCore.IsPlayer)
+        {
+            if (VFXMerge != null)
+                VFXMerge.SetActive(true);
+        }
     }
 
     public void OnCollisionEnter2D(Collision2D other)

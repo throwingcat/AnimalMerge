@@ -219,7 +219,7 @@ public class GameCore : MonoBehaviour
 
         var component = unit.GetComponent<UnitBase>();
 
-        component.OnSpawn(key, CollisionEnter)
+        component.OnSpawn(key, CollisionEnter, this)
             .SetPosition(UnitSpawnPosition)
             .SetRotation(Vector3.zero);
 
@@ -721,7 +721,7 @@ public class GameCore : MonoBehaviour
 
             unit.eUnitType = eUnitType.Bad;
             unit.SetPosition(shuffled_floor[floor][index]);
-            unit.Drop();
+            unit.Drop(true);
             BadUnits.Add(unit);
         }
     }
@@ -767,7 +767,7 @@ public class GameCore : MonoBehaviour
 
         if (CurrentReadyUnit != null)
         {
-            CurrentReadyUnit.Drop();
+            CurrentReadyUnit.Drop(true);
             UnitsInField.Add(CurrentReadyUnit);
             CurrentReadyUnit = null;
             _unitSpawnDelayDelta = EnvironmentValue.UNIT_SPAWN_DELAY;
