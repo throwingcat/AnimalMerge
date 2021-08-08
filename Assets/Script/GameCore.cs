@@ -20,7 +20,6 @@ public class GameCore : MonoBehaviour
 
     #endregion
 
-
     protected virtual void Initialize()
     {
         #region 데이터 초기화
@@ -30,7 +29,7 @@ public class GameCore : MonoBehaviour
         AttackBadBlockValue = 0;
         MyBadBlockValue = 0;
         Score = 0;
-        SpawnLevel = 1;
+        SpawnPhase = SpawnPhase.DefaultPhase;
         NextUnitList.Clear();
 
         //플레이어가 선택한 유닛 그룹 초기화
@@ -165,33 +164,7 @@ public class GameCore : MonoBehaviour
             NextUnitList.RemoveAt(0);
 
             //유닛 리스트에 새로운 유닛 추가
-            var pick = 0;
-            switch (SpawnLevel)
-            {
-                case 1:
-                    pick = 0;
-                    break;
-                case 2:
-                    pick = Utils.RandomPick(new List<double>
-                    {
-                        EnvironmentValue.SPAWN_PHASE_2_PICK_LEVEL_1,
-                        EnvironmentValue.SPAWN_PHASE_2_PICK_LEVEL_2
-                    });
-                    break;
-                case 3:
-                    pick = Utils.RandomPick(new List<double>
-                    {
-                        EnvironmentValue.SPAWN_PHASE_3_PICK_LEVEL_1,
-                        EnvironmentValue.SPAWN_PHASE_3_PICK_LEVEL_2,
-                        EnvironmentValue.SPAWN_PHASE_3_PICK_LEVEL_3,
-                        EnvironmentValue.SPAWN_PHASE_3_PICK_LEVEL_4
-                    });
-                    break;
-                default:
-                    pick = 0;
-                    break;
-            }
-
+            var pick = Utils.RandomPick(SpawnPhase.Phase);
             NextUnitList.Add(PlayerUnitGroupList[pick]);
 
             //유닛 대기열 UI 갱신
@@ -305,13 +278,7 @@ public class GameCore : MonoBehaviour
             a.transform.localPosition.z);
 
         if (a.Sheet.grow_unit.IsNullOrEmpty() == false)
-        {
             UnitsInField.Add(SpawnUnit(a.Sheet.grow_unit, pos));
-
-            if (SpawnLevel + 2 < a.Sheet.index)
-                SpawnLevel++;
-            SpawnLevel = Mathf.Clamp(SpawnLevel, 1, 3);
-        }
 
         RemoveUnit(a);
         RemoveUnit(b);
@@ -330,6 +297,10 @@ public class GameCore : MonoBehaviour
             //콤보 초상화 출력
             IngameComboPortraitCanvas.PlayComboPortrait(Combo, true);
         }
+
+        //유닛 생성 페이즈 변경 확인
+        if (SpawnPhase.GrowCondition <= a.Sheet.index)
+            SpawnPhase = SpawnPhase.GetNextPhase();
 
         //패시브 스킬 발동
         if (3 <= Combo)
@@ -495,7 +466,7 @@ public class GameCore : MonoBehaviour
     [Header("시스템")] public bool isGameFinish;
 
     public bool isPauseBadBlockTimer;
-    public int SpawnLevel = 1;
+    public SpawnPhase SpawnPhase;
     public string PlayerUnitGroup = "Cat";
     public List<Unit> PlayerUnitGroupList = new List<Unit>();
     public bool IsPlayer = true;

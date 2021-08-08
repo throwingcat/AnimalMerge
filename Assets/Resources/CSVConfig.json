@@ -2,7 +2,19 @@
    "BaseURL": "https://shdd.synology.me/Simon/Animal Merge/Sheet",
    "Files": [
       {
+         "Name": "Chest"
+      },
+      {
+         "Name": "EnvironmentValueSheet"
+      },
+      {
          "Name": "Item"
+      },
+      {
+         "Name": "Localization"
+      },
+      {
+         "Name": "SpawnPhase"
       },
       {
          "Name": "Unit"
@@ -12,14 +24,6 @@
       },
       {
          "Name": "UnitLevel"
-      },
-      {
-         "Name": "Chest"
-      },
-      {
-         "Name": "EnvironmentValueSheet"
-      },
-      {
-         "Name": "Localization"
-      }]
+      }
+   ]
 }
