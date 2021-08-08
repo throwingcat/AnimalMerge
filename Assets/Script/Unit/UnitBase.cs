@@ -89,7 +89,7 @@ public class UnitBase : MonoBehaviour
 
         SetActivePhysics(true);
 
-        AddTorque(0.03f);
+        AddTorque(0.3f);
 
         _dropInvokeGUID = GameManager.DelayInvoke(() =>
         {
@@ -100,7 +100,7 @@ public class UnitBase : MonoBehaviour
 
     public void AddTorque(float power)
     {
-        Rigidbody2D.AddTorque(Random.Range(-power, power),ForceMode2D.Impulse);
+        Rigidbody2D.AddTorque(Random.Range(-power, power),ForceMode2D.Force);
     }
 
     protected static Sprite GetSprite(string unit_key)
