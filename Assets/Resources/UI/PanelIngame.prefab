@@ -13364,7 +13364,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preset: 0
-  onEnableBehaviour: 2
+  onEnableBehaviour: 1
   onDisableBehaviour: 2
 --- !u!114 &6719810541575927055
 MonoBehaviour:
