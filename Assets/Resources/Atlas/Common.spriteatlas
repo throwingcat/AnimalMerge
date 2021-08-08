@@ -59,7 +59,7 @@ SpriteAtlas:
     - {fileID: 102900000, guid: 0dcf213ce157a314080be094c25a343a, type: 3}
     - {fileID: 102900000, guid: faf346794701d2946b6c2c15ba0b2997, type: 3}
     - {fileID: 102900000, guid: 1683a1423fa098848928f6327a3515c7, type: 3}
-    totalSpriteSurfaceArea: 2583605
+    totalSpriteSurfaceArea: 2632660
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -81,6 +81,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 0c75341281d460a40b176e55e4f5f372, type: 3}
   - {fileID: 21300000, guid: a8f102426f910484b864747c9eb7453a, type: 3}
   - {fileID: 21300000, guid: 8937af52659f0fb4d9d9788e9595b461, type: 3}
+  - {fileID: 21300000, guid: 3498626253fb51c4082b1367ceb2b8f3, type: 3}
   - {fileID: 21300000, guid: 12a186728ff6192478b83d1e090a7b37, type: 3}
   - {fileID: 21300000, guid: 1b3f418225e5e3346956f5c402292255, type: 3}
   - {fileID: 21300000, guid: 4505e1a20c948784bbc7aae1fccc70c3, type: 3}
@@ -169,6 +170,7 @@ SpriteAtlas:
   - btn_close
   - bg_AnimalSlot
   - btn_confirm
+  - fx_glowLine_Screen
   - img_Rank_03
   - gauge_01
   - btn_disable
