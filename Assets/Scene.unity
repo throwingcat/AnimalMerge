@@ -12791,7 +12791,6 @@ MonoBehaviour:
   INGAME_BGM: 
   isGameFinish: 0
   isPauseBadBlockTimer: 0
-  SpawnLevel: 1
   PlayerUnitGroup: Cat
   IsPlayer: 1
   GameOverLine: {fileID: 711099207}
@@ -13485,7 +13484,6 @@ MonoBehaviour:
   INGAME_BGM: ingame_bgm_02
   isGameFinish: 0
   isPauseBadBlockTimer: 0
-  SpawnLevel: 1
   PlayerUnitGroup: Cat
   IsPlayer: 1
   GameOverLine: {fileID: 1571814341}
@@ -29606,6 +29604,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1954851997}
     m_Modifications:
+    - target: {fileID: 530000167840487502, guid: ed8abd1563672f64da014a9a417e07ee, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2050804679752174704, guid: ed8abd1563672f64da014a9a417e07ee, type: 3}
+      propertyPath: m_Alpha
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469905106070448578, guid: ed8abd1563672f64da014a9a417e07ee, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469905106070448578, guid: ed8abd1563672f64da014a9a417e07ee, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4951980163943831187, guid: ed8abd1563672f64da014a9a417e07ee, type: 3}
+      propertyPath: m_Alpha
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5354172163564017546, guid: ed8abd1563672f64da014a9a417e07ee, type: 3}
       propertyPath: m_Name
       value: PopupUnitUpgrade
@@ -29697,6 +29715,18 @@ PrefabInstance:
     - target: {fileID: 5354172163564017557, guid: ed8abd1563672f64da014a9a417e07ee, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278017370598530725, guid: ed8abd1563672f64da014a9a417e07ee, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933172419975578170, guid: ed8abd1563672f64da014a9a417e07ee, type: 3}
+      propertyPath: m_Alpha
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7257152547908509769, guid: ed8abd1563672f64da014a9a417e07ee, type: 3}
+      propertyPath: m_Alpha
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed8abd1563672f64da014a9a417e07ee, type: 3}

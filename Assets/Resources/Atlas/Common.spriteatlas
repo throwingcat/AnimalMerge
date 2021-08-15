@@ -59,7 +59,7 @@ SpriteAtlas:
     - {fileID: 102900000, guid: 0dcf213ce157a314080be094c25a343a, type: 3}
     - {fileID: 102900000, guid: faf346794701d2946b6c2c15ba0b2997, type: 3}
     - {fileID: 102900000, guid: 1683a1423fa098848928f6327a3515c7, type: 3}
-    totalSpriteSurfaceArea: 2677912
+    totalSpriteSurfaceArea: 2767912
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -106,6 +106,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 430859973f47b2c43b5da664f21322d8, type: 3}
   - {fileID: 21300000, guid: 8efe95a758464e743a55db5918fe1414, type: 3}
   - {fileID: 21300000, guid: 01bb9fb7db87f10409ead9764c5bb738, type: 3}
+  - {fileID: 21300000, guid: 62a344c7255ec624ea5da2ccb17b53cb, type: 3}
   - {fileID: 21300000, guid: eb2a2dc73f043ae42b338100ee9ba95b, type: 3}
   - {fileID: 21300000, guid: 18aac0d7000c87149ad9d27bfe79d4db, type: 3}
   - {fileID: 21300000, guid: e913c04885ba5504488138a043b60201, type: 3}
@@ -161,7 +162,7 @@ SpriteAtlas:
   - Chest_Silver
   - btn_pause
   - img_money_bg
-  - cat_06
+  - cat_05
   - img_skill_cool_fg
   - img_Level_Bg
   - gauge_animal_exp
@@ -178,7 +179,7 @@ SpriteAtlas:
   - icon_timmer
   - img_skill_cool_bg
   - icon_collect_1
-  - cat_03
+  - cat_02
   - gauge_exp_fg_2
   - rat_02
   - slot_item
@@ -195,18 +196,19 @@ SpriteAtlas:
   - rat_06
   - btn_setting
   - btn_menu_05
-  - cat_02
+  - bad1
+  - cat_09
   - gauge_bg
   - btn_menu_04
   - icon_goldMark
-  - cat_08
+  - cat_07
   - btn_menu_03
   - img_nextSlot
   - piece_cat4
   - rat_03
   - btn_start_d
   - piece_cat1
-  - cat_09
+  - cat_08
   - rat_01
   - btn_post
   - piece_cat6
@@ -215,7 +217,7 @@ SpriteAtlas:
   - cat_01
   - bg_container
   - piece_cat7
-  - cat_07
+  - cat_06
   - btn_cancel
   - img_arrow_2
   - titled_footMark
@@ -237,9 +239,9 @@ SpriteAtlas:
   - btn_bottom_menu_off
   - piece_cat9
   - gauge_timeOut_fg
-  - cat_04
+  - cat_03
   - gauge_exp_bg
-  - cat_05
+  - cat_04
   - btn_start_n
   - rat_05
   m_RenderDataMap: {}
