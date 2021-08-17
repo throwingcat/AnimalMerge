@@ -49,6 +49,13 @@ namespace Define
         
         public static float SYNC_CAPTURE_DELAY = 1f;
 
+        public static int SUDDEN_DEATH_TIME_PAHSE_1 = 30;
+        public static float SUDDEN_DEATH_RATIO_PAHSE_1 = 0.5f;
+        public static int SUDDEN_DEATH_TIME_PAHSE_2 = 60;
+        public static float SUDDEN_DEATH_RATIO_PAHSE_2 = 0.75f;
+        public static int SUDDEN_DEATH_TIME_PAHSE_3 = 90;
+        public static float SUDDEN_DEATH_RATIO_PAHSE_3 = 1f;
+        
         #region BadBlock
         public static float BAD_BLOCK_TIMER = 5f;
         public static int BAD_BLOCK_HORIZONTAL_MAX_COUNT = 6;
