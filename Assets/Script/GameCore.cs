@@ -323,9 +323,9 @@ public class GameCore : MonoBehaviour
         //획득 스코어만큼 스킬게이지 충전
         ChargeSkillGauge(gain);
 
-        //주변 방해블록 삭제
         var remove_bad_units = new List<UnitBase>();
 
+        //주변 방해블록 삭제
         foreach (var unit in BadUnits)
         {
             if (IgnoreUnitGUID.Contains(unit.GUID)) continue;
@@ -346,15 +346,15 @@ public class GameCore : MonoBehaviour
         for (var i = 0; i < remove_bad_units.Count; i++)
         {
             IgnoreUnitGUID.Remove(remove_bad_units[i].GUID);
-            RemoveUnit(remove_bad_units[i]);
+            RemoveBadBlock(remove_bad_units[i]);
             remove_bad_units.RemoveAt(i--);
         }
 
-        var remove_badblock = remove_bad_units.Count;
+        remove_bad_units.Clear();
 
         var comboBonus = Combo > 2 ? 18 * Combo : 0;
         var unitDamage = Utils.GetUnitDamage(a.Sheet.score, a.Info.Level);
-        int badBlock = (int)  ((unitDamage * Combo + comboBonus + remove_badblock * 3) * SuddenDeathRatio(_elapsedGameTimer));
+        int badBlock = (int) ((unitDamage * Combo + comboBonus) * SuddenDeathRatio(_elapsedGameTimer));
 
         //내 방해블록 제거
         if (0 < MyBadBlockValue)
@@ -398,6 +398,55 @@ public class GameCore : MonoBehaviour
         ReduceBadBlockTimer(1f);
         //게임오버 타이머 1초 감소
         ReduceGameOverTimer(1f);
+    }
+
+    public void RemoveBadBlock(UnitBase unit)
+    {
+        int damage = (int) (5 * SuddenDeathRatio(_elapsedGameTimer));
+        PlayRemoveBadUnitDamage(damage, unit);
+        RemoveUnit(unit);
+    }
+
+    private void PlayRemoveBadUnitDamage(int damage, UnitBase unit)
+    {
+        //내 방해블록 제거
+        if (0 < MyBadBlockValue)
+        {
+            MyBadBlockValue -= damage;
+
+            //내 방해블록 제거 + 상대방에게 공격
+            if (MyBadBlockValue <= 0)
+            {
+                AttackBadBlockValue = Mathf.Abs(MyBadBlockValue);
+
+                if (IsPlayer)
+                    PlayMergeAttackVFX(unit.transform.position, PanelIngame.MyBadBlockVFXPoint.position, 0.5f, () =>
+                    {
+                        //블록 갱신
+                        RefreshBadBlockUI();
+
+                        PlayMergeAttackVFX(PanelIngame.MyBadBlockVFXPoint.position,
+                            PanelIngame.EnemyBadBlockVFXPoint.position,
+                            0.5f, () => { });
+                    });
+            }
+            //내 방해블록만 제거
+            else
+            {
+                if (IsPlayer)
+                    PlayMergeAttackVFX(unit.transform.position, PanelIngame.MyBadBlockVFXPoint.position, 0.5f,
+                        () => { RefreshBadBlockUI(); });
+            }
+        }
+        //상대방에게 공격
+        else
+        {
+            if (IsPlayer)
+                PlayMergeAttackVFX(unit.transform.position, PanelIngame.EnemyBadBlockVFXPoint.position, 0.5f,
+                    () => { });
+
+            AttackBadBlockValue += damage;
+        }
     }
 
     private void OnGainScore(int gain)
@@ -970,7 +1019,7 @@ public class GameCore : MonoBehaviour
 
     public decimal SuddenDeathRatio(float elapsed)
     {
-        return (decimal)(1 + EnvironmentValue.DAMAGE_PER_SECOND * elapsed); 
+        return (decimal) (1 + EnvironmentValue.DAMAGE_PER_SECOND * elapsed);
     }
 
     #endregion

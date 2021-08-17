@@ -10,9 +10,10 @@ public class ActiveShake : ActiveBase
     protected override bool RunProcess()
     {
         //AI 전용 조건
-        if(Core.IsPlayer == false)
-            if (BadUnits.Count < 20 || UnitsInField.Count < 10) return false;
-        
+        if (Core.IsPlayer == false)
+            if (BadUnits.Count < 20 || UnitsInField.Count < 10)
+                return false;
+
         GameManager.SimpleTimer(Key.SIMPLE_TIMER_RUNNING_SKILL, 3f);
 
         //방해블록 삭제
@@ -20,7 +21,7 @@ public class ActiveShake : ActiveBase
         {
             if (BadUnits.Count == 0) break;
             var index = Random.Range(0, BadUnits.Count);
-            Core.RemoveUnit(BadUnits[index]);
+            Core.RemoveBadBlock(BadUnits[index]);
         }
 
         //모든 블록 위로 튕겨냄

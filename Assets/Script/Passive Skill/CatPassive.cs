@@ -50,7 +50,7 @@ public class CatPassive : PassiveBase
                 for (var i = 0; i < BadUnits.Count; i++)
                     if (BadUnits[i].GUID == guid)
                     {
-                        Core.RemoveUnit(BadUnits[i]);
+                        Core.RemoveBadBlock(BadUnits[i]);
                         break;
                     }
 
