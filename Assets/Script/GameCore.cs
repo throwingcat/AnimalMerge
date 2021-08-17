@@ -29,7 +29,7 @@ public class GameCore : MonoBehaviour
         MyBadBlockValue = 0;
         Score = 0;
 
-        _elapsedGame = 0f;
+        _elapsedGameTimer = 0f;
         _mergeDelayDelta = 0f;
         _unitSpawnDelayDelta = 0f;
         _syncCaptureDelta = 0f;
@@ -121,7 +121,7 @@ public class GameCore : MonoBehaviour
     {
         if (isGameOver == false)
         {
-            _elapsedGame += delta;
+            _elapsedGameTimer += delta;
 
             if (CurrentReadyUnit == null && _unitSpawnDelayDelta <= 0f)
                 CurrentReadyUnit = SpawnUnit();
@@ -353,8 +353,8 @@ public class GameCore : MonoBehaviour
         var remove_badblock = remove_bad_units.Count;
 
         var comboBonus = Combo > 2 ? 18 * Combo : 0;
-        var badBlock = (int) (Utils.GetUnitDamage(a.Sheet.score, a.Info.Level) * Combo + comboBonus +
-                              remove_badblock * 3);
+        var unitDamage = Utils.GetUnitDamage(a.Sheet.score, a.Info.Level);
+        int badBlock = (int)  ((unitDamage * Combo + comboBonus + remove_badblock * 3) * SuddenDeathRatio(_elapsedGameTimer));
 
         //내 방해블록 제거
         if (0 < MyBadBlockValue)
@@ -565,7 +565,7 @@ public class GameCore : MonoBehaviour
 
     #region Timer Value
 
-    private float _elapsedGame;
+    private float _elapsedGameTimer;
     private float _mergeDelayDelta;
     private float _unitSpawnDelayDelta;
     private float _syncCaptureDelta;
@@ -613,9 +613,8 @@ public class GameCore : MonoBehaviour
     //방해블록 타이머
     private float _badBlockTimerDelta;
 
-    private int _badBlockMaxDropOneTime => (int) (EnvironmentValue.BAD_BLOCK_HORIZONTAL_MAX_COUNT *
-                                                  EnvironmentValue.BAD_BLOCK_VERTICAL_MAX_COUNT *
-                                                  SuddenDeathRatio(_elapsedGame));
+    private int _badBlockMaxDropOneTime => EnvironmentValue.BAD_BLOCK_HORIZONTAL_MAX_COUNT *
+                                           EnvironmentValue.BAD_BLOCK_VERTICAL_MAX_COUNT;
 
     private readonly List<List<Vector3>> Floors = new List<List<Vector3>>();
 
@@ -969,12 +968,9 @@ public class GameCore : MonoBehaviour
         }
     }
 
-    public float SuddenDeathRatio(float elapsed)
+    public decimal SuddenDeathRatio(float elapsed)
     {
-        if (EnvironmentValue.SUDDEN_DEATH_TIME_PAHSE_3 <= elapsed) return EnvironmentValue.SUDDEN_DEATH_RATIO_PAHSE_3;
-        if (EnvironmentValue.SUDDEN_DEATH_TIME_PAHSE_2 <= elapsed) return EnvironmentValue.SUDDEN_DEATH_RATIO_PAHSE_2;
-        if (EnvironmentValue.SUDDEN_DEATH_TIME_PAHSE_1 <= elapsed) return EnvironmentValue.SUDDEN_DEATH_RATIO_PAHSE_1;
-        return 0.25f;
+        return (decimal)(1 + EnvironmentValue.DAMAGE_PER_SECOND * elapsed); 
     }
 
     #endregion
