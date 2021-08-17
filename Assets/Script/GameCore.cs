@@ -10,7 +10,6 @@ using UnityEngine;
 using UnityEngine.U2D;
 using Violet;
 using Violet.Audio;
-using Random = UnityEngine.Random;
 
 public class GameCore : MonoBehaviour
 {
@@ -29,6 +28,13 @@ public class GameCore : MonoBehaviour
         AttackBadBlockValue = 0;
         MyBadBlockValue = 0;
         Score = 0;
+
+        _elapsedGame = 0f;
+        _mergeDelayDelta = 0f;
+        _unitSpawnDelayDelta = 0f;
+        _syncCaptureDelta = 0f;
+        _comboDelta = 0f;
+
         SpawnPhase = SpawnPhase.DefaultPhase;
         NextUnitList.Clear();
 
@@ -115,6 +121,8 @@ public class GameCore : MonoBehaviour
     {
         if (isGameOver == false)
         {
+            _elapsedGame += delta;
+
             if (CurrentReadyUnit == null && _unitSpawnDelayDelta <= 0f)
                 CurrentReadyUnit = SpawnUnit();
             else
@@ -557,6 +565,7 @@ public class GameCore : MonoBehaviour
 
     #region Timer Value
 
+    private float _elapsedGame;
     private float _mergeDelayDelta;
     private float _unitSpawnDelayDelta;
     private float _syncCaptureDelta;
@@ -604,8 +613,9 @@ public class GameCore : MonoBehaviour
     //방해블록 타이머
     private float _badBlockTimerDelta;
 
-    private int _badBlockMaxDropOneTime => EnvironmentValue.BAD_BLOCK_HORIZONTAL_MAX_COUNT *
-                                           EnvironmentValue.BAD_BLOCK_VERTICAL_MAX_COUNT;
+    private int _badBlockMaxDropOneTime => (int) (EnvironmentValue.BAD_BLOCK_HORIZONTAL_MAX_COUNT *
+                                                  EnvironmentValue.BAD_BLOCK_VERTICAL_MAX_COUNT *
+                                                  SuddenDeathRatio(_elapsedGame));
 
     private readonly List<List<Vector3>> Floors = new List<List<Vector3>>();
 
@@ -818,7 +828,6 @@ public class GameCore : MonoBehaviour
         Passive?.OnUpdate(delta);
 
         if (IsPlayer)
-        {
             if (Passive != null)
             {
                 PanelIngame.RefreshPassiveSkillGauge(1f - Passive.CoolTimeProgress);
@@ -826,7 +835,6 @@ public class GameCore : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.W))
                     Passive.Run(OnCompletePassiveSkill);
             }
-        }
     }
 
     private void OnCompletePassiveSkill()
@@ -959,6 +967,14 @@ public class GameCore : MonoBehaviour
             //오디오 종료
             AudioManager.Instance.StopBGM();
         }
+    }
+
+    public float SuddenDeathRatio(float elapsed)
+    {
+        if (EnvironmentValue.SUDDEN_DEATH_TIME_PAHSE_3 <= elapsed) return EnvironmentValue.SUDDEN_DEATH_RATIO_PAHSE_3;
+        if (EnvironmentValue.SUDDEN_DEATH_TIME_PAHSE_2 <= elapsed) return EnvironmentValue.SUDDEN_DEATH_RATIO_PAHSE_2;
+        if (EnvironmentValue.SUDDEN_DEATH_TIME_PAHSE_1 <= elapsed) return EnvironmentValue.SUDDEN_DEATH_RATIO_PAHSE_1;
+        return 0.25f;
     }
 
     #endregion

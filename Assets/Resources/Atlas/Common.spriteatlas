@@ -59,7 +59,7 @@ SpriteAtlas:
     - {fileID: 102900000, guid: 0dcf213ce157a314080be094c25a343a, type: 3}
     - {fileID: 102900000, guid: faf346794701d2946b6c2c15ba0b2997, type: 3}
     - {fileID: 102900000, guid: 1683a1423fa098848928f6327a3515c7, type: 3}
-    totalSpriteSurfaceArea: 2767912
+    totalSpriteSurfaceArea: 2941982
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -94,6 +94,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 4d4dfb555bc8936478b3d98033075ab8, type: 3}
   - {fileID: 21300000, guid: eb44ee75ec9305a49a6716afa5305860, type: 3}
   - {fileID: 21300000, guid: 5e798895ee8aa3c49a5c55d7d6dab0ad, type: 3}
+  - {fileID: 21300000, guid: 9850f5b51b704414ab0395fa8955c7f2, type: 3}
   - {fileID: 21300000, guid: 46d2e7f5d7190fc4ab883a401b0f1ddf, type: 3}
   - {fileID: 21300000, guid: 200957060769dd34bb29b20da02653dd, type: 3}
   - {fileID: 21300000, guid: 1e918fd6656443545aafd2f608b563ce, type: 3}
@@ -162,7 +163,7 @@ SpriteAtlas:
   - Chest_Silver
   - btn_pause
   - img_money_bg
-  - cat_05
+  - cat_06
   - img_skill_cool_fg
   - img_Level_Bg
   - gauge_animal_exp
@@ -179,11 +180,12 @@ SpriteAtlas:
   - icon_timmer
   - img_skill_cool_bg
   - icon_collect_1
-  - cat_02
+  - cat_03
   - gauge_exp_fg_2
   - rat_02
   - slot_item
   - rat_00
+  - bg_title_0
   - btn_start_h
   - Chest_Gold
   - img_Rank_02
@@ -197,18 +199,18 @@ SpriteAtlas:
   - btn_setting
   - btn_menu_05
   - bad1
-  - cat_09
+  - cat_02
   - gauge_bg
   - btn_menu_04
   - icon_goldMark
-  - cat_07
+  - cat_08
   - btn_menu_03
   - img_nextSlot
   - piece_cat4
   - rat_03
   - btn_start_d
   - piece_cat1
-  - cat_08
+  - cat_09
   - rat_01
   - btn_post
   - piece_cat6
@@ -217,7 +219,7 @@ SpriteAtlas:
   - cat_01
   - bg_container
   - piece_cat7
-  - cat_06
+  - cat_07
   - btn_cancel
   - img_arrow_2
   - titled_footMark
@@ -239,9 +241,9 @@ SpriteAtlas:
   - btn_bottom_menu_off
   - piece_cat9
   - gauge_timeOut_fg
-  - cat_03
-  - gauge_exp_bg
   - cat_04
+  - gauge_exp_bg
+  - cat_05
   - btn_start_n
   - rat_05
   m_RenderDataMap: {}

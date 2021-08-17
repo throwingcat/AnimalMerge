@@ -38,6 +38,7 @@ public class PanelIngame : SUIPanel
     public Image PassiveSkillGauge;
     public Image PassiveSkillIcon;
     public GameObject PassiveSkillActivate;
+
     #region Enemy Screen
     private readonly List<IngameBadBlock> _enemyBadBlocks = new List<IngameBadBlock>();
     public Transform EnemyBadBlockParent;
