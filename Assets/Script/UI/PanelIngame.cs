@@ -9,6 +9,9 @@ using Violet.Audio;
 
 public class PanelIngame : SUIPanel
 {
+    public GameObject WaitPlayer;
+    public GameObject CountDownRoot;
+    public List<GameObject> CountDown;
     private readonly List<IngameBadBlock> _badBlocks = new List<IngameBadBlock>();
 
     public Transform BadBlockParent;
@@ -40,9 +43,11 @@ public class PanelIngame : SUIPanel
     public GameObject PassiveSkillActivate;
 
     #region Enemy Screen
+
     private readonly List<IngameBadBlock> _enemyBadBlocks = new List<IngameBadBlock>();
     public Transform EnemyBadBlockParent;
     public Transform EnemyBadBlockVFXPoint;
+
     #endregion
 
     protected override void OnShow()
@@ -214,6 +219,7 @@ public class PanelIngame : SUIPanel
     }
 
     public Action OnClickSkillEvent;
+
     public void OnClickSkill()
     {
         OnClickSkillEvent?.Invoke();
@@ -246,5 +252,21 @@ public class PanelIngame : SUIPanel
     {
         _badBlocks.Clear();
         _enemyBadBlocks.Clear();
+    }
+
+    public void SetCountDown(int index)
+    {
+        for (int i = 0; i < CountDown.Count; i++)
+            CountDown[i].SetActive(i == index);
+    }
+
+    public void SetActiveCountDown(bool isActive)
+    {
+        CountDownRoot.SetActive(isActive);
+    }
+
+    public void SetActiveWaitPlayer(bool isActive)
+    {
+        WaitPlayer.SetActive(isActive);
     }
 }

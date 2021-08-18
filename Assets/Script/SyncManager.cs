@@ -27,6 +27,8 @@ public class SyncManager
     {
         var packet = new SyncPacket();
 
+        packet.ReadyTime = From.MyReadyTime;
+        
         var units = new List<UnitBase>();
         units.AddRange(From.UnitsInField);
         units.AddRange(From.BadUnits);
@@ -51,8 +53,6 @@ public class SyncManager
             packet.isGameOver = true;
             packet.GameOverTime = From.GameOverTime;
         }
-
-        packet.isGameFinish = From.isGameFinish;
 
         OnSyncCapture?.Invoke(packet);
 
@@ -103,20 +103,13 @@ public class SyncManager
     public class SyncPacket
     {
         [Key(0)] public List<UnitData> UnitsDatas = new List<UnitData>();
-
         [Key(1)] public int AttackDamage;
-
         [Key(2)] public int AttackCombo;
-
         [Key(3)] public int StackDamage;
-
         [Key(4)] public bool isGameOver;
-
         [Key(5)] public DateTime GameOverTime;
+        [Key(6)]public DateTime ReadyTime;
 
-        [Key(6)] public bool isGameFinish;
-
-        [Key(7)] public string WinPlayer = "";
     }
 
     [Serializable]
