@@ -23,6 +23,8 @@ public class GameCore : MonoBehaviour
     {
         #region 데이터 초기화
 
+        isReady = false;
+        isLaunchGame = false;
         isGameStart = false;
         isGameOver = false;
         isGameFinish = false;
@@ -81,6 +83,15 @@ public class GameCore : MonoBehaviour
         SyncManager.OnSyncCapture = OnCaptureSyncPacket;
         SyncManager.OnSyncReceive = OnReceiveSyncPacket;
 
+        float delay = IsPlayer ? 0.1f : 2f;
+
+        GameManager.DelayInvoke(() =>
+        {
+            isReady = true;
+            MyReadyTime = GameManager.GetTime();
+            EnemyReadyTime = new DateTime();
+        }, delay);
+
         #endregion
     }
 
@@ -109,12 +120,9 @@ public class GameCore : MonoBehaviour
         PanelIngame.RefreshPassiveSkillGauge(0f);
         PanelIngame.SetActiveWaitPlayer(true);
         PanelIngame.SetActiveCountDown(false);
-        
+
         RefreshBadBlockUI();
         IngameComboPortraitCanvas.Initialize();
-
-        MyReadyTime = GameManager.GetTime();
-        EnemyReadyTime = new DateTime();
 
         //매치 릴레이 세팅
         if (GameManager.Instance.isSinglePlay == false)
@@ -126,6 +134,7 @@ public class GameCore : MonoBehaviour
 
     public virtual void OnUpdate(float delta)
     {
+        if (isReady == false) return;
         if (isGameStart)
         {
             if (isGameOver == false)
@@ -533,6 +542,7 @@ public class GameCore : MonoBehaviour
     [Header("시스템")] public DateTime MyReadyTime;
     public DateTime EnemyReadyTime;
     public DateTime GameStartTime;
+    public bool isReady;
     public bool isLaunchGame;
     public bool isGameStart;
     public bool isGameFinish;
@@ -932,7 +942,6 @@ public class GameCore : MonoBehaviour
 
                 if (_prevIndex != index)
                 {
-
                     PanelIngame.SetCountDown(index);
                     _prevIndex = index;
                 }
@@ -959,7 +968,7 @@ public class GameCore : MonoBehaviour
 
     public void OnReceiveSyncPacket(SyncManager.SyncPacket packet)
     {
-        if (isLaunchGame == false)
+        if (isReady && isLaunchGame == false)
         {
             EnemyReadyTime = packet.ReadyTime;
             GameStartTime = MyReadyTime < EnemyReadyTime ? EnemyReadyTime : MyReadyTime;

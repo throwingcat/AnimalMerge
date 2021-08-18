@@ -12789,6 +12789,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   INGAME_BGM: 
+  isReady: 0
+  isLaunchGame: 0
+  isGameStart: 0
   isGameFinish: 0
   isPauseBadBlockTimer: 0
   PlayerUnitGroup: Cat
@@ -13482,6 +13485,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   INGAME_BGM: ingame_bgm_02
+  isReady: 0
+  isLaunchGame: 0
+  isGameStart: 0
   isGameFinish: 0
   isPauseBadBlockTimer: 0
   PlayerUnitGroup: Cat
