@@ -254,6 +254,12 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator OnEnterBattle()
     {
+        SUIPanel.IgnoreBackPress = true;
+
+        UIManager.Instance.LoadingScreen.SetActive(true);
+        
+        yield return new WaitForSeconds(2f);
+        
         GameCore.Initialize(true);
         if (isSinglePlay)
         {
@@ -261,8 +267,8 @@ public class GameManager : MonoBehaviour
             GameCore.SyncManager.SetTo(AICore);
             AICore.SyncManager.SetTo(GameCore);
         }
-
-        SUIPanel.IgnoreBackPress = true;
+        
+        UIManager.Instance.LoadingScreen.SetActive(false);
         
         yield break;
     }
