@@ -20,6 +20,12 @@ public class PanelLobby : SUIPanel
 
         Matching.SetActive(false);
 
+        Page.Sort((a, b) =>
+        {
+            if (a.Index < b.Index) return -1;
+            if (a.Index > b.Index) return 1;
+            return 0;
+        });
         foreach (var page in Page)
             page.Root.SetActive(false);
             

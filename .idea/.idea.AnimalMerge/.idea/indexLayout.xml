@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelUserStore">
-    <attachedFolders />
+    <attachedFolders>
+      <Path>../../Users/throw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.2d.animation@5.0.4</Path>
+      <Path>../../Users/throw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.2d.psdimporter@4.0.2</Path>
+      <Path>../../Users/throw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.2d.spriteshape@5.1.1</Path>
+      <Path>../../Users/throw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.collab-proxy@1.3.9</Path>
+      <Path>../../Users/throw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.test-framework@1.1.24</Path>
+      <Path>../../Users/throw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@3.0.4</Path>
+      <Path>../../Users/throw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.timeline@1.4.7</Path>
+    </attachedFolders>
     <explicitIncludes>
       <Path>Library/PackageCache/com.unity.2d.animation@5.0.4</Path>
       <Path>Library/PackageCache/com.unity.2d.common@4.0.3</Path>
@@ -56,13 +64,6 @@
       <Path>Library/PackageCache/com.unity.ugui@1.0.0</Path>
       <Path>Packages</Path>
       <Path>ProjectSettings</Path>
-      <Path>../../Users/throw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.2d.animation@5.0.4</Path>
-      <Path>../../Users/throw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.2d.psdimporter@4.0.2</Path>
-      <Path>../../Users/throw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.2d.spriteshape@5.1.1</Path>
-      <Path>../../Users/throw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.collab-proxy@1.3.9</Path>
-      <Path>../../Users/throw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.test-framework@1.1.24</Path>
-      <Path>../../Users/throw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@3.0.4</Path>
-      <Path>../../Users/throw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.timeline@1.4.7</Path>
     </explicitIncludes>
     <explicitExcludes>
       <Path>.git</Path>

@@ -23,6 +23,9 @@ public class GameCore : MonoBehaviour
     {
         #region 데이터 초기화
 
+        isReady = false;
+        isLaunchGame = false;
+        isGameStart = false;
         isGameOver = false;
         isGameFinish = false;
         AttackBadBlockValue = 0;
@@ -80,6 +83,15 @@ public class GameCore : MonoBehaviour
         SyncManager.OnSyncCapture = OnCaptureSyncPacket;
         SyncManager.OnSyncReceive = OnReceiveSyncPacket;
 
+        float delay = IsPlayer ? 0.1f : 2f;
+
+        GameManager.DelayInvoke(() =>
+        {
+            isReady = true;
+            MyReadyTime = GameManager.GetTime();
+            EnemyReadyTime = new DateTime();
+        }, delay);
+
         #endregion
     }
 
@@ -106,6 +118,9 @@ public class GameCore : MonoBehaviour
         PanelIngame.RefreshScore(0, 0);
         PanelIngame.RefreshSkillGauge(0f);
         PanelIngame.RefreshPassiveSkillGauge(0f);
+        PanelIngame.SetActiveWaitPlayer(true);
+        PanelIngame.SetActiveCountDown(false);
+
         RefreshBadBlockUI();
         IngameComboPortraitCanvas.Initialize();
 
@@ -119,32 +134,36 @@ public class GameCore : MonoBehaviour
 
     public virtual void OnUpdate(float delta)
     {
-        if (isGameOver == false)
+        if (isReady == false) return;
+        if (isGameStart)
         {
-            _elapsedGameTimer += delta;
-
-            if (CurrentReadyUnit == null && _unitSpawnDelayDelta <= 0f)
-                CurrentReadyUnit = SpawnUnit();
-            else
-                _unitSpawnDelayDelta -= delta;
-
-            if (Input.GetKeyDown(KeyCode.Space))
-                OnReceiveBadBlock(10);
-            if (Input.GetKeyDown(KeyCode.A))
+            if (isGameOver == false)
             {
-                ChargeSkillGauge(EnvironmentValue.SKILL_CHARGE_MAX_VALUE);
-                UseSkill();
+                _elapsedGameTimer += delta;
+
+                if (CurrentReadyUnit == null && _unitSpawnDelayDelta <= 0f)
+                    CurrentReadyUnit = SpawnUnit();
+                else
+                    _unitSpawnDelayDelta -= delta;
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                    OnReceiveBadBlock(10);
+                if (Input.GetKeyDown(KeyCode.A))
+                {
+                    ChargeSkillGauge(EnvironmentValue.SKILL_CHARGE_MAX_VALUE);
+                    UseSkill();
+                }
+
+                InputUpdate();
+
+                OnUpdatePassiveSkill(delta);
+
+                BadBlockUpdate(delta);
+
+                ComboUpdate(delta);
+
+                GameOverUpdate(delta);
             }
-
-            InputUpdate();
-
-            OnUpdatePassiveSkill(delta);
-
-            BadBlockUpdate(delta);
-
-            ComboUpdate(delta);
-
-            GameOverUpdate(delta);
         }
 
         #region Sync
@@ -520,8 +539,13 @@ public class GameCore : MonoBehaviour
 
     #region System
 
-    [Header("시스템")] public bool isGameFinish;
-
+    [Header("시스템")] public DateTime MyReadyTime;
+    public DateTime EnemyReadyTime;
+    public DateTime GameStartTime;
+    public bool isReady;
+    public bool isLaunchGame;
+    public bool isGameStart;
+    public bool isGameFinish;
     public bool isPauseBadBlockTimer;
     public SpawnPhase SpawnPhase;
     public string PlayerUnitGroup = "Cat";
@@ -895,6 +919,47 @@ public class GameCore : MonoBehaviour
 
     #endregion
 
+    private IEnumerator GameStartProcess()
+    {
+        if (IsPlayer)
+        {
+            PanelIngame.SetActiveWaitPlayer(false);
+            PanelIngame.SetActiveCountDown(true);
+        }
+
+        float duration = (float) (GameStartTime - GameManager.GetTime()).TotalSeconds;
+        float elapsed = 0f;
+
+        int _prevIndex = -1;
+        while (elapsed <= duration)
+        {
+            elapsed += Time.deltaTime;
+
+            if (IsPlayer)
+            {
+                //0 ~ 2
+                int index = (int) elapsed;
+
+                if (_prevIndex != index)
+                {
+                    PanelIngame.SetCountDown(index);
+                    _prevIndex = index;
+                }
+            }
+
+            yield return null;
+        }
+
+        isGameStart = true;
+
+        if (IsPlayer)
+        {
+            PanelIngame.SetCountDown(3);
+            yield return new WaitForSeconds(0.5f);
+            PanelIngame.SetActiveCountDown(false);
+        }
+    }
+
     #region Sync
 
     public void OnCaptureSyncPacket(SyncManager.SyncPacket packet)
@@ -903,6 +968,17 @@ public class GameCore : MonoBehaviour
 
     public void OnReceiveSyncPacket(SyncManager.SyncPacket packet)
     {
+        if (isReady && isLaunchGame == false)
+        {
+            EnemyReadyTime = packet.ReadyTime;
+            GameStartTime = MyReadyTime < EnemyReadyTime ? EnemyReadyTime : MyReadyTime;
+            GameStartTime = GameStartTime.AddSeconds(3);
+
+            StartCoroutine(GameStartProcess());
+
+            isLaunchGame = true;
+        }
+
         OnReceiveBadBlock(packet.AttackDamage);
         OnReceiveCombo(packet.AttackCombo);
         if (IsPlayer)

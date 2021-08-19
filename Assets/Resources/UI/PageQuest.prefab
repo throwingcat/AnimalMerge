@@ -1287,7 +1287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.072210535, g: 0.8773585, b: 0, a: 1}
+  m_Color: {r: 0.05098039, g: 1, b: 0.14532882, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5184,7 +5184,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8083072363460187467}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5209,7 +5209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5529d461f46c0249a4860dd4cc7dfd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Index: 4
+  Index: 3
   CanvasGroup: {fileID: 0}
   Root: {fileID: 3322022097553868182}
 --- !u!1 &8349783423144782752
