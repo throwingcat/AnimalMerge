@@ -59,7 +59,7 @@ SpriteAtlas:
     - {fileID: 102900000, guid: 0dcf213ce157a314080be094c25a343a, type: 3}
     - {fileID: 102900000, guid: faf346794701d2946b6c2c15ba0b2997, type: 3}
     - {fileID: 102900000, guid: 1683a1423fa098848928f6327a3515c7, type: 3}
-    totalSpriteSurfaceArea: 2941982
+    totalSpriteSurfaceArea: 2963366
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -84,6 +84,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 3498626253fb51c4082b1367ceb2b8f3, type: 3}
   - {fileID: 21300000, guid: 12a186728ff6192478b83d1e090a7b37, type: 3}
   - {fileID: 21300000, guid: 1b3f418225e5e3346956f5c402292255, type: 3}
+  - {fileID: 21300000, guid: 6e4d6092a7b161f49938c9cfe9557442, type: 3}
   - {fileID: 21300000, guid: 4505e1a20c948784bbc7aae1fccc70c3, type: 3}
   - {fileID: 21300000, guid: 2d988bb2f2defb145b33942733d57d72, type: 3}
   - {fileID: 21300000, guid: daf105034455aef459c604d588acff1b, type: 3}
@@ -120,6 +121,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: da1b6659b6d7d32499951bc29bb8d5dd, type: 3}
   - {fileID: 21300000, guid: 250568c90fd039c47a38df0b588bce13, type: 3}
   - {fileID: 21300000, guid: f6976e0ae5b023a4db20b6fe81698d7e, type: 3}
+  - {fileID: 21300000, guid: 9db1c86ae87716543a88c351d95dcb16, type: 3}
   - {fileID: 21300000, guid: f526ce7a0cf0e834f890cf03d9681268, type: 3}
   - {fileID: 21300000, guid: 8efc37aaf884e104db9ad24459cbe626, type: 3}
   - {fileID: 21300000, guid: b26b2baaf186f6b43856ab6a399d2fb0, type: 3}
@@ -175,12 +177,13 @@ SpriteAtlas:
   - fx_glowLine_Screen
   - img_Rank_03
   - gauge_01
+  - tri_01
   - btn_disable
   - Chest_Wood
   - icon_timmer
   - img_skill_cool_bg
   - icon_collect_1
-  - cat_03
+  - cat_02
   - gauge_exp_fg_2
   - rat_02
   - slot_item
@@ -199,7 +202,7 @@ SpriteAtlas:
   - btn_setting
   - btn_menu_05
   - bad1
-  - cat_02
+  - cat_11
   - gauge_bg
   - btn_menu_04
   - icon_goldMark
@@ -211,6 +214,7 @@ SpriteAtlas:
   - btn_start_d
   - piece_cat1
   - cat_09
+  - bg_inner_half_dark
   - rat_01
   - btn_post
   - piece_cat6
@@ -241,7 +245,7 @@ SpriteAtlas:
   - btn_bottom_menu_off
   - piece_cat9
   - gauge_timeOut_fg
-  - cat_04
+  - cat_03
   - gauge_exp_bg
   - cat_05
   - btn_start_n
