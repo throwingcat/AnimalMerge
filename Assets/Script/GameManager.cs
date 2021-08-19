@@ -258,7 +258,9 @@ public class GameManager : MonoBehaviour
 
         UIManager.Instance.LoadingScreen.SetActive(true);
         
-        yield return new WaitForSeconds(2f);
+        //모든 UI 정리
+        while(0 < SUIPanel.StackCount)
+            SUIPanel.CurrentPanel.Hide();
         
         GameCore.Initialize(true);
         if (isSinglePlay)
@@ -268,9 +270,9 @@ public class GameManager : MonoBehaviour
             AICore.SyncManager.SetTo(GameCore);
         }
         
-        UIManager.Instance.LoadingScreen.SetActive(false);
+        yield return new WaitForSeconds(2f);
         
-        yield break;
+        UIManager.Instance.LoadingScreen.SetActive(false);
     }
 
     private IEnumerator OnLeaveBattle()
