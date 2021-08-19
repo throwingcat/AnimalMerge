@@ -88,7 +88,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 4505e1a20c948784bbc7aae1fccc70c3, type: 3}
   - {fileID: 21300000, guid: 2d988bb2f2defb145b33942733d57d72, type: 3}
   - {fileID: 21300000, guid: daf105034455aef459c604d588acff1b, type: 3}
-  - {fileID: 21300000, guid: 7193071394e60fc44b523f0e09e81063, type: 3}
   - {fileID: 21300000, guid: eac45a64b2fca7f448fe0b082f7eb72d, type: 3}
   - {fileID: 21300000, guid: d80fdba47e9418a4e901ceaee62442ae, type: 3}
   - {fileID: 21300000, guid: 9c0a1ae4a7a69354fba2dde8c530744b, type: 3}
@@ -182,10 +181,9 @@ SpriteAtlas:
   - btn_disable
   - Chest_Wood
   - icon_timmer
-  - tri_01
   - img_skill_cool_bg
   - icon_collect_1
-  - cat_02
+  - cat_03
   - gauge_exp_fg_2
   - rat_02
   - slot_item
@@ -204,7 +202,7 @@ SpriteAtlas:
   - btn_setting
   - btn_menu_05
   - bad1
-  - cat_11
+  - cat_02
   - gauge_bg
   - btn_menu_04
   - icon_goldMark
@@ -247,7 +245,7 @@ SpriteAtlas:
   - btn_bottom_menu_off
   - piece_cat9
   - gauge_timeOut_fg
-  - cat_03
+  - cat_04
   - gauge_exp_bg
   - cat_05
   - btn_start_n

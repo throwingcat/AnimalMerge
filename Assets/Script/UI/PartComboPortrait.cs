@@ -10,13 +10,15 @@ public class PartComboPortrait : MonoBehaviour
     public GameObject Frame;
     public GameObject Root;
     public GameObject PortraitRoot;
-    
+
     public GameObject PlayingObject;
     public DOTweenAnimation[] Tweens;
 
     private bool isPlaying = false;
     private float Elapsed = 0f;
     private float Duration = 2f;
+
+    private System.Action _onFinish;
 
     public void Enter()
     {
@@ -27,10 +29,13 @@ public class PartComboPortrait : MonoBehaviour
     {
         Frame.SetActive(false);
     }
-    public void Play(int combo)
+
+    public void Play(int combo, System.Action onFinish)
     {
         if (combo < 3) return;
-        
+
+        _onFinish = onFinish;
+
         foreach (var t in Tweens)
         {
             t.DORewind();
@@ -104,6 +109,9 @@ public class PartComboPortrait : MonoBehaviour
     private void Exit()
     {
         if (isPlaying == false)
+        {
             Root.SetActive(false);
+            _onFinish?.Invoke();
+        }
     }
 }

@@ -258,6 +258,10 @@ public class GameManager : MonoBehaviour
 
         UIManager.Instance.LoadingScreen.SetActive(true);
         
+        //모든 UI 정리
+        while(0 < SUIPanel.StackCount)
+            SUIPanel.CurrentPanel.Hide();
+        
         yield return new WaitForSeconds(2f);
         
         GameCore.Initialize(true);
