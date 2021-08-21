@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Define;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,13 +6,13 @@ using Violet;
 
 public class PanelLobby : SUIPanel
 {
-    public LobbyPageBase PrevPage;
     public LobbyPageBase CurrentPage;
     public GameObject Matching;
     public List<LobbyPageBase> Page = new List<LobbyPageBase>();
 
     public ScrollRect PageScroll;
-    
+    public LobbyPageBase PrevPage;
+
     protected override void OnShow()
     {
         base.OnShow();
@@ -28,11 +27,11 @@ public class PanelLobby : SUIPanel
         });
         foreach (var page in Page)
             page.Root.SetActive(false);
-            
+
         CurrentPage = Page[2];
         CurrentPage.Root.SetActive(true);
         CurrentPage.OnShow();
-        
+
         RefreshScroll();
     }
 
@@ -46,7 +45,7 @@ public class PanelLobby : SUIPanel
         if (CurrentPage.Index == index) return;
 
         PrevPage = CurrentPage;
-        
+
         CurrentPage = Page[index];
         CurrentPage.Root.SetActive(true);
         CurrentPage.OnShow();
@@ -55,14 +54,11 @@ public class PanelLobby : SUIPanel
 
     public void RefreshScroll()
     {
-        float destination = CurrentPage.Index == 0 ? 0f : (float) CurrentPage.Index / (Page.Count - 1);
+        var destination = CurrentPage.Index == 0 ? 0f : (float) CurrentPage.Index / (Page.Count - 1);
         DOTween.To(() => PageScroll.horizontalNormalizedPosition,
-            x => PageScroll.horizontalNormalizedPosition = x,
-            destination, 0.3f).SetEase(Ease.OutBack)
-            .OnComplete(() =>
-            {
-                PrevPage.Root.SetActive(false);
-            })
+                x => PageScroll.horizontalNormalizedPosition = x,
+                destination, 0.3f).SetEase(Ease.OutBack)
+            .OnComplete(() => { PrevPage.Root.SetActive(false); })
             .Play();
     }
 
@@ -92,5 +88,6 @@ public class PanelLobby : SUIPanel
         OnMatchingCancel();
         GameManager.EnterBattle(true);
     }
+
     #endregion
 }

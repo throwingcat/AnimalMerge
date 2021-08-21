@@ -34,6 +34,7 @@ namespace Server
         public AnimalMergeServer()
         {
             DBList.Add(new DBPlayerInfo());
+            DBList.Add(new DBInventory());
             DBList.Add(new DBChestInventory());
             DBList.Add(new DBUnitInventory());
         }
@@ -172,15 +173,20 @@ namespace Server
                     {
                         if (reward.Type == eItemType.Card)
                             UnitInventory.Instance.GainEXP(reward.Key, reward.Amount);
+                        if (reward.Type == eItemType.Currency)
+                            Inventory.Instance.Update(reward.Key, reward.Amount);
                     }
 
                     UpdateDB<DBUnitInventory>(() =>
                     {
-                        PacketReward packetReward = new PacketReward();
-                        packetReward.PacketType = Packet.ePACKET_TYPE.CHEST_COMPLETE;
-                        packetReward.hash = packet.hash;
-                        packetReward.Rewards = rewards;
-                        SendPacket(packetReward);
+                        UpdateDB<DBInventory>(() =>
+                        {
+                            PacketReward packetReward = new PacketReward();
+                            packetReward.PacketType = Packet.ePACKET_TYPE.CHEST_COMPLETE;
+                            packetReward.hash = packet.hash;
+                            packetReward.Rewards = rewards;
+                            SendPacket(packetReward);    
+                        });
                     });
                 });
             });
@@ -276,11 +282,13 @@ namespace Server
             bool isSuccess = UnitInventory.Instance.LevelUp(unitKey);
             UpdateDB<DBUnitInventory>(() =>
             {
-                packet.hash.Add("success",isSuccess);
-                SendPacket(packet);                
+                packet.hash.Add("success", isSuccess);
+                SendPacket(packet);
             });
         }
+
         #endregion
+
         public void DownloadDB<T>(System.Action onFinish) where T : DBBase
         {
             var db = GetDB<T>();
