@@ -63,9 +63,15 @@ public class LobbyPageMain : LobbyPageBase
                 }
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Inventory.Instance.Update("coin", 1);
+        }
     }
-    
+
     #region 게임 시작
+
     public void OnClickGameStart()
     {
         Backend.Match.OnMatchInGameStart -= OnMatchInGameStart;
@@ -75,7 +81,7 @@ public class LobbyPageMain : LobbyPageBase
 
         if (SUIPanel.CurrentPanel is PanelLobby)
         {
-            PanelLobby panel  = SUIPanel.CurrentPanel as PanelLobby;
+            PanelLobby panel = SUIPanel.CurrentPanel as PanelLobby;
             panel.Matching.SetActive(true);
         }
     }
@@ -89,5 +95,6 @@ public class LobbyPageMain : LobbyPageBase
     {
         UIManager.Instance.Show<PanelAdventure>();
     }
+
     #endregion
 }

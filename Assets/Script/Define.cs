@@ -35,6 +35,7 @@ namespace Define
     {
         Currency,
         Card,
+        Hero,
     }
     
     public class EnvironmentValue

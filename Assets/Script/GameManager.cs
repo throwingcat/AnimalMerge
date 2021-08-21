@@ -196,6 +196,12 @@ public class GameManager : MonoBehaviour
         while (isDone == false)
             yield return null;
         isDone = false;
+        
+        Debug.Log("Download Inventory");
+        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBInventory>(() => { isDone = true; });
+        while (isDone == false)
+            yield return null;
+        isDone = false;
 
         Debug.Log("Download ChestInventory");
         Server.AnimalMergeServer.Instance.DownloadDB<Server.DBChestInventory>(() => { isDone = true; });
