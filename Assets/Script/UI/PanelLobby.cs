@@ -90,8 +90,7 @@ public class PanelLobby : SUIPanel
     public void MatchMakingAI()
     {
         OnMatchingCancel();
-        GameManager.Instance.isSinglePlay = true;
-        GameManager.Instance.ChangeGameState(eGAME_STATE.Battle);
+        GameManager.EnterBattle(true);
     }
     #endregion
 }

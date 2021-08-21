@@ -82,7 +82,12 @@ public class LobbyPageMain : LobbyPageBase
 
     private void OnMatchInGameStart()
     {
-        GameManager.Instance.ChangeGameState(eGAME_STATE.Battle);
+        GameManager.EnterBattle(false);
+    }
+
+    public void OnClickAdventure()
+    {
+        UIManager.Instance.Show<PanelAdventure>();
     }
     #endregion
 }
