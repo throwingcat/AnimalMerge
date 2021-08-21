@@ -93,6 +93,7 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIEffect.cs" />
      <Compile Include="Assets\Script\UI\IngameBadBlock.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIGradient.cs" />
+     <Compile Include="Assets\Script\Data\Hero.cs" />
      <Compile Include="Assets\Script\Data\Partial\SpawnPhase.cs" />
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutodestructWhenNoChildren.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\EditorCoroutine\EditorCoroutines.cs" />
@@ -140,12 +141,15 @@
      <Compile Include="Assets\Script\UI\PopupLogin.cs" />
      <Compile Include="Assets\Script\UI\PartLobbyChest.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\CSVGenerator\CSVDownloadConfig.cs" />
+     <Compile Include="Assets\Script\PlayerData\HeroInventory.cs" />
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDir.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUITouchable.cs" />
      <Compile Include="Assets\Script\UI\Lobby Page\LobbyPageCollection.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\EffectArea.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\Singleton.cs" />
+     <Compile Include="Assets\Script\Data\Stage.cs" />
      <Compile Include="Assets\Script\AICore.cs" />
+     <Compile Include="Assets\Script\Data\Chapter.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPressButton.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\ICSVDataBase.cs" />
      <Compile Include="Assets\Script\NetworkManager.cs" />
@@ -212,6 +216,10 @@
      <Compile Include="Assets\Script\Uitls\ScrollRectDisableDrag.cs" />
      <Compile Include="Assets\Script\UI\PanelLobby.cs" />
      <Compile Include="Assets\Script\PlayerData\ChestInventory.cs" />
+     <Compile Include="Assets\Script\UI\Adventure\CellStage.cs" />
+     <Compile Include="Assets\Script\UI\Adventure\PanelAdventure.cs" />
+     <Compile Include="Assets\Script\Data\Partial\Stage.cs" />
+     <Compile Include="Assets\Script\UI\Adventure\CellChapter.cs" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\SoftMask.cginc" />
      <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Glow.shader" />

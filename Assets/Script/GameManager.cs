@@ -23,7 +23,9 @@ public class GameManager : MonoBehaviour
     public string GUID = "";
 
     public bool isSinglePlay = true;
-
+    public bool isAdventure = false;
+    public string StageKey = "";
+    
     public PartBase PartSceneChange;
 
     public GameCore GameCore;
@@ -281,7 +283,6 @@ public class GameManager : MonoBehaviour
         {
             GameCore.Clear();
             AICore.Clear();
-            isSinglePlay = false;
         }
         else
         {
@@ -295,6 +296,10 @@ public class GameManager : MonoBehaviour
             NetworkManager.Instance.DisconnectMatchServer();
         }
 
+        isSinglePlay = false;
+        isAdventure = false;
+        StageKey = "";
+        
         SUIPanel.IgnoreBackPress = false;
         
         yield break;
@@ -444,5 +449,20 @@ public class GameManager : MonoBehaviour
             //Simply return true no matter what
             return true;
         }
+    }
+
+    
+    public static void EnterBattle(bool isSinglePlay)
+    {
+        Instance.isSinglePlay = true;
+        Instance.ChangeGameState(eGAME_STATE.Battle);
+    }
+
+    public static void EnterAdventure(string stageKey)
+    {
+        Instance.isSinglePlay = true;
+        Instance.isAdventure = true;
+        Instance.StageKey = stageKey;
+        Instance.ChangeGameState(eGAME_STATE.Battle);
     }
 }

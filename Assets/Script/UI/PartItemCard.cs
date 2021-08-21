@@ -34,8 +34,10 @@ public class PartItemCard : MonoBehaviour
                 SetTexutre(sheet.Texture);
                 SetName(sheet.Name.ToLocalization());
                 SetGroup(sheet.Type.ToLocalization());
-                Exp.gameObject.SetActive(false);
-                ExpGauge.gameObject.SetActive(false);
+                if (Exp != null)
+                    Exp.gameObject.SetActive(false);
+                if (ExpGauge != null)
+                    ExpGauge.gameObject.SetActive(false);
             }
                 break;
             case eItemType.Card:
@@ -59,7 +61,7 @@ public class PartItemCard : MonoBehaviour
         SetGrade(sheet.index);
 
         var need_exp = unit.GetCurrentLevelUpExp();
-        if(need_exp != -1)
+        if (need_exp != -1)
             SetExp(unit.GetCurrentLevelEXP(), need_exp);
         else
             SetMaxLevel();

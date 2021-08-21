@@ -1,4 +1,5 @@
 using Define;
+using SheetData;
 using UnityEngine;
 
 //Game Core와 동일한 동작을 하지만 불필요한 동작을 제거함
@@ -16,13 +17,25 @@ public class AICore : GameCore
         IsPlayer = isPlayer;
         Initialize();
 
-        MMR = PlayerInfo.Instance.RankScore;
+        //모험모드
+        if (GameManager.Instance.isAdventure)
+        {
+            var stage = GameManager.Instance.StageKey.ToTableData<Stage>();
+            MMR = stage.AI_MMR;
+        }
+
+        if (GameManager.Instance.isSinglePlay && GameManager.Instance.isAdventure == false)
+        {
+            MMR = PlayerInfo.Instance.RankScore;
+        }
+
         float mmr_ratio = Mathf.InverseLerp(EnvironmentValue.AI_INPUT_DELAY_LOW_MMR,
             EnvironmentValue.AI_INPUT_DELAY_HIGH_MMR, MMR);
 
         InputDelayDuration = Mathf.Lerp(EnvironmentValue.AI_INPUT_DELAY_MAX, EnvironmentValue.AI_INPUT_DELAY_MIN,
             mmr_ratio);
         InputDelayElapsed = InputDelayDuration;
+        
         gameObject.SetActive(true);
     }
 

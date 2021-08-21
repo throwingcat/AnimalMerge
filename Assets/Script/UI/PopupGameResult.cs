@@ -10,7 +10,6 @@ public class PopupGameResult : SUIPanel
 {
     public GameObject Victory;
     public GameObject Defeat;
-    public GameObject ExitButtonRoot;
     public GameObject RankScoreRoot;
     public Text RankScoreText;
     public Text AddRankScoreText;
@@ -19,7 +18,6 @@ public class PopupGameResult : SUIPanel
     {
         Victory.SetActive(false);
         Defeat.SetActive(false);
-        ExitButtonRoot.SetActive(false);
         RankScoreRoot.SetActive(false);
 
         StartCoroutine(Process(isWin, beforeScore));
@@ -42,10 +40,6 @@ public class PopupGameResult : SUIPanel
             score = x;
             RankScoreText.text = Utils.ParseComma(score);
         }, PlayerInfo.Instance.RankScore, 0.5f);
-        
-        yield return new WaitForSeconds(1f);
-        
-        ExitButtonRoot.SetActive(true);
     }
 
     public void OnClickExit()
