@@ -18,13 +18,13 @@ public class UnitBase : MonoBehaviour
     public GameObject VFXSpawn;
     public GameObject VFXMerge;
 
-    public string GUID;
+    public ulong GUID;
     public Unit Sheet;
     public UnitInventory.Unit Info;
 
     public eUnitType eUnitType = eUnitType.None;
     public eUnitDropState eUnitDropState = eUnitDropState.Ready;
-    private string _dropInvokeGUID = "";
+    private ulong _dropInvokeGUID;
 
     private Action<UnitBase, UnitBase> _collisionEvent;
 
@@ -43,7 +43,7 @@ public class UnitBase : MonoBehaviour
                 Exp = 0,
                 Level = 1,
             };
-        GUID = Guid.NewGuid().ToString();
+        GUID = GameManager.Guid.NewGuid();
         eUnitDropState = eUnitDropState.Ready;
 
         if (Rigidbody2D != null)

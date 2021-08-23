@@ -93,6 +93,15 @@ public class GameCore : MonoBehaviour
         }, delay);
 
         #endregion
+
+        #region VFX 풀링
+
+        ResourceManager.Instance.CreateUIVFXPool(Key.VFX_MERGE_ATTACK_TRAIL, 30);
+        ResourceManager.Instance.CreateUIVFXPool(Key.VFX_MERGE_ATTACK_BOMB, 30);
+        ResourceManager.Instance.CreateUIVFXPool(Key.VFX_MERGE_ATTACK_TRAIL_Red, 30);
+        ResourceManager.Instance.CreateUIVFXPool(Key.VFX_MERGE_ATTACK_BOMB_Red, 30);
+
+        #endregion
     }
 
     public virtual void Initialize(bool isPlayer)
@@ -674,7 +683,7 @@ public class GameCore : MonoBehaviour
     public int AttackBadBlockValue;
     public int AttackComboValue;
     public int Combo;
-    public List<string> IgnoreUnitGUID = new List<string>();
+    public List<ulong> IgnoreUnitGUID = new List<ulong>();
 
     public PassiveBase Passive;
     public ActiveBase Active;

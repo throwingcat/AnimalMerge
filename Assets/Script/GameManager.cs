@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using BackEnd;
 using Define;
 using UnityEngine;
@@ -345,11 +346,11 @@ public class GameManager : MonoBehaviour
 
     private static readonly List<DelayInvokeData> _delayInvokeList = new List<DelayInvokeData>();
 
-    public static string DelayInvoke(Action action, float t)
+    public static ulong DelayInvoke(Action action, float t)
     {
         var invoke = new DelayInvokeData
         {
-            GUID = Guid.NewGuid().ToString(),
+            GUID = Guid.NewGuid(),
             action = action,
             t = t,
             delta = 0f
@@ -359,7 +360,7 @@ public class GameManager : MonoBehaviour
         return invoke.GUID;
     }
 
-    public static void DelayInvokeCancel(string guid)
+    public static void DelayInvokeCancel(ulong guid)
     {
         for (var i = 0; i < _delayInvokeList.Count; i++)
             if (_delayInvokeList[i].GUID == guid)
@@ -373,7 +374,7 @@ public class GameManager : MonoBehaviour
     {
         public Action action;
         public float delta;
-        public string GUID = "";
+        public ulong GUID;
         public float t;
     }
 
@@ -470,5 +471,15 @@ public class GameManager : MonoBehaviour
         Instance.isAdventure = true;
         Instance.StageKey = stageKey;
         Instance.ChangeGameState(eGAME_STATE.Battle);
+    }
+
+    public class Guid
+    {
+        public static ulong Index;
+        
+        public static ulong NewGuid()
+        {
+            return Index++;
+        }
     }
 }

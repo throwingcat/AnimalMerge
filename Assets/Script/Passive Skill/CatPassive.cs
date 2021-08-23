@@ -33,8 +33,8 @@ public class CatPassive : PassiveBase
             var center = BadUnits[pick].transform.localPosition;
             var remove_range = 200f;
             var shake_range = 400f;
-            var remove_target = new List<string>();
-            var shake_target = new List<Tuple<string, Vector2>>();
+            var remove_target = new List<ulong>();
+            var shake_target = new List<Tuple<ulong, Vector2>>();
 
             foreach (var unit in BadUnits)
             {
@@ -42,7 +42,7 @@ public class CatPassive : PassiveBase
                 if (distance <= remove_range)
                     remove_target.Add(unit.GUID);
                 else if (distance <= shake_range)
-                    shake_target.Add(new Tuple<string, Vector2>(unit.GUID,
+                    shake_target.Add(new Tuple<ulong, Vector2>(unit.GUID,
                         (unit.transform.localPosition - center).normalized));
             }
 

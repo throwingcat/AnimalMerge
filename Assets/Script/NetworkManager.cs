@@ -372,7 +372,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
     #region 일반
 
     private List<PacketBase> _reservedPacket = new List<PacketBase>();
-    private Dictionary<string, Action<PacketBase>> _waitingPacket = new Dictionary<string, Action<PacketBase>>();
+    private Dictionary<ulong, Action<PacketBase>> _waitingPacket = new Dictionary<ulong, Action<PacketBase>>();
 
     public void Request(PacketBase packet, Action<PacketBase> onReceive)
     {
@@ -388,7 +388,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
         if (isContains)
             return;
-        string packetGUID = Guid.NewGuid().ToString();
+        ulong packetGUID = GameManager.Guid.NewGuid();
 
         packet.hash.Add("player_guid", GameManager.Instance.GUID);
         packet.hash.Add("packet_guid", packetGUID);
@@ -415,7 +415,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
         PacketBase packet = MessagePackSerializer.Deserialize<Packet.PacketBase>(bytes, lz4Options);
 
-        string guid = packet.hash["packet_guid"].ToString();
+        ulong guid = (ulong) packet.hash["packet_guid"];
 
         if (_waitingPacket.ContainsKey(guid))
         {
