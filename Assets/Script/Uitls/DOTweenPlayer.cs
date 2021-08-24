@@ -25,12 +25,17 @@ public class DOTweenPlayer : MonoBehaviour
     {
         foreach (var tween in Tweens)
         {
-            tween.enabled = isEnable;
             if (isEnable)
             {
                 tween.DORewind();
                 tween.DOPlay();
             }
+            else
+            {
+                tween.DOComplete();
+                tween.DORewind();
+            }
+            tween.enabled = isEnable;
         }
     }
 }
