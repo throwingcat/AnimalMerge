@@ -71,9 +71,9 @@ public class PartComboPortrait : MonoBehaviour
         }
 
         PlayingObject = pool.Get();
-
-        PlayingObject.transform.SetParent(Root.transform);
-        PlayingObject.transform.LocalReset();
+        var rt = PlayingObject.GetComponent<RectTransform>();
+        rt.SetParent(Root.transform);
+        rt.LocalReset();
         PlayingObject.gameObject.SetActive(true);
 
         isPlaying = true;
