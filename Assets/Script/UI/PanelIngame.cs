@@ -17,7 +17,7 @@ public class PanelIngame : SUIPanel
     public RectTransform LayoutLeft;
     public RectTransform LayoutRight;
     public RectTransform LayoutTop;
-    
+
     public GameObject WaitPlayer;
     public GameObject CountDownRoot;
     public List<GameObject> CountDown;
@@ -62,6 +62,16 @@ public class PanelIngame : SUIPanel
     protected override void OnShow()
     {
         base.OnShow();
+        
+        EnterPortraitTween.gameObject.SetActive(true);
+    }
+
+    protected override void OnHide()
+    {
+        base.OnHide();
+        
+        EnterPortraitTween.SetEnable(false);
+        PlayPortraitTween.SetEnable(false);
     }
 
     public void PlayEnterAnimation()
@@ -75,12 +85,14 @@ public class PanelIngame : SUIPanel
         EnterPortraitTween.SetEnable(true);
         yield return new WaitForSeconds(2f);
         PlayPortraitTween.SetEnable(true);
-        
+
         LayoutLeft.DOAnchorPos(Vector2.zero, 1f);
         LayoutRight.DOAnchorPos(Vector2.zero, 1f);
         LayoutTop.DOAnchorPos(Vector2.zero, 1f);
+
+        EnterPortraitTween.gameObject.SetActive(false);
     }
-    
+
     public void RefreshScore(int before, int after)
     {
         var score = before;
