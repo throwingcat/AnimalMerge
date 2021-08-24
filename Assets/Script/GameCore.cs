@@ -131,7 +131,7 @@ public class GameCore : MonoBehaviour
         PanelIngame.SetActiveCountDown(false);
 
         RefreshBadBlockUI();
-        IngameComboPortraitCanvas.Initialize();
+        ingameDynamicCanvas.Initialize();
 
         //매치 릴레이 세팅
         if (GameManager.Instance.isSinglePlay == false)
@@ -331,7 +331,7 @@ public class GameCore : MonoBehaviour
             //콤보 출력
             PanelIngame.PlayCombo(Canvas.GetComponent<RectTransform>(), a.transform.position, Combo);
             //콤보 초상화 출력
-            IngameComboPortraitCanvas.PlayComboPortrait(Combo, true);
+            ingameDynamicCanvas.PlayComboPortrait(Combo, true);
         }
 
         //유닛 생성 페이즈 변경 확인
@@ -575,7 +575,7 @@ public class GameCore : MonoBehaviour
 
     public PanelIngame PanelIngame;
 
-    public IngameComboPortraitCanvas IngameComboPortraitCanvas;
+    public IngameDynamicCanvas ingameDynamicCanvas;
 
     #endregion
 
@@ -875,7 +875,7 @@ public class GameCore : MonoBehaviour
     {
         if (combo == 0) return;
         if (IsPlayer)
-            IngameComboPortraitCanvas.PlayComboPortrait(combo, false);
+            ingameDynamicCanvas.PlayComboPortrait(combo, false);
     }
 
     private void RefreshBadBlockUI()
@@ -929,12 +929,18 @@ public class GameCore : MonoBehaviour
     #endregion
 
     private IEnumerator GameStartProcess()
-    {
+    {        
         if (IsPlayer)
         {
             PanelIngame.SetActiveWaitPlayer(false);
+            yield return new WaitForSeconds(1f);
+            if (IsPlayer)
+                PanelIngame.PlayEnterAnimation();
+            yield return new WaitForSeconds(1f);
             PanelIngame.SetActiveCountDown(true);
         }
+        else
+            yield return new WaitForSeconds(2f);
 
         float duration = (float) (GameStartTime - GameManager.GetTime()).TotalSeconds;
         float elapsed = 0f;
@@ -981,7 +987,7 @@ public class GameCore : MonoBehaviour
         {
             EnemyReadyTime = packet.ReadyTime;
             GameStartTime = MyReadyTime < EnemyReadyTime ? EnemyReadyTime : MyReadyTime;
-            GameStartTime = GameStartTime.AddSeconds(3);
+            GameStartTime = GameStartTime.AddSeconds(6);
 
             StartCoroutine(GameStartProcess());
 
@@ -1091,7 +1097,7 @@ public class GameCore : MonoBehaviour
             EnemyScreen.gameObject.SetActive(false);
             SetEnableDeadline(false);
             PanelIngame.Clear();
-            IngameComboPortraitCanvas.Exit();
+            ingameDynamicCanvas.Exit();
             //이벤트 초기화
             SyncManager.OnSyncCapture = null;
             SyncManager.OnSyncReceive = null;

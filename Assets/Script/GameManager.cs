@@ -461,7 +461,7 @@ public class GameManager : MonoBehaviour
     
     public static void EnterBattle(bool isSinglePlay)
     {
-        Instance.isSinglePlay = true;
+        Instance.isSinglePlay = isSinglePlay;
         Instance.ChangeGameState(eGAME_STATE.Battle);
     }
 

@@ -1,36 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
-public class IngameComboPortraitCanvas : MonoBehaviour
+public class IngameDynamicCanvas : MonoBehaviour
 {
     public GameObject Camera;
     public GameObject Root;
-    public PartComboPortrait PlayerComboPortrait;
-    public PartComboPortrait EnemyComboPortrait;
+    public PartComboPortrait PlayerPortrait;
+    public PartComboPortrait EnemyPortrait;
     public GameObject PlayerSide;
     public GameObject EnemySide;
-
+    
     public void Initialize()
     {
         Camera.SetActive(true);
         Root.SetActive(true);
         
-        PlayerComboPortrait.gameObject.SetActive(true);
-        EnemyComboPortrait.gameObject.SetActive(true);
+        PlayerPortrait.gameObject.SetActive(true);
+        EnemyPortrait.gameObject.SetActive(true);
         PlayerSide.SetActive(false);
         EnemySide.SetActive(false);
         
-        PlayerComboPortrait.Enter();
-        EnemyComboPortrait.Enter();
-    } 
-    
+        PlayerPortrait.Enter();
+        EnemyPortrait.Enter();
+    }
+
     public void PlayComboPortrait(int combo, bool isPlayer)
     {
         if (combo < 3) return;
         if (isPlayer)
         {
-            PlayerComboPortrait.Play(combo, () =>
+            PlayerPortrait.Play(combo, () =>
             {
                 PlayerSide.SetActive(false);
             });
@@ -39,7 +40,7 @@ public class IngameComboPortraitCanvas : MonoBehaviour
         }
         else
         {
-            EnemyComboPortrait.Play(combo, () =>
+            EnemyPortrait.Play(combo, () =>
             {
                 EnemySide.SetActive(false);
             });
@@ -50,12 +51,12 @@ public class IngameComboPortraitCanvas : MonoBehaviour
 
     public void Exit()
     {
-        PlayerComboPortrait.gameObject.SetActive(false);
-        EnemyComboPortrait.gameObject.SetActive(false);
+        PlayerPortrait.gameObject.SetActive(false);
+        EnemyPortrait.gameObject.SetActive(false);
         PlayerSide.SetActive(false);
         EnemySide.SetActive(false);
-        PlayerComboPortrait.Leave();
-        EnemyComboPortrait.Leave();
+        PlayerPortrait.Leave();
+        EnemyPortrait.Leave();
         Camera.SetActive(false);
         Root.SetActive(false);
     }

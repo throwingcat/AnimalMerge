@@ -53,7 +53,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Submodules\Violet\Violet\Manager\UIManager.cs" />
-     <Compile Include="Assets\Script\UI\VFXCombo.cs" />
+     <Compile Include="Assets\Script\UI\Ingame\VFXCombo.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\DOTweenProShortcuts.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\MonoObjectPool.cs" />
      <Compile Include="Assets\Script\Data\Item.cs" />
@@ -91,7 +91,7 @@
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutoRotate.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ToneMode.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIEffect.cs" />
-     <Compile Include="Assets\Script\UI\IngameBadBlock.cs" />
+     <Compile Include="Assets\Script\UI\Ingame\IngameBadBlock.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIGradient.cs" />
      <Compile Include="Assets\Script\Data\Hero.cs" />
      <Compile Include="Assets\Script\Data\Partial\SpawnPhase.cs" />
@@ -182,7 +182,7 @@
      <Compile Include="Assets\Script\UI\SlicedFilledImage.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleUI.cs" />
      <Compile Include="Assets\Script\Passive Skill\CatPassive.cs" />
-     <Compile Include="Assets\Script\UI\IngameComboPortraitCanvas.cs" />
+     <Compile Include="Assets\Script\UI\Ingame\IngameDynamicCanvas.cs" />
      <Compile Include="Assets\Script\Data\Partial\Unit.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\JoyStick\Script\JoyStickReceiver.cs" />
      <Compile Include="Assets\Script\UI\PopupChestUnlock.cs" />
@@ -222,6 +222,8 @@
      <Compile Include="Assets\Script\Uitls\ScrollRectDisableDrag.cs" />
      <Compile Include="Assets\Script\UI\PanelLobby.cs" />
      <Compile Include="Assets\Script\PlayerData\ChestInventory.cs" />
+     <Compile Include="Assets\Script\UI\Ingame\IngamePlayerPortrait.cs" />
+     <Compile Include="Assets\Script\Uitls\DOTweenPlayer.cs" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\SoftMask.cginc" />
      <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Glow.shader" />
