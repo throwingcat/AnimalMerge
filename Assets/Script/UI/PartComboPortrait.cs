@@ -7,11 +7,11 @@ using Violet;
 
 public class PartComboPortrait : MonoBehaviour
 {
-    public GameObject Frame;
+    public RectTransform RectTransform;
     public GameObject Root;
-    public GameObject PortraitRoot;
 
     public GameObject PlayingObject;
+    
     public DOTweenAnimation[] Tweens;
 
     private bool isPlaying = false;
@@ -22,12 +22,10 @@ public class PartComboPortrait : MonoBehaviour
 
     public void Enter()
     {
-        Frame.SetActive(true);
     }
 
     public void Leave()
     {
-        Frame.SetActive(false);
     }
 
     public void Play(int combo, System.Action onFinish)
@@ -73,9 +71,9 @@ public class PartComboPortrait : MonoBehaviour
         }
 
         PlayingObject = pool.Get();
-
-        PlayingObject.transform.SetParent(PortraitRoot.transform);
-        PlayingObject.transform.LocalReset();
+        var rt = PlayingObject.GetComponent<RectTransform>();
+        rt.SetParent(Root.transform);
+        rt.LocalReset();
         PlayingObject.gameObject.SetActive(true);
 
         isPlaying = true;

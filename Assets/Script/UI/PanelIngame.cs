@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using SheetData;
@@ -9,6 +10,14 @@ using Violet.Audio;
 
 public class PanelIngame : SUIPanel
 {
+    public DOTweenPlayer EnterPortraitTween;
+    public DOTweenPlayer PlayPortraitTween;
+    public IngamePlayerPortrait PlayerPortrait;
+    public IngamePlayerPortrait EnemyPortrait;
+    public RectTransform LayoutLeft;
+    public RectTransform LayoutRight;
+    public RectTransform LayoutTop;
+    
     public GameObject WaitPlayer;
     public GameObject CountDownRoot;
     public List<GameObject> CountDown;
@@ -55,6 +64,23 @@ public class PanelIngame : SUIPanel
         base.OnShow();
     }
 
+    public void PlayEnterAnimation()
+    {
+        StartCoroutine(PlayEnterAnimationProcess());
+    }
+
+    private IEnumerator PlayEnterAnimationProcess()
+    {
+        yield return new WaitForSeconds(3f);
+        EnterPortraitTween.SetEnable(true);
+        yield return new WaitForSeconds(2f);
+        PlayPortraitTween.SetEnable(true);
+        
+        LayoutLeft.DOAnchorPos(Vector2.zero, 1f);
+        LayoutRight.DOAnchorPos(Vector2.zero, 1f);
+        LayoutTop.DOAnchorPos(Vector2.zero, 1f);
+    }
+    
     public void RefreshScore(int before, int after)
     {
         var score = before;
