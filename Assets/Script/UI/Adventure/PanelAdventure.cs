@@ -92,7 +92,8 @@ public class PanelAdventure : SUIPanel
         for (var i = 0; i < stages.Count; i++)
         {
             _stages[i].Set(stages[i], OnClickStage);
-            _stages[i].SetClear(false);
+            bool isClear = PlayerTracker.Instance.Contains(stages[i].key);
+            _stages[i].SetClear(isClear);
             _stages[i].gameObject.SetActive(true);
         }
 

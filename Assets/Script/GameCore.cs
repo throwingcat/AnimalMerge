@@ -284,6 +284,8 @@ public class GameCore : MonoBehaviour
 
     private IEnumerator MergeProcess(UnitBase a, UnitBase b)
     {
+        OnBeforeMergeEvent();
+        
         var cached_guid_a = a.GUID;
         var cached_guid_b = b.GUID;
         var cached_pos_a = a.transform.position;
@@ -304,9 +306,11 @@ public class GameCore : MonoBehaviour
         b.transform.DOLocalRotate(a.transform.localRotation.eulerAngles, 0.15f).SetEase(Ease.OutCubic).Play();
         yield return new WaitForSeconds(0.15f);
 
-        //콤보 출력
+        //콤보 상승
         Combo++;
-        OnMergeEvent(a, b, Combo);
+        
+        //콤보 출력
+        OnAfterMergeEvent(a, b, Combo);
 
         var pos = new Vector3(
             (a.transform.localPosition.x + b.transform.localPosition.x) * 0.5f,
@@ -322,7 +326,15 @@ public class GameCore : MonoBehaviour
         IgnoreUnitGUID.Remove(cached_guid_b);
     }
 
-    private void OnMergeEvent(UnitBase a, UnitBase b, int Combo)
+    private void OnBeforeMergeEvent()
+    {
+        //방해블록 타이머 1초 감소
+        ReduceBadBlockTimer(EnvironmentValue.RECOVERY_BAD_BLOCK_TIMER);
+        //게임오버 타이머 1초 감소
+        ReduceGameOverTimer(EnvironmentValue.RECOVERY_GAMEOVER_TIMER);
+    }
+
+    private void OnAfterMergeEvent(UnitBase a, UnitBase b, int Combo)
     {
         _comboDelta = EnvironmentValue.COMBO_DURATION;
 
@@ -338,10 +350,6 @@ public class GameCore : MonoBehaviour
         if (SpawnPhase.GrowCondition <= a.Sheet.index)
             SpawnPhase = SpawnPhase.GetNextPhase();
 
-        //패시브 스킬 발동
-        if (3 <= Combo)
-            Passive?.Run(OnCompletePassiveSkill);
-
         AttackComboValue = Combo;
 
         //스코어 갱신
@@ -353,6 +361,10 @@ public class GameCore : MonoBehaviour
 
         var remove_bad_units = new List<UnitBase>();
 
+        //패시브 스킬 발동
+        if (3 <= Combo)
+            Passive?.Run(OnCompletePassiveSkill);
+        
         //주변 방해블록 삭제
         foreach (var unit in BadUnits)
         {
@@ -421,11 +433,6 @@ public class GameCore : MonoBehaviour
 
             AttackBadBlockValue += badBlock;
         }
-
-        //방해블록 타이머 1초 감소
-        ReduceBadBlockTimer(1f);
-        //게임오버 타이머 1초 감소
-        ReduceGameOverTimer(1f);
     }
 
     public void RemoveBadBlock(UnitBase unit)
@@ -929,7 +936,7 @@ public class GameCore : MonoBehaviour
     #endregion
 
     private IEnumerator GameStartProcess()
-    {        
+    {
         if (IsPlayer)
         {
             PanelIngame.SetActiveWaitPlayer(false);
@@ -1043,9 +1050,32 @@ public class GameCore : MonoBehaviour
             packet.PacketType = ePACKET_TYPE.REPORT_GAME_RESULT;
             packet.hash.Add("is_win", isWin);
 
+            //모험모드 스테이지 데이터
+            if (GameManager.Instance.isAdventure)
+                packet.hash.Add("stage", GameManager.Instance.StageKey);
+
             var beforeScore = PlayerInfo.Instance.RankScore;
             NetworkManager.Instance.Request(packet, res =>
             {
+                if (res.hash.ContainsKey("first_clear"))
+                {
+                    var isFirstClear = (bool)res.hash["first_clear"];
+                    if (isFirstClear)
+                    {
+                        var stage = (string) res.hash["stage"];
+                        var heroes = TableManager.Instance.GetTable<Hero>();
+                        foreach (var row in heroes)
+                        {
+                            var hero = row.Value as Hero;
+                            if (hero.Unlock == stage)
+                            {
+                                GameManager.Instance.isUnlockHero = true;
+                                break;
+                            }
+                        }
+                    }
+
+                }
                 var popup = UIManager.Instance.ShowPopup<PopupGameResult>();
                 popup.SetResult(isWin, beforeScore);
             });

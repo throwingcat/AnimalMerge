@@ -13,8 +13,11 @@ public class LobbyPageCollection : LobbyPageBase
     public GameObject EnableChangeGroupButtonLeft;
     public GameObject EnableChangeGroupButtonRight;
 
-    private List<UnitGroup> _groups = new List<UnitGroup>();
-    private UnitGroup _currentGroup;
+    public GameObject Lock;
+    public Text LockMessage;
+    
+    private List<Hero> _heroes = new List<Hero>();
+    private Hero _currentHero;
 
     private bool _isFirstGroup = false;
     private bool _isLastGroup = false;
@@ -23,16 +26,16 @@ public class LobbyPageCollection : LobbyPageBase
     {
         base.OnShow();
 
-        _groups.Clear();
+        _heroes.Clear();
 
-        var sheet = TableManager.Instance.GetTable<UnitGroup>();
+        var sheet = TableManager.Instance.GetTable<Hero>();
         foreach (var row in sheet)
         {
-            var group = row.Value as UnitGroup;
-            _groups.Add(group);
+            var group = row.Value as Hero;
+            _heroes.Add(group);
         }
 
-        _groups.Sort((a, b) =>
+        _heroes.Sort((a, b) =>
         {
             if (a.index < b.index) return -1;
             if (a.index > b.index) return 1;
@@ -54,23 +57,23 @@ public class LobbyPageCollection : LobbyPageBase
 
     private void MoveGroupIndex(int direction)
     {
-        var index = _currentGroup.index + direction;
-        index = Mathf.Clamp(index, 0, _groups.Count);
+        var index = _currentHero.index + direction;
+        index = Mathf.Clamp(index, 0, _heroes.Count);
 
         SetGroup(index);
     }
 
     private void SetGroup(int index)
     {
-        if (index < 0 || _groups.Count <= index) return;
+        if (index < 0 || _heroes.Count <= index) return;
 
-        _currentGroup = _groups[index];
+        _currentHero = _heroes[index];
 
         if (index == 0)
             _isFirstGroup = true;
         else
             _isFirstGroup = false;
-        if (index == _groups.Count - 1)
+        if (index == _heroes.Count - 1)
             _isLastGroup = true;
         else
             _isLastGroup = false;
@@ -83,7 +86,7 @@ public class LobbyPageCollection : LobbyPageBase
 
     private void RefreshGroupList()
     {
-        var group = UnitInventory.Instance.GetGroup(_currentGroup.key);
+        var group = UnitInventory.Instance.GetGroup(_currentHero.UnitGroupKey);
 
         int index = 0;
         foreach (var unit in group)
@@ -91,6 +94,18 @@ public class LobbyPageCollection : LobbyPageBase
             PartItemCards[index].Set(unit);
             PartItemCards[index].SetClickEvent(OnClickUnit);
             index++;
+        }
+
+        if (_currentHero.Unlock.IsNullOrEmpty() == false && PlayerTracker.Instance.Contains(_currentHero.Unlock) == false)
+        {
+            var stage = _currentHero.Unlock.ToTableData<Stage>();
+            var chapter = stage.Chapter.ToTableData<Chapter>();
+            Lock.SetActive(true);
+            LockMessage.text = string.Format("HeroUnlockStageFormat".ToLocalization(), chapter.name.ToLocalization());
+        }
+        else
+        {
+            Lock.SetActive(false);
         }
     }
 

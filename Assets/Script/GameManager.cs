@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     public bool isSinglePlay = true;
     public bool isAdventure = false;
     public string StageKey = "";
-    
+    public bool isUnlockHero = false;
     public PartBase PartSceneChange;
 
     public GameCore GameCore;
@@ -215,6 +215,12 @@ public class GameManager : MonoBehaviour
         while (isDone == false)
             yield return null;
         isDone = false;
+        
+        Debug.Log("Download PlayerTracker");
+        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBPlayerTracker>(() => { isDone = true; });
+        while (isDone == false)
+            yield return null;
+        isDone = false;
     }
 
     public void ChangeGameState(eGAME_STATE state)
@@ -305,7 +311,6 @@ public class GameManager : MonoBehaviour
 
         isSinglePlay = false;
         isAdventure = false;
-        StageKey = "";
         
         SUIPanel.IgnoreBackPress = false;
         
@@ -470,6 +475,7 @@ public class GameManager : MonoBehaviour
         Instance.isSinglePlay = true;
         Instance.isAdventure = true;
         Instance.StageKey = stageKey;
+        Instance.isUnlockHero = false;
         Instance.ChangeGameState(eGAME_STATE.Battle);
     }
 

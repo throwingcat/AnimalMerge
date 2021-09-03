@@ -29,11 +29,12 @@ public class UnitBase : MonoBehaviour
     private Action<UnitBase, UnitBase> _collisionEvent;
 
     private GameCore ParentCore;
-    public virtual UnitBase OnSpawn(string unit_key, Action<UnitBase, UnitBase> collisionEvent , GameCore Core)
+
+    public virtual UnitBase OnSpawn(string unit_key, Action<UnitBase, UnitBase> collisionEvent, GameCore Core)
     {
         _collisionEvent = collisionEvent;
         ParentCore = Core;
-        
+
         Sheet = TableManager.Instance.GetData<Unit>(unit_key);
         Info = UnitInventory.Instance.GetUnit(unit_key);
         if (Info == null)
@@ -54,7 +55,7 @@ public class UnitBase : MonoBehaviour
         Texture.sprite = GetSprite(unit_key);
         transform.localScale = Vector3.zero;
 
-        if (Core != null &&  Core.IsPlayer)
+        if (Core != null && Core.IsPlayer)
         {
             if (Sheet.isBadBlock)
             {
@@ -63,6 +64,7 @@ public class UnitBase : MonoBehaviour
             }
             else if (VFXSpawn != null)
                 VFXSpawn.SetActive(false);
+
             if (VFXMerge != null)
                 VFXMerge.SetActive(false);
         }
@@ -94,18 +96,18 @@ public class UnitBase : MonoBehaviour
         return this;
     }
 
-    public void Drop(bool isAddTorque = false)
+    public void Drop(bool isAddForce = false)
     {
         eUnitDropState = eUnitDropState.Falling;
         if (Rigidbody2D != null)
-            Rigidbody2D.gravityScale = 1;
+            Rigidbody2D.gravityScale = 2;
 
         if (Collider2D != null)
             Collider2D.enabled = true;
 
         SetActivePhysics(true);
 
-        if(isAddTorque)
+        if (isAddForce)
             AddTorque(0.3f);
 
         _dropInvokeGUID = GameManager.DelayInvoke(() =>
@@ -113,6 +115,11 @@ public class UnitBase : MonoBehaviour
             if (eUnitDropState == eUnitDropState.Falling)
                 eUnitDropState = eUnitDropState.Complete;
         }, 2f);
+    }
+
+    public void AddForce(float power)
+    {
+        Rigidbody2D.AddRelativeForce(new Vector2(0f, power));
     }
 
     public void AddTorque(float power)

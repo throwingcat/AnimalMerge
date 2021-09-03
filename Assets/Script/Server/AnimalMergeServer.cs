@@ -37,6 +37,7 @@ namespace Server
             DBList.Add(new DBInventory());
             DBList.Add(new DBChestInventory());
             DBList.Add(new DBUnitInventory());
+            DBList.Add(new DBPlayerTracker());
         }
 
         public void OnUpdate()
@@ -88,7 +89,34 @@ namespace Server
             //승리 처리
             else
             {
-                BattleWinProcess(() => { SendPacket(packet); });
+                BattleWinProcess(() =>
+                {
+                    //스테이지 플레이 정보
+                    if (packet.hash.ContainsKey("stage"))
+                    {
+                        var stage = (string) packet.hash["stage"];
+                        
+                        if (PlayerTracker.Instance.Contains(stage) == false)
+                        {
+                            packet.hash.Add("first_clear", true);
+                            PlayerTracker.Instance.Set(stage, 1);
+                            UpdateDB<DBPlayerTracker>(() =>
+                            {
+                                
+                                SendPacket(packet);
+                            });
+                        }
+                        else
+                        {
+                            packet.hash.Add("first_clear", false);
+                            SendPacket(packet);
+                        }
+                    }
+                    else
+                    {
+                        SendPacket(packet);
+                    }
+                });
             }
         }
 
@@ -185,7 +213,7 @@ namespace Server
                             packetReward.PacketType = Packet.ePACKET_TYPE.CHEST_COMPLETE;
                             packetReward.hash = packet.hash;
                             packetReward.Rewards = rewards;
-                            SendPacket(packetReward);    
+                            SendPacket(packetReward);
                         });
                     });
                 });
