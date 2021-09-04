@@ -89,17 +89,29 @@ public class PanelAdventure : SUIPanel
         foreach (var cell in _stages)
             cell.gameObject.SetActive(false);
 
+        int lastIndex = 0;
         for (var i = 0; i < stages.Count; i++)
         {
             _stages[i].Set(stages[i], OnClickStage);
             bool isClear = PlayerTracker.Instance.Contains(stages[i].key);
-            _stages[i].SetClear(isClear);
+            bool isLock = stages[i].UnlockCondition.IsNullOrEmpty() ? false : PlayerTracker.Instance.Contains(stages[i].UnlockCondition) == false;
+            if (isLock)
+                _stages[i].SetState(CellStage.eState.Lock);
+            else
+            {
+                if (isClear)
+                    _stages[i].SetState(CellStage.eState.Clear);
+                else
+                    _stages[i].SetState(CellStage.eState.Unlock);
+                lastIndex = i;
+            }
+
             _stages[i].gameObject.SetActive(true);
         }
 
-        ChangeStage(0);
-
-        StageScrollView.content.anchoredPosition = Vector3.zero;
+        ChangeStage(lastIndex);
+        float t = lastIndex / (float) stages.Count;
+        StageScrollView.content.anchoredPosition = new Vector2(0, StageScrollView.content.rect.height * t);
     }
 
     private void MoveChapter(int index)

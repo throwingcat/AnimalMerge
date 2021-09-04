@@ -8,6 +8,8 @@ namespace SheetData
 
 	public int Index { get; set; }
 
+	public string UnlockCondition { get; set; }
+
 	public int AI_MMR { get; set; }
 
 	public string Reward1 { get; set; }

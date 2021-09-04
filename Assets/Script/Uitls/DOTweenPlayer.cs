@@ -28,7 +28,7 @@ public class DOTweenPlayer : MonoBehaviour
             if (isEnable)
             {
                 tween.DORewind();
-                tween.DOPlay();
+                tween.DORestart();
             }
             else
             {
@@ -36,6 +36,15 @@ public class DOTweenPlayer : MonoBehaviour
                 tween.DORewind();
             }
             tween.enabled = isEnable;
+        }
+    }
+
+    public void PlayBackward()
+    {
+        foreach (var tween in Tweens)
+        {
+            tween.DOComplete();
+            tween.DOPlayBackwards();
         }
     }
 }
