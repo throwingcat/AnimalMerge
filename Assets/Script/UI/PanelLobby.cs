@@ -33,6 +33,13 @@ public class PanelLobby : SUIPanel
         CurrentPage.OnShow();
 
         RefreshScroll();
+
+        //스테이지 최초 클리어
+        if (GameManager.Instance.isUnlockHero)
+        {
+            GameManager.Instance.isUnlockHero = false;
+            UIManager.Instance.ShowPopup<PopupHeroUnlock>();
+        }
     }
 
     private void Update()

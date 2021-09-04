@@ -51,7 +51,9 @@ namespace Define
         public static float SYNC_CAPTURE_DELAY = 1f;
 
         public static float DAMAGE_PER_SECOND = 0.05f;
-        
+
+        public static float RECOVERY_BAD_BLOCK_TIMER = 1f;
+        public static float RECOVERY_GAMEOVER_TIMER = 1f;
         #region BadBlock
         public static float BAD_BLOCK_TIMER = 5f;
         public static int BAD_BLOCK_HORIZONTAL_MAX_COUNT = 6;

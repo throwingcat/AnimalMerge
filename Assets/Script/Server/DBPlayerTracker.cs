@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using BackEnd;
 using LitJson;
 using Newtonsoft.Json;
@@ -6,16 +8,17 @@ using UnityEngine;
 
 namespace Server
 {
-    public class DBInventory : DBBase
+    public class DBPlayerTracker : DBBase
     {
         public override string DB_KEY()
         {
-            return "inventory";
+            return "player_tracker";
         }
 
         public override void DoUpdate()
         {
-            var json = JsonConvert.SerializeObject(Inventory.Instance.Items);
+            base.DoUpdate();
+            var json = JsonConvert.SerializeObject(PlayerTracker.Instance.Tracker);
             var param = new Param();
             param.Add("Json", json);
 
@@ -35,7 +38,7 @@ namespace Server
 
             isReservedUpdate = false;
         }
-
+        
         public override void Download(Action onFinishDownload)
         {
             SendQueue.Enqueue(Backend.GameData.GetMyData, DB_KEY(),
@@ -58,7 +61,7 @@ namespace Server
                                 var inDate = row["inDate"]["S"].ToString();
                                 var json = row["Json"]["S"].ToString();
                                 InDate = inDate;
-                                Inventory.Instance.Update(json);
+                                PlayerTracker.Instance.OnUpdate(json);
                             }
                         }
                     }

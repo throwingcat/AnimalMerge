@@ -102,6 +102,7 @@
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Spawn System\CFX_SpawnSystem.cs" />
      <Compile Include="Assets\Script\UI\Lobby Page\LobbyPageMain.cs" />
      <Compile Include="Assets\Script\UI\PopupUnitInfo.cs" />
+     <Compile Include="Assets\Script\Server\DBPlayerTracker.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIButton.cs" />
      <Compile Include="Assets\Script\Data\SpawnPhase.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIFlow.cs" />
@@ -133,6 +134,7 @@
      <Compile Include="Assets\Script\PlayerData\UnitInventory.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModulePhysics2D.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
+     <Compile Include="Assets\Script\PlayerData\PlayerTracker.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\DOTweenTk2d.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIDragRect.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Manager\ResourceManager.cs" />
@@ -163,6 +165,7 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\MaterialReplacements.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\FXController.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIToggle.cs" />
+     <Compile Include="Assets\Script\UI\Ingame\IngamePlayerPortrait.cs" />
      <Compile Include="Assets\Script\Data\EnvironmentValueSheet.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModulePhysics.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPanel.cs" />
@@ -200,6 +203,7 @@
      <Compile Include="Assets\Submodules\Violet\Violet\Manager\TableManager.cs" />
      <Compile Include="Assets\Script\Packet\PacketBase.cs" />
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutoDestructShuriken.cs" />
+     <Compile Include="Assets\Script\Uitls\DOTweenPlayer.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIDissolve.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\UI\CanvasLayerTag.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleAudio.cs" />
@@ -222,8 +226,7 @@
      <Compile Include="Assets\Script\Uitls\ScrollRectDisableDrag.cs" />
      <Compile Include="Assets\Script\UI\PanelLobby.cs" />
      <Compile Include="Assets\Script\PlayerData\ChestInventory.cs" />
-     <Compile Include="Assets\Script\UI\Ingame\IngamePlayerPortrait.cs" />
-     <Compile Include="Assets\Script\Uitls\DOTweenPlayer.cs" />
+     <Compile Include="Assets\Script\UI\PopupHeroUnlock.cs" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\SoftMask.cginc" />
      <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Glow.shader" />
