@@ -59,7 +59,7 @@ SpriteAtlas:
     - {fileID: 102900000, guid: 0dcf213ce157a314080be094c25a343a, type: 3}
     - {fileID: 102900000, guid: faf346794701d2946b6c2c15ba0b2997, type: 3}
     - {fileID: 102900000, guid: 1683a1423fa098848928f6327a3515c7, type: 3}
-    totalSpriteSurfaceArea: 3372297
+    totalSpriteSurfaceArea: 3390441
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -117,6 +117,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 62a344c7255ec624ea5da2ccb17b53cb, type: 3}
   - {fileID: 21300000, guid: eb2a2dc73f043ae42b338100ee9ba95b, type: 3}
   - {fileID: 21300000, guid: 18aac0d7000c87149ad9d27bfe79d4db, type: 3}
+  - {fileID: 21300000, guid: 80f9cb08e31c8be4fbfc968cc63d69c3, type: 3}
   - {fileID: 21300000, guid: e913c04885ba5504488138a043b60201, type: 3}
   - {fileID: 21300000, guid: eecdbb4863cf6284dad173c9f28d6110, type: 3}
   - {fileID: 21300000, guid: 5cc34e4864d4522489a65f9f344251e1, type: 3}
@@ -141,6 +142,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 22a74c5b8bd277b45a62aaa7e256c850, type: 3}
   - {fileID: 21300000, guid: 3ff1fb7bb1419e348b4a483e31dc7936, type: 3}
   - {fileID: 21300000, guid: aebfc39b7b5eaa04797e513a1b7be581, type: 3}
+  - {fileID: 21300000, guid: b85484bbba005594fab68c2764b1b978, type: 3}
   - {fileID: 21300000, guid: 185632eb5487f114bbf3492a3afbc6a3, type: 3}
   - {fileID: 21300000, guid: 9b8188fb8473b9b4491d1dd574c63a7c, type: 3}
   - {fileID: 21300000, guid: f659eafbdb9341344b6a64173a986919, type: 3}
@@ -164,6 +166,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 3b15d3ee0ada77d4eb06d9e2724fe31b, type: 3}
   - {fileID: 21300000, guid: 035714ee130adea4a810c053a46df6db, type: 3}
   - {fileID: 21300000, guid: e8431c3ffbffb9148b56640b27609dd3, type: 3}
+  - {fileID: 21300000, guid: 5f5fec4fba8b5634bbb86666168b12de, type: 3}
   - {fileID: 21300000, guid: f2b4ed4f57deeb24c823152088986f8f, type: 3}
   - {fileID: 21300000, guid: aca9c25fb46f85149bb41c3630f80379, type: 3}
   - {fileID: 21300000, guid: 4d1a2b5f8c8456047a10d841d67c5f10, type: 3}
@@ -227,6 +230,7 @@ SpriteAtlas:
   - bad1
   - cat_02
   - gauge_bg
+  - gauge_exp_fg3
   - btn_menu_04
   - cat_07
   - icon_goldMark
@@ -251,6 +255,7 @@ SpriteAtlas:
   - piece_cat7
   - X
   - btn_cancel
+  - gauge_exp_fg2
   - img_arrow_2
   - titled_footMark
   - 8
@@ -274,6 +279,7 @@ SpriteAtlas:
   - expIcon
   - btn_bottom_menu_on
   - bg_container_inner
+  - medal
   - icon_goldMark_empty
   - bad
   - btn_bottom_menu_off

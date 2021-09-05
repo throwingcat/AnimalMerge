@@ -30,9 +30,13 @@ public class ActiveShake : ActiveBase
             var direction = Vector2.up * EnvironmentValue.SHAKE_SKILL_FORCE_POWER;
             direction.x = Random.Range(-0.3f, 0.3f);
             BadUnits[i].Rigidbody2D.velocity = Vector2.zero;
-            BadUnits[i].Rigidbody2D.AddForce(direction);
+            BadUnits[i].AddForce(direction);
         }
 
+        //IgnoreUnitGUID 에 있는 유닛 Collision 모두 꺼버림
+        foreach (var unit in IgnoreUnits)
+            unit.Collider2D.enabled = false;
+        
         foreach (var unit in UnitsInField)
         {
             var direction = Vector2.up * EnvironmentValue.SHAKE_SKILL_FORCE_POWER;

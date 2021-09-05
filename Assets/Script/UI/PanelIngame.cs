@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Define;
 using DG.Tweening;
 using SheetData;
 using UnityEngine;
@@ -31,7 +32,7 @@ public class PanelIngame : SUIPanel
     public Text BadBlockTimerText;
 
     public Text Score;
-    public Transform VFXComboParent;
+    public RectTransform VFXComboParent;
     public GameObject VFXComboPrefab;
 
     public Transform MyBadBlockVFXPoint;
@@ -62,14 +63,14 @@ public class PanelIngame : SUIPanel
     protected override void OnShow()
     {
         base.OnShow();
-        
+
         EnterPortraitTween.gameObject.SetActive(true);
     }
 
     protected override void OnHide()
     {
         base.OnHide();
-        
+
         EnterPortraitTween.SetEnable(false);
         PlayPortraitTween.SetEnable(false);
     }
@@ -206,6 +207,7 @@ public class PanelIngame : SUIPanel
         }
     }
 
+    private VFXCombo _vfxCombo;
     public void PlayCombo(RectTransform canvas, Vector3 worldPosition, int combo)
     {
         var path = string.Format("Sound/Combo Sound/Default/combo_{0}", Mathf.Clamp(combo, 1, 11));
@@ -221,12 +223,18 @@ public class PanelIngame : SUIPanel
 
                 return go;
             }, 1, VFXComboParent.gameObject, Define.Key.IngamePoolCategory);
-
-        var vfx = pool.Get();
-        var vfxCombo = vfx.GetComponent<VFXCombo>();
+        if (_vfxCombo == null)
+            _vfxCombo = pool.Get().GetComponent<VFXCombo>();
+        // var vfx = pool.Get();
+        var vfxCombo = _vfxCombo;
         vfxCombo.Set(combo);
+
         Utils.WorldToCanvas(ref vfxCombo.RectTransform, Camera.main, worldPosition, canvas);
-        vfxCombo.Play();
+        var pos = vfxCombo.RectTransform.anchoredPosition;
+        pos.x = Mathf.Clamp(pos.x, VFXComboParent.rect.x, VFXComboParent.rect.x + VFXComboParent.rect.width);
+        pos.y = Mathf.Clamp(pos.y, VFXComboParent.rect.y, VFXComboParent.rect.y + VFXComboParent.rect.height);
+        vfxCombo.RectTransform.anchoredPosition = pos;
+        vfxCombo.Play(EnvironmentValue.COMBO_DURATION);
     }
 
     public void SetActiveBadBlockTimer(bool isActive)

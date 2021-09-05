@@ -117,9 +117,10 @@ public class UnitBase : MonoBehaviour
         }, 2f);
     }
 
-    public void AddForce(float power)
+    public void AddForce(Vector2 power)
     {
-        Rigidbody2D.AddRelativeForce(new Vector2(0f, power));
+        Rigidbody2D.AddRelativeForce(power);
+        SetActivePhysics(true);
     }
 
     public void AddTorque(float power)
@@ -143,7 +144,6 @@ public class UnitBase : MonoBehaviour
     public void PlayMerge()
     {
         SetActivePhysics(false);
-
         if (ParentCore != null && ParentCore.IsPlayer)
         {
             if (VFXMerge != null)

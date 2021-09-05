@@ -16,6 +16,7 @@ public class PopupGameResult : SUIPanel
 
     public void SetResult(bool isWin, int beforeScore)
     {
+        IgnoreBackPress = true;
         Victory.SetActive(false);
         Defeat.SetActive(false);
         RankScoreRoot.SetActive(false);
@@ -39,12 +40,15 @@ public class PopupGameResult : SUIPanel
         {
             score = x;
             RankScoreText.text = Utils.ParseComma(score);
+            IgnoreBackPress = false;
         }, PlayerInfo.Instance.RankScore, 0.5f);
     }
 
     public void OnClickExit()
     {
-        BackPress();
+        if (IgnoreBackPress) return;
+
+        Hide();
         GameManager.Instance.ChangeGameState(eGAME_STATE.Lobby);
     }
 }

@@ -7,6 +7,22 @@ public class ActiveBase
 {
     public List<UnitBase> BadUnits => Core.BadUnits;
     public List<UnitBase> UnitsInField => Core.UnitsInField;
+
+    public List<UnitBase> IgnoreUnits
+    {
+        get
+        {
+            List<UnitBase> result = new List<UnitBase>();
+            var list = Core.IgnoreUnitGUID;
+            foreach (var unit in UnitsInField)
+            {
+                if(list.Contains(unit.GUID))
+                    result.Add(unit);
+            }
+
+            return result;
+        }
+    }
     
     public PanelIngame PanelIngame => Core.IsPlayer ? Core.PanelIngame : null;
     public Canvas Canvas => Core.Canvas;

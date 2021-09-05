@@ -1,17 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
 public class DOTweenPlayer : MonoBehaviour
 {
-    public DOTweenAnimation[] Tweens = null;
+    public DOTweenAnimation[] Tweens;
 
-    #if UNITY_EDITOR
-    
-    #endif
-    void Reset()
+    private void Reset()
     {
         Tweens = GetComponentsInChildren<DOTweenAnimation>();
     }
@@ -35,6 +29,7 @@ public class DOTweenPlayer : MonoBehaviour
                 tween.DOComplete();
                 tween.DORewind();
             }
+
             tween.enabled = isEnable;
         }
     }
@@ -47,4 +42,8 @@ public class DOTweenPlayer : MonoBehaviour
             tween.DOPlayBackwards();
         }
     }
+
+#if UNITY_EDITOR
+
+#endif
 }

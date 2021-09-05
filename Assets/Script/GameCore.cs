@@ -803,11 +803,11 @@ public class GameCore : MonoBehaviour
 
     protected virtual void InputUpdate()
     {
-        if (Input.GetMouseButtonDown(0)) OnPress();
-
-        if (isPress && Input.GetMouseButton(0) == false) OnRelease();
+        if (Input.GetMouseButtonDown(0)) 
+            OnPress();
 
         if (isPress)
+        {
             if (CurrentReadyUnit != null)
             {
                 var input_pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -823,6 +823,10 @@ public class GameCore : MonoBehaviour
                         CurrentReadyUnit.transform.localPosition.y,
                         CurrentReadyUnit.transform.localPosition.z);
             }
+        }
+        
+        if (isPress && Input.GetMouseButton(0) == false) 
+            OnRelease();
     }
 
     protected void OnPress()
@@ -1094,9 +1098,12 @@ public class GameCore : MonoBehaviour
             var t = delta / duration;
             var st = (from - to) / 2;
             var et = (to - from) / 2;
-            st.z = go.transform.position.z;
-            et.z = st.z;
-            go.transform.position = BezierUtility.BezierPoint(from, st, et, to, t);
+            if (go != null)
+            {
+                st.z = go.transform.position.z;
+                et.z = st.z;
+                go.transform.position = BezierUtility.BezierPoint(from, st, et, to, t);
+            }
 
             delta += Time.deltaTime;
             yield return null;
