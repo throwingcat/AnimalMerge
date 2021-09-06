@@ -1,6 +1,5 @@
 using Define;
 using SheetData;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 //Game Core와 동일한 동작을 하지만 불필요한 동작을 제거함
@@ -9,9 +8,9 @@ using UnityEngine;
 
 public class AICore : GameCore
 {
+    public float InputDelayDuration;
+    public float InputDelayElapsed;
     public int MMR = 1000;
-    public float InputDelayElapsed = 0f;
-    public float InputDelayDuration = 0f;
     protected override int UnitLayer => LayerMask.NameToLayer("AI_Unit");
 
     public override void Initialize(bool isPlayer)
@@ -27,11 +26,9 @@ public class AICore : GameCore
         }
 
         if (GameManager.Instance.isSinglePlay && GameManager.Instance.isAdventure == false)
-        {
             MMR = PlayerInfo.Instance.RankScore;
-        }
 
-        float mmr_ratio = Mathf.InverseLerp(EnvironmentValue.AI_INPUT_DELAY_LOW_MMR,
+        var mmr_ratio = Mathf.InverseLerp(EnvironmentValue.AI_INPUT_DELAY_LOW_MMR,
             EnvironmentValue.AI_INPUT_DELAY_HIGH_MMR, MMR);
 
         InputDelayDuration = Mathf.Lerp(EnvironmentValue.AI_INPUT_DELAY_MAX, EnvironmentValue.AI_INPUT_DELAY_MIN,
@@ -59,7 +56,7 @@ public class AICore : GameCore
             InputDelayElapsed = 0f;
 
             var isFindFriend = false;
-            Vector3 pos = UnitSpawnPosition;
+            var pos = UnitSpawnPosition;
             foreach (var unit in UnitsInField)
                 if (CurrentReadyUnit.Info.Key == unit.Info.Key)
                 {
@@ -70,7 +67,7 @@ public class AICore : GameCore
 
             if (isFindFriend == false)
             {
-                var horizontalLimit = 540f - (EnvironmentValue.UNIT_SPRITE_BASE_SIZE * CurrentReadyUnit.Sheet.size) *
+                var horizontalLimit = 540f - EnvironmentValue.UNIT_SPRITE_BASE_SIZE * CurrentReadyUnit.Sheet.size *
                     EnvironmentValue.WORLD_RATIO;
                 pos.x = Random.Range(-horizontalLimit, horizontalLimit);
             }
