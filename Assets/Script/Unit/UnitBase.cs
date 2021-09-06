@@ -76,7 +76,7 @@ public class UnitBase : MonoBehaviour
                 VFXMerge.SetActive(false);
         }
 
-        var size = Vector3.one * Sheet.size;
+        var size = Vector3.one * (EnvironmentValue.UNIT_SPRITE_BASE_SIZE * Sheet.size);
         transform.DOScale(size, 0.5f).SetEase(Ease.OutBack).Play();
 
         eUnitType = eUnitType.Nomral;
@@ -120,7 +120,6 @@ public class UnitBase : MonoBehaviour
     public void AddForce(Vector2 power)
     {
         Rigidbody2D.AddRelativeForce(power);
-        SetActivePhysics(true);
     }
 
     public void AddTorque(float power)

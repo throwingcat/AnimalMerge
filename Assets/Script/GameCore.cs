@@ -225,6 +225,7 @@ public class GameCore : MonoBehaviour
         unit.transform.SetParent(UnitParent);
         unit.transform.LocalReset();
         unit.transform.SetAsLastSibling();
+        Utils.SetLayer(UnitLayer, unit.gameObject);
 
         var component = unit.GetComponent<UnitBase>();
 
@@ -285,7 +286,7 @@ public class GameCore : MonoBehaviour
     private IEnumerator MergeProcess(UnitBase a, UnitBase b)
     {
         OnBeforeMergeEvent();
-        
+
         var cached_guid_a = a.GUID;
         var cached_guid_b = b.GUID;
         var cached_pos_a = a.transform.position;
@@ -308,7 +309,7 @@ public class GameCore : MonoBehaviour
 
         //콤보 상승
         Combo++;
-        
+
         //콤보 출력
         OnAfterMergeEvent(a, b, Combo);
 
@@ -364,7 +365,7 @@ public class GameCore : MonoBehaviour
         //패시브 스킬 발동
         if (3 <= Combo)
             Passive?.Run(OnCompletePassiveSkill);
-        
+
         //주변 방해블록 삭제
         foreach (var unit in BadUnits)
         {
@@ -679,6 +680,24 @@ public class GameCore : MonoBehaviour
     public Vector3 UnitSpawnPosition;
     public List<Unit> NextUnitList = new List<Unit>();
 
+    public List<UnitBase> IgnoreUnits
+    {
+        get
+        {
+            List<UnitBase> result = new List<UnitBase>();
+            var list = IgnoreUnitGUID;
+            foreach (var unit in UnitsInField)
+            {
+                if (list.Contains(unit.GUID))
+                    result.Add(unit);
+            }
+
+            return result;
+        }
+    }
+
+    protected virtual int UnitLayer => LayerMask.NameToLayer("Unit");
+
     #endregion
 
     #region Player Data
@@ -803,7 +822,7 @@ public class GameCore : MonoBehaviour
 
     protected virtual void InputUpdate()
     {
-        if (Input.GetMouseButtonDown(0)) 
+        if (Input.GetMouseButtonDown(0))
             OnPress();
 
         if (isPress)
@@ -815,8 +834,8 @@ public class GameCore : MonoBehaviour
                     new Vector3(input_pos.x, CurrentReadyUnit.transform.position.y,
                         CurrentReadyUnit.transform.position.z);
 
-                var horizontalLimit = 540f - EnvironmentValue.UNIT_SPRITE_BASE_SIZE * EnvironmentValue.WORLD_RATIO *
-                    CurrentReadyUnit.Sheet.size;
+                var horizontalLimit = 540f - (EnvironmentValue.UNIT_SPRITE_BASE_SIZE * CurrentReadyUnit.Sheet.size) *
+                    EnvironmentValue.WORLD_RATIO;
                 CurrentReadyUnit.transform.localPosition =
                     new Vector3(
                         Mathf.Clamp(CurrentReadyUnit.transform.localPosition.x, -horizontalLimit, horizontalLimit),
@@ -824,8 +843,8 @@ public class GameCore : MonoBehaviour
                         CurrentReadyUnit.transform.localPosition.z);
             }
         }
-        
-        if (isPress && Input.GetMouseButton(0) == false) 
+
+        if (isPress && Input.GetMouseButton(0) == false)
             OnRelease();
     }
 
@@ -1063,7 +1082,7 @@ public class GameCore : MonoBehaviour
             {
                 if (res.hash.ContainsKey("first_clear"))
                 {
-                    var isFirstClear = (bool)res.hash["first_clear"];
+                    var isFirstClear = (bool) res.hash["first_clear"];
                     if (isFirstClear)
                     {
                         var stage = (string) res.hash["stage"];
@@ -1078,8 +1097,8 @@ public class GameCore : MonoBehaviour
                             }
                         }
                     }
-
                 }
+
                 var popup = UIManager.Instance.ShowPopup<PopupGameResult>();
                 popup.SetResult(isWin, beforeScore);
             });
@@ -1148,6 +1167,24 @@ public class GameCore : MonoBehaviour
     public decimal SuddenDeathRatio(float elapsed)
     {
         return (decimal) (1 + EnvironmentValue.DAMAGE_PER_SECOND * elapsed);
+    }
+
+    public bool isPauseCollider = false;
+    private ulong _pauseColliderID;
+
+    public void PauseCollider(float duration)
+    {
+        isPauseCollider = true;
+        int layer = UnitLayer;
+        Physics2D.IgnoreLayerCollision(layer, layer, true);
+
+        GameManager.DelayInvokeCancel(_pauseColliderID);
+        _pauseColliderID =
+            GameManager.DelayInvoke(() =>
+            {
+                Physics2D.IgnoreLayerCollision(layer, layer, false);
+                isPauseCollider = false;
+            }, duration);
     }
 
     #endregion

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Define;
 using UnityEngine;
 
@@ -24,25 +25,20 @@ public class ActiveShake : ActiveBase
             Core.RemoveBadBlock(BadUnits[index]);
         }
 
-        //모든 블록 위로 튕겨냄
-        for (var i = 0; i < BadUnits.Count; i++)
-        {
-            var direction = Vector2.up * EnvironmentValue.SHAKE_SKILL_FORCE_POWER;
-            direction.x = Random.Range(-0.3f, 0.3f);
-            BadUnits[i].Rigidbody2D.velocity = Vector2.zero;
-            BadUnits[i].AddForce(direction);
-        }
+        //모든 유닛 Collider 일시중단
+        Core.PauseCollider(0.5f);
 
-        //IgnoreUnitGUID 에 있는 유닛 Collision 모두 꺼버림
-        foreach (var unit in IgnoreUnits)
-            unit.Collider2D.enabled = false;
-        
-        foreach (var unit in UnitsInField)
+        var units = new List<UnitBase>();
+        units.AddRange(BadUnits);
+        units.AddRange(UnitsInField);
+
+        //모든 블록 위로 튕겨냄
+        foreach (var unit in units)
         {
             var direction = Vector2.up * EnvironmentValue.SHAKE_SKILL_FORCE_POWER;
-            direction.x = Random.Range(-0.3f, 0.3f);
+            direction.x = Random.Range(-1.5f, 1.5f);
             unit.Rigidbody2D.velocity = Vector2.zero;
-            unit.Rigidbody2D.AddForce(direction);
+            unit.AddForce(direction);
 
             var range = EnvironmentValue.SHAKE_SKILL_TORQUE_MAX_POWER -
                         EnvironmentValue.SHAKE_SKILL_TORQUE_MIN_POWER;

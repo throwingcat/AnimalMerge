@@ -12,7 +12,7 @@ namespace SheetData
 
 	public string grow_unit { get; set; }
 
-	public int size { get; set; }
+	public float size { get; set; }
 
 	public int score { get; set; }
 
