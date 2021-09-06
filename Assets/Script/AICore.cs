@@ -67,8 +67,7 @@ public class AICore : GameCore
 
             if (isFindFriend == false)
             {
-                var horizontalLimit = 540f - EnvironmentValue.UNIT_SPRITE_BASE_SIZE * CurrentReadyUnit.Sheet.size *
-                    EnvironmentValue.WORLD_RATIO;
+                var horizontalLimit = (float)(540f - EnvironmentValue.UNIT_BASE_SIZE * CurrentReadyUnit.Sheet.size * EnvironmentValue.WORLD_RATIO);
                 pos.x = Random.Range(-horizontalLimit, horizontalLimit);
             }
 

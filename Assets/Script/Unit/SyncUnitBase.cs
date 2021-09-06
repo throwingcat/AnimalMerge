@@ -12,7 +12,7 @@ public class SyncUnitBase : UnitBase
         Sheet = TableManager.Instance.GetData<Unit>(unit_key);
         GUID = GameManager.Guid.NewGuid();
         Texture.sprite = GetSprite(unit_key);
-        transform.localScale = Vector3.one * (EnvironmentValue.UNIT_SPRITE_BASE_SIZE * Sheet.size);
+        transform.localScale = Vector3.one * (float)(EnvironmentValue.UNIT_BASE_SIZE * Sheet.size);
         return this;
     }
 }

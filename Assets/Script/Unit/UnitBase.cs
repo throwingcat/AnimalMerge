@@ -76,7 +76,7 @@ public class UnitBase : MonoBehaviour
                 VFXMerge.SetActive(false);
         }
 
-        var size = Vector3.one * (EnvironmentValue.UNIT_SPRITE_BASE_SIZE * Sheet.size);
+        var size = Vector3.one * (float) (EnvironmentValue.UNIT_BASE_SIZE * Sheet.size);
         transform.DOScale(size, 0.5f).SetEase(Ease.OutBack).Play();
 
         eUnitType = eUnitType.Nomral;
