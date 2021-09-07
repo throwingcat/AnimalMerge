@@ -721,9 +721,12 @@ public class GameCore : MonoBehaviour
     //방해블록 타이머
     private float _badBlockTimerDelta;
 
-    private int _badBlockMaxDropOneTime => EnvironmentValue.BAD_BLOCK_HORIZONTAL_MAX_COUNT *
-                                           EnvironmentValue.BAD_BLOCK_VERTICAL_MAX_COUNT;
-
+    private int _badBlockMaxDropOneTime =>
+        (int)Mathf.Clamp(
+            EnvironmentValue.BAD_BLOCK_DROP_COUNT_MIN +
+            (_elapsedGameTimer * EnvironmentValue.BAD_BLOCK_INCREASE_DROP_COUNT_PER_SECOND),
+            EnvironmentValue.BAD_BLOCK_DROP_COUNT_MIN, EnvironmentValue.BAD_BLOCK_DROP_COUNT_MAX);
+    
     private readonly List<List<Vector3>> Floors = new List<List<Vector3>>();
 
 
@@ -738,12 +741,14 @@ public class GameCore : MonoBehaviour
 
             _badBlockTimerDelta += delta;
 
-            if (IsPlayer)
-                PanelIngame.UpdateBadBlockTimer(
-                    EnvironmentValue.BAD_BLOCK_TIMER - _badBlockTimerDelta,
-                    EnvironmentValue.BAD_BLOCK_TIMER);
+            float t = EnvironmentValue.BAD_BLOCK_TIMER_MAX -
+                      (_elapsedGameTimer * EnvironmentValue.BAD_BLOCK_TIMER_PER_SECOND);
+            t = Mathf.Clamp(t, EnvironmentValue.BAD_BLOCK_TIMER_MIN, EnvironmentValue.BAD_BLOCK_TIMER_MAX);
 
-            if (EnvironmentValue.BAD_BLOCK_TIMER < _badBlockTimerDelta)
+            if (IsPlayer)
+                PanelIngame.UpdateBadBlockTimer(t - _badBlockTimerDelta, t);
+
+            if (t < _badBlockTimerDelta)
             {
                 _badBlockTimerDelta = 0f;
 
@@ -781,7 +786,9 @@ public class GameCore : MonoBehaviour
     private void DropBadBlock(int count)
     {
         if (Floors.Count == 0)
-            for (var i = 0; i < EnvironmentValue.BAD_BLOCK_VERTICAL_MAX_COUNT; i++)
+        {
+            int vertical = EnvironmentValue.BAD_BLOCK_DROP_COUNT_MAX / EnvironmentValue.BAD_BLOCK_HORIZONTAL_MAX_COUNT;
+            for (var i = 0; i < vertical; i++)
             {
                 Floors.Add(new List<Vector3>());
                 for (var j = 0; j < EnvironmentValue.BAD_BLOCK_HORIZONTAL_MAX_COUNT; j++)
@@ -796,6 +803,7 @@ public class GameCore : MonoBehaviour
                         -1f));
                 }
             }
+        }
 
         var shuffled_floor = new List<List<Vector3>>();
         foreach (var f in Floors)
@@ -834,7 +842,7 @@ public class GameCore : MonoBehaviour
                     new Vector3(input_pos.x, CurrentReadyUnit.transform.position.y,
                         CurrentReadyUnit.transform.position.z);
 
-                var horizontalLimit = (float)(540f - (EnvironmentValue.UNIT_BASE_SIZE * CurrentReadyUnit.Sheet.size) *
+                var horizontalLimit = (float) (440f - (EnvironmentValue.UNIT_BASE_SIZE * CurrentReadyUnit.Sheet.size) *
                     EnvironmentValue.WORLD_RATIO);
                 CurrentReadyUnit.transform.localPosition =
                     new Vector3(

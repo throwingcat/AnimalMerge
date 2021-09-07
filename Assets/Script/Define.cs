@@ -55,9 +55,13 @@ namespace Define
         public static float RECOVERY_BAD_BLOCK_TIMER = 1f;
         public static float RECOVERY_GAMEOVER_TIMER = 1f;
         #region BadBlock
-        public static float BAD_BLOCK_TIMER = 5f;
+        public static float BAD_BLOCK_TIMER_MAX = 5f;
+        public static float BAD_BLOCK_TIMER_MIN = 5f;
+        public static float BAD_BLOCK_TIMER_PER_SECOND = 5f;
         public static int BAD_BLOCK_HORIZONTAL_MAX_COUNT = 6;
-        public static int BAD_BLOCK_VERTICAL_MAX_COUNT = 4;
+        public static int BAD_BLOCK_DROP_COUNT_MIN = 6;
+        public static int BAD_BLOCK_DROP_COUNT_MAX = 36;
+        public static float BAD_BLOCK_INCREASE_DROP_COUNT_PER_SECOND = 0.5f;
         public static float BAD_BLOCK_AREA_WIDTH = 800;
         public static float BAD_BLOCK_SPAWN_Y = 1050;
         public static float BAD_BLOCK_VERTICAL_OFFSET = 150;
