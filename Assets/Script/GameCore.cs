@@ -19,6 +19,10 @@ public class GameCore : MonoBehaviour
 
     #endregion
 
+    protected float HorizontalSpawnLimit =>
+        (float) (500f - EnvironmentValue.UNIT_BASE_SIZE * CurrentReadyUnit.Sheet.size *
+        EnvironmentValue.WORLD_RATIO);
+    
     protected virtual void Initialize()
     {
         #region 데이터 초기화
@@ -842,11 +846,9 @@ public class GameCore : MonoBehaviour
                     new Vector3(input_pos.x, CurrentReadyUnit.transform.position.y,
                         CurrentReadyUnit.transform.position.z);
 
-                var horizontalLimit = (float) (440f - (EnvironmentValue.UNIT_BASE_SIZE * CurrentReadyUnit.Sheet.size) *
-                    EnvironmentValue.WORLD_RATIO);
                 CurrentReadyUnit.transform.localPosition =
                     new Vector3(
-                        Mathf.Clamp(CurrentReadyUnit.transform.localPosition.x, -horizontalLimit, horizontalLimit),
+                        Mathf.Clamp(CurrentReadyUnit.transform.localPosition.x, -HorizontalSpawnLimit, HorizontalSpawnLimit),
                         CurrentReadyUnit.transform.localPosition.y,
                         CurrentReadyUnit.transform.localPosition.z);
             }

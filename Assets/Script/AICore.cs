@@ -55,21 +55,15 @@ public class AICore : GameCore
 
             InputDelayElapsed = 0f;
 
-            var isFindFriend = false;
             var pos = UnitSpawnPosition;
             foreach (var unit in UnitsInField)
                 if (CurrentReadyUnit.Info.Key == unit.Info.Key)
                 {
                     pos.x = unit.transform.localPosition.x;
-                    isFindFriend = true;
                     break;
                 }
 
-            if (isFindFriend == false)
-            {
-                var horizontalLimit = (float)(540f - EnvironmentValue.UNIT_BASE_SIZE * CurrentReadyUnit.Sheet.size * EnvironmentValue.WORLD_RATIO);
-                pos.x = Random.Range(-horizontalLimit, horizontalLimit);
-            }
+            pos.x = Random.Range(-HorizontalSpawnLimit, HorizontalSpawnLimit);
 
             CurrentReadyUnit.transform.localPosition = pos;
 
