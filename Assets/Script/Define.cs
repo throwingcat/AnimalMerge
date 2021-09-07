@@ -77,7 +77,8 @@ namespace Define
         #endregion
         
         #region Skill
-        public static float SHAKE_SKILL_FORCE_POWER = 100f;
+        public static float SHAKE_SKILL_VERTICAL_POWER = 100f;
+        public static float SHAKE_SKILL_HORIZONTAL_POWER = 1.0f;
         public static float SHAKE_SKILL_TORQUE_MAX_POWER = 2f;
         public static float SHAKE_SKILL_TORQUE_MIN_POWER = 1f;
         public static int SKILL_CHARGE_MAX_VALUE = 3000;

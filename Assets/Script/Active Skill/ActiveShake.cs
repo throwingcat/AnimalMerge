@@ -12,18 +12,10 @@ public class ActiveShake : ActiveBase
     {
         //AI 전용 조건
         if (Core.IsPlayer == false)
-            if (BadUnits.Count < 20 || UnitsInField.Count < 10)
+            if (UnitsInField.Count < 10)
                 return false;
 
         GameManager.SimpleTimer(Key.SIMPLE_TIMER_RUNNING_SKILL, 3f);
-
-        //방해블록 삭제
-        for (var i = 0; i < 15; i++)
-        {
-            if (BadUnits.Count == 0) break;
-            var index = Random.Range(0, BadUnits.Count);
-            Core.RemoveBadBlock(BadUnits[index]);
-        }
 
         //모든 유닛 Collider 일시중단
         Core.PauseCollider(0.5f);
@@ -35,8 +27,9 @@ public class ActiveShake : ActiveBase
         //모든 블록 위로 튕겨냄
         foreach (var unit in units)
         {
-            var direction = Vector2.up * EnvironmentValue.SHAKE_SKILL_FORCE_POWER;
-            direction.x = Random.Range(-1.5f, 1.5f);
+            var direction = Vector2.up * EnvironmentValue.SHAKE_SKILL_VERTICAL_POWER;
+            direction.x = Random.Range(-EnvironmentValue.SHAKE_SKILL_HORIZONTAL_POWER,
+                EnvironmentValue.SHAKE_SKILL_HORIZONTAL_POWER);
             unit.Rigidbody2D.velocity = Vector2.zero;
             unit.AddForce(direction);
 
