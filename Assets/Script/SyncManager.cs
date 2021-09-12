@@ -42,6 +42,7 @@ public class SyncManager
             packet.UnitsDatas.Add(u);
         }
 
+        if(From.AttackBadBlockValue != 0){Debug.Log(From.AttackBadBlockValue);}
         packet.AttackDamage = From.AttackBadBlockValue;
         packet.AttackCombo = From.AttackComboValue;
         packet.StackDamage = From.MyBadBlockValue;

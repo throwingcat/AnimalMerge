@@ -7,75 +7,117 @@ using Violet;
 
 public class PanelAdventure : SUIPanel
 {
-    private readonly List<CellStage> _stages = new List<CellStage>();
+    private List<CellStage> _stages = new List<CellStage>();
+    public List<CellChapter> CellChapters = new List<CellChapter>();
+    private List<Chapter> _chapters = new List<Chapter>();
 
-    private readonly List<CellChapter> _chapters = new List<CellChapter>();
+    public RectTransform ChapterRoot;
+    public RectTransform StageRoot;
 
-    public CellChapter CellChapterPrefab;
     public CellStage CellStagePrefab;
-    public Text ChapterDesc;
     public Text ChapterName;
-    public GameObject ChapterScrollRoot;
+    public GameObject Information;
+    public DOTweenPlayer InformationTweenPlayer;
+    public GameObject PrevChapterButton;
+    public GameObject NextChapterButton;
 
-    public ScrollRect ChapterScrollView;
-
-    public int CurrentIndex;
-
+    public int CurrentChapterIndex;
+    public int PrevChapterIndex = -1;
+    public Chapter CurrentChapter;
     public Stage CurrentStage;
-    public int PrevIndex = -1;
     public Text StageLevel;
     public GameObject StageScrollRoot;
-
     public ScrollRect StageScrollView;
+
+    private ulong _moveChapterScrollInvokeID = 0L;
+    private List<Tweener> _moveChapterTwwenTweeners = new List<Tweener>();
 
     protected override void OnShow()
     {
         base.OnShow();
 
-        CurrentIndex = -1;
-        PrevIndex = -1;
+        CurrentChapterIndex = -1;
+        PrevChapterIndex = 0;
+        Information.SetActive(false);
+
+        var pos = ChapterRoot.anchoredPosition;
+        pos.y = -66;
+        ChapterRoot.anchoredPosition = pos;
+
+        StageRoot.gameObject.SetActive(false);
+        pos = StageRoot.anchoredPosition;
+        pos.y = -1750;
+        StageRoot.anchoredPosition = pos;
 
         Initialize();
     }
 
     public void Initialize()
     {
-        var sheet = TableManager.Instance.GetTable<Chapter>();
+        var table = TableManager.Instance.GetTable<Chapter>();
+        _chapters = new List<Chapter>();
+        foreach (var row in table)
+            _chapters.Add(row.Value as Chapter);
 
-        var need = sheet.Count - _chapters.Count;
+        foreach (var cell in CellChapters)
+            cell.Initialize();
 
-        for (var i = 0; i < need; i++)
-        {
-            var cell = Instantiate(CellChapterPrefab);
-            cell.transform.SetParent(ChapterScrollRoot.transform);
-            cell.transform.LocalReset();
-            _chapters.Add(cell);
-        }
-
-        foreach (var cell in _chapters)
-            cell.gameObject.SetActive(false);
-
-        var index = 0;
-        foreach (var row in sheet)
-        {
-            var chapter = row.Value as Chapter;
-            _chapters[index].Set(chapter);
-            _chapters[index].gameObject.SetActive(true);
-            index++;
-        }
+        // var need = sheet.Count - _chapters.Count;
+        //
+        // for (var i = 0; i < need; i++)
+        // {
+        //     var cell = Instantiate(CellChapterPrefab);
+        //     cell.transform.SetParent(ChapterScrollRoot.transform);
+        //     cell.transform.LocalReset();
+        //     _chapters.Add(cell);
+        // }
+        //
+        // foreach (var cell in _chapters)
+        //     cell.gameObject.SetActive(false);
+        //
+        // var index = 0;
+        // foreach (var row in sheet)
+        // {
+        //     var chapter = row.Value as Chapter;
+        //     _chapters[index].Set(chapter);
+        //     _chapters[index].gameObject.SetActive(true);
+        //     index++;
+        // }
 
 
         MoveChapter(0);
     }
 
-    public void ChangeChapter(int index)
+    private void SetStage(Chapter chapter)
     {
-        //챕터 설정
-        ChapterName.text = _chapters[index].Chatper.name.ToLocalization();
-        ChapterDesc.text = _chapters[index].Chatper.name.ToLocalization();
-
         //스테이지 설정
-        var stages = Stage.GetStage(_chapters[index].Chatper);
+        var stages = Stage.GetStage(chapter);
+
+        //클리어한 스테이지 목록 정리
+        List<Stage> sortedStage = new List<Stage>();
+        int higher_stage = -1;
+        for (int i = 0; i < stages.Count; i++)
+        {
+            bool isClear = PlayerTracker.Instance.Contains(stages[i].key);
+
+            if (isClear)
+            {
+                sortedStage.Add(stages[i]);
+                if (higher_stage < stages[i].Index)
+                    higher_stage = stages[i].Index;
+            }
+        }
+
+        //최신 스테이지 추가
+        int new_stage = higher_stage + 1;
+        foreach (var stage in stages)
+        {
+            if (stage.Index == new_stage)
+                sortedStage.Add(stage);
+        }
+
+        stages = sortedStage;
+
 
         var need = stages.Count - _stages.Count;
         for (var i = 0; i < need; i++)
@@ -83,6 +125,7 @@ public class PanelAdventure : SUIPanel
             var cell = Instantiate(CellStagePrefab);
             cell.transform.SetParent(StageScrollRoot.transform);
             cell.transform.LocalReset();
+            cell.transform.SetAsLastSibling();
             _stages.Add(cell);
         }
 
@@ -92,46 +135,90 @@ public class PanelAdventure : SUIPanel
         int lastIndex = 0;
         for (var i = 0; i < stages.Count; i++)
         {
-            _stages[i].Set(stages[i], OnClickStage);
-            bool isClear = PlayerTracker.Instance.Contains(stages[i].key);
-            bool isLock = stages[i].UnlockCondition.IsNullOrEmpty() ? false : PlayerTracker.Instance.Contains(stages[i].UnlockCondition) == false;
-            if (isLock)
-                _stages[i].SetState(CellStage.eState.Lock);
-            else
-            {
-                if (isClear)
-                    _stages[i].SetState(CellStage.eState.Clear);
-                else
-                    _stages[i].SetState(CellStage.eState.Unlock);
-                lastIndex = i;
-            }
-
-            _stages[i].gameObject.SetActive(true);
+            int index = (stages.Count - 1) - i;
+            _stages[index].Set(stages[i], OnClickStage);
+            _stages[index].gameObject.SetActive(true);
         }
 
         ChangeStage(lastIndex);
-        float t = lastIndex / (float) stages.Count;
-        StageScrollView.content.anchoredPosition = new Vector2(0, StageScrollView.content.rect.height * t);
+        StageScrollView.content.anchoredPosition = Vector2.zero;
     }
 
     private void MoveChapter(int index)
     {
-        if (CurrentIndex == index) return;
+        if (CurrentChapterIndex == index) return;
 
-        PrevIndex = CurrentIndex;
-        CurrentIndex = index;
-        ChangeChapter(CurrentIndex);
-
-        RefreshChapterScroll();
+        PrevChapterIndex = CurrentChapterIndex;
+        CurrentChapterIndex = index;
+        MoveChapterScroll(PrevChapterIndex - CurrentChapterIndex);
     }
 
-    public void RefreshChapterScroll()
+    private void SetChapter(int chapter)
     {
-        var destination = CurrentIndex == 0 ? 0f : (float) CurrentIndex / (_chapters.Count - 1);
-        DOTween.To(() => ChapterScrollView.horizontalNormalizedPosition,
-                x => ChapterScrollView.horizontalNormalizedPosition = x,
-                destination, 0.3f).SetEase(Ease.OutBack)
-            .Play();
+        foreach (var tween in _moveChapterTwwenTweeners)
+            tween.Kill();
+        _moveChapterTwwenTweeners.Clear();
+
+        int index = -2;
+        foreach (var cell in CellChapters)
+        {
+            cell.RectTransform.anchoredPosition = cell.OrigianlPosition;
+
+            int value = index + chapter;
+            if (0 <= value && value < _chapters.Count)
+            {
+                cell.Set(_chapters[value], OnClickChapter);
+                cell.gameObject.SetActive(true);
+            }
+            else
+                cell.gameObject.SetActive(false);
+
+            index++;
+        }
+
+        SetInputEnable(true);
+        SetEnableChapterMoveButton(true);
+
+        if (chapter == CurrentChapterIndex)
+        {
+            Information.SetActive(true);
+            InformationTweenPlayer.SetEnable(true);
+
+            CurrentChapter = _chapters[CurrentChapterIndex];
+            //챕터 설정
+            ChapterName.text = _chapters[CurrentChapterIndex].name.ToLocalization();
+        }
+    }
+
+    public void MoveChapterScroll(int direction)
+    {
+        GameManager.DelayInvokeCancel(_moveChapterScrollInvokeID);
+        SetChapter(PrevChapterIndex);
+
+        SetInputEnable(false);
+        SetEnableChapterMoveButton(false);
+        
+        direction = Mathf.Clamp(direction, -1, 1);
+        for (int i = 0; i < CellChapters.Count; i++)
+        {
+            int index = i + direction;
+            if (0 <= index && index < CellChapters.Count)
+            {
+                Vector2 to = CellChapters[index].OrigianlPosition;
+                _moveChapterTwwenTweeners.Add(CellChapters[i].RectTransform.DOAnchorPosX(to.x, 0.33f)
+                    .SetEase(Ease.OutBack));
+                _moveChapterTwwenTweeners.Add(CellChapters[i].RectTransform.DOAnchorPosY(to.y, 0.33f)
+                    .SetEase(Ease.OutBack));
+            }
+        }
+
+        _moveChapterScrollInvokeID = GameManager.DelayInvoke(() => { SetChapter(CurrentChapterIndex); }, 0.5f);
+
+        // var destination = CurrentIndex == 0 ? 0f : (float) CurrentIndex / (_chapters.Count - 1);
+        // DOTween.To(() => ChapterScrollView.horizontalNormalizedPosition,
+        //         x => ChapterScrollView.horizontalNormalizedPosition = x,
+        //         destination, 0.3f).SetEase(Ease.OutBack)
+        //     .Play();
     }
 
     public void ChangeStage(int index)
@@ -146,22 +233,35 @@ public class PanelAdventure : SUIPanel
         for (int i = 0; i < _stages.Count; i++)
             _stages[i].SetSelect(CurrentStage.key == _stages[i].Stage.key);
 
-        StageLevel.text = CurrentStage.AI_MMR.ToString();
+        //StageLevel.text = CurrentStage.AI_MMR.ToString();
     }
 
     #region Input
 
+    public override void BackPress()
+    {
+        if (IgnoreBackPress) return;
+
+        if (StageRoot.gameObject.activeSelf)
+        {
+            SetEnableStageView(false);
+            return;
+        }
+
+        base.BackPress();
+    }
+
     public void OnClickPrevChapter()
     {
-        if (CurrentIndex == 0) return;
+        if (CurrentChapterIndex == 0) return;
 
-        MoveChapter(CurrentIndex - 1);
+        MoveChapter(CurrentChapterIndex - 1);
     }
 
     public void OnClickNextChapter()
     {
-        if (CurrentIndex < _chapters.Count - 1)
-            MoveChapter(CurrentIndex + 1);
+        if (CurrentChapterIndex < _chapters.Count - 1)
+            MoveChapter(CurrentChapterIndex + 1);
     }
 
     public void OnClickStartButton()
@@ -172,6 +272,67 @@ public class PanelAdventure : SUIPanel
     public void OnClickStage(CellStage cell)
     {
         ChangeStage(cell.Stage);
+    }
+
+    public void OnClickChapter(CellChapter chapter)
+    {
+        if (IgnoreBackPress) return;
+
+        if (chapter.Chatper.index == CurrentChapter.index)
+            SelectedChapter(chapter.Chatper);
+        else
+            MoveChapter(chapter.Chatper.index);
+    }
+
+
+    public void SelectedChapter(Chapter chapter)
+    {
+        SetEnableStageView(true);
+        SetStage(chapter);
+    }
+
+    public void SetEnableStageView(bool isEnable)
+    {
+        SetInputEnable(false);
+        SetEnableChapterMoveButton(false);
+        if (isEnable)
+        {
+            StageRoot.gameObject.SetActive(true);
+
+            ChapterRoot.DOAnchorPosY(450f, 0.3f).SetEase(Ease.OutQuad);
+            StageRoot.DOAnchorPosY(-426f, 0.3f).SetEase(Ease.OutQuad);
+        }
+        else
+        {
+            ChapterRoot.DOAnchorPosY(-66f, 0.3f).SetEase(Ease.OutQuad);
+            StageRoot.DOAnchorPosY(-1750, 0.3f).SetEase(Ease.OutQuad);
+        }
+
+        GameManager.DelayInvoke(() =>
+        {
+            SetInputEnable(true);
+            SetEnableChapterMoveButton(!isEnable);
+            StageRoot.gameObject.SetActive(isEnable);
+        }, 0.6f);
+    }
+
+    public void SetInputEnable(bool isEnable)
+    {
+        IgnoreBackPress = !isEnable;
+    }
+
+    public void SetEnableChapterMoveButton(bool isEnable)
+    {
+        if (isEnable)
+        {
+            PrevChapterButton.SetActive(0 < CurrentChapterIndex);
+            NextChapterButton.SetActive(CurrentChapterIndex < _chapters.Count);
+        }
+        else
+        {
+            PrevChapterButton.SetActive(false);
+            NextChapterButton.SetActive(false);
+        }
     }
 
     #endregion

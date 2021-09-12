@@ -55,6 +55,7 @@ namespace Define
         public static float RECOVERY_BAD_BLOCK_TIMER = 1f;
         public static float RECOVERY_GAMEOVER_TIMER = 1f;
         #region BadBlock
+        
         public static float BAD_BLOCK_TIMER_MAX = 5f;
         public static float BAD_BLOCK_TIMER_MIN = 5f;
         public static float BAD_BLOCK_TIMER_PER_SECOND = 5f;
@@ -88,13 +89,17 @@ namespace Define
 
         public static int CHEST_SLOT_MAX_COUNT = 4;
         public static int CHEST_GRADE_MAX = 3;
-
+        
         #endregion
 
     }
 
     public class Key
     {
+        #region Currency
+
+        public const string ITEM_COIN = "Coin";
+        #endregion
         #region Pool Category
         public const string IngamePoolCategory = "ingame";
         public const string UIVFXPoolCategory = "ui_vfx";

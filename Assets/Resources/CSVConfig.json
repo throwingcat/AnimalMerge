@@ -1,38 +1,47 @@
 {
-   "BaseURL": "https://shdd.synology.me/Simon/Animal Merge/Sheet",
-   "Files": [
-      {
-         "Name": "Chapter"
-      },
-      {
-         "Name": "Chest"
-      },
-      {
-         "Name": "EnvironmentValueSheet"
-      },
-      {
-         "Name": "Hero"
-      },
-      {
-         "Name": "Item"
-      },
-      {
-         "Name": "Localization"
-      },
-      {
-         "Name": "SpawnPhase"
-      },
-      {
-         "Name": "Stage"
-      },
-      {
-         "Name": "Unit"
-      },
-      {
-         "Name": "UnitGroup"
-      },
-      {
-         "Name": "UnitLevel"
-      }
-   ]
+  "BaseURL": "https://shdd.synology.me/Simon/Animal Merge/Sheet",
+  "Files": [
+    {
+      "Name": "Chapter"
+    },
+    {
+      "Name": "Chest"
+    },
+    {
+      "Name": "DailyQuestRewardInfo"
+    },
+    {
+      "Name": "EnvironmentValueSheet"
+    },
+    {
+      "Name": "Hero"
+    },
+    {
+      "Name": "Item"
+    },
+    {
+      "Name": "Localization"
+    },
+    {
+      "Name": "PlayerTrackerInfo"
+    },
+    {
+      "Name": "SpawnPhase"
+    },
+    {
+      "Name": "Stage"
+    },
+    {
+      "Name": "Unit"
+    },
+    {
+      "Name": "UnitGroup"
+    },
+    {
+      "Name": "UnitLevel"
+    },
+    {
+      "Name": "Quest"
+    }
+  ]
 }

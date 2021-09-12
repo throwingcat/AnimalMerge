@@ -7,31 +7,29 @@ using UnityEngine.UI;
 
 public class CellStage : MonoBehaviour
 {
+    public RectTransform Root;
+    public RectTransform Selected;
     public Text Name;
     public List<PartItemCard> Rewards;
-    public GameObject Clear;
-    public GameObject Select;
-    public GameObject Lock;
+    public GameObject Complete;
+    public GameObject New;
     public Stage Stage;
 
     private Action<CellStage> _onClick;
-
-    public enum eState
-    {
-        Lock,
-        Unlock,
-        Clear,
-        None,
-    }
-
-    private eState _state = eState.None;
 
     public void Set(Stage stage, Action<CellStage> onClick)
     {
         Stage = stage;
         _onClick = onClick;
+
         Name.text = string.Format("스테이지 {0}", (stage.Index + 1));
 
+        bool isClear = PlayerTracker.Instance.Contains(stage.key);
+        Complete.SetActive(isClear);
+        New.SetActive(!isClear);
+        SetSelect(false);
+        
+        //보상 설정
         foreach (var reward in Rewards)
             reward.gameObject.SetActive(false);
         for (int i = 0; i < stage.Rewards.Count; i++)
@@ -41,31 +39,37 @@ public class CellStage : MonoBehaviour
         }
     }
 
-    public void SetState(eState state)
+    public void SetSelect(bool isSelected)
     {
-        _state = state;
-        Lock.SetActive(state == eState.Lock);
-        Clear.SetActive(state == eState.Clear);
-    }
+        Selected.gameObject.SetActive(isSelected);
 
-    public void SetSelect(bool isSelect)
-    {
-        Select.SetActive(isSelect);
+        if (isSelected)
+        {
+            //Root 위치 설정
+            var pos = Root.anchoredPosition;
+            pos.x = 597;
+            Root.anchoredPosition = pos;
+            
+            //Selected 위치 설정
+            pos = Selected.anchoredPosition;
+            pos.x = 0;
+            Selected.anchoredPosition = pos;
+        }
+        else
+        {
+            //Root 위치 설정
+            var pos = Root.anchoredPosition;
+            pos.x = 510;
+            Root.anchoredPosition = pos;
+            
+            //Selected 위치 설정
+            pos = Selected.anchoredPosition;
+            pos.x = -200;
+            Selected.anchoredPosition = pos;
+        }
     }
-
     public void OnClick()
     {
-        switch (_state)
-        {
-            case eState.Lock:
-                PartSimpleNotice.Show("아직 진입할 수 없습니다");
-                break;
-            case eState.Unlock:
-            case eState.Clear:
-                _onClick?.Invoke(this);
-                break;
-            case eState.None:
-                break;
-        }
+        _onClick?.Invoke(this);
     }
 }

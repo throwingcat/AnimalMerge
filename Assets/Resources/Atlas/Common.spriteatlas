@@ -59,7 +59,7 @@ SpriteAtlas:
     - {fileID: 102900000, guid: 0dcf213ce157a314080be094c25a343a, type: 3}
     - {fileID: 102900000, guid: faf346794701d2946b6c2c15ba0b2997, type: 3}
     - {fileID: 102900000, guid: 1683a1423fa098848928f6327a3515c7, type: 3}
-    totalSpriteSurfaceArea: 3390441
+    totalSpriteSurfaceArea: 3455977
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -69,6 +69,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 7b048e100553a504a81e81cdd500913e, type: 3}
   - {fileID: 21300000, guid: 5fa61430a06801a4484d5047040632ac, type: 3}
   - {fileID: 21300000, guid: 9da468303806a5f4f9094a6749bff438, type: 3}
+  - {fileID: 21300000, guid: a86baa30cf4de0a4c994443411094043, type: 3}
   - {fileID: 21300000, guid: c5ff8b307f53cab40b9807357e5ab976, type: 3}
   - {fileID: 21300000, guid: 409b9b60610bc58468b9f67fc9874f8b, type: 3}
   - {fileID: 21300000, guid: 0ad40c6030111524da7613e64b1ae619, type: 3}
@@ -182,6 +183,7 @@ SpriteAtlas:
   - 3
   - icon_coin
   - VS_small
+  - img_icon_reset_dummy
   - 9
   - gauge_exp_fg
   - Chest_Silver

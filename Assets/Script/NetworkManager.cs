@@ -422,6 +422,8 @@ public class NetworkManager : MonoSingleton<NetworkManager>
             switch (packet.PacketType)
             {
                 case ePACKET_TYPE.CHEST_COMPLETE:
+                case ePACKET_TYPE.QUEST_COMPLETE:
+                case ePACKET_TYPE.DAILY_QUEST_REWARD:
                 {
                     PacketReward res = MessagePackSerializer.Deserialize<Packet.PacketReward>(bytes, lz4Options);
                     _waitingPacket[guid]?.Invoke(res);

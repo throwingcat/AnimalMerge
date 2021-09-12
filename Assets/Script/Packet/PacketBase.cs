@@ -12,6 +12,9 @@ namespace Packet
         CHEST_PROGRESS,
         CHEST_COMPLETE,
         UNIT_LEVEL_UP,
+        QUEST_COMPLETE,
+        QUEST_REFRESH,
+        DAILY_QUEST_REWARD,
     }
 
     [MessagePackObject]

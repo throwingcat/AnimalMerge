@@ -63,6 +63,7 @@
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_InspectorHelp.cs" />
      <Compile Include="Assets\Script\Data\UnitGroup.cs" />
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RotateCamera.cs" />
+     <Compile Include="Assets\Script\Data\Quest.cs" />
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_LightIntensityFade.cs" />
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo.cs" />
      <Compile Include="Assets\Script\UI\PopupHeroUnlock.cs" />
@@ -70,12 +71,14 @@
      <Compile Include="Assets\Script\Server\DBBase.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ShadowStyle.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUICanvasFitter.cs" />
+     <Compile Include="Assets\Script\UI\PopupGetReward.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\CSVGenerator\CSVGenerator.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\SoftMaskable.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIMultiLoopScroll.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\JoyStick\Script\JoyStick.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UITransitionEffect.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\CSVDataBase.cs" />
+     <Compile Include="Assets\Script\UI\Quest\PartQuestDailyReward.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\MaterialOps.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\Packer.cs" />
      <Compile Include="Assets\Script\SyncManager.cs" />
@@ -109,6 +112,7 @@
      <Compile Include="Assets\Script\Data\SpawnPhase.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIFlow.cs" />
      <Compile Include="Assets\Script\Server\DBPlayerInfo.cs" />
+     <Compile Include="Assets\Script\Data\DailyQuestRewardInfo.cs" />
      <Compile Include="Assets\Script\UI\LoadingScreen.cs" />
      <Compile Include="Assets\Script\UI\Adventure\PanelAdventure.cs" />
      <Compile Include="Assets\Script\UI\Adventure\CellStage.cs" />
@@ -116,6 +120,7 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\SoftMask.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\EffectPlayer.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIFlowText.cs" />
+     <Compile Include="Assets\Script\UI\Quest\CellQeustInfo.cs" />
      <Compile Include="Assets\Script\UI\UIOffsetFlow.cs" />
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Manager\SceneDirector.cs" />
@@ -123,6 +128,7 @@
      <Compile Include="Assets\Submodules\Violet\Violet\Common\CSVReader.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Audio\AudioManager.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\ISoftMask.cs" />
+     <Compile Include="Assets\Script\PlayerData\QuestInfo.cs" />
      <Compile Include="Assets\Script\TextPreset.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIScrollSnap.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\MaterialCache.cs" />
@@ -141,6 +147,7 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIDragRect.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Manager\ResourceManager.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUILetterSpacing.cs" />
+     <Compile Include="Assets\Script\UI\Lobby Page\LobbyPageQuest.cs" />
      <Compile Include="Assets\Script\Passive Skill\PassiveBase.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\MUI\MToggle.cs" />
      <Compile Include="Assets\Script\UI\PartComboPortrait.cs" />
@@ -168,10 +175,12 @@
      <Compile Include="Assets\Submodules\Violet\Violet\Common\FXController.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIToggle.cs" />
      <Compile Include="Assets\Script\UI\Ingame\IngamePlayerPortrait.cs" />
+     <Compile Include="Assets\Script\PlayerData\PlayerBattleTracker.cs" />
      <Compile Include="Assets\Script\Data\EnvironmentValueSheet.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModulePhysics.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPanel.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\SubscribeBase.cs" />
+     <Compile Include="Assets\Script\Server\DBQuestInfo.cs" />
      <Compile Include="Assets\Script\UI\PartSimpleValueUpdate.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\UIEffectBase.cs" />
      <Compile Include="Assets\Script\UI\PopupUnitUpgrade.cs" />
@@ -204,6 +213,7 @@
      <Compile Include="Assets\Script\Active Skill\ActiveShake.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Manager\TableManager.cs" />
      <Compile Include="Assets\Script\Packet\PacketBase.cs" />
+     <Compile Include="Assets\Script\Data\PlayerTrackerInfo.cs" />
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutoDestructShuriken.cs" />
      <Compile Include="Assets\Script\Uitls\DOTweenPlayer.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIDissolve.cs" />

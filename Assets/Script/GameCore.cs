@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using BackEnd;
 using Define;
 using DG.Tweening;
+using Newtonsoft.Json;
 using Packet;
 using SheetData;
 using UnityEngine;
@@ -21,8 +22,8 @@ public class GameCore : MonoBehaviour
 
     protected float HorizontalSpawnLimit =>
         (float) (500f - EnvironmentValue.UNIT_BASE_SIZE * CurrentReadyUnit.Sheet.size *
-        EnvironmentValue.WORLD_RATIO);
-    
+            EnvironmentValue.WORLD_RATIO);
+
     protected virtual void Initialize()
     {
         #region 데이터 초기화
@@ -45,6 +46,7 @@ public class GameCore : MonoBehaviour
         SpawnPhase = SpawnPhase.DefaultPhase;
         NextUnitList.Clear();
 
+        PlayerBattleTracker.Clear();
         //플레이어가 선택한 유닛 그룹 초기화
         PlayerUnitGroupList.Clear();
         var unitTable = TableManager.Instance.GetTable<Unit>();
@@ -265,6 +267,8 @@ public class GameCore : MonoBehaviour
                 if (BadUnits[i].GUID == unit.GUID)
                 {
                     BadUnits.RemoveAt(i);
+                    if (IsPlayer)
+                        PlayerBattleTracker.Update(PlayerBattleTracker.REMOVE_BAD_BLOCK, 1);
                     break;
                 }
 
@@ -313,6 +317,17 @@ public class GameCore : MonoBehaviour
 
         //콤보 상승
         Combo++;
+
+        if (IsPlayer)
+        {
+            if (Combo <= 3)
+                PlayerBattleTracker.Update(PlayerBattleTracker.COMBO3, 1);
+            if (Combo <= 7)
+                PlayerBattleTracker.Update(PlayerBattleTracker.COMBO7, 1);
+            if (Combo <= 10)
+                PlayerBattleTracker.Update(PlayerBattleTracker.COMBO10, 1);
+            PlayerBattleTracker.UpdateMax(PlayerBattleTracker.MAX_COMBO, Combo);
+        }
 
         //콤보 출력
         OnAfterMergeEvent(a, b, Combo);
@@ -397,14 +412,17 @@ public class GameCore : MonoBehaviour
 
         remove_bad_units.Clear();
 
-        var comboBonus = Combo > 2 ? 18 * Combo : 0;
+        //var comboBonus = Combo > 3 ? 3 * Combo : 0;
         var unitDamage = Utils.GetUnitDamage(a.Sheet.score, a.Info.Level);
-        int badBlock = (int) ((unitDamage * Combo + comboBonus) * SuddenDeathRatio(_elapsedGameTimer));
+        int badBlock = (int) ((unitDamage * Combo) * SuddenDeathRatio(_elapsedGameTimer));
 
         //내 방해블록 제거
         if (0 < MyBadBlockValue)
         {
             MyBadBlockValue -= badBlock;
+
+            if (IsPlayer)
+                PlayerBattleTracker.Update(PlayerBattleTracker.DEFENCE_DAMAGE, badBlock);
 
             //내 방해블록 제거 + 상대방에게 공격
             if (MyBadBlockValue <= 0)
@@ -412,6 +430,8 @@ public class GameCore : MonoBehaviour
                 AttackBadBlockValue = Mathf.Abs(MyBadBlockValue);
 
                 if (IsPlayer)
+                {
+                    PlayerBattleTracker.Update(PlayerBattleTracker.DEFENCE_DAMAGE, MyBadBlockValue);
                     PlayMergeAttackVFX(a.transform.position, PanelIngame.MyBadBlockVFXPoint.position, 0.5f, () =>
                     {
                         //블록 갱신
@@ -421,20 +441,29 @@ public class GameCore : MonoBehaviour
                             PanelIngame.EnemyBadBlockVFXPoint.position,
                             0.5f, () => { });
                     });
+                }
             }
             //내 방해블록만 제거
             else
             {
                 if (IsPlayer)
+                {
+                    PlayerBattleTracker.Update(PlayerBattleTracker.DEFENCE_DAMAGE, badBlock);
+
                     PlayMergeAttackVFX(a.transform.position, PanelIngame.MyBadBlockVFXPoint.position, 0.5f,
                         () => { RefreshBadBlockUI(); });
+                }
             }
         }
         //상대방에게 공격
         else
         {
             if (IsPlayer)
+            {
+                if (IsPlayer)
+                    PlayerBattleTracker.Update(PlayerBattleTracker.ATTACK_DAMAGE, badBlock);
                 PlayMergeAttackVFX(a.transform.position, PanelIngame.EnemyBadBlockVFXPoint.position, 0.5f, () => { });
+            }
 
             AttackBadBlockValue += badBlock;
         }
@@ -726,11 +755,11 @@ public class GameCore : MonoBehaviour
     private float _badBlockTimerDelta;
 
     private int _badBlockMaxDropOneTime =>
-        (int)Mathf.Clamp(
+        (int) Mathf.Clamp(
             EnvironmentValue.BAD_BLOCK_DROP_COUNT_MIN +
             (_elapsedGameTimer * EnvironmentValue.BAD_BLOCK_INCREASE_DROP_COUNT_PER_SECOND),
             EnvironmentValue.BAD_BLOCK_DROP_COUNT_MIN, EnvironmentValue.BAD_BLOCK_DROP_COUNT_MAX);
-    
+
     private readonly List<List<Vector3>> Floors = new List<List<Vector3>>();
 
 
@@ -848,7 +877,8 @@ public class GameCore : MonoBehaviour
 
                 CurrentReadyUnit.transform.localPosition =
                     new Vector3(
-                        Mathf.Clamp(CurrentReadyUnit.transform.localPosition.x, -HorizontalSpawnLimit, HorizontalSpawnLimit),
+                        Mathf.Clamp(CurrentReadyUnit.transform.localPosition.x, -HorizontalSpawnLimit,
+                            HorizontalSpawnLimit),
                         CurrentReadyUnit.transform.localPosition.y,
                         CurrentReadyUnit.transform.localPosition.z);
             }
@@ -870,6 +900,8 @@ public class GameCore : MonoBehaviour
         if (CurrentReadyUnit != null)
         {
             CurrentReadyUnit.Drop(true);
+            if (IsPlayer)
+                PlayerBattleTracker.Update(PlayerBattleTracker.DROP_BLOCK, 1);
             UnitsInField.Add(CurrentReadyUnit);
             CurrentReadyUnit = null;
             _unitSpawnDelayDelta = EnvironmentValue.UNIT_SPAWN_DELAY;
@@ -1086,6 +1118,14 @@ public class GameCore : MonoBehaviour
             //모험모드 스테이지 데이터
             if (GameManager.Instance.isAdventure)
                 packet.hash.Add("stage", GameManager.Instance.StageKey);
+
+            //전투 진행 트래킹 추가
+            PlayerBattleTracker.Update(PlayerBattleTracker.BATTLE_PLAY, 1);
+            //전투 승리 트래킹 추가
+            if (isWin)
+                PlayerBattleTracker.Update(PlayerBattleTracker.BATTLE_WIN, 1);
+            //트랙커 정보 
+            packet.hash.Add("tracker_json", JsonConvert.SerializeObject(PlayerBattleTracker.Tracker));
 
             var beforeScore = PlayerInfo.Instance.RankScore;
             NetworkManager.Instance.Request(packet, res =>

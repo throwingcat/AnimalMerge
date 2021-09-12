@@ -18,7 +18,8 @@ public class PanelLobby : SUIPanel
         base.OnShow();
 
         Matching.SetActive(false);
-
+        var pages = GetComponentsInChildren<LobbyPageBase>();
+        Page = new List<LobbyPageBase>(pages);
         Page.Sort((a, b) =>
         {
             if (a.Index < b.Index) return -1;

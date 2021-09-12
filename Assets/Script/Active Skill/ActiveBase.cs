@@ -9,7 +9,6 @@ public class ActiveBase
     public List<UnitBase> UnitsInField => Core.UnitsInField;
 
 
-    
     public PanelIngame PanelIngame => Core.IsPlayer ? Core.PanelIngame : null;
     public Canvas Canvas => Core.Canvas;
     public GameCore Core;
@@ -17,6 +16,7 @@ public class ActiveBase
     public float Progress => Point / (float) EnvironmentValue.SKILL_CHARGE_MAX_VALUE;
 
     public bool isEnable => EnvironmentValue.SKILL_CHARGE_MAX_VALUE <= Point;
+
     public ActiveBase(GameCore core)
     {
         Core = core;
@@ -26,18 +26,19 @@ public class ActiveBase
     {
         Point += value;
     }
-    
+
     public void Run()
     {
         if (Point < EnvironmentValue.SKILL_CHARGE_MAX_VALUE) return;
         if (RunProcess())
+        {
+            PlayerBattleTracker.Update(PlayerBattleTracker.USE_SKILL, 1);
             Point = 0;
-
+        }
     }
 
     protected virtual bool RunProcess()
     {
         return true;
     }
-
 }

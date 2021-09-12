@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using BackEnd;
 using LitJson;
 using Newtonsoft.Json;
@@ -38,11 +36,11 @@ namespace Server
 
             isReservedUpdate = false;
         }
-        
+
         public override void Download(Action onFinishDownload)
         {
             SendQueue.Enqueue(Backend.GameData.GetMyData, DB_KEY(),
-                new Where(), 10, bro =>
+                new Where(), 1, bro =>
                 {
                     if (bro.IsSuccess() == false)
                     {

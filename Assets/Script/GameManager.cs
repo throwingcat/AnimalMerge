@@ -221,6 +221,12 @@ public class GameManager : MonoBehaviour
         while (isDone == false)
             yield return null;
         isDone = false;
+        
+        Debug.Log("Download QuestInfo");
+        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBQuestInfo>(() => { isDone = true; });
+        while (isDone == false)
+            yield return null;
+        isDone = false;
     }
 
     public void ChangeGameState(eGAME_STATE state)
