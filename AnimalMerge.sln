@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagePack", "MessagePack.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LunarConsole", "LunarConsole.csproj", "{1067a6a7-68bf-a9f5-6bf9-3f3c41685e3b}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coffee.SoftMaskForUGUI", "Coffee.SoftMaskForUGUI.csproj", "{a38124eb-0139-0416-d58b-aaf76c7d219a}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CFXRDemo", "CFXRDemo.csproj", "{90098972-9133-f76e-b59d-8c7278d8a911}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CFXRRuntime", "CFXRRuntime.csproj", "{f1580a4b-0e7f-8cd4-bfd5-a48861788752}"
@@ -26,8 +24,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CFXRDemoEditor", "CFXRDemoEditor.csproj", "{a0000048-48df-36c2-1e91-c7669505ac87}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CFXREditor", "CFXREditor.csproj", "{cb0c5c62-3126-4983-743e-7846da511a1f}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coffee.SoftMaskForUGUI.Editor", "Coffee.SoftMaskForUGUI.Editor.csproj", "{81402af7-e1f7-c3ee-3160-fd45120cecfa}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +43,6 @@ Global
 		{1067a6a7-68bf-a9f5-6bf9-3f3c41685e3b}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1067a6a7-68bf-a9f5-6bf9-3f3c41685e3b}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1067a6a7-68bf-a9f5-6bf9-3f3c41685e3b}.Release|Any CPU.Build.0 = Release|Any CPU
-		{a38124eb-0139-0416-d58b-aaf76c7d219a}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{a38124eb-0139-0416-d58b-aaf76c7d219a}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{a38124eb-0139-0416-d58b-aaf76c7d219a}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{a38124eb-0139-0416-d58b-aaf76c7d219a}.Release|Any CPU.Build.0 = Release|Any CPU
 		{90098972-9133-f76e-b59d-8c7278d8a911}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{90098972-9133-f76e-b59d-8c7278d8a911}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90098972-9133-f76e-b59d-8c7278d8a911}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -87,10 +79,6 @@ Global
 		{cb0c5c62-3126-4983-743e-7846da511a1f}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{cb0c5c62-3126-4983-743e-7846da511a1f}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{cb0c5c62-3126-4983-743e-7846da511a1f}.Release|Any CPU.Build.0 = Release|Any CPU
-		{81402af7-e1f7-c3ee-3160-fd45120cecfa}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{81402af7-e1f7-c3ee-3160-fd45120cecfa}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{81402af7-e1f7-c3ee-3160-fd45120cecfa}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{81402af7-e1f7-c3ee-3160-fd45120cecfa}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

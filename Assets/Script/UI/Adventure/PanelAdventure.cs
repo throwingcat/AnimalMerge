@@ -326,7 +326,7 @@ public class PanelAdventure : SUIPanel
         if (isEnable)
         {
             PrevChapterButton.SetActive(0 < CurrentChapterIndex);
-            NextChapterButton.SetActive(CurrentChapterIndex < _chapters.Count);
+            NextChapterButton.SetActive(CurrentChapterIndex < (_chapters.Count - 1));
         }
         else
         {

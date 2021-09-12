@@ -17,7 +17,7 @@ public class GameCore : MonoBehaviour
     #region Environment
 
     [Header("환경")] public string INGAME_BGM;
-
+    public GameObject BattleCameraGroup;
     #endregion
 
     protected float HorizontalSpawnLimit =>
@@ -113,9 +113,12 @@ public class GameCore : MonoBehaviour
     public virtual void Initialize(bool isPlayer)
     {
         IsPlayer = isPlayer;
-
+        
         Initialize();
 
+        //게임 카메라 루트 활성화
+        BattleCameraGroup.SetActive(true);
+        
         //사운드 초기화
         AudioManager.Instance.ChangeBGMVolume(0.3f);
         AudioManager.Instance.ChangeSFXVolume(0.3f);
@@ -540,15 +543,6 @@ public class GameCore : MonoBehaviour
         Active.Charge(value);
         if (IsPlayer)
             PanelIngame.RefreshSkillGauge(Active.Progress);
-    }
-
-    public void OnLeave()
-    {
-        if (PlayerScreen)
-        {
-            PlayerScreen.SetActive(false);
-            EnemyScreen.gameObject.SetActive(false);
-        }
     }
 
     #region VFX
@@ -1201,6 +1195,7 @@ public class GameCore : MonoBehaviour
         {
             PlayerScreen.SetActive(false);
             EnemyScreen.gameObject.SetActive(false);
+            BattleCameraGroup.SetActive(false);
             SetEnableDeadline(false);
             PanelIngame.Clear();
             ingameDynamicCanvas.Exit();

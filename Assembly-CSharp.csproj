@@ -73,13 +73,11 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUICanvasFitter.cs" />
      <Compile Include="Assets\Script\UI\PopupGetReward.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\CSVGenerator\CSVGenerator.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\SoftMaskable.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIMultiLoopScroll.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\JoyStick\Script\JoyStick.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UITransitionEffect.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\CSVDataBase.cs" />
      <Compile Include="Assets\Script\UI\Quest\PartQuestDailyReward.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\MaterialOps.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\Packer.cs" />
      <Compile Include="Assets\Script\SyncManager.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Audio\AudioItem.cs" />
@@ -117,7 +115,6 @@
      <Compile Include="Assets\Script\UI\Adventure\PanelAdventure.cs" />
      <Compile Include="Assets\Script\UI\Adventure\CellStage.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIFitter.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\SoftMask.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\EffectPlayer.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIFlowText.cs" />
      <Compile Include="Assets\Script\UI\Quest\CellQeustInfo.cs" />
@@ -127,7 +124,6 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIEffectCapturedImage.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\CSVReader.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Audio\AudioManager.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\ISoftMask.cs" />
      <Compile Include="Assets\Script\PlayerData\QuestInfo.cs" />
      <Compile Include="Assets\Script\TextPreset.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIScrollSnap.cs" />
@@ -171,7 +167,6 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ParameterTexture.cs" />
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_Translate.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\UI\PartCurtain.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\MaterialReplacements.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\FXController.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIToggle.cs" />
      <Compile Include="Assets\Script\UI\Ingame\IngamePlayerPortrait.cs" />
@@ -239,27 +234,18 @@
      <Compile Include="Assets\Script\UI\PanelLobby.cs" />
      <Compile Include="Assets\Script\UI\PartSimpleNotice.cs" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\SoftMask.cginc" />
      <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Glow.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Dissolve.shader" />
      <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Ubershader.shader" />
      <None Include="Assets\JMO Assets\Cartoon FX (legacy)\Shaders\CFXM_MobileParticleAB_Alpha8.shader" />
      <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR_SETTINGS.cginc" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Shaders\SoftMaskTemplate.cginc" />
      <None Include="Assets\LunarConsole\readme.txt" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\Shaders\TMP_SDF (SoftMaskable).shader" />
      <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR.cginc" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect.cginc" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\Shaders\TMP_Sprite (SoftMaskable).shader" />
      <None Include="Assets\JMO Assets\Cartoon FX Easy Editor\CartoonFX Easy Editor Readme.txt" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Transition.shader" />
      <None Include="Assets\JMO Assets\Cartoon FX (legacy)\CartoonFX Readme.txt" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\Shaders\TMP_SDF-Mobile (SoftMaskable).shader" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Shaders\SoftMask.cginc" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Shaders\SoftMaskETC1.shader" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\Shaders\Resources\UI-Default-SoftMask.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect.shader" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMaskForUGUI\Shaders\Resources\SoftMask.shader" />
      <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Prefabs\Texts\_Make your own text effect.txt" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-EffectCapture.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\readme.txt" />
@@ -269,7 +255,6 @@
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Shaders\UIAdditive.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\readme.txt" />
      <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Procedural Ring.shader" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Shaders\SoftMask.shader" />
      <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR_URP.cginc" />
      <None Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_WaterWiggle.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-HSV.shader" />
@@ -962,10 +947,6 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Coffee.SoftMaskForUGUI.Editor.csproj">
-      <Project>{81402af7-e1f7-c3ee-3160-fd45120cecfa}</Project>
-      <Name>Coffee.SoftMaskForUGUI.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="CFXRDemoEditor.csproj">
       <Project>{a0000048-48df-36c2-1e91-c7669505ac87}</Project>
       <Name>CFXRDemoEditor</Name>
@@ -981,10 +962,6 @@
     <ProjectReference Include="LunarConsoleEditor.csproj">
       <Project>{c9f8e04d-e9e1-8195-3c36-995387e41d4c}</Project>
       <Name>LunarConsoleEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Coffee.SoftMaskForUGUI.csproj">
-      <Project>{a38124eb-0139-0416-d58b-aaf76c7d219a}</Project>
-      <Name>Coffee.SoftMaskForUGUI</Name>
     </ProjectReference>
     <ProjectReference Include="MessagePack.csproj">
       <Project>{2618d3d5-7a04-4dc7-ba81-fe7e6ec15d12}</Project>

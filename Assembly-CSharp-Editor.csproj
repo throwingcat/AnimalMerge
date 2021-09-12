@@ -73,7 +73,6 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\Editor\SUITouchableInspector.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\Editor\SUIToggleInspector.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Editor\UIEffectCapturedImageEditor.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SoftMask\Scripts\Editor\SoftMaskEditor.cs" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DemiLib\Core\Editor\DemiEditor.xml" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -807,10 +806,6 @@
       <Project>{5f280f4f-ded8-c4e3-9383-451a5a520da2}</Project>
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
-    <ProjectReference Include="Coffee.SoftMaskForUGUI.Editor.csproj">
-      <Project>{81402af7-e1f7-c3ee-3160-fd45120cecfa}</Project>
-      <Name>Coffee.SoftMaskForUGUI.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="CFXRDemoEditor.csproj">
       <Project>{a0000048-48df-36c2-1e91-c7669505ac87}</Project>
       <Name>CFXRDemoEditor</Name>
@@ -826,10 +821,6 @@
     <ProjectReference Include="LunarConsoleEditor.csproj">
       <Project>{c9f8e04d-e9e1-8195-3c36-995387e41d4c}</Project>
       <Name>LunarConsoleEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Coffee.SoftMaskForUGUI.csproj">
-      <Project>{a38124eb-0139-0416-d58b-aaf76c7d219a}</Project>
-      <Name>Coffee.SoftMaskForUGUI</Name>
     </ProjectReference>
     <ProjectReference Include="MessagePack.csproj">
       <Project>{2618d3d5-7a04-4dc7-ba81-fe7e6ec15d12}</Project>
