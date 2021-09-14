@@ -13,11 +13,11 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{5f280f4f-ded8-c4e3-9383-451a5a520da2}</ProjectGuid>
+    <ProjectGuid>{304d171c-f4e7-4680-7776-c8e8aa6771cd}</ProjectGuid>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -52,213 +52,37 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Script\PlayerData\ChestInventory.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Manager\UIManager.cs" />
-     <Compile Include="Assets\Script\UI\Ingame\VFXCombo.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\DOTweenProShortcuts.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\MonoObjectPool.cs" />
-     <Compile Include="Assets\Script\Data\Item.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\DOTweenTextMeshPro.cs" />
-     <Compile Include="Assets\Script\Server\DBChestInventory.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_InspectorHelp.cs" />
-     <Compile Include="Assets\Script\Data\UnitGroup.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RotateCamera.cs" />
-     <Compile Include="Assets\Script\Data\Quest.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_LightIntensityFade.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo.cs" />
-     <Compile Include="Assets\Script\UI\PopupHeroUnlock.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\Define.cs" />
-     <Compile Include="Assets\Script\Server\DBBase.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ShadowStyle.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUICanvasFitter.cs" />
-     <Compile Include="Assets\Script\UI\PopupGetReward.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\CSVGenerator\CSVGenerator.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIMultiLoopScroll.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\JoyStick\Script\JoyStick.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UITransitionEffect.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\CSVDataBase.cs" />
-     <Compile Include="Assets\Script\UI\Quest\PartQuestDailyReward.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\Packer.cs" />
-     <Compile Include="Assets\Script\SyncManager.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Audio\AudioItem.cs" />
-     <Compile Include="Assets\Script\UI\PopupGameResult.cs" />
-     <Compile Include="Assets\Script\EnemyScreen.cs" />
-     <Compile Include="Assets\Script\UI\PanelIngame.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIHsvModifier.cs" />
-     <Compile Include="Assets\Script\UI\PartItemCard.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\MaterialResolver.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIShiny.cs" />
-     <Compile Include="Assets\Script\UI\PopupChestOpen.cs" />
-     <Compile Include="Assets\Script\Active Skill\ActiveBase.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ColorMode.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutoRotate.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ToneMode.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIEffect.cs" />
-     <Compile Include="Assets\Script\UI\Ingame\IngameBadBlock.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIGradient.cs" />
-     <Compile Include="Assets\Script\Data\Hero.cs" />
-     <Compile Include="Assets\Script\Data\Partial\SpawnPhase.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutodestructWhenNoChildren.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\EditorCoroutine\EditorCoroutines.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Manager\MonoBehaviourPool.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\EditorCoroutine\EditorCoroutineExtensions.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Spawn System\CFX_SpawnSystem.cs" />
-     <Compile Include="Assets\Script\UI\Lobby Page\LobbyPageMain.cs" />
-     <Compile Include="Assets\Script\UI\PopupUnitInfo.cs" />
-     <Compile Include="Assets\Script\Server\DBPlayerTracker.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIButton.cs" />
-     <Compile Include="Assets\Script\Data\SpawnPhase.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIFlow.cs" />
-     <Compile Include="Assets\Script\Server\DBPlayerInfo.cs" />
-     <Compile Include="Assets\Script\Data\DailyQuestRewardInfo.cs" />
-     <Compile Include="Assets\Script\UI\LoadingScreen.cs" />
-     <Compile Include="Assets\Script\UI\Adventure\PanelAdventure.cs" />
-     <Compile Include="Assets\Script\UI\Adventure\CellStage.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIFitter.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\EffectPlayer.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIFlowText.cs" />
-     <Compile Include="Assets\Script\UI\Quest\CellQeustInfo.cs" />
-     <Compile Include="Assets\Script\UI\UIOffsetFlow.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Manager\SceneDirector.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIEffectCapturedImage.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\CSVReader.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Audio\AudioManager.cs" />
-     <Compile Include="Assets\Script\PlayerData\QuestInfo.cs" />
-     <Compile Include="Assets\Script\TextPreset.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIScrollSnap.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\MaterialCache.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUISlider.cs" />
-     <Compile Include="Assets\Script\PlayerData\PlayerInfo.cs" />
-     <Compile Include="Assets\Script\Data\Unit.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
-     <Compile Include="Assets\Script\PartBase.cs" />
-     <Compile Include="Assets\Script\Server\DBUnitInventory.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\StringUtils.cs" />
-     <Compile Include="Assets\Script\PlayerData\UnitInventory.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModulePhysics2D.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
-     <Compile Include="Assets\Script\PlayerData\PlayerTracker.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\DOTweenTk2d.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIDragRect.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Manager\ResourceManager.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUILetterSpacing.cs" />
-     <Compile Include="Assets\Script\UI\Lobby Page\LobbyPageQuest.cs" />
-     <Compile Include="Assets\Script\Passive Skill\PassiveBase.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\MUI\MToggle.cs" />
-     <Compile Include="Assets\Script\UI\PartComboPortrait.cs" />
-     <Compile Include="Assets\Script\UI\PopupLogin.cs" />
-     <Compile Include="Assets\Script\UI\PartLobbyChest.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\CSVGenerator\CSVDownloadConfig.cs" />
-     <Compile Include="Assets\Script\PlayerData\Inventory.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDir.cs" />
-     <Compile Include="Assets\Script\Server\DBInventory.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUITouchable.cs" />
-     <Compile Include="Assets\Script\UI\Lobby Page\LobbyPageCollection.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\EffectArea.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\Singleton.cs" />
-     <Compile Include="Assets\Script\Data\Stage.cs" />
-     <Compile Include="Assets\Script\AICore.cs" />
-     <Compile Include="Assets\Script\Data\Chapter.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPressButton.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\ICSVDataBase.cs" />
-     <Compile Include="Assets\Script\NetworkManager.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUILoopScroll.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ParameterTexture.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_Translate.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\UI\PartCurtain.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\FXController.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIToggle.cs" />
-     <Compile Include="Assets\Script\UI\Ingame\IngamePlayerPortrait.cs" />
-     <Compile Include="Assets\Script\PlayerData\PlayerBattleTracker.cs" />
-     <Compile Include="Assets\Script\Data\EnvironmentValueSheet.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModulePhysics.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPanel.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\SubscribeBase.cs" />
-     <Compile Include="Assets\Script\Server\DBQuestInfo.cs" />
-     <Compile Include="Assets\Script\UI\PartSimpleValueUpdate.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\UIEffectBase.cs" />
-     <Compile Include="Assets\Script\UI\PopupUnitUpgrade.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
-     <Compile Include="Assets\Script\Data\Partial\Stage.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleSprite.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_ShurikenThreadFix.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\Utils.cs" />
-     <Compile Include="Assets\Script\Server\AnimalMergeServer.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\MonoObjectPoolManager.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
-     <Compile Include="Assets\Script\Unit\SyncUnitBase.cs" />
-     <Compile Include="Assets\Script\UI\SlicedFilledImage.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleUI.cs" />
-     <Compile Include="Assets\Script\Passive Skill\CatPassive.cs" />
-     <Compile Include="Assets\Script\UI\Ingame\IngameDynamicCanvas.cs" />
-     <Compile Include="Assets\Script\Data\Partial\Unit.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\JoyStick\Script\JoyStickReceiver.cs" />
-     <Compile Include="Assets\Script\UI\PopupChestUnlock.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_New.cs" />
-     <Compile Include="Assets\Script\GameManager.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Common\Logger.cs" />
-     <Compile Include="Assets\Script\Uitls\CameraResolution.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIShadow.cs" />
-     <Compile Include="Assets\Script\Data\Localization.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\CSVGenerator\CSVDownloader.cs" />
-     <Compile Include="Assets\Script\Define.cs" />
-     <Compile Include="Assets\TheBackend\Toolkit\SendQueueMgr.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUITween.cs" />
-     <Compile Include="Assets\Script\Active Skill\ActiveShake.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Manager\TableManager.cs" />
-     <Compile Include="Assets\Script\Packet\PacketBase.cs" />
-     <Compile Include="Assets\Script\Data\PlayerTrackerInfo.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutoDestructShuriken.cs" />
-     <Compile Include="Assets\Script\Uitls\DOTweenPlayer.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIDissolve.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\UI\CanvasLayerTag.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleAudio.cs" />
-     <Compile Include="Assets\Script\Data\Partial\EnvironmentValueSheet.cs" />
-     <Compile Include="Assets\Script\UI\Adventure\CellChapter.cs" />
-     <Compile Include="Assets\Script\Data\Chest.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\BlurMode.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\Matrix2x3.cs" />
-     <Compile Include="Assets\Script\Data\ItemInfo.cs" />
-     <Compile Include="Assets\Script\Data\UnitLevel.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIDragSlider.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\UI\UITracker.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\Manager\RenderTextureManager.cs" />
-     <Compile Include="Assets\Script\Unit\UnitBase.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\CSVGenerator\CSVDownloadConfigCore.cs" />
-     <Compile Include="Assets\Script\GameCore.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIFlip.cs" />
-     <Compile Include="Assets\Script\UI\Lobby Page\LobbyPageBase.cs" />
-     <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPanelInfo.cs" />
-     <Compile Include="Assets\Script\Uitls\ScrollRectDisableDrag.cs" />
-     <Compile Include="Assets\Script\UI\PanelLobby.cs" />
-     <Compile Include="Assets\Script\UI\PartSimpleNotice.cs" />
-     <Compile Include="Assets\Script\UI\Adventure\ChapterScrollViewBank.cs" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
-     <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Glow.shader" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Dissolve.shader" />
-     <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Ubershader.shader" />
-     <None Include="Assets\JMO Assets\Cartoon FX (legacy)\Shaders\CFXM_MobileParticleAB_Alpha8.shader" />
-     <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR_SETTINGS.cginc" />
-     <None Include="Assets\LunarConsole\readme.txt" />
-     <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR.cginc" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect.cginc" />
-     <None Include="Assets\JMO Assets\Cartoon FX Easy Editor\CartoonFX Easy Editor Readme.txt" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Transition.shader" />
-     <None Include="Assets\JMO Assets\Cartoon FX (legacy)\CartoonFX Readme.txt" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect.shader" />
-     <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Prefabs\Texts\_Make your own text effect.txt" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-EffectCapture.shader" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\readme.txt" />
-     <None Include="Assets\JMO Assets\Cartoon FX Remaster\Readme Cartoon FX Remaster.txt" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DemiLib\Core\DemiLib.xml" />
-     <None Include="Assets\JMO Assets\Cartoon FX (legacy)\Shaders\CFXM_MobileParticleAdd_Alpha8.shader" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Shaders\UIAdditive.shader" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\readme.txt" />
-     <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Procedural Ring.shader" />
-     <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR_URP.cginc" />
-     <None Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_WaterWiggle.shader" />
-     <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-HSV.shader" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\ListContentManager.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\ColorStrListBox.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\ListEvent.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\MovementCtrl\VelocityMovementCurve.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\DisplayAndSelectExample.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\SpriteStringListBank.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\VariableStringListBank.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\MovementCtrl\DistanceMovementCurve.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\MovementCtrl\UnitMovementCtrl.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\StringStarListBox.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\FPSLimiter.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\SpriteStringListBox.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\AnimationCurveUtils\DeltaTimeCurve.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\FactorUtility.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\ListBox.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\ColorStrListBank.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\StringStarListBank.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\BoxTransformCtrl\LinearBoxTransformCtrl.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\ListIteration.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\MovementCtrl\FreeMovementCtrl.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\FewerContentListBank.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\BoxTransformCtrl\IBoxTransformCtrl.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\AnimationCurveUtils\RangeMappingCurve.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\CircularScrollingList.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\IntListBox.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\StringListBox.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\ListPositionCtrl.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\IntListBank.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\ListBank.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\CircularScrollingListSetting.cs" />
+     <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\MovementCtrl\IMovementCtrl.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Unity HUB/2020.3.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
@@ -948,10 +772,6 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{304d171c-f4e7-4680-7776-c8e8aa6771cd}</Project>
-      <Name>Assembly-CSharp-firstpass</Name>
-    </ProjectReference>
     <ProjectReference Include="CFXRDemoEditor.csproj">
       <Project>{a0000048-48df-36c2-1e91-c7669505ac87}</Project>
       <Name>CFXRDemoEditor</Name>
