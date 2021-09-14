@@ -12679,12 +12679,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97bc2ebab6563400c95b036136d26ea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Inverse: 0
-  m_MaskInteraction: 85
-  m_UseStencil: 0
-  _graphic: {fileID: 647967574}
-  _softMask: {fileID: 0}
-  _maskMaterial: {fileID: 0}
 --- !u!114 &647967574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30346,12 +30340,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97bc2ebab6563400c95b036136d26ea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Inverse: 0
-  m_MaskInteraction: 85
-  m_UseStencil: 0
-  _graphic: {fileID: 1746294135}
-  _softMask: {fileID: 0}
-  _maskMaterial: {fileID: 0}
 --- !u!114 &1746294135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37727,18 +37715,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1092462009}
     m_Modifications:
-    - target: {fileID: 680910451109505359, guid: 0d2d45cacac32f042a170e2d5a134364, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1339660326141236984, guid: 0d2d45cacac32f042a170e2d5a134364, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1747508781601326557, guid: 0d2d45cacac32f042a170e2d5a134364, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 2510390600943251554, guid: 0d2d45cacac32f042a170e2d5a134364, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -37831,17 +37807,25 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3196350438312167144, guid: 0d2d45cacac32f042a170e2d5a134364, type: 3}
-      propertyPath: m_Material
+    - target: {fileID: 7810654923317087771, guid: 0d2d45cacac32f042a170e2d5a134364, type: 3}
+      propertyPath: _setting._onBoxClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 6263883638141942076, guid: 0d2d45cacac32f042a170e2d5a134364, type: 3}
-      propertyPath: m_Material
+    - target: {fileID: 7810654923317087771, guid: 0d2d45cacac32f042a170e2d5a134364, type: 3}
+      propertyPath: _setting._onBoxClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7810654923317087771, guid: 0d2d45cacac32f042a170e2d5a134364, type: 3}
+      propertyPath: _setting._onBoxClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 7246952670775602593, guid: 0d2d45cacac32f042a170e2d5a134364, type: 3}
-      propertyPath: m_Material
-      value: 
+    - target: {fileID: 7810654923317087771, guid: 0d2d45cacac32f042a170e2d5a134364, type: 3}
+      propertyPath: _setting._onBoxClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PanelAdventure, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7810654923317087771, guid: 0d2d45cacac32f042a170e2d5a134364, type: 3}
+      propertyPath: _setting._onBoxClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d2d45cacac32f042a170e2d5a134364, type: 3}

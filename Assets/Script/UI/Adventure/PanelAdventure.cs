@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AirFishLab.ScrollingList;
 using DG.Tweening;
 using SheetData;
 using UnityEngine;
@@ -7,10 +8,10 @@ using Violet;
 
 public class PanelAdventure : SUIPanel
 {
-    private List<CellStage> _stages = new List<CellStage>();
     public List<CellChapter> CellChapters = new List<CellChapter>();
-    private List<Chapter> _chapters = new List<Chapter>();
-
+    private List<CellStage> _stages = new List<CellStage>();
+    public List<Chapter> Chapters = new List<Chapter>();
+    public CircularScrollingList ChapterScrollView;
     public RectTransform ChapterRoot;
     public RectTransform StageRoot;
 
@@ -22,72 +23,48 @@ public class PanelAdventure : SUIPanel
     public GameObject NextChapterButton;
 
     public int CurrentChapterIndex;
-    public int PrevChapterIndex = -1;
     public Chapter CurrentChapter;
     public Stage CurrentStage;
     public Text StageLevel;
     public GameObject StageScrollRoot;
     public ScrollRect StageScrollView;
 
-    private ulong _moveChapterScrollInvokeID = 0L;
-    private List<Tweener> _moveChapterTwwenTweeners = new List<Tweener>();
-
+    private bool _isInitialize = false;
     protected override void OnShow()
     {
         base.OnShow();
-
+        _isInitialize = false;
         CurrentChapterIndex = -1;
-        PrevChapterIndex = 0;
-        Information.SetActive(false);
-
+        var bank = ChapterScrollView.listBank as ChapterScrollViewBank;
+        bank.Initialize(this);
+        ChapterScrollView.OnBeginDragEvent = OnBeginDrag;
+        
+        var table = TableManager.Instance.GetTable<Chapter>();
+        Chapters = new List<Chapter>();
+        foreach (var row in table)
+            Chapters.Add(row.Value as Chapter);
+        foreach (var chapter in CellChapters)
+            chapter.SetOnClickEvent(OnClickChapter);
+        
         var pos = ChapterRoot.anchoredPosition;
         pos.y = -66;
         ChapterRoot.anchoredPosition = pos;
-
+        Information.SetActive(false);
+        
         StageRoot.gameObject.SetActive(false);
         pos = StageRoot.anchoredPosition;
         pos.y = -1750;
         StageRoot.anchoredPosition = pos;
-
-        Initialize();
     }
 
-    public void Initialize()
+    void Update()
     {
-        var table = TableManager.Instance.GetTable<Chapter>();
-        _chapters = new List<Chapter>();
-        foreach (var row in table)
-            _chapters.Add(row.Value as Chapter);
-
-        foreach (var cell in CellChapters)
-            cell.Initialize();
-
-        // var need = sheet.Count - _chapters.Count;
-        //
-        // for (var i = 0; i < need; i++)
-        // {
-        //     var cell = Instantiate(CellChapterPrefab);
-        //     cell.transform.SetParent(ChapterScrollRoot.transform);
-        //     cell.transform.LocalReset();
-        //     _chapters.Add(cell);
-        // }
-        //
-        // foreach (var cell in _chapters)
-        //     cell.gameObject.SetActive(false);
-        //
-        // var index = 0;
-        // foreach (var row in sheet)
-        // {
-        //     var chapter = row.Value as Chapter;
-        //     _chapters[index].Set(chapter);
-        //     _chapters[index].gameObject.SetActive(true);
-        //     index++;
-        // }
-
-
-        MoveChapter(0);
+        if (_isInitialize == false)
+        {
+            MoveChapter(0);
+            _isInitialize = true;
+        }
     }
-
     private void SetStage(Chapter chapter)
     {
         //스테이지 설정
@@ -147,78 +124,23 @@ public class PanelAdventure : SUIPanel
     private void MoveChapter(int index)
     {
         if (CurrentChapterIndex == index) return;
-
-        PrevChapterIndex = CurrentChapterIndex;
+        ChapterScrollView.SelectContentID(index);
         CurrentChapterIndex = index;
-        MoveChapterScroll(PrevChapterIndex - CurrentChapterIndex);
+        OnBeginDrag();
     }
 
     private void SetChapter(int chapter)
     {
-        foreach (var tween in _moveChapterTwwenTweeners)
-            tween.Kill();
-        _moveChapterTwwenTweeners.Clear();
-
-        int index = -2;
-        foreach (var cell in CellChapters)
-        {
-            cell.RectTransform.anchoredPosition = cell.OrigianlPosition;
-
-            int value = index + chapter;
-            if (0 <= value && value < _chapters.Count)
-            {
-                cell.Set(_chapters[value], OnClickChapter);
-                cell.gameObject.SetActive(true);
-            }
-            else
-                cell.gameObject.SetActive(false);
-
-            index++;
-        }
-
+        CurrentChapterIndex = chapter;
+        
         SetInputEnable(true);
         SetEnableChapterMoveButton(true);
 
-        if (chapter == CurrentChapterIndex)
-        {
-            Information.SetActive(true);
-            InformationTweenPlayer.SetEnable(true);
+        Information.SetActive(true);
+        InformationTweenPlayer.SetEnable(true);
 
-            CurrentChapter = _chapters[CurrentChapterIndex];
-            //챕터 설정
-            ChapterName.text = _chapters[CurrentChapterIndex].name.ToLocalization();
-        }
-    }
-
-    public void MoveChapterScroll(int direction)
-    {
-        GameManager.DelayInvokeCancel(_moveChapterScrollInvokeID);
-        SetChapter(PrevChapterIndex);
-
-        SetInputEnable(false);
-        SetEnableChapterMoveButton(false);
-        
-        direction = Mathf.Clamp(direction, -1, 1);
-        for (int i = 0; i < CellChapters.Count; i++)
-        {
-            int index = i + direction;
-            if (0 <= index && index < CellChapters.Count)
-            {
-                Vector2 to = CellChapters[index].OrigianlPosition;
-                _moveChapterTwwenTweeners.Add(CellChapters[i].RectTransform.DOAnchorPosX(to.x, 0.33f)
-                    .SetEase(Ease.OutBack));
-                _moveChapterTwwenTweeners.Add(CellChapters[i].RectTransform.DOAnchorPosY(to.y, 0.33f)
-                    .SetEase(Ease.OutBack));
-            }
-        }
-
-        _moveChapterScrollInvokeID = GameManager.DelayInvoke(() => { SetChapter(CurrentChapterIndex); }, 0.5f);
-
-        // var destination = CurrentIndex == 0 ? 0f : (float) CurrentIndex / (_chapters.Count - 1);
-        // DOTween.To(() => ChapterScrollView.horizontalNormalizedPosition,
-        //         x => ChapterScrollView.horizontalNormalizedPosition = x,
-        //         destination, 0.3f).SetEase(Ease.OutBack)
-        //     .Play();
+        CurrentChapter = Chapters[CurrentChapterIndex];
+        ChapterName.text = Chapters[CurrentChapterIndex].name.ToLocalization();
     }
 
     public void ChangeStage(int index)
@@ -232,7 +154,6 @@ public class PanelAdventure : SUIPanel
 
         for (int i = 0; i < _stages.Count; i++)
             _stages[i].SetSelect(CurrentStage.key == _stages[i].Stage.key);
-
         //StageLevel.text = CurrentStage.AI_MMR.ToString();
     }
 
@@ -260,7 +181,7 @@ public class PanelAdventure : SUIPanel
 
     public void OnClickNextChapter()
     {
-        if (CurrentChapterIndex < _chapters.Count - 1)
+        if (CurrentChapterIndex < Chapters.Count - 1)
             MoveChapter(CurrentChapterIndex + 1);
     }
 
@@ -283,7 +204,6 @@ public class PanelAdventure : SUIPanel
         else
             MoveChapter(chapter.Chatper.index);
     }
-
 
     public void SelectedChapter(Chapter chapter)
     {
@@ -326,7 +246,7 @@ public class PanelAdventure : SUIPanel
         if (isEnable)
         {
             PrevChapterButton.SetActive(0 < CurrentChapterIndex);
-            NextChapterButton.SetActive(CurrentChapterIndex < (_chapters.Count - 1));
+            NextChapterButton.SetActive(CurrentChapterIndex < (Chapters.Count - 1));
         }
         else
         {
@@ -335,5 +255,17 @@ public class PanelAdventure : SUIPanel
         }
     }
 
+    public void OnBeginDrag()
+    {
+        SetInputEnable(false);
+        SetEnableChapterMoveButton(false);
+    }
+    public void OnScrollingFinish()
+    {
+        var center = ChapterScrollView.GetCenteredBox() as CellChapter;
+        SetChapter(center.Chatper.index);
+        SetInputEnable(true);
+        SetEnableChapterMoveButton(true);
+    }
     #endregion
 }
