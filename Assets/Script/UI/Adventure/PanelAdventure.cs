@@ -131,6 +131,7 @@ public class PanelAdventure : SUIPanel
 
     private void SetChapter(int chapter)
     {
+        if (CurrentChapterIndex == chapter) return;
         CurrentChapterIndex = chapter;
         
         SetInputEnable(true);
