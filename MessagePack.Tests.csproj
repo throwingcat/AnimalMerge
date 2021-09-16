@@ -13,11 +13,11 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{c9f8e04d-e9e1-8195-3c36-995387e41d4c}</ProjectGuid>
+    <ProjectGuid>{54dfe423-87f3-2e1e-6610-defc44a173e0}</ProjectGuid>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>LunarConsoleEditor</AssemblyName>
+    <AssemblyName>MessagePack.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -31,7 +31,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn></NoWarn>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -41,7 +41,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn></NoWarn>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
@@ -52,25 +52,67 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\LunarConsole\Editor\LunarConsoleHttpClient.cs" />
-     <Compile Include="Assets\LunarConsole\Editor\SimpleJSON.cs" />
-     <Compile Include="Assets\LunarConsole\Editor\Compatibility.cs" />
-     <Compile Include="Assets\LunarConsole\Editor\EditorConstants.cs" />
-     <Compile Include="Assets\LunarConsole\Editor\AndroidPlugin.cs" />
-     <Compile Include="Assets\LunarConsole\Editor\LunarConsoleActionEditor.cs" />
-     <Compile Include="Assets\LunarConsole\Editor\Log.cs" />
-     <Compile Include="Assets\LunarConsole\Editor\Utils.cs" />
-     <Compile Include="Assets\LunarConsole\Editor\UI\ActionsAndVariablesWindow.cs" />
-     <Compile Include="Assets\LunarConsole\Editor\MenuItems.cs" />
-     <Compile Include="Assets\LunarConsole\Editor\Autorun.cs" />
-     <Compile Include="Assets\LunarConsole\Editor\BuildPostProcessor.cs" />
-     <Compile Include="Assets\LunarConsole\Editor\Installer.cs" />
-     <Compile Include="Assets\LunarConsole\Editor\LunarConsoleEditorAnalytics.cs" />
-     <Compile Include="Assets\LunarConsole\Editor\Updater.cs" />
-     <Compile Include="Assets\LunarConsole\Editor\Legacy\LunarConsoleLegacyActionsEditor.cs" />
-     <Compile Include="Assets\LunarConsole\Editor\LunarConsoleEditor.cs" />
-     <Compile Include="Assets\LunarConsole\Editor\EditorHelper.cs" />
-     <None Include="Assets\LunarConsole\Editor\LunarConsoleEditor.asmdef" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\LZ4Test.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\Shims\XUnit.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\DynamicObjectResolverOrderTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\AnonymousTypeTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\ExpandoObjectTests.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\EnumAsStringTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\DynamicObjectFallbackTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\DynamicObjectResolverTests.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\ToJsonTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\AllowPrivateTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\MessagePackReaderTests.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\GenericFormatters.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\OldSpecBinaryFormatterTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\SpecifiedFormatterResolverTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\ByteArrayComparerTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\MessagePackStreamReaderTests.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\OneByteAtATimeStream.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\PrimitivelikeFormatterTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\ByteArrayStringHashTableTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\Shims\ChainingAssertion.Unity.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\UnionResolverTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\ObjectResolverTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\NonGenericCollectionTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\ValueTupleTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\UnsafeMemoryTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\StandardClassLibraryFormatterTests.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\T4\MessagePackReaderTests.ReadInt.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\Generated\GeneratedResolver.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\DataContractTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\FormatterTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\DictionaryTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\MessagePackSecurityTests.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\CollectionTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\TestBase.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\FloatConversionTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\Class1.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\ExtensionHeaderTests.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\DynamicObjectResolverConstructorTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\MultiDimensionalArrayTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\PrimitiveResolverTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\MessagePackReaderTests.ReadString.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\TestUtilities.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\IgnoreTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\MessagePackFormatterPerFieldTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\TestConstants.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\DynamicObjectResolverDerivedAttributeInheritanceTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\UnsafeFormattersTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\MultibyteCharPropertyTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\Utils\ChainingAssertion.Ext.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\MessagePackBinaryTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\PrimitiveObjectFormatterTests.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\MessagePackSerializerTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\DynamicObjectResolverInterfaceTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\Loader.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\AutomataTests.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\NewGuidFormatterTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\ContractlessStandardResolverTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\MessagePackWriterTests.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\MessagePackSerializerTypelessTests.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\ShareTests\MessagePackSerializerOptionsTests.cs" />
+     <None Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scripts\Tests\Tests.asmdef" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.18f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
@@ -292,93 +334,6 @@
  </Reference>
  <Reference Include="UnityEditor.UnityConnectModule">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.18f1/Editor/Data/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.Graphs">
- <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.18f1/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.WebGL.Extensions">
- <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.18f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.WindowsStandalone.Extensions">
- <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.18f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="TheBackendSettings">
- <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/Settings/TheBackendSettings.dll</HintPath>
- </Reference>
- <Reference Include="log4netPlastic">
- <HintPath>C:/Git/AnimalMerge/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/log4netPlastic.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Plastic.Newtonsoft.Json">
- <HintPath>C:/Git/AnimalMerge/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/Unity.Plastic.Newtonsoft.Json.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Plastic.Antlr3.Runtime">
- <HintPath>C:/Git/AnimalMerge/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/Unity.Plastic.Antlr3.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="unityplastic">
- <HintPath>C:/Git/AnimalMerge/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
- </Reference>
- <Reference Include="System.Buffers">
- <HintPath>C:/Git/AnimalMerge/Assets/Plugins/System.Buffers.dll</HintPath>
- </Reference>
- <Reference Include="DemiEditor">
- <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DemiLib/Core/Editor/DemiEditor.dll</HintPath>
- </Reference>
- <Reference Include="Newtonsoft.Json">
- <HintPath>C:/Git/AnimalMerge/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
- </Reference>
- <Reference Include="TheBackendSettingEditor">
- <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/Editor/TheBackendSettingEditor.dll</HintPath>
- </Reference>
- <Reference Include="TheBackend.iOS">
- <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/Android/TheBackend.iOS.dll</HintPath>
- </Reference>
- <Reference Include="DOTween">
- <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTween/DOTween.dll</HintPath>
- </Reference>
- <Reference Include="System.Memory">
- <HintPath>C:/Git/AnimalMerge/Assets/Plugins/System.Memory.dll</HintPath>
- </Reference>
- <Reference Include="Backend">
- <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/Backend.dll</HintPath>
- </Reference>
- <Reference Include="System.Threading.Tasks.Extensions">
- <HintPath>C:/Git/AnimalMerge/Assets/Plugins/System.Threading.Tasks.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="TheBackendHashKeySettings">
- <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/Settings/TheBackendHashKeySettings.dll</HintPath>
- </Reference>
- <Reference Include="DOTweenPro">
- <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
- </Reference>
- <Reference Include="DemiLib">
- <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DemiLib/Core/DemiLib.dll</HintPath>
- </Reference>
- <Reference Include="LitJSON">
- <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/LitJSON.dll</HintPath>
- </Reference>
- <Reference Include="DOTweenProEditor">
- <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTweenPro/Editor/DOTweenProEditor.dll</HintPath>
- </Reference>
- <Reference Include="DOTweenEditor">
- <HintPath>C:/Git/AnimalMerge/Assets/Submodules/Violet/Violet/External Asset/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
- </Reference>
- <Reference Include="System.Runtime.CompilerServices.Unsafe">
- <HintPath>C:/Git/AnimalMerge/Assets/Plugins/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
- </Reference>
- <Reference Include="MessagePack_2_1_165">
- <HintPath>C:/Git/AnimalMerge/Assets/Submodules/MessagePack-CSharp/benchmark/ExperimentalBenchmark/MessagePack_2_1_165.dll</HintPath>
- </Reference>
- <Reference Include="MessagePack_1_6_0_3">
- <HintPath>C:/Git/AnimalMerge/Assets/Submodules/MessagePack-CSharp/sandbox/PerfBenchmarkDotNet/MessagePack_1_6_0_3.dll</HintPath>
- </Reference>
- <Reference Include="OdinSerializer">
- <HintPath>C:/Git/AnimalMerge/Assets/Submodules/MessagePack-CSharp/benchmark/SerializerBenchmark/OdinSerializer.dll</HintPath>
- </Reference>
- <Reference Include="MessagePack_1_7_3_6">
- <HintPath>C:/Git/AnimalMerge/Assets/Submodules/MessagePack-CSharp/benchmark/SerializerBenchmark/MessagePack_1_7_3_6.dll</HintPath>
- </Reference>
- <Reference Include="MessagePack_1_4_4">
- <HintPath>C:/Git/AnimalMerge/Assets/Submodules/MessagePack-CSharp/sandbox/PerfBenchmarkDotNet/MessagePack_1_4_4.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
  <HintPath>C:/Git/AnimalMerge/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
@@ -731,23 +686,31 @@
  <Reference Include="System.Xml.XPath.XDocument">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.18f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Xml.XPath.XDocument.dll</HintPath>
  </Reference>
- <Reference Include="UnityEditor.UI">
- <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.UI">
- <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.TestRunner">
  <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.TestRunner">
  <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEditor.UI">
+ <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.UI">
+ <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="LunarConsole.csproj">
-      <Project>{1067a6a7-68bf-a9f5-6bf9-3f3c41685e3b}</Project>
-      <Name>LunarConsole</Name>
+    <ProjectReference Include="MessagePack.csproj">
+      <Project>{2618d3d5-7a04-4dc7-ba81-fe7e6ec15d12}</Project>
+      <Name>MessagePack</Name>
+    </ProjectReference>
+    <ProjectReference Include="MessagePack.Annotations.csproj">
+      <Project>{0c84f949-ed2f-f0f9-fbea-2ff681d75e71}</Project>
+      <Name>MessagePack.Annotations</Name>
+    </ProjectReference>
+    <ProjectReference Include="RuntimeUnitTestToolkit.csproj">
+      <Project>{7f7f5e9f-c266-7e76-23e4-8581ce61eccb}</Project>
+      <Name>RuntimeUnitTestToolkit</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

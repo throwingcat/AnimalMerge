@@ -235,30 +235,243 @@
      <Compile Include="Assets\Script\PlayerData\ChestInventory.cs" />
      <Compile Include="Assets\Script\UI\PartSimpleNotice.cs" />
      <Compile Include="Assets\Script\Uitls\Startup.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\User.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\SearchExcerpt.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\GuidImprov.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.MSBuild.Tasks\MessagePackGenerator.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePackAnalyzer.Tests\Helpers\CSharpCodeFixVerifier`2+Test.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\Post.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\ContractType.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Fixture\FloatValueFixture.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePackAnalyzer\MsgPack002UseConstantOptionsAnalyzer.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\Feed.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePackAnalyzer\Strings.Designer.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\TagScore.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.Experimental\HardwareIntrinsics\FormatterHelpers.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\ReputationHistory.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\TypelessDeserializeBenchmark.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack\Internal\UnsafeMemory.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Fixture\DateTimeValueFixture.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.GeneratorCore\Generator\IFormatterTemplate.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.GeneratorCore\Utils\RoslynExtensions.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.Tests\Utils\ChainingAssertion.Xunit.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.Experimental\UnsafeUnmanagedStructFormatter\UnsafeUnmanagedStructFormatter.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\Assets\Scenes\SandboxBehaviour.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Program.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\DynamicCodeDumper\Program.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.GeneratorCore\Generator\FormatterTemplate.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.Experimental\UnsafeUnmanagedStructFormatter\UnsafeUnmanagedStructMemoryFormatter.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Serializers\BinaryFormatterSerializer.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\MessagePackReaderBenchmark.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\TestData2\PropNameCheck2.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\Reputation.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\InboxItem.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\AccessToken.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.Generator\MessagepackCompiler.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfNetFramework\BenchmarkEventSource.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfNetFramework\Person.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Serializers\SerializerBase.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\ShallowUser.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\TestData2\Generated.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.ReactiveProperty\Formatters.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\FlagOption.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePackAnalyzer\TypeCollector.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\QuestionTimeline.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack\MessagePackReader.Integers.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack\Resolvers\ImmutableCollectionResolver.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\MessagePack.Internal\AssemblyInfo.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.Tests\ExtensionTests\LZ4Test.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePackAnalyzer.Tests\MessagePackAnalyzerTests.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePackAnalyzer.Tests\Helpers\CSharpCodeFixVerifier`2.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.Tests\MessagePackStreamReaderMapTests.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\Error.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.Internal.Tests\MessagePackInternalTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.Tests\IsExternalInit.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\MessagePackWriterBenchmark.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\Lz4PrimitiveBenchmark.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\DeserializeBenchmark.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\Event.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePackAnalyzer\MessagePackAnalyzer.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Serializers\FsPicklerSerializer.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.Experimental\UnsafeUnmanagedStructFormatter\UnsafeUnmanagedStructReadOnlySequenceFormatter.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Serializers\JilSerializer.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack\Formatters\ForceSizePrimitiveFormatter.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.Tests\DynamicObjectResolverRecordsTests.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\TagSynonym.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\TestData2\NestedTypeCheck.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\TypelessSerializeBenchmark.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\TestData2\Record.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Serializers\MsgPackCliSerializer.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Fixture\DateTimeOffsetValueFixture.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.GeneratorCore\Generator\ResolverTemplate.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePackAnalyzer\MessagePackCodeFixProvider.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePackAnalyzer.Tests\Helpers\VisualBasicCodeFixVerifier`2+Test.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\Comment.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\StringKeySerializerTarget.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\SpanBenchmarks.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityShims\Shims.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.GeneratorCore\CodeGenerator.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePackAnalyzer\Utils\DiagnosticsReportContext.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePackAnalyzer\ReferenceSymbols.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Serializers\HyperionSerializer.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Fixture\ShortValueFixture.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.Generator.Tests\TemporaryProjectWorkarea.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\NetworkUser.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\NewVsOld.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePackAnalyzer\MsgPack001SpecifyOptionsAnalyzer.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Serializers\MessagePackSerializer.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.Generator.Tests\GenerateGenericsFormatterTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack\Formatters\ImmutableCollectionFormatters.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Fixture\LongValueFixture.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\IntKeySerializerTarget.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Serializers\BsonNetSerializer.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePackAnalyzer\AnalyzerUtilities.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\GeneratedFormatter.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Fixture\StringValueFixture.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.Experimental\HardwareIntrinsics\Formatters.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Serializers\JsonNetSerializer.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\WritePermission.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.Generator.Tests\GenerateStringKeyedFormatterTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\Sandbox\Generated.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.Experimental\UnsafeUnmanagedStructFormatter\UnsafeUnmanagedStructArrayFormatter.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePackAnalyzer\Utils\RoslynAnalyzerExtensions.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePackAnalyzer.Tests\Helpers\ReferencesHelper.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.Experimental\HardwareIntrinsics\UnsafeMemoryAlignmentUtility.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\Privilege.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Fixture\IntValueFixture.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.Generator.Tests\GenerateEnumFormatterTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Fixture\IValueFixture.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\TestData.InvalidSyntax\Class1.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.ImmutableCollection\AssemblyInfo.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack\MessagePackSerializer+Typeless.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.GeneratorCore\Generator\StringKey\StringKeyFormatterTemplate.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\Question.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Serializers\OdinSerializer.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.Experimental.Tests\ArrayTests.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.Tests\MessagePackStreamReaderArrayTests.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.ReactiveProperty\ReactivePropertyResolver.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Serializers\HagarSerializer.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\ContractlessType.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Fixture\OtherPrimitiveFixtures.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\TestData2\PropNameCheck1.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\Program.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Fixture\ByteValueFixture.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.GeneratedCode.Tests\MissingPropertiesTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\TypelessPrimitiveType.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\TestData2\A.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.GeneratorCore\Generator\StringKey\EmbedStringHelper.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\UserTimeline.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfNetFramework\Sex.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.GeneratorCore\Generator\UnionTemplate.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Serializers\DataContractSerializer.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePackAnalyzer.Tests\MsgPack002UseConstantOptionsAnalyzerTests.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePackAnalyzer.Tests\Helpers\VisualBasicCodeFixVerifier`2.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.AspNetCoreMvcFormatter\MessagePackInputFormatter.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack\MessagePackStreamReader.Maps.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\Badge.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack\Formatters\ValueTupleFormatter.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\IGenericEquality`1.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.GeneratorCore\Generator\EnumTemplate.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\TestData.InvalidProject\Class1.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Serializers\SystemTextJsonSerializer.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\SuggestedEdit.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\SerializerBenchmark.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Serializers\ProtobufNetSerializer.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Serializers\CerasSerializer.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\TestData2\C.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.Generator.Tests\TestUtilities.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\ExtensionMethods.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.GeneratorCore\Generator\StringKey\StringKeyFormatterDeserializeHelper.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.Experimental\UnsafeUnmanagedStructFormatter\UnsafeUnmanagedStructReadOnlyMemoryFormatter.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\TopTag.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePackAnalyzer.Tests\MsgPack001SpecifyOptionsAnalyzerTests.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfNetFramework\Program.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Fixture\GuidValueFixture.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.AspNetCoreMvcFormatter.Tests\AspNetCoreMvcFormatterTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\AccountMerge.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\Sandbox\Program.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.Experimental.Tests\UnsafeUnmanagedStruct\UnsafeUnmanagedStructTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack\MessagePackStreamReader.Arrays.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.Tests\ExtensionTests\UnityShimTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.Generator.Tests\GenerateKeyedFormatterTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePackAnalyzer\Utils\TinyJsonReader.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Serializers\SpanJsonSerializer.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack\Formatters\PrimitiveFormatter.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.Generator\PseudoCompilation.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\DictionaryLookupCompare.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\TagWiki.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\Revision.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.AspNetCoreMvcFormatter\MessagePackOutputFormatter.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack\Formatters\TupleFormatter.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.GeneratorCore\Generator\ShouldUseFormatterResolverHelper.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.Experimental\HardwareIntrinsics\PrimitiveArrayGetFormatterHelper.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.Experimental\HardwareIntrinsics\PrimitiveArrayResolver.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\Resolver.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\Lz4Benchmark.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.GeneratorCore\Generator\TemplatePartials.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\Answer.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\Info.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Fixture\ExpressionTreeFixture.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\BenchmarkConfig.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Fixture\BooleanValueFixture.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.Tests\ExtensionTests\ReactivePropertyTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\ImproveStringKeySerializeBenchmark.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePackAnalyzer\Utils\ConfigurationLoader.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Fixture\EnumValueFixture.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Fixture\DoubleValueFixture.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfNetFramework\Measure.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\TestData2\B.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Serializers\Utf8JsonSerializer.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.Tests\ContractlessStandardResolverConstructorTests.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\StringKeyDeserializeCompare.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.GeneratorCore\CodeAnalysis\TypeCollector.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.GeneratorCore\CodeAnalysis\Definitions.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.Generator.Tests\GenerateMessagePackFormatterAttrTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\StringKeySerializerTarget2.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\ExperimentalBenchmark\Tests.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.Tests\MessagePackReaderTests.ReadInt.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\BenchmarkConfig.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Fixture\DecimalValueFixture.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\ExperimentalBenchmark\Program.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\Tag.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\sandbox\PerfBenchmarkDotNet\SerializeBenchmark.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\tests\MessagePack.Tests\ExtensionTests\ImmutableCollectionTest.cs" />
+     <Compile Include="Assets\Submodules\MessagePack-CSharp\benchmark\SerializerBenchmark\Models\Notification.cs" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
+     <None Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack\netcoreapp2.1\PublicAPI.Unshipped.txt" />
      <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Glow.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Dissolve.shader" />
      <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Ubershader.shader" />
      <None Include="Assets\JMO Assets\Cartoon FX (legacy)\Shaders\CFXM_MobileParticleAB_Alpha8.shader" />
      <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR_SETTINGS.cginc" />
+     <None Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack\netcoreapp3.1\PublicAPI.Shipped.txt" />
      <None Include="Assets\LunarConsole\readme.txt" />
      <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR.cginc" />
+     <None Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack\netstandard2.0\PublicAPI.Unshipped.txt" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect.cginc" />
      <None Include="Assets\JMO Assets\Cartoon FX Easy Editor\CartoonFX Easy Editor Readme.txt" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Transition.shader" />
+     <None Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack\netcoreapp2.1\PublicAPI.Shipped.txt" />
      <None Include="Assets\JMO Assets\Cartoon FX (legacy)\CartoonFX Readme.txt" />
+     <None Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack\netcoreapp3.1\PublicAPI.Unshipped.txt" />
+     <None Include="Assets\Submodules\MessagePack-CSharp\Directory.Build.rsp" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect.shader" />
      <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Prefabs\Texts\_Make your own text effect.txt" />
+     <None Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack.UnityClient\ProjectSettings\ProjectVersion.txt" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-EffectCapture.shader" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTweenPro\readme.txt" />
      <None Include="Assets\JMO Assets\Cartoon FX Remaster\Readme Cartoon FX Remaster.txt" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DemiLib\Core\DemiLib.xml" />
      <None Include="Assets\JMO Assets\Cartoon FX (legacy)\Shaders\CFXM_MobileParticleAdd_Alpha8.shader" />
+     <None Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack\net5.0\PublicAPI.Shipped.txt" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect3.3.8\Shaders\UIAdditive.shader" />
+     <None Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack\net5.0\PublicAPI.Unshipped.txt" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\readme.txt" />
      <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Procedural Ring.shader" />
      <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR_URP.cginc" />
+     <None Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack\BannedSymbols.txt" />
      <None Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_WaterWiggle.shader" />
+     <None Include="Assets\Submodules\MessagePack-CSharp\src\MessagePack\netstandard2.0\PublicAPI.Shipped.txt" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-HSV.shader" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.18f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -520,6 +733,21 @@
  </Reference>
  <Reference Include="System.Runtime.CompilerServices.Unsafe">
  <HintPath>C:/Git/AnimalMerge/Assets/Plugins/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+ </Reference>
+ <Reference Include="MessagePack_2_1_165">
+ <HintPath>C:/Git/AnimalMerge/Assets/Submodules/MessagePack-CSharp/benchmark/ExperimentalBenchmark/MessagePack_2_1_165.dll</HintPath>
+ </Reference>
+ <Reference Include="MessagePack_1_6_0_3">
+ <HintPath>C:/Git/AnimalMerge/Assets/Submodules/MessagePack-CSharp/sandbox/PerfBenchmarkDotNet/MessagePack_1_6_0_3.dll</HintPath>
+ </Reference>
+ <Reference Include="OdinSerializer">
+ <HintPath>C:/Git/AnimalMerge/Assets/Submodules/MessagePack-CSharp/benchmark/SerializerBenchmark/OdinSerializer.dll</HintPath>
+ </Reference>
+ <Reference Include="MessagePack_1_7_3_6">
+ <HintPath>C:/Git/AnimalMerge/Assets/Submodules/MessagePack-CSharp/benchmark/SerializerBenchmark/MessagePack_1_7_3_6.dll</HintPath>
+ </Reference>
+ <Reference Include="MessagePack_1_4_4">
+ <HintPath>C:/Git/AnimalMerge/Assets/Submodules/MessagePack-CSharp/sandbox/PerfBenchmarkDotNet/MessagePack_1_4_4.dll</HintPath>
  </Reference>
  <Reference Include="mscorlib">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.18f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -995,6 +1223,14 @@
     <ProjectReference Include="CFXRRuntime.csproj">
       <Project>{f1580a4b-0e7f-8cd4-bfd5-a48861788752}</Project>
       <Name>CFXRRuntime</Name>
+    </ProjectReference>
+    <ProjectReference Include="MessagePack.Annotations.csproj">
+      <Project>{0c84f949-ed2f-f0f9-fbea-2ff681d75e71}</Project>
+      <Name>MessagePack.Annotations</Name>
+    </ProjectReference>
+    <ProjectReference Include="MessagePack.csproj">
+      <Project>{2618d3d5-7a04-4dc7-ba81-fe7e6ec15d12}</Project>
+      <Name>MessagePack</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

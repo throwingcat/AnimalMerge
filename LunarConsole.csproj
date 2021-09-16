@@ -363,6 +363,21 @@
  <Reference Include="System.Runtime.CompilerServices.Unsafe">
  <HintPath>C:/Git/AnimalMerge/Assets/Plugins/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
  </Reference>
+ <Reference Include="MessagePack_2_1_165">
+ <HintPath>C:/Git/AnimalMerge/Assets/Submodules/MessagePack-CSharp/benchmark/ExperimentalBenchmark/MessagePack_2_1_165.dll</HintPath>
+ </Reference>
+ <Reference Include="MessagePack_1_6_0_3">
+ <HintPath>C:/Git/AnimalMerge/Assets/Submodules/MessagePack-CSharp/sandbox/PerfBenchmarkDotNet/MessagePack_1_6_0_3.dll</HintPath>
+ </Reference>
+ <Reference Include="OdinSerializer">
+ <HintPath>C:/Git/AnimalMerge/Assets/Submodules/MessagePack-CSharp/benchmark/SerializerBenchmark/OdinSerializer.dll</HintPath>
+ </Reference>
+ <Reference Include="MessagePack_1_7_3_6">
+ <HintPath>C:/Git/AnimalMerge/Assets/Submodules/MessagePack-CSharp/benchmark/SerializerBenchmark/MessagePack_1_7_3_6.dll</HintPath>
+ </Reference>
+ <Reference Include="MessagePack_1_4_4">
+ <HintPath>C:/Git/AnimalMerge/Assets/Submodules/MessagePack-CSharp/sandbox/PerfBenchmarkDotNet/MessagePack_1_4_4.dll</HintPath>
+ </Reference>
  <Reference Include="mscorlib">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.18f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
  </Reference>
