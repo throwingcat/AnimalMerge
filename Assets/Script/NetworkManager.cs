@@ -33,7 +33,6 @@ public class NetworkManager : MonoSingleton<NetworkManager>
     public bool Login()
     {
         Debug.Log("로그인 시작");
-        Debug.Log(Backend.Utils.GetGoogleHash());
         if (GameManager.Instance.GUID.IsNullOrEmpty())
             GameManager.Instance.GUID = SystemInfo.deviceUniqueIdentifier;
 
@@ -48,13 +47,23 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         }
         else
         {
-            Debug.LogFormat("로그인 실패 : {0} / {1}", bro.GetErrorCode(), bro.GetMessage());
+            //Custome 계정 Login 시도
+            bro = Backend.BMember.CustomLogin(GameManager.Instance.GUID, "1234");
+            if (bro.IsSuccess())
+            {
+                Debug.Log("로그인 성공");
+                isLoginComplete = true;
+            }
+            else
+            {
+                Debug.LogFormat("로그인 실패 : {0} / {1}", bro.GetErrorCode(), bro.GetMessage());
 
-            //회원가입 진행
-            bro = Backend.BMember.CustomSignUp(GameManager.Instance.GUID, "1234");
-            if (bro.IsSuccess() == false)
-                Debug.LogFormat("회원가입 실패 : {0} / {1}", bro.GetErrorCode(), bro.GetMessage());
-            isLoginComplete = false;
+                //회원가입 진행
+                bro = Backend.BMember.CustomSignUp(GameManager.Instance.GUID, "1234");
+                if (bro.IsSuccess() == false)
+                    Debug.LogFormat("회원가입 실패 : {0} / {1}", bro.GetErrorCode(), bro.GetMessage());
+                isLoginComplete = false;
+            }
         }
 
         return isLoginComplete;
