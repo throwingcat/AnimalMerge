@@ -1,6 +1,3 @@
 [submodule "Assets/Submodules/Violet"]
 	path = Assets/Submodules/Violet
 	url = https://github.com/throwingcat/Violet.git
-[submodule "Assets/Submodules/MessagePack-CSharp"]
-	path = Assets/Submodules/MessagePack-CSharp
-	url = https://github.com/neuecc/MessagePack-CSharp.git
