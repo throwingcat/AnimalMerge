@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using BackEnd;
+using Common;
 using Define;
 using DG.Tweening;
 using Newtonsoft.Json;
@@ -166,6 +167,12 @@ public class GameCore : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.Space))
                     OnReceiveBadBlock(10);
+                if (Input.GetKeyDown(KeyCode.P))
+                {
+                    isGameOver = true;
+                    GameOverTime = DateTime.UtcNow;
+                }
+
                 if (Input.GetKeyDown(KeyCode.A))
                 {
                     ChargeSkillGauge(EnvironmentValue.SKILL_CHARGE_MAX_VALUE);

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Common;
 using Newtonsoft.Json;
 using Packet;
 using Server;
@@ -75,7 +76,7 @@ public class QuestInfo
             {
                 var packet = new PacketBase();
                 packet.PacketType = ePACKET_TYPE.QUEST_COMPLETE;
-                packet.hash = new Hashtable();
+                packet.hash = new Dictionary<string, object>();
                 packet.hash.Add("index", index);
                 NetworkManager.Instance.Request(packet, (res) =>
                 {

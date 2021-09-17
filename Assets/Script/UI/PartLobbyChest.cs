@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Common;
 using DG.Tweening;
 using Packet;
 using SheetData;
@@ -181,7 +182,7 @@ public class PartLobbyChest : MonoBehaviour
                 {
                     var packet = new PacketBase();
                     packet.PacketType = ePACKET_TYPE.CHEST_COMPLETE;
-                    packet.hash = new Hashtable();
+                    packet.hash = new Dictionary<string, object>();
                     packet.hash.Add("inDate", ChestSlot.inDate);
                     packet.hash.Add("chest_key", ChestSlot.Key);
                     

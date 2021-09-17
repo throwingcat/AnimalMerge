@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BackEnd;
 using BackEnd.Tcp;
+using Common;
 using MessagePack;
 using Packet;
 using UnityEngine;
@@ -413,16 +414,14 @@ public class NetworkManager : MonoSingleton<NetworkManager>
     private void SendPacket(PacketBase packet)
     {
         //서버로 데이터 송신
-        var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
-        var bytes = MessagePackSerializer.Serialize(packet, lz4Options);
+        var bytes = MessagePackSerializer.Serialize(packet);
 
         Server.AnimalMergeServer.Instance.OnReceivePacket(bytes);
     }
 
     public void ReceivePacket(byte[] bytes)
     {
-        var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
-        PacketBase packet = MessagePackSerializer.Deserialize<Packet.PacketBase>(bytes, lz4Options);
+        PacketBase packet = MessagePackSerializer.Deserialize<PacketBase>(bytes);
 
         ulong guid = (ulong) packet.hash["packet_guid"];
 
@@ -434,7 +433,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
                 case ePACKET_TYPE.QUEST_COMPLETE:
                 case ePACKET_TYPE.DAILY_QUEST_REWARD:
                 {
-                    PacketReward res = MessagePackSerializer.Deserialize<Packet.PacketReward>(bytes, lz4Options);
+                    PacketReward res = MessagePackSerializer.Deserialize<PacketReward>(bytes);
                     _waitingPacket[guid]?.Invoke(res);
                 }
                     break;

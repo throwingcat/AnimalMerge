@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Text;
 using BackEnd;
 using Define;
+using MessagePack;
+using MessagePack.Resolvers;
 using UnityEngine;
 using UnityEngine.Networking;
 using Violet;
@@ -95,9 +97,11 @@ public class GameManager : MonoBehaviour
         //     Player.ChargeVolt(999999f);
         // }
     }
-
+    
     private IEnumerator InitalizeProcess()
     {
+        RegisterSerializer();
+        
         PartSceneChange.OnShow();
 
         ChangeGameState(eGAME_STATE.Intro);
@@ -114,6 +118,26 @@ public class GameManager : MonoBehaviour
         PartSceneChange.OnHide();
     }
 
+    private static bool _isSerializerRegisted = false;
+    private static void RegisterSerializer()
+    {
+        if (_isSerializerRegisted) return;
+        
+        //시리얼라이저 등록
+        StaticCompositeResolver.Instance.Register(
+            MessagePack.Resolvers.BuiltinResolver.Instance,
+            MessagePack.Unity.UnityResolver.Instance,
+            MessagePack.Unity.Extension.UnityBlitWithPrimitiveArrayResolver.Instance,
+            MessagePack.Resolvers.StandardResolver.Instance,
+            MessagePack.Resolvers.GeneratedResolver.Instance
+        );
+        var options = MessagePackSerializerOptions.Standard.WithResolver(StaticCompositeResolver.Instance);
+        //var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
+        MessagePackSerializer.DefaultOptions = options;
+        
+        _isSerializerRegisted = true;
+    }
+    
     private IEnumerator LoadSheetData()
     {
         var isDone = false;
@@ -323,6 +347,13 @@ public class GameManager : MonoBehaviour
         yield break;
     }
 
+#if UNITY_EDITOR
+    [UnityEditor.InitializeOnLoadMethod]
+    static void EditorInitialize()
+    {
+        RegisterSerializer();
+    }
+#endif
     #region Utility
 
     public void LoadVFX(string key, int capacity, GameObject root = null)
@@ -459,7 +490,6 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
-    
     public class BypassCertificate : CertificateHandler
     {
         protected override bool ValidateCertificate(byte[] certificateData)

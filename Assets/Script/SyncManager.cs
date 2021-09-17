@@ -67,9 +67,7 @@ public class SyncManager
         //매치 서버로 송신
         if (Backend.Match.IsMatchServerConnect() && Backend.Match.IsInGameServerConnect())
         {
-            
-            var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
-            var bytes = MessagePackSerializer.Serialize(packet, lz4Options);
+            var bytes = MessagePackSerializer.Serialize(packet);
             Backend.Match.SendDataToInGameRoom(bytes);
         }
 

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Common;
 using Define;
 using LitJson;
 using MessagePack;
@@ -53,9 +54,7 @@ namespace Server
 
         public void OnReceivePacket(byte[] bytes)
         {
-            var lz4Options =
-                MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
-            PacketBase packet = MessagePackSerializer.Deserialize<PacketBase>(bytes, lz4Options);
+            PacketBase packet = MessagePackSerializer.Deserialize<PacketBase>(bytes);
 
             switch (packet.PacketType)
             {
@@ -425,9 +424,7 @@ namespace Server
 
         public void SendPacket<T>(T packet) where T : PacketBase
         {
-            var lz4Options =
-                MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
-            var bytes = MessagePackSerializer.Serialize(packet, lz4Options);
+            var bytes = MessagePackSerializer.Serialize(packet);
 
             NetworkManager.Instance.ReceivePacket(bytes);
         }
@@ -527,19 +524,6 @@ namespace Server
         }
 
         #endregion
-
-        [MessagePackObject]
-        public class PacketBase
-        {
-            [Key(0)] public Packet.ePACKET_TYPE PacketType;
-            [Key(1)] public Hashtable hash;
-        }
-
-        [MessagePackObject]
-        public class PacketReward : PacketBase
-        {
-            [Key(2)] public List<ItemInfo> Rewards = new List<ItemInfo>();
-        }
 
         public T GetDB<T>() where T : DBBase
         {
