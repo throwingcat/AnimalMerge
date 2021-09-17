@@ -78,6 +78,6 @@ public class CellQeustInfo : MonoBehaviour
 
     public void OnClickComplete()
     {
-        _owner.ReceiveDailyReward(_slot.Index);
+        _owner.QuestComplete(_slot.Index);
     }
 }
