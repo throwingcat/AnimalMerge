@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Cat
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: faf346794701d2946b6c2c15ba0b2997, type: 3}
+    totalSpriteSurfaceArea: 1161920
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: b212bce24079c134fb97319c3d6b65ac, type: 3}
+  - {fileID: 21300000, guid: 7495cbf211feee74cac4e472342eb23e, type: 3}
+  - {fileID: 21300000, guid: b92e8b74e52443a43871f4b65431a334, type: 3}
+  - {fileID: 21300000, guid: 9c0a1ae4a7a69354fba2dde8c530744b, type: 3}
+  - {fileID: 21300000, guid: eb2a2dc73f043ae42b338100ee9ba95b, type: 3}
+  - {fileID: 21300000, guid: eecdbb4863cf6284dad173c9f28d6110, type: 3}
+  - {fileID: 21300000, guid: 547e97c8821c14742904ca45ad42498f, type: 3}
+  - {fileID: 21300000, guid: 9473804b2003c1a49932aa8ceff6026e, type: 3}
+  - {fileID: 21300000, guid: 56e5bb1c0f6972c4297649e4baf46323, type: 3}
+  - {fileID: 21300000, guid: 30bb6c5c924b46c4f86071e97606523d, type: 3}
+  - {fileID: 21300000, guid: 8f8415deb1bf59c4db6e2eeb13972ab4, type: 3}
+  - {fileID: 21300000, guid: d1e867fe974aa6647a0c6d1495d9e0a2, type: 3}
+  - {fileID: 21300000, guid: 7608a9affeb5a684eaee63180dab8f7e, type: 3}
+  - {fileID: 21300000, guid: e1213acfd08570b47922d1f394fa07a6, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - cat_08
+  - portrait_cat_face
+  - cat_99
+  - cat_03
+  - cat_02
+  - cat_07
+  - cat_06
+  - cat_01
+  - cat_88
+  - cat_09
+  - cat_66
+  - portrait_cat_body
+  - cat_04
+  - cat_05
+  m_RenderDataMap: {}
+  m_Tag: Cat
+  m_IsVariant: 0

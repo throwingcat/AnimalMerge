@@ -11,6 +11,7 @@
       <Path>../../Users/throw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.timeline@1.4.7</Path>
     </attachedFolders>
     <explicitIncludes>
+      <Path>Library/PackageCache/com.coffee.softmask-for-ugui@1.0.0</Path>
       <Path>Library/PackageCache/com.unity.2d.animation@5.0.4</Path>
       <Path>Library/PackageCache/com.unity.2d.animation@5.0.6</Path>
       <Path>Library/PackageCache/com.unity.2d.common@4.0.3</Path>

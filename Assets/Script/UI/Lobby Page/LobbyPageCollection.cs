@@ -86,7 +86,7 @@ public class LobbyPageCollection : LobbyPageBase
 
     private void RefreshGroupList()
     {
-        var group = UnitInventory.Instance.GetGroup(_currentHero.UnitGroupKey);
+        var group = UnitInventory.Instance.GetGroup(_currentHero.key);
 
         int index = 0;
         foreach (var unit in group)
@@ -96,9 +96,9 @@ public class LobbyPageCollection : LobbyPageBase
             index++;
         }
 
-        if (_currentHero.Unlock.IsNullOrEmpty() == false && PlayerTracker.Instance.Contains(_currentHero.Unlock) == false)
+        if (_currentHero.isUnlock == false)
         {
-            var stage = _currentHero.Unlock.ToTableData<Stage>();
+            var stage = _currentHero.unlock_condition.ToTableData<Stage>();
             var chapter = stage.Chapter.ToTableData<Chapter>();
             Lock.SetActive(true);
             LockMessage.text = string.Format("HeroUnlockStageFormat".ToLocalization(), chapter.name.ToLocalization());

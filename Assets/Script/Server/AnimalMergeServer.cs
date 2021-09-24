@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -11,7 +10,6 @@ using Newtonsoft.Json;
 using Packet;
 using SheetData;
 using UnityEngine;
-using UnityEngine.Monetization;
 using Violet;
 using Random = UnityEngine.Random;
 
@@ -23,16 +21,6 @@ namespace Server
 
         public List<DBBase> DBList = new List<DBBase>();
 
-        public static AnimalMergeServer Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new AnimalMergeServer();
-                return _instance;
-            }
-        }
-
         public AnimalMergeServer()
         {
             DBList.Add(new DBPlayerInfo());
@@ -43,28 +31,36 @@ namespace Server
             DBList.Add(new DBQuestInfo());
         }
 
+        public static AnimalMergeServer Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new AnimalMergeServer();
+                return _instance;
+            }
+        }
+
         public void OnUpdate()
         {
             foreach (var DB in DBList)
-            {
                 if (DB.isReservedUpdate)
                     DB.DoUpdate();
-            }
         }
 
         public void OnReceivePacket(byte[] bytes)
         {
-            PacketBase packet = MessagePackSerializer.Deserialize<PacketBase>(bytes);
+            var packet = MessagePackSerializer.Deserialize<PacketBase>(bytes);
 
             switch (packet.PacketType)
             {
-                case Packet.ePACKET_TYPE.REPORT_GAME_RESULT:
+                case ePACKET_TYPE.REPORT_GAME_RESULT:
                     BattleResult(packet);
                     break;
-                case Packet.ePACKET_TYPE.CHEST_PROGRESS:
+                case ePACKET_TYPE.CHEST_PROGRESS:
                     ProgressChest(packet);
                     break;
-                case Packet.ePACKET_TYPE.CHEST_COMPLETE:
+                case ePACKET_TYPE.CHEST_COMPLETE:
                     CompleteChest(packet);
                     break;
                 case ePACKET_TYPE.UNIT_LEVEL_UP:
@@ -79,7 +75,96 @@ namespace Server
                 case ePACKET_TYPE.DAILY_QUEST_REWARD:
                     DailyQuestReward(packet);
                     break;
+                case ePACKET_TYPE.CHANGE_HERO:
+                    ChangeHero(packet);
+                    break;
             }
+        }
+
+        #region Lobby - Collection
+
+        public void UnitLevelUpProcess(PacketBase packet)
+        {
+            var unitKey = packet.hash["unit_key"].ToString();
+
+            var isSuccess = UnitInventory.Instance.LevelUp(unitKey);
+            UpdateDB<DBUnitInventory>(() =>
+            {
+                packet.hash.Add("success", isSuccess);
+                SendPacket(packet);
+            });
+        }
+
+        #endregion
+
+        #region Tracker
+
+        public void UpdateTracker(string json, Action onFinish)
+        {
+            var tracker = JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
+
+            //퀘스트 목록 갱신
+            foreach (var quest in QuestInfo.Instance.QuestSlots)
+                if (tracker.ContainsKey(quest.Sheet.TrackerKey))
+                    quest.Count += tracker[quest.Sheet.TrackerKey];
+
+            UpdateDB<DBQuestInfo>(() => { onFinish?.Invoke(); });
+        }
+
+        #endregion
+
+        public void DownloadDB<T>(Action onFinish) where T : DBBase
+        {
+            var db = GetDB<T>();
+            db.Download(onFinish);
+        }
+
+        public void UpdateDB<T>(Action onFinish) where T : DBBase
+        {
+            var db = GetDB<T>();
+            db.Update(onFinish);
+        }
+
+        public void SendPacket<T>(T packet) where T : PacketBase
+        {
+            var bytes = MessagePackSerializer.Serialize(packet);
+
+            NetworkManager.Instance.ReceivePacket(bytes);
+        }
+
+        public void GetRewards(List<ItemInfo> rewards, Action onFinish)
+        {
+            var isUpdateUnit = false;
+            var isUpdateInventory = false;
+            foreach (var item in rewards)
+            {
+                if (item.Type == eItemType.Card)
+                {
+                    UnitInventory.Instance.GainEXP(item.Key, item.Amount);
+                    isUpdateUnit = true;
+                }
+
+                if (item.Type == eItemType.Currency)
+                {
+                    Inventory.Instance.Update(item.Key, item.Amount);
+                    isUpdateInventory = true;
+                }
+            }
+
+            if (isUpdateUnit && isUpdateInventory)
+                UpdateDB<DBUnitInventory>(() => { UpdateDB<DBInventory>(onFinish); });
+            else if (isUpdateUnit)
+                UpdateDB<DBUnitInventory>(onFinish);
+            else if (isUpdateInventory) UpdateDB<DBInventory>(onFinish);
+        }
+
+        public T GetDB<T>() where T : DBBase
+        {
+            foreach (var db in DBList)
+                if (db is T)
+                    return db as T;
+
+            return null;
         }
 
         #region Battle Result
@@ -88,15 +173,17 @@ namespace Server
         {
             var isWin = (bool) packet.hash["is_win"];
 
-            Action<PacketBase> onFinishBattleResult = (p) =>
+            Action<PacketBase> onFinishBattleResult = p =>
             {
                 if (packet.hash.ContainsKey("tracker_json"))
                 {
-                    string json = packet.hash["tracker_json"].ToString();
+                    var json = packet.hash["tracker_json"].ToString();
                     UpdateTracker(json, () => { SendPacket(p); });
                 }
                 else
+                {
                     SendPacket(p);
+                }
             };
             //패배 처리
             if (isWin == false)
@@ -150,16 +237,16 @@ namespace Server
                     var default_chest = TableManager.Instance.GetTable<Chest>().Where(
                         _ => (_.Value as Chest)?.group == "default");
 
-                    List<double> random = new List<double>();
-                    List<string> keys = new List<string>();
+                    var random = new List<double>();
+                    var keys = new List<string>();
                     foreach (var row in default_chest)
                     {
-                        Chest chest = (row.Value as Chest);
+                        var chest = row.Value as Chest;
                         random.Add(chest.ratio);
                         keys.Add(chest.key);
                     }
 
-                    int index = Utils.RandomPick(random);
+                    var index = Utils.RandomPick(random);
 
                     ChestInventory.Instance.Insert(keys[index]);
 
@@ -168,17 +255,15 @@ namespace Server
                 else
                 {
                     //보유한 상자중에 선택
-                    List<string> inDate = new List<string>();
+                    var inDate = new List<string>();
 
                     foreach (var chest in ChestInventory.Instance.ChestSlots)
-                    {
                         if (chest.Grade < EnvironmentValue.CHEST_GRADE_MAX && chest.isProgress == false)
                             inDate.Add(chest.inDate);
-                    }
 
                     if (0 < inDate.Count)
                     {
-                        string pick = Utils.RandomPickDefault(inDate);
+                        var pick = Utils.RandomPickDefault(inDate);
                         ChestInventory.Instance.Upgrade(pick);
                         //DB 업데이트
                         UpdateDB<DBChestInventory>(() => { onFinish?.Invoke(); });
@@ -193,22 +278,34 @@ namespace Server
 
         #endregion
 
+        #region Lobby - Hero Select
+
+        private void ChangeHero(PacketBase packet)
+        {
+            var hero = packet.hash["hero"].ToString();
+            PlayerInfo.Instance.SelectHero = hero;
+            UpdateDB<DBPlayerInfo>(() =>
+            {
+                SendPacket(packet);
+            });
+        }
+        #endregion
         #region Lobby - Chest
 
         public void ProgressChest(PacketBase packet)
         {
-            string inDate = packet.hash["inDate"].ToString();
+            var inDate = packet.hash["inDate"].ToString();
             ChestInventory.Instance.Progress(inDate);
             UpdateDB<DBChestInventory>(() => { SendPacket(packet); });
         }
 
         public void CompleteChest(PacketBase packet)
         {
-            string inDate = packet.hash["inDate"].ToString();
+            var inDate = packet.hash["inDate"].ToString();
             var chest = ChestInventory.Instance.Get(inDate);
 
-            int amount = chest.GetRewardAmount();
-            int gold_amount = Random.Range(chest.Sheet.gold_min, chest.Sheet.gold_max);
+            var amount = chest.GetRewardAmount();
+            var gold_amount = Random.Range(chest.Sheet.gold_min, chest.Sheet.gold_max);
             var rewards = GetChestReward(amount, gold_amount);
             ChestInventory.Instance.Remove(inDate);
 
@@ -216,8 +313,8 @@ namespace Server
             {
                 GetRewards(rewards, () =>
                 {
-                    PacketReward packetReward = new PacketReward();
-                    packetReward.PacketType = Packet.ePACKET_TYPE.CHEST_COMPLETE;
+                    var packetReward = new PacketReward();
+                    packetReward.PacketType = ePACKET_TYPE.CHEST_COMPLETE;
                     packetReward.hash = packet.hash;
                     packetReward.Rewards = rewards;
                     SendPacket(packetReward);
@@ -228,50 +325,46 @@ namespace Server
         public List<ItemInfo> GetChestReward(int reward_amount, int gold_amount)
         {
             //받을수 있는 목록 정리
-            int max_exp = "13".ToTableData<UnitLevel>().total;
-            List<string> get_table = new List<string>();
+            var max_exp = "13".ToTableData<UnitLevel>().total;
+            var get_table = new List<string>();
             foreach (var group in UnitInventory.Instance.Units)
-            {
-                foreach (var unit in group.Value)
-                {
-                    if (unit.Exp < max_exp)
-                        get_table.Add(unit.Key);
-                }
-            }
+            foreach (var unit in group.Value)
+                if (unit.Exp < max_exp)
+                    get_table.Add(unit.Key);
 
             //무작위로 분리
-            int pick_count = Random.Range(3, 7);
-            List<int> randomize_spilt = new List<int>();
-            int total_redomize_value = 0;
-            for (int i = 0; i < pick_count; i++)
+            var pick_count = Random.Range(3, 7);
+            var randomize_spilt = new List<int>();
+            var total_redomize_value = 0;
+            for (var i = 0; i < pick_count; i++)
             {
-                int rand = Random.Range(3, reward_amount - 3);
+                var rand = Random.Range(3, reward_amount - 3);
                 total_redomize_value += rand;
                 randomize_spilt.Add(rand);
             }
 
             //보상 추가
-            List<ItemInfo> rewards = new List<ItemInfo>();
-            for (int i = 0; i < pick_count; i++)
+            var rewards = new List<ItemInfo>();
+            for (var i = 0; i < pick_count; i++)
             {
                 if (get_table.Count == 0) break;
                 var result = Utils.RandomPickDefault(get_table);
                 get_table.Remove(result);
 
-                ItemInfo itemInfo = new ItemInfo()
+                var itemInfo = new ItemInfo
                 {
                     Key = result,
                     Type = eItemType.Card,
-                    Amount = (int) ((randomize_spilt[i] / (float) total_redomize_value) * reward_amount),
+                    Amount = (int) (randomize_spilt[i] / (float) total_redomize_value * reward_amount)
                 };
                 rewards.Add(itemInfo);
             }
 
             //보상 확인
-            int result_amount = 0;
-            int high_amount_reward = 0;
-            int high_amount_reward_index = -1;
-            for (int i = 0; i < rewards.Count; i++)
+            var result_amount = 0;
+            var high_amount_reward = 0;
+            var high_amount_reward_index = -1;
+            for (var i = 0; i < rewards.Count; i++)
             {
                 if (high_amount_reward < rewards[i].Amount)
                 {
@@ -285,38 +378,19 @@ namespace Server
             result_amount = reward_amount - result_amount;
 
             //보상 숫자 정리
-            if (high_amount_reward_index != -1)
-            {
-                rewards[high_amount_reward_index].Amount += result_amount;
-            }
+            if (high_amount_reward_index != -1) rewards[high_amount_reward_index].Amount += result_amount;
 
             //남은 보상만큼 골드 추가
-            ItemInfo gold = new ItemInfo()
+            var gold = new ItemInfo
             {
                 Key = "Coin",
                 Type = eItemType.Currency,
-                Amount = (int) (gold_amount + result_amount * 3f),
+                Amount = (int) (gold_amount + result_amount * 3f)
             };
 
             rewards.Add(gold);
 
             return rewards;
-        }
-
-        #endregion
-
-        #region Lobby - Collection
-
-        public void UnitLevelUpProcess(PacketBase packet)
-        {
-            string unitKey = packet.hash["unit_key"].ToString();
-
-            bool isSuccess = UnitInventory.Instance.LevelUp(unitKey);
-            UpdateDB<DBUnitInventory>(() =>
-            {
-                packet.hash.Add("success", isSuccess);
-                SendPacket(packet);
-            });
         }
 
         #endregion
@@ -335,7 +409,7 @@ namespace Server
         public void QuestComplete(PacketBase packet)
         {
             var slot_index = int.Parse(packet.hash["slot_index"].ToString());
-            List<ItemInfo> rewards = new List<ItemInfo>();
+            var rewards = new List<ItemInfo>();
             //보상 획득
             QuestInfo.Instance.QuestPoint += QuestInfo.Instance.QuestSlots[slot_index].Sheet.Point;
             Inventory.Instance.Update(Key.ITEM_COIN, QuestInfo.Instance.QuestSlots[slot_index].Sheet.Coin);
@@ -353,8 +427,8 @@ namespace Server
                 //퀘스트 업데이트
                 UpdateDB<DBQuestInfo>(() =>
                 {
-                    PacketReward packetReward = new PacketReward();
-                    packetReward.PacketType = Packet.ePACKET_TYPE.QUEST_COMPLETE;
+                    var packetReward = new PacketReward();
+                    packetReward.PacketType = ePACKET_TYPE.QUEST_COMPLETE;
                     packetReward.hash = packet.hash;
                     packetReward.Rewards = rewards;
                     SendPacket(packetReward);
@@ -371,15 +445,15 @@ namespace Server
                 QuestInfo.Instance.ReceiveReward[index] = true;
                 UpdateDB<DBQuestInfo>(() =>
                 {
-                    string key = string.Format("DailyReward_{0}", index);
+                    var key = string.Format("DailyReward_{0}", index);
                     var sheet = TableManager.Instance.GetData<DailyQuestRewardInfo>(key);
                     var chest = TableManager.Instance.GetData<Chest>(sheet.Reward);
                     var rewards = GetChestReward(chest.amount, Random.Range(chest.gold_min, chest.gold_max));
 
                     GetRewards(rewards, () =>
                     {
-                        PacketReward packetReward = new PacketReward();
-                        packetReward.PacketType = Packet.ePACKET_TYPE.DAILY_QUEST_REWARD;
+                        var packetReward = new PacketReward();
+                        packetReward.PacketType = ePACKET_TYPE.DAILY_QUEST_REWARD;
                         packetReward.hash = packet.hash;
                         packetReward.Rewards = rewards;
                         SendPacket(packetReward);
@@ -387,80 +461,12 @@ namespace Server
                 });
             }
             else
+            {
                 SendPacket(packet);
+            }
         }
 
         #endregion
-
-        #region Tracker
-
-        public void UpdateTracker(string json, Action onFinish)
-        {
-            Dictionary<string, int> tracker = JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
-
-            //퀘스트 목록 갱신
-            foreach (var quest in QuestInfo.Instance.QuestSlots)
-            {
-                if (tracker.ContainsKey(quest.Sheet.TrackerKey))
-                    quest.Count += tracker[quest.Sheet.TrackerKey];
-            }
-
-            UpdateDB<DBQuestInfo>(() => { onFinish?.Invoke(); });
-        }
-
-        #endregion
-
-        public void DownloadDB<T>(System.Action onFinish) where T : DBBase
-        {
-            var db = GetDB<T>();
-            db.Download(onFinish);
-        }
-
-        public void UpdateDB<T>(System.Action onFinish) where T : DBBase
-        {
-            var db = GetDB<T>();
-            db.Update(onFinish);
-        }
-
-        public void SendPacket<T>(T packet) where T : PacketBase
-        {
-            var bytes = MessagePackSerializer.Serialize(packet);
-
-            NetworkManager.Instance.ReceivePacket(bytes);
-        }
-
-        public void GetRewards(List<ItemInfo> rewards, Action onFinish)
-        {
-            bool isUpdateUnit = false;
-            bool isUpdateInventory = false;
-            foreach (var item in rewards)
-            {
-                if (item.Type == eItemType.Card)
-                {
-                    UnitInventory.Instance.GainEXP(item.Key, item.Amount);
-                    isUpdateUnit = true;
-                }
-
-                if (item.Type == eItemType.Currency)
-                {
-                    Inventory.Instance.Update(item.Key, item.Amount);
-                    isUpdateInventory = true;
-                }
-            }
-
-            if (isUpdateUnit && isUpdateInventory)
-            {
-                UpdateDB<DBUnitInventory>(() => { UpdateDB<DBInventory>(onFinish); });
-            }
-            else if (isUpdateUnit)
-            {
-                UpdateDB<DBUnitInventory>(onFinish);
-            }
-            else if (isUpdateInventory)
-            {
-                UpdateDB<DBInventory>(onFinish);
-            }
-        }
 
         #region Utils
 
@@ -524,16 +530,5 @@ namespace Server
         }
 
         #endregion
-
-        public T GetDB<T>() where T : DBBase
-        {
-            foreach (var db in DBList)
-            {
-                if (db is T)
-                    return db as T;
-            }
-
-            return null;
-        }
     }
 }

@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Tako
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 96b0691e48595694fb617c87db461cba, type: 3}
+    totalSpriteSurfaceArea: 891920
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: fdc94020b5b73044abce923e9671e6c0, type: 3}
+  - {fileID: 21300000, guid: ef0c2620e35588c419b8ba7dccab75a2, type: 3}
+  - {fileID: 21300000, guid: 01a9d1b1683c3bb428060bb0ef8a246e, type: 3}
+  - {fileID: 21300000, guid: 0c5617055b5a8cb4399e7d537bd9b323, type: 3}
+  - {fileID: 21300000, guid: 8e66b67556310e749a69b49fc4c61af7, type: 3}
+  - {fileID: 21300000, guid: d7454627f4a85964cbcb41208adf2a64, type: 3}
+  - {fileID: 21300000, guid: aae300a8f65d6814eab3d0d8144f2693, type: 3}
+  - {fileID: 21300000, guid: 479aeba86783ebb4abc15230df9ff4e8, type: 3}
+  - {fileID: 21300000, guid: 1359e1b8dec999b4fa88b89606ecc789, type: 3}
+  - {fileID: 21300000, guid: 226c217e0f64c20468ab1e53ca395bd5, type: 3}
+  - {fileID: 21300000, guid: 539309ef13202024eb8bbd1b8db09091, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - tako_04
+  - portrait_tako_face
+  - tako_08
+  - tako_03
+  - portrait_tako_body
+  - tako_01
+  - tako_05
+  - tako_09
+  - tako_06
+  - tako_02
+  - tako_07
+  m_RenderDataMap: {}
+  m_Tag: Tako
+  m_IsVariant: 0

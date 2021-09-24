@@ -4,17 +4,19 @@ namespace SheetData
 {
  public partial class Hero : CSVDataBase 
 { 
-	public string group { get; set; }
-
 	public int index { get; set; }
+
+	public string face { get; set; }
+
+	public string body { get; set; }
 
 	public string name { get; set; }
 
 	public string description { get; set; }
 
-	public string Unlock { get; set; }
+	public string unlock_condition { get; set; }
 
-	public string UnitGroupKey { get; set; }
+	public string atlas { get; set; }
 
 }
 }

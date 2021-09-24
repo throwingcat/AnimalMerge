@@ -70,6 +70,10 @@ public class LobbyPageMain : LobbyPageBase
         }
     }
 
+    public void OnClickChangeHero()
+    {
+        UIManager.Instance.ShowPopup<PopupHeroSelect>();
+    }
     #region 게임 시작
 
     public void OnClickGameStart()

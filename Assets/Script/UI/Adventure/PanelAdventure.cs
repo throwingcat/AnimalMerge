@@ -30,6 +30,7 @@ public class PanelAdventure : SUIPanel
     public ScrollRect StageScrollView;
 
     private bool _isInitialize = false;
+
     protected override void OnShow()
     {
         base.OnShow();
@@ -38,19 +39,19 @@ public class PanelAdventure : SUIPanel
         var bank = ChapterScrollView.listBank as ChapterScrollViewBank;
         bank.Initialize(this);
         ChapterScrollView.OnBeginDragEvent = OnBeginDrag;
-        
+
         var table = TableManager.Instance.GetTable<Chapter>();
         Chapters = new List<Chapter>();
         foreach (var row in table)
             Chapters.Add(row.Value as Chapter);
         foreach (var chapter in CellChapters)
             chapter.SetOnClickEvent(OnClickChapter);
-        
+
         var pos = ChapterRoot.anchoredPosition;
         pos.y = -66;
         ChapterRoot.anchoredPosition = pos;
         Information.SetActive(false);
-        
+
         StageRoot.gameObject.SetActive(false);
         pos = StageRoot.anchoredPosition;
         pos.y = -1750;
@@ -65,6 +66,7 @@ public class PanelAdventure : SUIPanel
             _isInitialize = true;
         }
     }
+
     private void SetStage(Chapter chapter)
     {
         //스테이지 설정
@@ -125,15 +127,13 @@ public class PanelAdventure : SUIPanel
     {
         if (CurrentChapterIndex == index) return;
         ChapterScrollView.SelectContentID(index);
-        CurrentChapterIndex = index;
         OnBeginDrag();
     }
 
     private void SetChapter(int chapter)
     {
-        if (CurrentChapterIndex == chapter) return;
         CurrentChapterIndex = chapter;
-        
+
         SetInputEnable(true);
         SetEnableChapterMoveButton(true);
 
@@ -261,6 +261,7 @@ public class PanelAdventure : SUIPanel
         SetInputEnable(false);
         SetEnableChapterMoveButton(false);
     }
+
     public void OnScrollingFinish()
     {
         var center = ChapterScrollView.GetCenteredBox() as CellChapter;
@@ -268,5 +269,6 @@ public class PanelAdventure : SUIPanel
         SetInputEnable(true);
         SetEnableChapterMoveButton(true);
     }
+
     #endregion
 }

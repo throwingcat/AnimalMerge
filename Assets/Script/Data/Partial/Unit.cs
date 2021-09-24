@@ -8,11 +8,12 @@ namespace SheetData
     {
         public bool isBadBlock = false;
         public static List<Unit> BadBlocks = new List<Unit>();
+        public Hero Master => master.ToTableData<Hero>();
         public override void Initialize()
         {
             base.Initialize();
 
-            if (group == "Rat")
+            if (master == "Rat")
             {
                 isBadBlock = true;
                 BadBlocks.Add(this);

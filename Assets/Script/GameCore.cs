@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Packet;
 using SheetData;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.U2D;
 using Violet;
 using Violet.Audio;
@@ -19,6 +20,7 @@ public class GameCore : MonoBehaviour
 
     [Header("환경")] public string INGAME_BGM;
     public GameObject BattleCameraGroup;
+
     #endregion
 
     protected float HorizontalSpawnLimit =>
@@ -29,13 +31,18 @@ public class GameCore : MonoBehaviour
     {
         #region 데이터 초기화
 
+        if (IsPlayer)
+        {
+            PlayerHeroKey = PlayerInfo.Instance.SelectHero;
+        }
         isReady = false;
         isLaunchGame = false;
         isGameStart = false;
-        isGameOver = false;
-        isGameFinish = false;
-        AttackBadBlockValue = 0;
-        MyBadBlockValue = 0;
+        MyReadyTime = new SubscribeValue<DateTime>(new DateTime());
+        isGameOver = new SubscribeValue<bool>(false);
+        AttackDamage = new SubscribeValue<int>(0);
+        MyStackDamage = new SubscribeValue<int>(0);
+        AttackComboValue = new SubscribeValue<int>(0);
         Score = 0;
 
         _elapsedGameTimer = 0f;
@@ -54,7 +61,7 @@ public class GameCore : MonoBehaviour
         foreach (var sheet in unitTable)
         {
             var unit = sheet.Value as Unit;
-            if (unit.group.Equals(PlayerUnitGroup))
+            if (unit.master.Equals(PlayerHeroKey))
                 PlayerUnitGroupList.Add(unit);
         }
 
@@ -71,9 +78,9 @@ public class GameCore : MonoBehaviour
 
         MAX_BADBLOCK_VALUE = Unit.BadBlocks[0].score * 5;
 
-        switch (PlayerUnitGroup)
+        switch (PlayerHeroKey)
         {
-            case "Cat":
+            default:
                 Passive = new CatPassive(this);
                 break;
         }
@@ -90,12 +97,19 @@ public class GameCore : MonoBehaviour
         SyncManager.OnSyncCapture = OnCaptureSyncPacket;
         SyncManager.OnSyncReceive = OnReceiveSyncPacket;
 
+        //플레이어 정보 전송
+        SyncManager.PlayerInfo playerInfo = new SyncManager.PlayerInfo();
+        playerInfo.HeroKey = PlayerHeroKey;
+        playerInfo.MMR = playerInfo.MMR;
+        playerInfo.Name = playerInfo.Name;
+        SyncManager.Request(playerInfo);
+        
         float delay = IsPlayer ? 0.1f : 2f;
 
+        isReady = true;
         GameManager.DelayInvoke(() =>
         {
-            isReady = true;
-            MyReadyTime = GameManager.GetTime();
+            MyReadyTime.Set(GameManager.GetTime());
             EnemyReadyTime = new DateTime();
         }, delay);
 
@@ -114,12 +128,12 @@ public class GameCore : MonoBehaviour
     public virtual void Initialize(bool isPlayer)
     {
         IsPlayer = isPlayer;
-        
+
         Initialize();
 
         //게임 카메라 루트 활성화
         BattleCameraGroup.SetActive(true);
-        
+
         //사운드 초기화
         AudioManager.Instance.ChangeBGMVolume(0.3f);
         AudioManager.Instance.ChangeSFXVolume(0.3f);
@@ -139,7 +153,7 @@ public class GameCore : MonoBehaviour
         PanelIngame.RefreshPassiveSkillGauge(0f);
         PanelIngame.SetActiveWaitPlayer(true);
         PanelIngame.SetActiveCountDown(false);
-
+        PanelIngame.SetPlayerPortrait(PlayerInfo.Instance.NickName,PlayerHeroKey.ToTableData<Hero>());
         RefreshBadBlockUI();
         ingameDynamicCanvas.Initialize();
 
@@ -156,7 +170,7 @@ public class GameCore : MonoBehaviour
         if (isReady == false) return;
         if (isGameStart)
         {
-            if (isGameOver == false)
+            if (isGameOver.Value == false)
             {
                 _elapsedGameTimer += delta;
 
@@ -166,11 +180,10 @@ public class GameCore : MonoBehaviour
                     _unitSpawnDelayDelta -= delta;
 
                 if (Input.GetKeyDown(KeyCode.Space))
-                    OnReceiveBadBlock(10);
+                    OnReceiveAttack(10);
                 if (Input.GetKeyDown(KeyCode.P))
                 {
-                    isGameOver = true;
-                    GameOverTime = DateTime.UtcNow;
+                    GameOver(GameManager.GetTime());
                 }
 
                 if (Input.GetKeyDown(KeyCode.A))
@@ -221,7 +234,7 @@ public class GameCore : MonoBehaviour
 
             //유닛 대기열 UI 갱신
             if (PanelIngame != null)
-                PanelIngame.RefreshWaitBlocks(NextUnitList[0].face_texture, NextUnitList[1].face_texture);
+                PanelIngame.RefreshWaitBlocks(NextUnitList[0], NextUnitList[1]);
         }
 
         var pool = GameObjectPool.GetPool(key);
@@ -380,7 +393,7 @@ public class GameCore : MonoBehaviour
         if (SpawnPhase.GrowCondition <= a.Sheet.index)
             SpawnPhase = SpawnPhase.GetNextPhase();
 
-        AttackComboValue = Combo;
+        AttackComboValue.Set(Combo);
 
         //스코어 갱신
         var gain = (a.Sheet.score + b.Sheet.score) * 10 * Combo;
@@ -427,21 +440,22 @@ public class GameCore : MonoBehaviour
         int badBlock = (int) ((unitDamage * Combo) * SuddenDeathRatio(_elapsedGameTimer));
 
         //내 방해블록 제거
-        if (0 < MyBadBlockValue)
+        if (0 < MyStackDamage.Value)
         {
-            MyBadBlockValue -= badBlock;
+            MyStackDamage.Set(MyStackDamage.Value - badBlock);
 
             if (IsPlayer)
                 PlayerBattleTracker.Update(PlayerBattleTracker.DEFENCE_DAMAGE, badBlock);
 
             //내 방해블록 제거 + 상대방에게 공격
-            if (MyBadBlockValue <= 0)
+            if (MyStackDamage.Value <= 0)
             {
-                AttackBadBlockValue = Mathf.Abs(MyBadBlockValue);
+                int damage = Mathf.Abs(MyStackDamage.Value);
+                AttackDamage.Set(damage);
 
                 if (IsPlayer)
                 {
-                    PlayerBattleTracker.Update(PlayerBattleTracker.DEFENCE_DAMAGE, MyBadBlockValue);
+                    PlayerBattleTracker.Update(PlayerBattleTracker.DEFENCE_DAMAGE, MyStackDamage.Value);
                     PlayMergeAttackVFX(a.transform.position, PanelIngame.MyBadBlockVFXPoint.position, 0.5f, () =>
                     {
                         //블록 갱신
@@ -475,7 +489,7 @@ public class GameCore : MonoBehaviour
                 PlayMergeAttackVFX(a.transform.position, PanelIngame.EnemyBadBlockVFXPoint.position, 0.5f, () => { });
             }
 
-            AttackBadBlockValue += badBlock;
+            AttackDamage.Set(AttackDamage.Value + badBlock);
         }
     }
 
@@ -489,14 +503,14 @@ public class GameCore : MonoBehaviour
     private void PlayRemoveBadUnitDamage(int damage, UnitBase unit)
     {
         //내 방해블록 제거
-        if (0 < MyBadBlockValue)
+        if (0 < MyStackDamage.Value)
         {
-            MyBadBlockValue -= damage;
+            MyStackDamage.Set(MyStackDamage.Value - damage);
 
             //내 방해블록 제거 + 상대방에게 공격
-            if (MyBadBlockValue <= 0)
+            if (MyStackDamage.Value <= 0)
             {
-                AttackBadBlockValue = Mathf.Abs(MyBadBlockValue);
+                AttackDamage.Set(Mathf.Abs(MyStackDamage.Value));
 
                 if (IsPlayer)
                     PlayMergeAttackVFX(unit.transform.position, PanelIngame.MyBadBlockVFXPoint.position, 0.5f, () =>
@@ -524,7 +538,7 @@ public class GameCore : MonoBehaviour
                 PlayMergeAttackVFX(unit.transform.position, PanelIngame.EnemyBadBlockVFXPoint.position, 0.5f,
                     () => { });
 
-            AttackBadBlockValue += damage;
+            AttackDamage.Set(AttackDamage.Value + damage);
         }
     }
 
@@ -590,23 +604,25 @@ public class GameCore : MonoBehaviour
 
     #region System
 
-    [Header("시스템")] public DateTime MyReadyTime;
+    [Header("시스템")] public SubscribeValue<DateTime> MyReadyTime = new SubscribeValue<DateTime>(new DateTime());
     public DateTime EnemyReadyTime;
     public DateTime GameStartTime;
     public bool isReady;
     public bool isLaunchGame;
     public bool isGameStart;
-    public bool isGameFinish;
     public bool isPauseBadBlockTimer;
     public SpawnPhase SpawnPhase;
-    public string PlayerUnitGroup = "Cat";
+
+    [FormerlySerializedAs("PlayerUnitGroup")]
+    public string PlayerHeroKey = "Cat";
+
     public List<Unit> PlayerUnitGroupList = new List<Unit>();
     public bool IsPlayer = true;
     public SyncManager SyncManager;
     [Header("시스템 - 게임오버")] public GameObject GameOverLine;
 
     public float GameoverTimeoutDelta;
-    public bool isGameOver;
+    public SubscribeValue<bool> isGameOver;
     public DateTime GameOverTime;
 
     #endregion
@@ -625,7 +641,7 @@ public class GameCore : MonoBehaviour
 
     private void GameOverUpdate(float delta)
     {
-        if (isGameOver) return;
+        if (isGameOver.Value) return;
 
         if (GameManager.ContainsTimer(Key.SIMPLE_TIMER_RUNNING_SKILL)) return;
 
@@ -660,8 +676,7 @@ public class GameCore : MonoBehaviour
             GameoverTimeoutDelta += delta;
             if (EnvironmentValue.GAME_OVER_TIME_OUT <= GameoverTimeoutDelta)
             {
-                isGameOver = true;
-                GameOverTime = DateTime.UtcNow;
+                GameOver(GameManager.GetTime());
             }
 
             if (IsPlayer)
@@ -739,10 +754,15 @@ public class GameCore : MonoBehaviour
     [Header("플레이어 데이터")] public int Score;
 
     public int MAX_BADBLOCK_VALUE;
-    public int MyBadBlockValue;
-    public int AttackBadBlockValue;
-    public int AttackComboValue;
+
+    [FormerlySerializedAs("MyBadBlockValue")]
+    public SubscribeValue<int> MyStackDamage;
+
+    [FormerlySerializedAs("AttackBadBlockValue")]
+    public SubscribeValue<int> AttackDamage;
+    public SubscribeValue<int> AttackComboValue;
     public int Combo;
+
     public List<ulong> IgnoreUnitGUID = new List<ulong>();
 
     public PassiveBase Passive;
@@ -768,7 +788,7 @@ public class GameCore : MonoBehaviour
     {
         if (isPauseBadBlockTimer) return;
 
-        if (0 < MyBadBlockValue)
+        if (0 < MyStackDamage.Value)
         {
             if (IsPlayer)
                 PanelIngame.SetActiveBadBlockTimer(true);
@@ -788,15 +808,15 @@ public class GameCore : MonoBehaviour
 
                 //쌓인 방해블록 소모 
                 var drop = 0;
-                if (MyBadBlockValue >= _badBlockMaxDropOneTime)
+                if (MyStackDamage.Value >= _badBlockMaxDropOneTime)
                 {
-                    MyBadBlockValue -= _badBlockMaxDropOneTime;
+                    MyStackDamage.Set(MyStackDamage.Value - _badBlockMaxDropOneTime);
                     drop = _badBlockMaxDropOneTime;
                 }
                 else
                 {
-                    drop = MyBadBlockValue;
-                    MyBadBlockValue = 0;
+                    drop = MyStackDamage.Value;
+                    MyStackDamage.Set(0);
                 }
 
                 DropBadBlock(drop);
@@ -913,12 +933,13 @@ public class GameCore : MonoBehaviour
 
     #region Attack
 
-    private void OnReceiveBadBlock(int value)
+    private void OnReceiveAttack(int value)
     {
         if (value == 0) return;
 
-        MyBadBlockValue += value;
-        MyBadBlockValue = Mathf.Clamp(MyBadBlockValue, 0, MAX_BADBLOCK_VALUE);
+        var stackDamage = MyStackDamage.Value + value;
+        stackDamage = Mathf.Clamp(stackDamage, 0, MAX_BADBLOCK_VALUE);
+        MyStackDamage.Set(stackDamage);
 
         if (IsPlayer)
         {
@@ -955,7 +976,7 @@ public class GameCore : MonoBehaviour
     {
         var blocks = new List<Unit>();
 
-        var current = MyBadBlockValue;
+        var current = MyStackDamage.Value;
         foreach (var bad in Unit.BadBlocks)
         {
             var count = current / bad.score;
@@ -1048,48 +1069,92 @@ public class GameCore : MonoBehaviour
         }
     }
 
-    #region Sync
-
+    #region Sync    
     public void OnCaptureSyncPacket(SyncManager.SyncPacket packet)
     {
     }
 
     public void OnReceiveSyncPacket(SyncManager.SyncPacket packet)
     {
+        foreach (var p in packet.Packets)
+        {
+            switch (p.PacketType)
+            {
+                case SyncManager.ePacketType.PlayerInfo:
+                    OnReceivePlayerInfoPacket(p as SyncManager.PlayerInfo);
+                    break;
+                case SyncManager.ePacketType.Ready:
+                    OnReceiveReadyPacket(p as SyncManager.Ready);
+                    break;
+                case SyncManager.ePacketType.UnitUpdate:
+                    if (IsPlayer)
+                        OnReceiveUpdateUnit(p as SyncManager.UpdateUnit);
+                    break;
+                case SyncManager.ePacketType.AttackDamage:
+                    OnReceiveAttack((p as SyncManager.AttackDamage).Damage);
+                    break;
+                case SyncManager.ePacketType.UpdateAttackCombo:
+                    OnReceiveCombo((p as SyncManager.UpdateAttackCombo).Combo);
+                    break;
+                case SyncManager.ePacketType.UpdateStackDamage:
+                    if (IsPlayer)
+                    {
+                        PanelIngame.RefreshEnemyBadBlock((p as SyncManager.UpdateStackDamage).StackDamage);
+                        RefreshBadBlockUI();
+                    }
+
+                    break;
+                case SyncManager.ePacketType.GameResult:
+                {
+                    var result = p as SyncManager.GameResult;
+                    OnReceiveGameResult(result.isGameOver, result.GameOverTime);
+                }
+                    break;
+                case SyncManager.ePacketType.None:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+    }
+
+    private SyncManager.PlayerInfo _enemyPlayerInfo;
+    public void OnReceivePlayerInfoPacket(SyncManager.PlayerInfo packet)
+    {
+        _enemyPlayerInfo = packet;
+        StartCoroutine(UpdatePlayerInfoProcess());    
+    }
+    private IEnumerator UpdatePlayerInfoProcess()
+    {
+        if (PanelIngame == null)
+            yield return null;
+        PanelIngame.SetEnemyPortrait(_enemyPlayerInfo.Name,_enemyPlayerInfo.HeroKey.ToTableData<Hero>());
+    }
+    
+    private void OnReceiveReadyPacket(SyncManager.Ready ready)
+    {
         if (isReady && isLaunchGame == false)
         {
-            EnemyReadyTime = packet.ReadyTime;
-            GameStartTime = MyReadyTime < EnemyReadyTime ? EnemyReadyTime : MyReadyTime;
+            EnemyReadyTime = ready.ReadyTime;
+            GameStartTime = MyReadyTime.Value < EnemyReadyTime ? EnemyReadyTime : MyReadyTime.Value;
             GameStartTime = GameStartTime.AddSeconds(6);
 
             StartCoroutine(GameStartProcess());
 
             isLaunchGame = true;
         }
-
-        OnReceiveBadBlock(packet.AttackDamage);
-        OnReceiveCombo(packet.AttackCombo);
-        if (IsPlayer)
-        {
-            RefreshEnemy(packet);
-            PanelIngame.RefreshEnemyBadBlock(packet.StackDamage);
-            RefreshBadBlockUI();
-        }
-
-        if (packet.isGameOver && isGameFinish == false)
-            OnReceiveGameOver(packet.isGameOver, packet.GameOverTime);
     }
 
-    public void RefreshEnemy(SyncManager.SyncPacket packet)
+    public void OnReceiveUpdateUnit(SyncManager.UpdateUnit packet)
     {
         EnemyScreen.Refresh(packet);
     }
 
-    public void OnReceiveGameOver(bool isGameOver, DateTime time)
+    public void OnReceiveGameResult(bool isGameOver, DateTime time)
     {
         var isWin = false;
         //나도 게임오버인 경우
-        if (this.isGameOver)
+        if (this.isGameOver.Value)
         {
             //상대가 더 늦게 죽음
             if (GameOverTime < time)
@@ -1104,11 +1169,8 @@ public class GameCore : MonoBehaviour
             //승리
             isWin = true;
             //게임 오버 처리해서 플레이 정지
-            this.isGameOver = true;
-            GameOverTime = time.AddSeconds(100);
+            GameOver(time.AddSeconds(10));
         }
-
-        isGameFinish = true;
 
         if (IsPlayer)
         {
@@ -1141,7 +1203,7 @@ public class GameCore : MonoBehaviour
                         foreach (var row in heroes)
                         {
                             var hero = row.Value as Hero;
-                            if (hero.Unlock == stage)
+                            if (hero.unlock_condition == stage)
                             {
                                 GameManager.Instance.isUnlockHero = true;
                                 break;
@@ -1157,6 +1219,12 @@ public class GameCore : MonoBehaviour
     }
 
     #endregion
+
+    public void GameOver(DateTime time)
+    {
+        GameOverTime = time;
+        isGameOver.Set(true);
+    }
 
     #region Utility
 
@@ -1189,13 +1257,12 @@ public class GameCore : MonoBehaviour
         GameObjectPool.DestroyPools(Key.UIVFXPoolCategory);
 
         //변수 초기화
-        isGameOver = false;
-        isGameFinish = false;
+        isGameOver.Set(false);
         UnitsInField.Clear();
         BadUnits.Clear();
         CurrentReadyUnit = null;
-        AttackBadBlockValue = 0;
-        MyBadBlockValue = 0;
+        AttackDamage.Clear();
+        MyStackDamage.Clear();
 
         //UI 초기화
         if (IsPlayer)

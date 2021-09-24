@@ -991,7 +991,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6491387643483441516}
         m_TargetAssemblyTypeName: LobbyPageCollection, Assembly-CSharp
         m_MethodName: OnClickNextGroup
         m_Mode: 1
@@ -1507,7 +1507,7 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6491387643483441516}
         m_TargetAssemblyTypeName: LobbyPageCollection, Assembly-CSharp
         m_MethodName: OnClickPrevGroup
         m_Mode: 1

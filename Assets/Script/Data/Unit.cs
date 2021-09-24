@@ -4,7 +4,7 @@ namespace SheetData
 {
  public partial class Unit : CSVDataBase 
 { 
-	public string group { get; set; }
+	public string master { get; set; }
 
 	public bool isPlayerUnit { get; set; }
 

@@ -31,7 +31,7 @@ public class PartItemCard : MonoBehaviour
             case eItemType.Currency:
             {
                 var sheet = itemInfo.Key.ToTableData<Item>();
-                SetTexutre(sheet.Texture);
+                SetTexutre("Common",sheet.Texture);
                 SetName(sheet.Name.ToLocalization());
                 SetGroup(sheet.Type.ToLocalization());
                 if (Exp != null)
@@ -54,9 +54,9 @@ public class PartItemCard : MonoBehaviour
         Unit = unit;
 
         var sheet = unit.Key.ToTableData<Unit>();
-        SetTexutre(sheet.face_texture);
+        SetTexutre(sheet.Master.atlas,sheet.face_texture);
         SetName(sheet.name.ToLocalization());
-        SetGroup(string.Format("group_{0}", sheet.group.ToLower().ToLocalization()));
+        SetGroup(string.Format("group_{0}", sheet.master.ToLower().ToLocalization()));
         SetLevel(unit.Level);
         SetGrade(sheet.index);
 
@@ -69,10 +69,12 @@ public class PartItemCard : MonoBehaviour
         SetPiece(sheet.piece_texture);
     }
 
-    public void SetTexutre(string texutre)
+    public void SetTexutre(string atlas,string texture)
     {
         if (Icon != null)
-            Icon.sprite = texutre.ToSprite();
+        {
+            Icon.sprite = texture.ToSprite(atlas);
+        }
     }
 
     public void SetName(string name)

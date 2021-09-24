@@ -19,4 +19,5 @@ public class PlayerInfo
     public string NickName;
     public int Level;
     public int RankScore;
+    public string SelectHero;
 }

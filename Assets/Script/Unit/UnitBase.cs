@@ -130,7 +130,8 @@ public class UnitBase : MonoBehaviour
     protected static Sprite GetSprite(string unit_key)
     {
         var sheet = TableManager.Instance.GetData<Unit>(unit_key);
-        return sheet.face_texture.ToSprite();
+        string atlas = sheet.Master != null ? sheet.Master.atlas : "Common";
+        return sheet.face_texture.ToSprite(atlas);
     }
 
     public void SetActivePhysics(bool isActive)

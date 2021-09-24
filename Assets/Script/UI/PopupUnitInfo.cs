@@ -34,10 +34,10 @@ public class PopupUnitInfo : SUIPanel
         _unit = unit;
         Unit.Set(unit);
         var sheet = unit.Key.ToTableData<Unit>();
-        var group = sheet.group.ToTableData<UnitGroup>();
+        var master = sheet.master.ToTableData<Hero>();
         Name.text = sheet.name.ToLocalization();
         Description.text = string.Format("{0} 의 배경설명", sheet.name.ToLocalization()); 
-        Group.text = group.name.ToLocalization();
+        Group.text = master.name.ToLocalization();
 
         decimal current =  Utils.GetUnitDamage(sheet.score, unit.Level);
         current = Math.Truncate(current * 10) / 10;

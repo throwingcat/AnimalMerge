@@ -25,13 +25,13 @@ public class UnitInventory
 
     public void Insert(SheetData.Unit sheet)
     {
-        if (Units.ContainsKey(sheet.group) == false)
+        if (Units.ContainsKey(sheet.master) == false)
         {
-            Units.Add(sheet.group, new List<Unit>());
+            Units.Add(sheet.master, new List<Unit>());
         }
 
         bool isContains = false;
-        foreach (var unit in Units[sheet.group])
+        foreach (var unit in Units[sheet.master])
         {
             if (unit.Key == sheet.key)
             {
@@ -42,14 +42,14 @@ public class UnitInventory
 
         if (isContains == false)
         {
-            Units[sheet.group].Add(new Unit()
+            Units[sheet.master].Add(new Unit()
             {
                 Key = sheet.key,
                 Level = 1,
                 Exp = 0,
             });
 
-            SetChangedGroup(sheet.group);
+            SetChangedGroup(sheet.master);
         }
     }
 
@@ -64,14 +64,14 @@ public class UnitInventory
     {
         var sheet = key.ToTableData<SheetData.Unit>();
 
-        if (Units.ContainsKey(sheet.group))
+        if (Units.ContainsKey(sheet.master))
         {
-            foreach (var unit in Units[sheet.group])
+            foreach (var unit in Units[sheet.master])
             {
                 if (unit.Key == key)
                 {
                     unit.Exp += value;
-                    SetChangedGroup(sheet.group);
+                    SetChangedGroup(sheet.master);
                 }
             }
         }
@@ -81,9 +81,9 @@ public class UnitInventory
     {
         var sheet = key.ToTableData<SheetData.Unit>();
 
-        if (Units.ContainsKey(sheet.group))
+        if (Units.ContainsKey(sheet.master))
         {
-            foreach (var unit in Units[sheet.group])
+            foreach (var unit in Units[sheet.master])
             {
                 if (unit.Key == key)
                     return unit;
@@ -107,7 +107,7 @@ public class UnitInventory
         {
             unit.Level++;
             var sheet = key.ToTableData<SheetData.Unit>();
-            SetChangedGroup(sheet.group);
+            SetChangedGroup(sheet.master);
             return true;
         }
 

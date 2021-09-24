@@ -49,19 +49,26 @@ namespace MessagePack.Resolvers
 
         static GeneratedResolverGetFormatterHelper()
         {
-            lookup = new global::System.Collections.Generic.Dictionary<Type, int>(11)
+            lookup = new global::System.Collections.Generic.Dictionary<Type, int>(18)
             {
                 { typeof(global::System.Collections.Generic.Dictionary<string, object>), 0 },
                 { typeof(global::System.Collections.Generic.List<global::ItemInfo>), 1 },
-                { typeof(global::System.Collections.Generic.List<global::SyncManager.UnitData>), 2 },
-                { typeof(global::Define.eItemType), 3 },
-                { typeof(global::Packet.ePACKET_TYPE), 4 },
-                { typeof(global::Common.PacketBase), 5 },
-                { typeof(global::Common.PacketReward), 6 },
-                { typeof(global::ItemInfo), 7 },
-                { typeof(global::SyncManager.SVector3), 8 },
-                { typeof(global::SyncManager.SyncPacket), 9 },
-                { typeof(global::SyncManager.UnitData), 10 },
+                { typeof(global::System.Collections.Generic.List<global::SyncManager.PacketBase>), 2 },
+                { typeof(global::System.Collections.Generic.List<global::SyncManager.UnitData>), 3 },
+                { typeof(global::Define.eItemType), 4 },
+                { typeof(global::Packet.ePACKET_TYPE), 5 },
+                { typeof(global::SyncManager.ePacketType), 6 },
+                { typeof(global::Common.PacketBase), 7 },
+                { typeof(global::Common.PacketReward), 8 },
+                { typeof(global::ItemInfo), 9 },
+                { typeof(global::SyncManager.AttackDamage), 10 },
+                { typeof(global::SyncManager.GameResult), 11 },
+                { typeof(global::SyncManager.PacketBase), 12 },
+                { typeof(global::SyncManager.Ready), 13 },
+                { typeof(global::SyncManager.SVector3), 14 },
+                { typeof(global::SyncManager.SyncPacket), 15 },
+                { typeof(global::SyncManager.UnitData), 16 },
+                { typeof(global::SyncManager.UpdateUnit), 17 },
             };
         }
 
@@ -77,15 +84,22 @@ namespace MessagePack.Resolvers
             {
                 case 0: return new global::MessagePack.Formatters.DictionaryFormatter<string, object>();
                 case 1: return new global::MessagePack.Formatters.ListFormatter<global::ItemInfo>();
-                case 2: return new global::MessagePack.Formatters.ListFormatter<global::SyncManager.UnitData>();
-                case 3: return new MessagePack.Formatters.Define.eItemTypeFormatter();
-                case 4: return new MessagePack.Formatters.Packet.ePACKET_TYPEFormatter();
-                case 5: return new MessagePack.Formatters.Common.PacketBaseFormatter();
-                case 6: return new MessagePack.Formatters.Common.PacketRewardFormatter();
-                case 7: return new MessagePack.Formatters.ItemInfoFormatter();
-                case 8: return new MessagePack.Formatters.SyncManager_SVector3Formatter();
-                case 9: return new MessagePack.Formatters.SyncManager_SyncPacketFormatter();
-                case 10: return new MessagePack.Formatters.SyncManager_UnitDataFormatter();
+                case 2: return new global::MessagePack.Formatters.ListFormatter<global::SyncManager.PacketBase>();
+                case 3: return new global::MessagePack.Formatters.ListFormatter<global::SyncManager.UnitData>();
+                case 4: return new MessagePack.Formatters.Define.eItemTypeFormatter();
+                case 5: return new MessagePack.Formatters.Packet.ePACKET_TYPEFormatter();
+                case 6: return new MessagePack.Formatters.SyncManager_ePacketTypeFormatter();
+                case 7: return new MessagePack.Formatters.Common.PacketBaseFormatter();
+                case 8: return new MessagePack.Formatters.Common.PacketRewardFormatter();
+                case 9: return new MessagePack.Formatters.ItemInfoFormatter();
+                case 10: return new MessagePack.Formatters.SyncManager_AttackDamageFormatter();
+                case 11: return new MessagePack.Formatters.SyncManager_GameResultFormatter();
+                case 12: return new MessagePack.Formatters.SyncManager_PacketBaseFormatter();
+                case 13: return new MessagePack.Formatters.SyncManager_ReadyFormatter();
+                case 14: return new MessagePack.Formatters.SyncManager_SVector3Formatter();
+                case 15: return new MessagePack.Formatters.SyncManager_SyncPacketFormatter();
+                case 16: return new MessagePack.Formatters.SyncManager_UnitDataFormatter();
+                case 17: return new MessagePack.Formatters.SyncManager_UpdateUnitFormatter();
                 default: return null;
             }
         }
@@ -173,6 +187,48 @@ namespace MessagePack.Formatters.Packet
         public global::Packet.ePACKET_TYPE Deserialize(ref MessagePackReader reader, global::MessagePack.MessagePackSerializerOptions options)
         {
             return (global::Packet.ePACKET_TYPE)reader.ReadInt32();
+        }
+    }
+}
+
+#pragma warning restore 168
+#pragma warning restore 414
+#pragma warning restore 618
+#pragma warning restore 612
+
+#pragma warning restore SA1200 // Using directives should be placed correctly
+#pragma warning restore SA1403 // File may only contain a single namespace
+#pragma warning restore SA1649 // File name should match first type name
+
+// <auto-generated>
+// THIS (.cs) FILE IS GENERATED BY MPC(MessagePack-CSharp). DO NOT CHANGE IT.
+// </auto-generated>
+
+#pragma warning disable 618
+#pragma warning disable 612
+#pragma warning disable 414
+#pragma warning disable 168
+
+#pragma warning disable SA1200 // Using directives should be placed correctly
+#pragma warning disable SA1403 // File may only contain a single namespace
+#pragma warning disable SA1649 // File name should match first type name
+
+namespace MessagePack.Formatters
+{
+    using System;
+    using System.Buffers;
+    using MessagePack;
+
+    public sealed class SyncManager_ePacketTypeFormatter : global::MessagePack.Formatters.IMessagePackFormatter<global::SyncManager.ePacketType>
+    {
+        public void Serialize(ref MessagePackWriter writer, global::SyncManager.ePacketType value, global::MessagePack.MessagePackSerializerOptions options)
+        {
+            writer.Write((Int32)value);
+        }
+
+        public global::SyncManager.ePacketType Deserialize(ref MessagePackReader reader, global::MessagePack.MessagePackSerializerOptions options)
+        {
+            return (global::SyncManager.ePacketType)reader.ReadInt32();
         }
     }
 }
@@ -401,6 +457,206 @@ namespace MessagePack.Formatters
         }
     }
 
+    public sealed class SyncManager_AttackDamageFormatter : global::MessagePack.Formatters.IMessagePackFormatter<global::SyncManager.AttackDamage>
+    {
+
+        public void Serialize(ref global::MessagePack.MessagePackWriter writer, global::SyncManager.AttackDamage value, global::MessagePack.MessagePackSerializerOptions options)
+        {
+            if (value == null)
+            {
+                writer.WriteNil();
+                return;
+            }
+
+            global::MessagePack.IFormatterResolver formatterResolver = options.Resolver;
+            writer.WriteArrayHeader(2);
+            formatterResolver.GetFormatterWithVerify<global::SyncManager.ePacketType>().Serialize(ref writer, value.PacketType, options);
+            writer.Write(value.Damage);
+        }
+
+        public global::SyncManager.AttackDamage Deserialize(ref global::MessagePack.MessagePackReader reader, global::MessagePack.MessagePackSerializerOptions options)
+        {
+            if (reader.TryReadNil())
+            {
+                return null;
+            }
+
+            options.Security.DepthStep(ref reader);
+            global::MessagePack.IFormatterResolver formatterResolver = options.Resolver;
+            var length = reader.ReadArrayHeader();
+            var ____result = new global::SyncManager.AttackDamage();
+
+            for (int i = 0; i < length; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        ____result.PacketType = formatterResolver.GetFormatterWithVerify<global::SyncManager.ePacketType>().Deserialize(ref reader, options);
+                        break;
+                    case 1:
+                        ____result.Damage = reader.ReadInt32();
+                        break;
+                    default:
+                        reader.Skip();
+                        break;
+                }
+            }
+
+            reader.Depth--;
+            return ____result;
+        }
+    }
+
+    public sealed class SyncManager_GameResultFormatter : global::MessagePack.Formatters.IMessagePackFormatter<global::SyncManager.GameResult>
+    {
+
+        public void Serialize(ref global::MessagePack.MessagePackWriter writer, global::SyncManager.GameResult value, global::MessagePack.MessagePackSerializerOptions options)
+        {
+            if (value == null)
+            {
+                writer.WriteNil();
+                return;
+            }
+
+            global::MessagePack.IFormatterResolver formatterResolver = options.Resolver;
+            writer.WriteArrayHeader(3);
+            formatterResolver.GetFormatterWithVerify<global::SyncManager.ePacketType>().Serialize(ref writer, value.PacketType, options);
+            writer.Write(value.isGameOver);
+            formatterResolver.GetFormatterWithVerify<global::System.DateTime>().Serialize(ref writer, value.GameOverTime, options);
+        }
+
+        public global::SyncManager.GameResult Deserialize(ref global::MessagePack.MessagePackReader reader, global::MessagePack.MessagePackSerializerOptions options)
+        {
+            if (reader.TryReadNil())
+            {
+                return null;
+            }
+
+            options.Security.DepthStep(ref reader);
+            global::MessagePack.IFormatterResolver formatterResolver = options.Resolver;
+            var length = reader.ReadArrayHeader();
+            var ____result = new global::SyncManager.GameResult();
+
+            for (int i = 0; i < length; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        ____result.PacketType = formatterResolver.GetFormatterWithVerify<global::SyncManager.ePacketType>().Deserialize(ref reader, options);
+                        break;
+                    case 1:
+                        ____result.isGameOver = reader.ReadBoolean();
+                        break;
+                    case 2:
+                        ____result.GameOverTime = formatterResolver.GetFormatterWithVerify<global::System.DateTime>().Deserialize(ref reader, options);
+                        break;
+                    default:
+                        reader.Skip();
+                        break;
+                }
+            }
+
+            reader.Depth--;
+            return ____result;
+        }
+    }
+
+    public sealed class SyncManager_PacketBaseFormatter : global::MessagePack.Formatters.IMessagePackFormatter<global::SyncManager.PacketBase>
+    {
+
+        public void Serialize(ref global::MessagePack.MessagePackWriter writer, global::SyncManager.PacketBase value, global::MessagePack.MessagePackSerializerOptions options)
+        {
+            if (value == null)
+            {
+                writer.WriteNil();
+                return;
+            }
+
+            global::MessagePack.IFormatterResolver formatterResolver = options.Resolver;
+            writer.WriteArrayHeader(1);
+            formatterResolver.GetFormatterWithVerify<global::SyncManager.ePacketType>().Serialize(ref writer, value.PacketType, options);
+        }
+
+        public global::SyncManager.PacketBase Deserialize(ref global::MessagePack.MessagePackReader reader, global::MessagePack.MessagePackSerializerOptions options)
+        {
+            if (reader.TryReadNil())
+            {
+                return null;
+            }
+
+            options.Security.DepthStep(ref reader);
+            global::MessagePack.IFormatterResolver formatterResolver = options.Resolver;
+            var length = reader.ReadArrayHeader();
+            var ____result = new global::SyncManager.PacketBase();
+
+            for (int i = 0; i < length; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        ____result.PacketType = formatterResolver.GetFormatterWithVerify<global::SyncManager.ePacketType>().Deserialize(ref reader, options);
+                        break;
+                    default:
+                        reader.Skip();
+                        break;
+                }
+            }
+
+            reader.Depth--;
+            return ____result;
+        }
+    }
+
+    public sealed class SyncManager_ReadyFormatter : global::MessagePack.Formatters.IMessagePackFormatter<global::SyncManager.Ready>
+    {
+
+        public void Serialize(ref global::MessagePack.MessagePackWriter writer, global::SyncManager.Ready value, global::MessagePack.MessagePackSerializerOptions options)
+        {
+            if (value == null)
+            {
+                writer.WriteNil();
+                return;
+            }
+
+            global::MessagePack.IFormatterResolver formatterResolver = options.Resolver;
+            writer.WriteArrayHeader(2);
+            formatterResolver.GetFormatterWithVerify<global::SyncManager.ePacketType>().Serialize(ref writer, value.PacketType, options);
+            formatterResolver.GetFormatterWithVerify<global::System.DateTime>().Serialize(ref writer, value.ReadyTime, options);
+        }
+
+        public global::SyncManager.Ready Deserialize(ref global::MessagePack.MessagePackReader reader, global::MessagePack.MessagePackSerializerOptions options)
+        {
+            if (reader.TryReadNil())
+            {
+                return null;
+            }
+
+            options.Security.DepthStep(ref reader);
+            global::MessagePack.IFormatterResolver formatterResolver = options.Resolver;
+            var length = reader.ReadArrayHeader();
+            var ____result = new global::SyncManager.Ready();
+
+            for (int i = 0; i < length; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        ____result.PacketType = formatterResolver.GetFormatterWithVerify<global::SyncManager.ePacketType>().Deserialize(ref reader, options);
+                        break;
+                    case 1:
+                        ____result.ReadyTime = formatterResolver.GetFormatterWithVerify<global::System.DateTime>().Deserialize(ref reader, options);
+                        break;
+                    default:
+                        reader.Skip();
+                        break;
+                }
+            }
+
+            reader.Depth--;
+            return ____result;
+        }
+    }
+
     public sealed class SyncManager_SVector3Formatter : global::MessagePack.Formatters.IMessagePackFormatter<global::SyncManager.SVector3>
     {
 
@@ -465,14 +721,8 @@ namespace MessagePack.Formatters
             }
 
             global::MessagePack.IFormatterResolver formatterResolver = options.Resolver;
-            writer.WriteArrayHeader(7);
-            formatterResolver.GetFormatterWithVerify<global::System.Collections.Generic.List<global::SyncManager.UnitData>>().Serialize(ref writer, value.UnitsDatas, options);
-            writer.Write(value.AttackDamage);
-            writer.Write(value.AttackCombo);
-            writer.Write(value.StackDamage);
-            writer.Write(value.isGameOver);
-            formatterResolver.GetFormatterWithVerify<global::System.DateTime>().Serialize(ref writer, value.GameOverTime, options);
-            formatterResolver.GetFormatterWithVerify<global::System.DateTime>().Serialize(ref writer, value.ReadyTime, options);
+            writer.WriteArrayHeader(1);
+            formatterResolver.GetFormatterWithVerify<global::System.Collections.Generic.List<global::SyncManager.PacketBase>>().Serialize(ref writer, value.Packets, options);
         }
 
         public global::SyncManager.SyncPacket Deserialize(ref global::MessagePack.MessagePackReader reader, global::MessagePack.MessagePackSerializerOptions options)
@@ -492,25 +742,7 @@ namespace MessagePack.Formatters
                 switch (i)
                 {
                     case 0:
-                        ____result.UnitsDatas = formatterResolver.GetFormatterWithVerify<global::System.Collections.Generic.List<global::SyncManager.UnitData>>().Deserialize(ref reader, options);
-                        break;
-                    case 1:
-                        ____result.AttackDamage = reader.ReadInt32();
-                        break;
-                    case 2:
-                        ____result.AttackCombo = reader.ReadInt32();
-                        break;
-                    case 3:
-                        ____result.StackDamage = reader.ReadInt32();
-                        break;
-                    case 4:
-                        ____result.isGameOver = reader.ReadBoolean();
-                        break;
-                    case 5:
-                        ____result.GameOverTime = formatterResolver.GetFormatterWithVerify<global::System.DateTime>().Deserialize(ref reader, options);
-                        break;
-                    case 6:
-                        ____result.ReadyTime = formatterResolver.GetFormatterWithVerify<global::System.DateTime>().Deserialize(ref reader, options);
+                        ____result.Packets = formatterResolver.GetFormatterWithVerify<global::System.Collections.Generic.List<global::SyncManager.PacketBase>>().Deserialize(ref reader, options);
                         break;
                     default:
                         reader.Skip();
@@ -565,6 +797,56 @@ namespace MessagePack.Formatters
                         break;
                     case 2:
                         ____result.UnitRotation = formatterResolver.GetFormatterWithVerify<global::SyncManager.SVector3>().Deserialize(ref reader, options);
+                        break;
+                    default:
+                        reader.Skip();
+                        break;
+                }
+            }
+
+            reader.Depth--;
+            return ____result;
+        }
+    }
+
+    public sealed class SyncManager_UpdateUnitFormatter : global::MessagePack.Formatters.IMessagePackFormatter<global::SyncManager.UpdateUnit>
+    {
+
+        public void Serialize(ref global::MessagePack.MessagePackWriter writer, global::SyncManager.UpdateUnit value, global::MessagePack.MessagePackSerializerOptions options)
+        {
+            if (value == null)
+            {
+                writer.WriteNil();
+                return;
+            }
+
+            global::MessagePack.IFormatterResolver formatterResolver = options.Resolver;
+            writer.WriteArrayHeader(2);
+            formatterResolver.GetFormatterWithVerify<global::SyncManager.ePacketType>().Serialize(ref writer, value.PacketType, options);
+            formatterResolver.GetFormatterWithVerify<global::System.Collections.Generic.List<global::SyncManager.UnitData>>().Serialize(ref writer, value.UnitsDatas, options);
+        }
+
+        public global::SyncManager.UpdateUnit Deserialize(ref global::MessagePack.MessagePackReader reader, global::MessagePack.MessagePackSerializerOptions options)
+        {
+            if (reader.TryReadNil())
+            {
+                return null;
+            }
+
+            options.Security.DepthStep(ref reader);
+            global::MessagePack.IFormatterResolver formatterResolver = options.Resolver;
+            var length = reader.ReadArrayHeader();
+            var ____result = new global::SyncManager.UpdateUnit();
+
+            for (int i = 0; i < length; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        ____result.PacketType = formatterResolver.GetFormatterWithVerify<global::SyncManager.ePacketType>().Deserialize(ref reader, options);
+                        break;
+                    case 1:
+                        ____result.UnitsDatas = formatterResolver.GetFormatterWithVerify<global::System.Collections.Generic.List<global::SyncManager.UnitData>>().Deserialize(ref reader, options);
                         break;
                     default:
                         reader.Skip();

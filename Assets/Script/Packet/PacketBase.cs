@@ -15,5 +15,6 @@ namespace Packet
         QUEST_COMPLETE,
         QUEST_REFRESH,
         DAILY_QUEST_REWARD,
+        CHANGE_HERO,
     }
 }

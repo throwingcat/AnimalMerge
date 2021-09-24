@@ -13,8 +13,8 @@ public class PanelIngame : SUIPanel
 {
     public DOTweenPlayer EnterPortraitTween;
     public DOTweenPlayer PlayPortraitTween;
-    public IngamePlayerPortrait PlayerPortrait;
-    public IngamePlayerPortrait EnemyPortrait;
+    public List<IngamePlayerPortrait> PlayerPortrait = new List<IngamePlayerPortrait>();
+    public List<IngamePlayerPortrait> EnemyPortrait = new List<IngamePlayerPortrait>();
     public RectTransform LayoutLeft;
     public RectTransform LayoutRight;
     public RectTransform LayoutTop;
@@ -271,13 +271,13 @@ public class PanelIngame : SUIPanel
         OnClickSkillEvent?.Invoke();
     }
 
-    public void RefreshWaitBlocks(string next, string afterNext)
+    public void RefreshWaitBlocks(Unit next, Unit afterNext)
     {
         NextBlock.gameObject.SetActive(false);
         AfterNextBlock.gameObject.SetActive(false);
 
-        NextBlock.sprite = next.ToSprite();
-        AfterNextBlock.sprite = afterNext.ToSprite();
+        NextBlock.sprite = next.face_texture.ToSprite(next.Master.atlas);
+        AfterNextBlock.sprite = afterNext.face_texture.ToSprite(afterNext.Master.atlas);
 
         NextBlock.gameObject.SetActive(true);
         AfterNextBlock.gameObject.SetActive(true);
@@ -315,4 +315,20 @@ public class PanelIngame : SUIPanel
     {
         WaitPlayer.SetActive(isActive);
     }
+
+    #region Portrait
+
+    public void SetPlayerPortrait(string name, Hero hero)
+    {
+        foreach(var p in PlayerPortrait)
+            p.Set(name,hero);
+    }
+
+    public void SetEnemyPortrait(string name, Hero hero)
+    {
+        foreach(var p in EnemyPortrait)
+            p.Set(name,hero);
+    }
+
+    #endregion
 }
