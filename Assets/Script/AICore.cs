@@ -16,18 +16,31 @@ public class AICore : GameCore
     public override void Initialize(bool isPlayer)
     {
         IsPlayer = isPlayer;
+        
         Initialize();
 
+        string ai_name = "";
         //모험모드
         if (GameManager.Instance.isAdventure)
         {
             var stage = GameManager.Instance.StageKey.ToTableData<Stage>();
             MMR = stage.AI_MMR;
+            ai_name = "수호자";
         }
 
         if (GameManager.Instance.isSinglePlay && GameManager.Instance.isAdventure == false)
+        {
             MMR = PlayerInfo.Instance.RankScore;
+            ai_name = string.Format("AI_{0}", Random.Range(1000000, 9999999));
+        }
 
+        //플레이어 정보 전송
+        SyncManager.PlayerInfo playerInfo = new SyncManager.PlayerInfo();
+        playerInfo.HeroKey = PlayerHeroKey;
+        playerInfo.MMR = MMR;
+        playerInfo.Name = ai_name;
+        SyncManager.Request(playerInfo);
+        
         var mmr_ratio = Mathf.InverseLerp(EnvironmentValue.AI_INPUT_DELAY_LOW_MMR,
             EnvironmentValue.AI_INPUT_DELAY_HIGH_MMR, MMR);
 

@@ -35,6 +35,7 @@ public class GameCore : MonoBehaviour
         {
             PlayerHeroKey = PlayerInfo.Instance.SelectHero;
         }
+
         isReady = false;
         isLaunchGame = false;
         isGameStart = false;
@@ -97,13 +98,6 @@ public class GameCore : MonoBehaviour
         SyncManager.OnSyncCapture = OnCaptureSyncPacket;
         SyncManager.OnSyncReceive = OnReceiveSyncPacket;
 
-        //플레이어 정보 전송
-        SyncManager.PlayerInfo playerInfo = new SyncManager.PlayerInfo();
-        playerInfo.HeroKey = PlayerHeroKey;
-        playerInfo.MMR = playerInfo.MMR;
-        playerInfo.Name = playerInfo.Name;
-        SyncManager.Request(playerInfo);
-        
         float delay = IsPlayer ? 0.1f : 2f;
 
         isReady = true;
@@ -131,6 +125,13 @@ public class GameCore : MonoBehaviour
 
         Initialize();
 
+        //플레이어 정보 전송
+        SyncManager.PlayerInfo playerInfo = new SyncManager.PlayerInfo();
+        playerInfo.HeroKey = PlayerHeroKey;
+        playerInfo.MMR = PlayerInfo.Instance.RankScore;
+        playerInfo.Name =  PlayerInfo.Instance.NickName;
+        SyncManager.Request(playerInfo);
+        
         //게임 카메라 루트 활성화
         BattleCameraGroup.SetActive(true);
 
@@ -153,7 +154,7 @@ public class GameCore : MonoBehaviour
         PanelIngame.RefreshPassiveSkillGauge(0f);
         PanelIngame.SetActiveWaitPlayer(true);
         PanelIngame.SetActiveCountDown(false);
-        PanelIngame.SetPlayerPortrait(PlayerInfo.Instance.NickName,PlayerHeroKey.ToTableData<Hero>());
+        PanelIngame.SetPlayerPortrait(PlayerInfo.Instance.NickName, PlayerHeroKey.ToTableData<Hero>());
         RefreshBadBlockUI();
         ingameDynamicCanvas.Initialize();
 
@@ -760,6 +761,7 @@ public class GameCore : MonoBehaviour
 
     [FormerlySerializedAs("AttackBadBlockValue")]
     public SubscribeValue<int> AttackDamage;
+
     public SubscribeValue<int> AttackComboValue;
     public int Combo;
 
@@ -1069,7 +1071,8 @@ public class GameCore : MonoBehaviour
         }
     }
 
-    #region Sync    
+    #region Sync
+
     public void OnCaptureSyncPacket(SyncManager.SyncPacket packet)
     {
     }
@@ -1119,18 +1122,21 @@ public class GameCore : MonoBehaviour
     }
 
     private SyncManager.PlayerInfo _enemyPlayerInfo;
+
     public void OnReceivePlayerInfoPacket(SyncManager.PlayerInfo packet)
     {
         _enemyPlayerInfo = packet;
-        StartCoroutine(UpdatePlayerInfoProcess());    
+        if (IsPlayer)
+            StartCoroutine(UpdatePlayerInfoProcess());
     }
+
     private IEnumerator UpdatePlayerInfoProcess()
     {
         if (PanelIngame == null)
             yield return null;
-        PanelIngame.SetEnemyPortrait(_enemyPlayerInfo.Name,_enemyPlayerInfo.HeroKey.ToTableData<Hero>());
+        PanelIngame.SetEnemyPortrait(_enemyPlayerInfo.Name, _enemyPlayerInfo.HeroKey.ToTableData<Hero>());
     }
-    
+
     private void OnReceiveReadyPacket(SyncManager.Ready ready)
     {
         if (isReady && isLaunchGame == false)
