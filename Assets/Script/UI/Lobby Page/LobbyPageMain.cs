@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using BackEnd;
 using Define;
 using Server;
+using SheetData;
 using UnityEngine;
 using UnityEngine.UI;
 using Violet;
@@ -11,7 +12,7 @@ using Violet;
 public class LobbyPageMain : LobbyPageBase
 {
     public Text RankScore;
-
+    public Image HeroFace;
     public PartLobbyChest[] Chests;
     private float _chest_update_delta = 0f;
     private float _chest_update_delay = 1f;
@@ -23,6 +24,8 @@ public class LobbyPageMain : LobbyPageBase
         RankScore.text = PlayerInfo.Instance.RankScore.ToString();
         foreach (var chest in Chests)
             chest.OnUpdate();
+        
+        Refresh();
     }
 
     public override void OnUpdate(float delta)
@@ -72,8 +75,16 @@ public class LobbyPageMain : LobbyPageBase
 
     public void OnClickChangeHero()
     {
-        UIManager.Instance.ShowPopup<PopupHeroSelect>();
+        var popup = UIManager.Instance.ShowPopup<PopupHeroSelect>();
+        popup.onUpdateSelectedHero = Refresh;
     }
+
+    public void Refresh()
+    {
+        var hero = PlayerInfo.Instance.SelectHero.ToTableData<Hero>();
+        HeroFace.sprite = hero.face.ToSprite(hero.atlas);
+    }
+    
     #region 게임 시작
 
     public void OnClickGameStart()

@@ -915,6 +915,7 @@ MonoBehaviour:
   CanvasGroup: {fileID: 0}
   Root: {fileID: 3065673665009540770}
   RankScore: {fileID: 1467327287877074895}
+  HeroFace: {fileID: 8814399433797143154}
   Chests:
   - {fileID: 2526260825159945147}
   - {fileID: 658344284221712738}

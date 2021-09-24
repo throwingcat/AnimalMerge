@@ -19,6 +19,8 @@ public class PopupHeroSelect : SUIPanel
     public GameObject Selected;
     public GameObject Select;
     private Hero _currentHero;
+
+    public System.Action onUpdateSelectedHero; 
     protected override void OnShow()
     {
         base.OnShow();
@@ -96,6 +98,7 @@ public class PopupHeroSelect : SUIPanel
             PlayerInfo.Instance.SelectHero = res.hash["hero"].ToString();
             Hero result = PlayerInfo.Instance.SelectHero.ToTableData<Hero>();
             UpdateHero(result);
+            onUpdateSelectedHero?.Invoke();
         });
     }
 }
