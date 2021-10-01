@@ -11,13 +11,13 @@ public class PartQuestDailyReward : MonoBehaviour
 
     private int _index;
 
-    private LobbyPageQuest _owner;
+    private PageQuest _owner;
     public GameObject Clear;
 
     public GameObject Disable;
     public GameObject Enable;
 
-    public void Set(LobbyPageQuest owner, int index, eState state)
+    public void Set(PageQuest owner, int index, eState state)
     {
         _owner = owner;
         _index = index;

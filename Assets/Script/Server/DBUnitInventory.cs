@@ -67,19 +67,7 @@ namespace Server
                 }
                 else
                 {
-                    if (bro.GetReturnValuetoJSON()["rows"].Count <= 0)
-                    {
-                        //최초 설정
-                        var table = TableManager.Instance.GetTable<Unit>();
-                        foreach (var row in table)
-                        {
-                            var sheet = row.Value as Unit;
-                            if (sheet.isPlayerUnit)
-                                UnitInventory.Instance.Insert(sheet);
-                        }
-
-                        Update(null);
-                    }
+                    if (bro.GetReturnValuetoJSON()["rows"].Count <= 0) { }
                     else
                     {
                         var rows = bro.Rows();
@@ -96,8 +84,7 @@ namespace Server
                             if (UnitInventory.Instance.Units.ContainsKey(group) == false)
                                 UnitInventory.Instance.Units.Add(group, new List<UnitInventory.Unit>());
                             UnitInventory.Instance.Units[group].Clear();
-                            UnitInventory.Instance.Units[group] =
-                                JsonConvert.DeserializeObject<List<UnitInventory.Unit>>(json);
+                            UnitInventory.Instance.Units[group] = JsonConvert.DeserializeObject<List<UnitInventory.Unit>>(json);
                         }
                     }
                 }

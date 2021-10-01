@@ -32,7 +32,7 @@ public class ActiveBase
         if (Point < EnvironmentValue.SKILL_CHARGE_MAX_VALUE) return;
         if (RunProcess())
         {
-            PlayerBattleTracker.Update(PlayerBattleTracker.USE_SKILL, 1);
+            PlayerBattleTracker.Update(PlayerTracker.USE_SKILL, 1);
             Point = 0;
         }
     }

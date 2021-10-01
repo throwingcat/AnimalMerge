@@ -27,9 +27,9 @@ public class CellQeustInfo : MonoBehaviour
     #endregion
 
     private QuestInfo.QuestSlot _slot;
-    private LobbyPageQuest _owner;
+    private PageQuest _owner;
 
-    public void Set(LobbyPageQuest owner, QuestInfo.QuestSlot slot)
+    public void Set(PageQuest owner, QuestInfo.QuestSlot slot)
     {
         _owner = owner;
         _slot = slot;

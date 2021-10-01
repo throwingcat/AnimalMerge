@@ -23,6 +23,7 @@ namespace Server
 
         public AnimalMergeServer()
         {
+            DBList.Add(new DBAchievement());
             DBList.Add(new DBPlayerInfo());
             DBList.Add(new DBInventory());
             DBList.Add(new DBChestInventory());
@@ -88,27 +89,15 @@ namespace Server
             var unitKey = packet.hash["unit_key"].ToString();
 
             var isSuccess = UnitInventory.Instance.LevelUp(unitKey);
+            if (isSuccess) PlayerTracker.Instance.Report(PlayerTracker.UPGRADE_ANY, 1);
             UpdateDB<DBUnitInventory>(() =>
             {
                 packet.hash.Add("success", isSuccess);
-                SendPacket(packet);
+                if (isSuccess)
+                    UpdateDB<DBPlayerTracker>(() => { SendPacket(packet); });
+                else
+                    SendPacket(packet);
             });
-        }
-
-        #endregion
-
-        #region Tracker
-
-        public void UpdateTracker(string json, Action onFinish)
-        {
-            var tracker = JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
-
-            //퀘스트 목록 갱신
-            foreach (var quest in QuestInfo.Instance.QuestSlots)
-                if (tracker.ContainsKey(quest.Sheet.TrackerKey))
-                    quest.Count += tracker[quest.Sheet.TrackerKey];
-
-            UpdateDB<DBQuestInfo>(() => { onFinish?.Invoke(); });
         }
 
         #endregion
@@ -167,35 +156,98 @@ namespace Server
             return null;
         }
 
+        #region Lobby - Hero Select
+
+        private void ChangeHero(PacketBase packet)
+        {
+            var hero = packet.hash["hero"].ToString();
+            PlayerInfo.Instance.SelectHero = hero;
+            UpdateDB<DBPlayerInfo>(() => { SendPacket(packet); });
+        }
+
+        #endregion
+
+        #region Tracker
+
+        public void ReportAchievement(Dictionary<string, ulong> tracker, Action onFinish)
+        {
+            //업적 목록 갱신
+            var isUpdateAchievement = false;
+            foreach (var t in tracker)
+            {
+                if (t.Value == 0) continue;
+
+                var isUpdate = AchievementInfo.Instance.Report(t.Key, t.Value);
+                if (isUpdateAchievement == false)
+                    isUpdateAchievement = isUpdate;
+            }
+
+            if (isUpdateAchievement)
+                UpdateDB<DBAchievement>(() => { onFinish?.Invoke(); });
+            else
+                onFinish?.Invoke();
+        }
+
+        public  void ReportQuest(Dictionary<string, ulong> tracker, Action onFinish)
+        {
+            var isUpdate = false;
+            foreach (var quest in QuestInfo.Instance.QuestSlots)
+            {
+                if (tracker.ContainsKey(quest.Sheet.TrackerKey))
+                {
+                    quest.Count += tracker[quest.Sheet.TrackerKey];
+                    isUpdate = true;
+                }
+            }
+
+            if (isUpdate)
+                UpdateDB<DBQuestInfo>(() => { onFinish?.Invoke(); });
+            else
+                onFinish?.Invoke();
+        }
+
+        #endregion
+
         #region Battle Result
 
         private void BattleResult(PacketBase packet)
         {
             var isWin = (bool) packet.hash["is_win"];
 
+            if (packet.hash.ContainsKey("tracker_json"))
+            {
+                var json = packet.hash["tracker_json"].ToString();
+                var tracker = JsonConvert.DeserializeObject<Dictionary<string, ulong>>(json);
+                foreach (var t in tracker)
+                    PlayerTracker.Instance.Report(t.Key, t.Value);
+            }
+
             Action<PacketBase> onFinishBattleResult = p =>
             {
-                if (packet.hash.ContainsKey("tracker_json"))
-                {
-                    var json = packet.hash["tracker_json"].ToString();
-                    UpdateTracker(json, () => { SendPacket(p); });
-                }
-                else
-                {
-                    SendPacket(p);
-                }
+                SendPacket(p);
             };
+
+            PlayerTracker.Instance.Report(PlayerTracker.BATTLE_PLAY, 1);
+            
             //패배 처리
             if (isWin == false)
             {
+                PlayerTracker.Instance.Report(PlayerTracker.BATTLE_LOSE, 1);
                 PlayerInfo.Instance.RankScore -= 5;
 
                 //플레이어 정보 업데이트
-                UpdateDB<DBPlayerInfo>(() => { onFinishBattleResult(packet); });
+                UpdateDB<DBPlayerInfo>(() =>
+                {
+                    UpdateDB<DBPlayerTracker>(() =>
+                    {
+                        onFinishBattleResult(packet);
+                    });
+                });
             }
             //승리 처리
             else
             {
+                PlayerTracker.Instance.Report(PlayerTracker.BATTLE_WIN, 1);
                 BattleWinProcess(() =>
                 {
                     //스테이지 플레이 정보
@@ -206,8 +258,11 @@ namespace Server
                         if (PlayerTracker.Instance.Contains(stage) == false)
                         {
                             packet.hash.Add("first_clear", true);
-                            PlayerTracker.Instance.Set(stage, 1);
-                            UpdateDB<DBPlayerTracker>(() => { onFinishBattleResult(packet); });
+                            PlayerTracker.Instance.Report(stage, 1);
+                            UpdateDB<DBPlayerTracker>(() =>
+                            {
+                                onFinishBattleResult(packet);
+                            });
                         }
                         else
                         {
@@ -278,18 +333,6 @@ namespace Server
 
         #endregion
 
-        #region Lobby - Hero Select
-
-        private void ChangeHero(PacketBase packet)
-        {
-            var hero = packet.hash["hero"].ToString();
-            PlayerInfo.Instance.SelectHero = hero;
-            UpdateDB<DBPlayerInfo>(() =>
-            {
-                SendPacket(packet);
-            });
-        }
-        #endregion
         #region Lobby - Chest
 
         public void ProgressChest(PacketBase packet)
@@ -421,17 +464,22 @@ namespace Server
             QuestInfo.Instance.QuestSlots[slot_index].Count = 0;
             QuestInfo.Instance.QuestSlots[slot_index].RefreshTime = GameManager.GetTime().AddMinutes(10);
 
+            PlayerTracker.Instance.Report(PlayerTracker.QUEST_CLEAR, 1);
+
             //인벤토리 업데이트
             UpdateDB<DBInventory>(() =>
             {
                 //퀘스트 업데이트
                 UpdateDB<DBQuestInfo>(() =>
                 {
-                    var packetReward = new PacketReward();
-                    packetReward.PacketType = ePACKET_TYPE.QUEST_COMPLETE;
-                    packetReward.hash = packet.hash;
-                    packetReward.Rewards = rewards;
-                    SendPacket(packetReward);
+                    UpdateDB<DBPlayerTracker>(() =>
+                    {
+                        var packetReward = new PacketReward();
+                        packetReward.PacketType = ePACKET_TYPE.QUEST_COMPLETE;
+                        packetReward.hash = packet.hash;
+                        packetReward.Rewards = rewards;
+                        SendPacket(packetReward);
+                    });
                 });
             });
         }

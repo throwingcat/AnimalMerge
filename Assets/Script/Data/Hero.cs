@@ -18,5 +18,11 @@ namespace SheetData
 
 	public string atlas { get; set; }
 
+	public string vfx_trail { get; set; }
+
+	public string vfx_hit { get; set; }
+
+	public string vfx_flash { get; set; }
+
 }
 }

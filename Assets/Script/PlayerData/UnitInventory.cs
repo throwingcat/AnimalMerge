@@ -93,11 +93,30 @@ public class UnitInventory
         return null;
     }
 
-    public List<Unit> GetGroup(string group)
+    public List<Unit> GetGroup(string master)
     {
-        if (Units.ContainsKey(group))
-            return Units[group];
-        return null;
+        if (Units.ContainsKey(master) == false)
+        {
+            var table = TableManager.Instance.GetTable<SheetData.Unit>();
+            foreach (var row in table)
+            {
+                var unit = row.Value as SheetData.Unit;
+
+                if (unit.master == master)
+                {
+                    if (Units.ContainsKey(master) == false)
+                        Units.Add(master, new List<Unit>());
+                    Units[master].Add(new Unit()
+                    {
+                        Key = unit.key,
+                        Level = 1,
+                        Exp = 0,
+                    });
+                }
+            }
+        }
+
+        return Units[master];
     }
 
     public bool LevelUp(string key)

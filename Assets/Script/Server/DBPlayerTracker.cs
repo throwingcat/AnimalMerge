@@ -16,6 +16,10 @@ namespace Server
         public override void DoUpdate()
         {
             base.DoUpdate();
+            
+            //Quest 갱신
+            //Achievement 갱신
+            
             var json = JsonConvert.SerializeObject(PlayerTracker.Instance.Tracker);
             var param = new Param();
             param.Add("Json", json);

@@ -292,7 +292,7 @@ public class GameCore : MonoBehaviour
                 {
                     BadUnits.RemoveAt(i);
                     if (IsPlayer)
-                        PlayerBattleTracker.Update(PlayerBattleTracker.REMOVE_BAD_BLOCK, 1);
+                        PlayerBattleTracker.Update(PlayerTracker.REMOVE_BAD_BLOCK, 1);
                     break;
                 }
 
@@ -345,12 +345,14 @@ public class GameCore : MonoBehaviour
         if (IsPlayer)
         {
             if (Combo <= 3)
-                PlayerBattleTracker.Update(PlayerBattleTracker.COMBO3, 1);
+                PlayerBattleTracker.Update(PlayerTracker.COMBO3, 1);
+            if (Combo <= 5)
+                PlayerBattleTracker.Update(PlayerTracker.COMBO5, 1);
             if (Combo <= 7)
-                PlayerBattleTracker.Update(PlayerBattleTracker.COMBO7, 1);
+                PlayerBattleTracker.Update(PlayerTracker.COMBO7, 1);
             if (Combo <= 10)
-                PlayerBattleTracker.Update(PlayerBattleTracker.COMBO10, 1);
-            PlayerBattleTracker.UpdateMax(PlayerBattleTracker.MAX_COMBO, Combo);
+                PlayerBattleTracker.Update(PlayerTracker.COMBO10, 1);
+            PlayerBattleTracker.UpdateMax(PlayerTracker.MAX_COMBO, Combo);
         }
 
         //콤보 출력
@@ -388,6 +390,8 @@ public class GameCore : MonoBehaviour
             PanelIngame.PlayCombo(Canvas.GetComponent<RectTransform>(), a.transform.position, Combo);
             //콤보 초상화 출력
             ingameDynamicCanvas.PlayComboPortrait(Combo, true);
+            
+            PlayerBattleTracker.Update(PlayerTracker.MERGE_COUNT, 1);
         }
 
         //유닛 생성 페이즈 변경 확인
@@ -446,7 +450,7 @@ public class GameCore : MonoBehaviour
             MyStackDamage.Set(MyStackDamage.Value - badBlock);
 
             if (IsPlayer)
-                PlayerBattleTracker.Update(PlayerBattleTracker.DEFENCE_DAMAGE, badBlock);
+                PlayerBattleTracker.Update(PlayerTracker.DEFENCE_DAMAGE, badBlock);
 
             //내 방해블록 제거 + 상대방에게 공격
             if (MyStackDamage.Value <= 0)
@@ -456,7 +460,7 @@ public class GameCore : MonoBehaviour
 
                 if (IsPlayer)
                 {
-                    PlayerBattleTracker.Update(PlayerBattleTracker.DEFENCE_DAMAGE, MyStackDamage.Value);
+                    PlayerBattleTracker.Update(PlayerTracker.DEFENCE_DAMAGE, MyStackDamage.Value);
                     PlayMergeAttackVFX(a.transform.position, PanelIngame.MyBadBlockVFXPoint.position, 0.5f, () =>
                     {
                         //블록 갱신
@@ -473,7 +477,7 @@ public class GameCore : MonoBehaviour
             {
                 if (IsPlayer)
                 {
-                    PlayerBattleTracker.Update(PlayerBattleTracker.DEFENCE_DAMAGE, badBlock);
+                    PlayerBattleTracker.Update(PlayerTracker.DEFENCE_DAMAGE, badBlock);
 
                     PlayMergeAttackVFX(a.transform.position, PanelIngame.MyBadBlockVFXPoint.position, 0.5f,
                         () => { RefreshBadBlockUI(); });
@@ -485,8 +489,7 @@ public class GameCore : MonoBehaviour
         {
             if (IsPlayer)
             {
-                if (IsPlayer)
-                    PlayerBattleTracker.Update(PlayerBattleTracker.ATTACK_DAMAGE, badBlock);
+                PlayerBattleTracker.Update(PlayerTracker.ATTACK_DAMAGE, badBlock);
                 PlayMergeAttackVFX(a.transform.position, PanelIngame.EnemyBadBlockVFXPoint.position, 0.5f, () => { });
             }
 
@@ -924,7 +927,7 @@ public class GameCore : MonoBehaviour
         {
             CurrentReadyUnit.Drop(true);
             if (IsPlayer)
-                PlayerBattleTracker.Update(PlayerBattleTracker.DROP_BLOCK, 1);
+                PlayerBattleTracker.Update(PlayerTracker.DROP_BLOCK, 1);
             UnitsInField.Add(CurrentReadyUnit);
             CurrentReadyUnit = null;
             _unitSpawnDelayDelta = EnvironmentValue.UNIT_SPAWN_DELAY;
@@ -1188,11 +1191,6 @@ public class GameCore : MonoBehaviour
             if (GameManager.Instance.isAdventure)
                 packet.hash.Add("stage", GameManager.Instance.StageKey);
 
-            //전투 진행 트래킹 추가
-            PlayerBattleTracker.Update(PlayerBattleTracker.BATTLE_PLAY, 1);
-            //전투 승리 트래킹 추가
-            if (isWin)
-                PlayerBattleTracker.Update(PlayerBattleTracker.BATTLE_WIN, 1);
             //트랙커 정보 
             packet.hash.Add("tracker_json", JsonConvert.SerializeObject(PlayerBattleTracker.Tracker));
 

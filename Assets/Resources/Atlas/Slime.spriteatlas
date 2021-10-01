@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Slime
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: e0712c16bd6425348abcf135426ad0ac, type: 3}
+    totalSpriteSurfaceArea: 891920
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: c2b564b0812cda44cb825290364e1ace, type: 3}
+  - {fileID: 21300000, guid: 8d5b80a1e18307b47b95b3c00cb902b3, type: 3}
+  - {fileID: 21300000, guid: 2d956dc1decd9e348b448e1c5cb9bd22, type: 3}
+  - {fileID: 21300000, guid: 38dc1e22ce94a734c9ac076c5bddfb12, type: 3}
+  - {fileID: 21300000, guid: 348ee7534e7cb2b409cb25763900791b, type: 3}
+  - {fileID: 21300000, guid: 8fab338421b21f74d82f027ae072286e, type: 3}
+  - {fileID: 21300000, guid: a1fa1b458fb5acd40bfcc4f36c746022, type: 3}
+  - {fileID: 21300000, guid: 34e561da0592ea54aae3929948afe1f6, type: 3}
+  - {fileID: 21300000, guid: 85e7644bf4bb3794b97e6f9b0cffe1a4, type: 3}
+  - {fileID: 21300000, guid: 5fb4b38b089881741aaac5714b758728, type: 3}
+  - {fileID: 21300000, guid: e6995e5c5faf16b4e8bd24c1505fe4f4, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - slime_04
+  - slime_08
+  - slime_06
+  - slime_05
+  - portrait_slime_body
+  - slime_02
+  - slime_03
+  - slime_09
+  - portrait_slime_face
+  - slime_07
+  - slime_01
+  m_RenderDataMap: {}
+  m_Tag: Slime
+  m_IsVariant: 0
