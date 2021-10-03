@@ -31,36 +31,36 @@ SpriteAtlas:
     secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
-    - {fileID: 102900000, guid: e0712c16bd6425348abcf135426ad0ac, type: 3}
+    - {fileID: 102900000, guid: a91c8123f5e83fe42b8a765553af21af, type: 3}
     totalSpriteSurfaceArea: 891920
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: c2b564b0812cda44cb825290364e1ace, type: 3}
-  - {fileID: 21300000, guid: 8d5b80a1e18307b47b95b3c00cb902b3, type: 3}
-  - {fileID: 21300000, guid: 2d956dc1decd9e348b448e1c5cb9bd22, type: 3}
-  - {fileID: 21300000, guid: 38dc1e22ce94a734c9ac076c5bddfb12, type: 3}
-  - {fileID: 21300000, guid: 348ee7534e7cb2b409cb25763900791b, type: 3}
-  - {fileID: 21300000, guid: 8fab338421b21f74d82f027ae072286e, type: 3}
-  - {fileID: 21300000, guid: a1fa1b458fb5acd40bfcc4f36c746022, type: 3}
-  - {fileID: 21300000, guid: 34e561da0592ea54aae3929948afe1f6, type: 3}
-  - {fileID: 21300000, guid: 85e7644bf4bb3794b97e6f9b0cffe1a4, type: 3}
-  - {fileID: 21300000, guid: 5fb4b38b089881741aaac5714b758728, type: 3}
-  - {fileID: 21300000, guid: e6995e5c5faf16b4e8bd24c1505fe4f4, type: 3}
+  - {fileID: 21300000, guid: 95e2cd10d967fd54e837d79c13a031bc, type: 3}
+  - {fileID: 21300000, guid: 8c004e913b59bdb40b2ea2d176c8132c, type: 3}
+  - {fileID: 21300000, guid: 7ab171629a951c34c8280bb48cc6fbe6, type: 3}
+  - {fileID: 21300000, guid: e9b5d637dbf182e48adc95609520a0f2, type: 3}
+  - {fileID: 21300000, guid: a81054cab4a5af74994deb0d19adf370, type: 3}
+  - {fileID: 21300000, guid: 50896c9c6a48a9640ab9ff611b8aef40, type: 3}
+  - {fileID: 21300000, guid: 0fec414de0aa2d341a279e7caeb078bd, type: 3}
+  - {fileID: 21300000, guid: 8d7409ce23ebef14cb8c65b5797c7ecb, type: 3}
+  - {fileID: 21300000, guid: 2dcbf9cebec94e147a017ce3068d4add, type: 3}
+  - {fileID: 21300000, guid: 5c0967ee5a424494295617a34c0b0021, type: 3}
+  - {fileID: 21300000, guid: 9bedbd7f6764fa242acc6703ddd6e7ec, type: 3}
   m_PackedSpriteNamesToIndex:
-  - slime_04
-  - slime_08
-  - slime_06
-  - slime_05
   - portrait_slime_body
-  - slime_02
-  - slime_03
   - slime_09
-  - portrait_slime_face
   - slime_07
+  - slime_03
+  - slime_08
+  - slime_04
   - slime_01
+  - slime_06
+  - slime_02
+  - slime_05
+  - portrait_slime_face
   m_RenderDataMap: {}
   m_Tag: Slime
   m_IsVariant: 0

@@ -69,6 +69,8 @@ public class LobbyPageCollection : LobbyPageBase
 
         _currentHero = _heroes[index];
 
+        Group.text = _currentHero.name.ToLocalization();
+        GroupTexture.sprite = _currentHero.face.ToSprite(_currentHero.atlas);
         if (index == 0)
             _isFirstGroup = true;
         else

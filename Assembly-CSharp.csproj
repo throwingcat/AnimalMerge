@@ -120,6 +120,7 @@
      <Compile Include="Assets\Script\UI\PopupHeroSelect.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\EffectArea.cs" />
      <Compile Include="Assets\Script\Data\Stage.cs" />
+     <Compile Include="Assets\Script\UI\Battle Pass\CellBattlePass.cs" />
      <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\SpawnProjectilesScript.cs" />
      <Compile Include="Assets\Script\AICore.cs" />
      <Compile Include="Assets\Script\Data\Chapter.cs" />
@@ -205,6 +206,7 @@
      <Compile Include="Assets\Script\UI\Lobby Page\PageQuest.cs" />
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
      <Compile Include="Assets\Script\MessagePackGenerated.cs" />
+     <Compile Include="Assets\Script\Data\Partial\BattlePass.cs" />
      <Compile Include="Assets\Script\PlayerData\UnitInventory.cs" />
      <Compile Include="Assets\Script\PlayerData\PlayerTracker.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIDragRect.cs" />
@@ -221,6 +223,7 @@
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_Translate.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\UI\PartCurtain.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\FXController.cs" />
+     <Compile Include="Assets\Script\Data\BattlePass.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModulePhysics.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\SubscribeBase.cs" />
      <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\ProjectileMoveScript.cs" />
@@ -239,10 +242,12 @@
      <Compile Include="Assets\Script\UI\PopupChestUnlock.cs" />
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_New.cs" />
      <Compile Include="Assets\Hovl Studio\Toon Projectiles 2\Scripts\AutoDestroyPS.cs" />
+     <Compile Include="Assets\Script\Data\Arena.cs" />
      <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\CameraShakeSimpleScript.cs" />
      <Compile Include="Assets\Script\Data\Localization.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Manager\TableManager.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUITween.cs" />
+     <Compile Include="Assets\Script\UI\PageBattlePass.cs" />
      <Compile Include="Assets\Script\Packet\PacketBase.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleAudio.cs" />
      <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\Serializables.cs" />

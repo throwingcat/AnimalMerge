@@ -54,34 +54,20 @@
   <ItemGroup>
      <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\MovementCtrl\IMovementCtrl.cs" />
      <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\ListContentManager.cs" />
-     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\SpriteStringListBox.cs" />
      <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\AnimationCurveUtils\DeltaTimeCurve.cs" />
-     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\DisplayAndSelectExample.cs" />
      <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\MovementCtrl\UnitMovementCtrl.cs" />
-     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\StringListBox.cs" />
      <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\CircularScrollingList.cs" />
-     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\ColorStrListBank.cs" />
      <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\MovementCtrl\DistanceMovementCurve.cs" />
      <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\ListBox.cs" />
-     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\StringStarListBox.cs" />
      <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\MovementCtrl\FreeMovementCtrl.cs" />
-     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\FewerContentListBank.cs" />
      <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\CircularScrollingListSetting.cs" />
-     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\SpriteStringListBank.cs" />
      <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\ListPositionCtrl.cs" />
-     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\StringStarListBank.cs" />
-     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\IntListBank.cs" />
-     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\IntListBox.cs" />
-     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\ListIteration.cs" />
      <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\MovementCtrl\VelocityMovementCurve.cs" />
      <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\AnimationCurveUtils\RangeMappingCurve.cs" />
      <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\ListEvent.cs" />
-     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\ColorStrListBox.cs" />
      <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\FactorUtility.cs" />
-     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\FPSLimiter.cs" />
      <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\BoxTransformCtrl\LinearBoxTransformCtrl.cs" />
      <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\ListBank.cs" />
-     <Compile Include="Assets\Plugins\CircularScrollingList\_Demo\Scripts\VariableStringListBank.cs" />
      <Compile Include="Assets\Plugins\CircularScrollingList\Scripts\BoxTransformCtrl\IBoxTransformCtrl.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.18f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

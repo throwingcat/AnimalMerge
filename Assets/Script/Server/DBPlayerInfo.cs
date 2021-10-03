@@ -53,7 +53,7 @@ namespace Server
                         PlayerInfo.Instance.GUID = GameManager.Instance.GUID;
                         PlayerInfo.Instance.NickName = Backend.UserNickName;
                         PlayerInfo.Instance.Level = 1;
-                        PlayerInfo.Instance.RankScore = 1000;
+                        PlayerInfo.Instance.RankScore = 0;
                         PlayerInfo.Instance.SelectHero = "Cat";
                         Update(onFinishDownload);
                         return;
