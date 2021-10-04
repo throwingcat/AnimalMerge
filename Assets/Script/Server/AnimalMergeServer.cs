@@ -24,6 +24,7 @@ namespace Server
         public AnimalMergeServer()
         {
             DBList.Add(new DBAchievement());
+            DBList.Add(new DBBattlePassInfo());
             DBList.Add(new DBPlayerInfo());
             DBList.Add(new DBInventory());
             DBList.Add(new DBChestInventory());
@@ -78,6 +79,12 @@ namespace Server
                     break;
                 case ePACKET_TYPE.CHANGE_HERO:
                     ChangeHero(packet);
+                    break;
+                case ePACKET_TYPE.PURCHASE_PREMIUM_PASS:
+                    PurchasePremiumPass(packet);
+                    break;
+                case ePACKET_TYPE.RECEIVE_PASS_REWARD:
+                    ReceivePassReward(packet);
                     break;
             }
         }
@@ -188,7 +195,7 @@ namespace Server
                 onFinish?.Invoke();
         }
 
-        public  void ReportQuest(Dictionary<string, ulong> tracker, Action onFinish)
+        public void ReportQuest(Dictionary<string, ulong> tracker, Action onFinish)
         {
             var isUpdate = false;
             foreach (var quest in QuestInfo.Instance.QuestSlots)
@@ -224,11 +231,14 @@ namespace Server
 
             Action<PacketBase> onFinishBattleResult = p =>
             {
-                SendPacket(p);
+                GetBattlePassPoint(isWin ? 5 : 3, () =>
+                {
+                   SendPacket(p);     
+                });
             };
 
             PlayerTracker.Instance.Report(PlayerTracker.BATTLE_PLAY, 1);
-            
+
             //패배 처리
             if (isWin == false)
             {
@@ -259,10 +269,7 @@ namespace Server
                         {
                             packet.hash.Add("first_clear", true);
                             PlayerTracker.Instance.Report(stage, 1);
-                            UpdateDB<DBPlayerTracker>(() =>
-                            {
-                                onFinishBattleResult(packet);
-                            });
+                            UpdateDB<DBPlayerTracker>(() => { onFinishBattleResult(packet); });
                         }
                         else
                         {
@@ -512,6 +519,75 @@ namespace Server
             {
                 SendPacket(packet);
             }
+        }
+
+        #endregion
+
+        #region Lobby - BattlePass
+
+        public void GetBattlePassPoint(int point, Action onFinish)
+        {
+            //진행중인 시즌이 없음
+            if (BattlePassInfo.CurrentSeason == null)
+            {
+                if (BattlePassInfo.Instance.JoinSeason != null)
+                {
+                    BattlePassInfo.Instance.JoinSeasonKey = "";
+                    BattlePassInfo.Instance.Point = 0;
+                    BattlePassInfo.Instance.RewardInfos = new List<BattlePassInfo.BattlePassRewardInfo>();
+                    BattlePassInfo.Instance.isPurchasePremiumPass = false;
+                }
+            }
+            else
+            {
+                //현재 시즌과 참가 시즌이 다름
+                var season = BattlePassInfo.CurrentSeason;
+                if (BattlePassInfo.Instance.JoinSeason == null || BattlePassInfo.Instance.JoinSeason.key != season.key)
+                {
+                    BattlePassInfo.Instance.JoinSeasonKey = season.key;
+                    BattlePassInfo.Instance.Point = point;
+                    BattlePassInfo.Instance.RewardInfos = new List<BattlePassInfo.BattlePassRewardInfo>();
+                    BattlePassInfo.Instance.isPurchasePremiumPass = false;
+                }
+                else
+                {
+                    BattlePassInfo.Instance.Point += point;
+                }
+            }
+
+            UpdateDB<DBBattlePassInfo>(onFinish);
+        }
+
+        public void PurchasePremiumPass(PacketBase packet)
+        {
+            BattlePassInfo.Instance.isPurchasePremiumPass = true;
+            UpdateDB<DBBattlePassInfo>(() =>
+            {
+                var packetReward = new PacketReward();
+                packetReward.PacketType = ePACKET_TYPE.RECEIVE_PASS_REWARD;
+                packetReward.hash = packet.hash;
+                packetReward.Rewards = new List<ItemInfo>();
+                SendPacket(packetReward);
+            });
+        }
+
+        public void ReceivePassReward(PacketBase packet)
+        {
+            //시즌 검증
+            var key = packet.hash["pass_key"].ToString();
+            var rewards = BattlePassInfo.Instance.ReceiveReward(key);
+            
+            GetRewards(rewards, () =>
+            {
+                UpdateDB<DBBattlePassInfo>(() =>
+                {
+                    var packetReward = new PacketReward();
+                    packetReward.PacketType = ePACKET_TYPE.RECEIVE_PASS_REWARD;
+                    packetReward.hash = packet.hash;
+                    packetReward.Rewards = rewards;
+                    SendPacket(packetReward);
+                });
+            });
         }
 
         #endregion

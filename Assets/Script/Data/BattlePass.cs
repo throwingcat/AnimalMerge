@@ -4,7 +4,9 @@ namespace SheetData
 {
  public partial class BattlePass : CSVDataBase 
 { 
-	public int score { get; set; }
+	public string Season { get; set; }
+
+	public int point { get; set; }
 
 	public string pass_reward { get; set; }
 

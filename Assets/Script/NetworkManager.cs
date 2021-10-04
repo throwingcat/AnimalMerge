@@ -386,6 +386,8 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
     public void Request(PacketBase packet, Action<PacketBase> onReceive)
     {
+        LoadingCurtain.Instance.SetActive(true);
+        
         bool isContains = false;
         foreach (var r in _reservedPacket)
         {
@@ -421,6 +423,8 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
     public void ReceivePacket(byte[] bytes)
     {
+        LoadingCurtain.Instance.SetActive(false);
+        
         PacketBase packet = MessagePackSerializer.Deserialize<PacketBase>(bytes);
 
         ulong guid = (ulong) packet.hash["packet_guid"];
@@ -432,6 +436,8 @@ public class NetworkManager : MonoSingleton<NetworkManager>
                 case ePACKET_TYPE.CHEST_COMPLETE:
                 case ePACKET_TYPE.QUEST_COMPLETE:
                 case ePACKET_TYPE.DAILY_QUEST_REWARD:
+                case ePACKET_TYPE.PURCHASE_PREMIUM_PASS:
+                case ePACKET_TYPE.RECEIVE_PASS_REWARD:
                 {
                     PacketReward res = MessagePackSerializer.Deserialize<PacketReward>(bytes);
                     _waitingPacket[guid]?.Invoke(res);

@@ -58,6 +58,8 @@ namespace Server
                             foreach (JsonData row in rows)
                             {
                                 var inDate = row["inDate"]["S"].ToString();
+                                InDate = inDate;
+                                
                                 var json = row["Json"]["S"].ToString();
                                 AchievementInfo.Instance.OnUpdate(json);
                             }

@@ -16,5 +16,7 @@ namespace Packet
         QUEST_REFRESH,
         DAILY_QUEST_REWARD,
         CHANGE_HERO,
+        PURCHASE_PREMIUM_PASS,
+        RECEIVE_PASS_REWARD,
     }
 }

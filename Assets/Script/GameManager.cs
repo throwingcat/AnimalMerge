@@ -100,6 +100,10 @@ public class GameManager : MonoBehaviour
     
     private IEnumerator InitalizeProcess()
     {
+        #if UNITY_EDITOR
+        Application.runInBackground = true;
+        #endif
+        
         RegisterSerializer();
         
         PartSceneChange.OnShow();
@@ -248,6 +252,12 @@ public class GameManager : MonoBehaviour
         
         Debug.Log("Download QuestInfo");
         Server.AnimalMergeServer.Instance.DownloadDB<Server.DBQuestInfo>(() => { isDone = true; });
+        while (isDone == false)
+            yield return null;
+        isDone = false;
+        
+        Debug.Log("Download DBBattlePassInfo");
+        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBBattlePassInfo>(() => { isDone = true; });
         while (isDone == false)
             yield return null;
         isDone = false;

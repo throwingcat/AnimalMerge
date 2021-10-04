@@ -70,6 +70,7 @@
      <Compile Include="Assets\Script\EnemyScreen.cs" />
      <Compile Include="Assets\Script\UI\PanelIngame.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIHsvModifier.cs" />
+     <Compile Include="Assets\Script\PlayerData\BattlePassInfo.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIShiny.cs" />
      <Compile Include="Assets\Script\Active Skill\ActiveBase.cs" />
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutoRotate.cs" />
@@ -86,6 +87,7 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIFlow.cs" />
      <Compile Include="Assets\Script\Server\DBPlayerInfo.cs" />
      <Compile Include="Assets\Script\Data\DailyQuestRewardInfo.cs" />
+     <Compile Include="Assets\Script\Server\DBBattlePassInfo.cs" />
      <Compile Include="Assets\Script\UI\LoadingScreen.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIFitter.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\EffectPlayer.cs" />
@@ -103,6 +105,8 @@
      <Compile Include="Assets\Script\Data\Unit.cs" />
      <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\RotateToMouseScript.cs" />
      <Compile Include="Assets\Script\PartBase.cs" />
+     <Compile Include="Assets\Script\UI\LoadingCurtain.cs" />
+     <Compile Include="Assets\Script\Data\BattlePassSeason.cs" />
      <Compile Include="Assets\Script\Server\DBUnitInventory.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\StringUtils.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModulePhysics2D.cs" />
