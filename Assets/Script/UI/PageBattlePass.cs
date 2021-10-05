@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using SheetData;
 using UnityEngine;
 using UnityEngine.UI;
 using Violet;
@@ -15,38 +16,51 @@ public class PageBattlePass : LobbyPageBase
     public SUILoopScroll ScrollView;
     public Text SeasonRemainTime;
 
+    public GameObject SeasonIn;
+    public GameObject SeasonOut;
+    
+    private string _currentSeason = ""; 
     public override void OnShow()
     {
         base.OnShow();
+        
+        if (_coroutine == null)
+            _coroutine = StartCoroutine(UpdateProcess());
+        
+        Refresh();
+    }
 
-        var list = BattlePassInfo.Instance.SeasonPassItems;
-
-        var items = new List<CellBattlePass.Data>();
-        for (var i = 0; i < list.Count; i++)
-            items.Add(new CellBattlePass.Data
-            {
-                isLock = BattlePassInfo.Instance.isPurchasePremiumPass == false,
-                Pass = list[i],
-                PlayerPoint = BattlePassInfo.Instance.Point,
-                NextPoint = i == list.Count - 1 ? 0 : list[i + 1].point,
-                PrevPoint = i == 0 ? 0 : list[i - 1].point
-            });
-        items.Sort((a, b) =>
+    public void Refresh()
+    {
+        var season_enable = RefreshSeasonState();
+        if (season_enable)
         {
-            if (a.Pass.point < b.Pass.point) return 1;
-            if (a.Pass.point > b.Pass.point) return -1;
-            return 0;
-        });
+            _currentSeason = BattlePassInfo.CurrentSeason.key;
+            
+            var list = BattlePassInfo.Instance.SeasonPassItems;
 
-        ScrollView.SetData(items);
-        ScrollView.Move(ScrollView.DataLength - 2);
+            var items = new List<CellBattlePass.Data>();
+            for (var i = 0; i < list.Count; i++)
+                items.Add(new CellBattlePass.Data
+                {
+                    isLock = BattlePassInfo.Instance.isPurchasePremiumPass == false,
+                    Pass = list[i],
+                    PlayerPoint = BattlePassInfo.Instance.Point,
+                    NextPoint = i == list.Count - 1 ? 0 : list[i + 1].point,
+                    PrevPoint = i == 0 ? 0 : list[i - 1].point
+                });
+            items.Sort((a, b) =>
+            {
+                if (a.Pass.point < b.Pass.point) return 1;
+                if (a.Pass.point > b.Pass.point) return -1;
+                return 0;
+            });
 
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
-        _coroutine = null;
-        _coroutine = StartCoroutine(UpdateProcess());
+            ScrollView.SetData(items);
+            ScrollView.Move(ScrollView.DataLength - 2);
 
-        UpdatePoint();
+            UpdatePoint();
+        }
     }
 
     public override void OnHide()
@@ -65,7 +79,26 @@ public class PageBattlePass : LobbyPageBase
         _isUpdate = true;
         while (_isUpdate)
         {
-            if (BattlePassInfo.Instance.isActiveSeason == false) break;
+            //시즌 변경 확인
+            if (_currentSeason.Equals(BattlePassInfo.CurrentSeason.key) == false)
+            {
+                bool isDone = false;
+                Server.AnimalMergeServer.Instance.DownloadDB<Server.DBBattlePassInfo>(() =>
+                {
+                    _currentSeason = BattlePassInfo.CurrentSeason.key;
+                    Refresh();
+                    isDone = true;
+                });
+                while (isDone == false)
+                    yield return new WaitForSeconds(1f);
+            }
+            
+            var eanble_season = RefreshSeasonState();
+            if (eanble_season == false)
+            {
+                yield return new WaitForSeconds(1f);
+                continue;
+            }
 
             var t = TimeSpan.FromSeconds(BattlePassInfo.Instance.SeasonReaminTime);
             var stringBuilder = new StringBuilder();
@@ -103,5 +136,17 @@ public class PageBattlePass : LobbyPageBase
     public void UpdatePoint()
     {
         Point.text = string.Format("패스 포인트 : {0}", BattlePassInfo.Instance.Point);
+    }
+
+    public bool RefreshSeasonState()
+    {
+        bool isResult = BattlePassInfo.CurrentSeason != null;
+
+        if (SeasonIn.activeSelf != isResult)
+            SeasonIn.SetActive(isResult);
+        if (SeasonOut.activeSelf != (!isResult))
+            SeasonOut.SetActive(!isResult);
+
+        return isResult;
     }
 }

@@ -22,7 +22,7 @@ namespace Server
             base.DoUpdate();
 
             var param = new Param();
-            param.Add("Season", BattlePassInfo.Instance.JoinSeason.key);
+            param.Add("Season", BattlePassInfo.Instance.JoinSeasonKey);
             param.Add("Point", BattlePassInfo.Instance.Point);
             param.Add("RewardInfo", JsonConvert.SerializeObject(BattlePassInfo.Instance.RewardInfos));
             param.Add("PurchasePremiumPass",BattlePassInfo.Instance.isPurchasePremiumPass);
@@ -81,9 +81,11 @@ namespace Server
                     {
                         if (BattlePassInfo.Instance.JoinSeason != null)
                         {
-                            BattlePassInfo.Instance.OnUpdate("",0,"",false);
+                            BattlePassInfo.Instance.OnUpdate("", 0, "", false);
                             Update(onFinishDownload);
                         }
+                        else
+                            onFinishDownload?.Invoke();
                     }
                     else
                     {

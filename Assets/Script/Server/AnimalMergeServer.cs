@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Common;
 using Define;
 using LitJson;
@@ -231,10 +232,7 @@ namespace Server
 
             Action<PacketBase> onFinishBattleResult = p =>
             {
-                GetBattlePassPoint(isWin ? 5 : 3, () =>
-                {
-                   SendPacket(p);     
-                });
+                GetBattlePassPoint(isWin ? 5 : 3, () => { SendPacket(p); });
             };
 
             PlayerTracker.Instance.Report(PlayerTracker.BATTLE_PLAY, 1);
@@ -246,13 +244,7 @@ namespace Server
                 PlayerInfo.Instance.RankScore -= 5;
 
                 //플레이어 정보 업데이트
-                UpdateDB<DBPlayerInfo>(() =>
-                {
-                    UpdateDB<DBPlayerTracker>(() =>
-                    {
-                        onFinishBattleResult(packet);
-                    });
-                });
+                UpdateDB<DBPlayerInfo>(() => { UpdateDB<DBPlayerTracker>(() => { onFinishBattleResult(packet); }); });
             }
             //승리 처리
             else
@@ -527,67 +519,109 @@ namespace Server
 
         public void GetBattlePassPoint(int point, Action onFinish)
         {
-            //진행중인 시즌이 없음
-            if (BattlePassInfo.CurrentSeason == null)
+            ValidateBattlePassSeason((validate) =>
             {
-                if (BattlePassInfo.Instance.JoinSeason != null)
-                {
-                    BattlePassInfo.Instance.JoinSeasonKey = "";
-                    BattlePassInfo.Instance.Point = 0;
-                    BattlePassInfo.Instance.RewardInfos = new List<BattlePassInfo.BattlePassRewardInfo>();
-                    BattlePassInfo.Instance.isPurchasePremiumPass = false;
-                }
-            }
-            else
-            {
-                //현재 시즌과 참가 시즌이 다름
-                var season = BattlePassInfo.CurrentSeason;
-                if (BattlePassInfo.Instance.JoinSeason == null || BattlePassInfo.Instance.JoinSeason.key != season.key)
-                {
-                    BattlePassInfo.Instance.JoinSeasonKey = season.key;
-                    BattlePassInfo.Instance.Point = point;
-                    BattlePassInfo.Instance.RewardInfos = new List<BattlePassInfo.BattlePassRewardInfo>();
-                    BattlePassInfo.Instance.isPurchasePremiumPass = false;
-                }
-                else
+                if (validate)
                 {
                     BattlePassInfo.Instance.Point += point;
+                    UpdateDB<DBBattlePassInfo>(onFinish);
                 }
-            }
-
-            UpdateDB<DBBattlePassInfo>(onFinish);
+                else
+                    onFinish?.Invoke();
+            });
         }
 
         public void PurchasePremiumPass(PacketBase packet)
         {
-            BattlePassInfo.Instance.isPurchasePremiumPass = true;
-            UpdateDB<DBBattlePassInfo>(() =>
+            ValidateBattlePassSeason((validate) =>
             {
-                var packetReward = new PacketReward();
-                packetReward.PacketType = ePACKET_TYPE.RECEIVE_PASS_REWARD;
-                packetReward.hash = packet.hash;
-                packetReward.Rewards = new List<ItemInfo>();
-                SendPacket(packetReward);
+                if (validate)
+                {
+                    BattlePassInfo.Instance.isPurchasePremiumPass = true;
+                    UpdateDB<DBBattlePassInfo>(() =>
+                    {
+                        var packetReward = new PacketReward();
+                        packetReward.PacketType = ePACKET_TYPE.RECEIVE_PASS_REWARD;
+                        packetReward.hash = packet.hash;
+                        packetReward.Rewards = new List<ItemInfo>();
+                        SendPacket(packetReward);
+                    });
+                }
+                else
+                {
+                    var packetReward = new PacketReward();
+                    packetReward.PacketType = ePACKET_TYPE.RECEIVE_PASS_REWARD;
+                    packetReward.hash = packet.hash;
+                    packetReward.Rewards = new List<ItemInfo>();
+                    packetReward.SetError("season_expire");
+                    SendPacket(packetReward);
+                }
             });
         }
 
         public void ReceivePassReward(PacketBase packet)
         {
-            //시즌 검증
-            var key = packet.hash["pass_key"].ToString();
-            var rewards = BattlePassInfo.Instance.ReceiveReward(key);
-            
-            GetRewards(rewards, () =>
+            ValidateBattlePassSeason((validate) =>
             {
-                UpdateDB<DBBattlePassInfo>(() =>
+                if (validate)
+                {
+                    var key = packet.hash["pass_key"].ToString();
+                    var rewards = BattlePassInfo.Instance.ReceiveReward(key);
+                    GetRewards(rewards, () =>
+                    {
+                        UpdateDB<DBBattlePassInfo>(() =>
+                        {
+                            var packetReward = new PacketReward();
+                            packetReward.PacketType = ePACKET_TYPE.RECEIVE_PASS_REWARD;
+                            packetReward.hash = packet.hash;
+                            packetReward.Rewards = rewards;
+                            SendPacket(packetReward);
+                        });
+                    });
+                }
+                else
                 {
                     var packetReward = new PacketReward();
                     packetReward.PacketType = ePACKET_TYPE.RECEIVE_PASS_REWARD;
                     packetReward.hash = packet.hash;
-                    packetReward.Rewards = rewards;
+                    packetReward.Rewards = new List<ItemInfo>();
+                    packetReward.SetError("season_expire");
                     SendPacket(packetReward);
-                });
+                }
             });
+        }
+
+        public void ValidateBattlePassSeason(Action<bool> onFinish)
+        {
+            bool isValidate = true;
+
+            //참가한 시즌이 없음
+            if (BattlePassInfo.Instance.JoinSeason == null)
+                isValidate = false;
+            //진행중인 시즌이 없음
+            if (BattlePassInfo.CurrentSeason == null)
+                isValidate = false;
+            //현재 진행중이 시즌과 참가한 시즌이 다름
+            else
+            {
+                if (BattlePassInfo.Instance.JoinSeasonKey != BattlePassInfo.CurrentSeason.key)
+                    isValidate = false;
+            }
+
+            if (isValidate == false)
+            {
+                BattlePassInfo.Instance.JoinSeasonKey =
+                    BattlePassInfo.CurrentSeason == null ? "" : BattlePassInfo.CurrentSeason.key;
+                BattlePassInfo.Instance.Point = 0;
+                BattlePassInfo.Instance.RewardInfos = new List<BattlePassInfo.BattlePassRewardInfo>();
+                BattlePassInfo.Instance.isPurchasePremiumPass = false;
+
+                UpdateDB<DBBattlePassInfo>(() => { onFinish?.Invoke(BattlePassInfo.CurrentSeason != null); });
+            }
+            else
+            {
+                onFinish?.Invoke(BattlePassInfo.CurrentSeason != null);
+            }
         }
 
         #endregion

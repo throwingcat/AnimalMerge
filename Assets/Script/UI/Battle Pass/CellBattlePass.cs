@@ -87,11 +87,14 @@ public class CellBattlePass : MonoBehaviour , IScrollCell
             }
         }
 
-        ReceiveRewardButton.SetActive(false);
         if (BattlePass.point <= BattlePassInfo.Instance.Point)
         {
             bool isEnable = ReceivePassReward.activeSelf == false || ReceivePremiumPassReward.activeSelf == false;
             ReceiveRewardButton.SetActive(isEnable);
+        }
+        else
+        {
+            ReceiveRewardButton.SetActive(false);    
         }
     }
     

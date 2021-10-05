@@ -35,10 +35,6 @@ public class BattlePassInfo
 
     public BattlePassSeason JoinSeason => JoinSeasonKey.ToTableData<BattlePassSeason>();
 
-    public bool isActiveSeason => JoinSeason == null
-        ? false
-        : JoinSeason.StartTime <= GameManager.GetTime() && GameManager.GetTime() < JoinSeason.EndTime;
-
     public double SeasonReaminTime => (JoinSeason.EndTime - GameManager.GetTime()).TotalSeconds;
 
     public static BattlePassSeason CurrentSeason
@@ -49,7 +45,7 @@ public class BattlePassInfo
             foreach (var row in table)
             {
                 var season = row.Value as BattlePassSeason;
-                if (season.StartTime <= GameManager.GetTime() && GameManager.GetTime() < season.EndTime)
+                if (season.StartTime <= GameManager.GetTime() && GameManager.GetTime() <= season.EndTime)
                     return season;
             }
 
@@ -146,6 +142,9 @@ public class BattlePassInfo
     public bool HasReward(string key)
     {
         if (SeasonPassRewardInfo.ContainsKey(key) == false)
+            return true;
+
+        if (SeasonPassRewardInfo[key] == null)
             return true;
         
         if (SeasonPassRewardInfo[key].isReceivedPassReward == false)
