@@ -196,6 +196,7 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIEffect.cs" />
      <Compile Include="Assets\Script\Data\Hero.cs" />
      <Compile Include="Assets\Script\Data\Partial\SpawnPhase.cs" />
+     <Compile Include="Assets\Submodules\Violet\Violet\UI\CanvasTag.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\EditorCoroutine\EditorCoroutines.cs" />
      <Compile Include="Assets\Script\UI\Lobby Page\LobbyPageMain.cs" />
      <Compile Include="Assets\Script\UI\PopupUnitInfo.cs" />
@@ -221,6 +222,7 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUITouchable.cs" />
      <Compile Include="Assets\Script\UI\Lobby Page\LobbyPageCollection.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\Singleton.cs" />
+     <Compile Include="Assets\Script\UI\Ingame\IngameInputActiveSkill.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Common\ICSVDataBase.cs" />
      <Compile Include="Assets\Script\NetworkManager.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\ParameterTexture.cs" />
@@ -1061,6 +1063,10 @@
     <ProjectReference Include="CFXRRuntime.csproj">
       <Project>{f1580a4b-0e7f-8cd4-bfd5-a48861788752}</Project>
       <Name>CFXRRuntime</Name>
+    </ProjectReference>
+    <ProjectReference Include="Coffee.SoftMaskForUGUI_Demo.csproj">
+      <Project>{ec1aca19-745b-c9eb-5a9d-30fbea36807f}</Project>
+      <Name>Coffee.SoftMaskForUGUI_Demo</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

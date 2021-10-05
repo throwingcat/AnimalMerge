@@ -58,7 +58,7 @@ SpriteAtlas:
     - {fileID: 102900000, guid: c7b50fe91a6b74b4bb2934041f78addd, type: 3}
     - {fileID: 102900000, guid: 0dcf213ce157a314080be094c25a343a, type: 3}
     - {fileID: 102900000, guid: 1683a1423fa098848928f6327a3515c7, type: 3}
-    totalSpriteSurfaceArea: 2390377
+    totalSpriteSurfaceArea: 2732521
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -91,6 +91,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 4505e1a20c948784bbc7aae1fccc70c3, type: 3}
   - {fileID: 21300000, guid: 2d988bb2f2defb145b33942733d57d72, type: 3}
   - {fileID: 21300000, guid: daf105034455aef459c604d588acff1b, type: 3}
+  - {fileID: 21300000, guid: e94670f3e1ff0884a84e923e2d990cd5, type: 3}
   - {fileID: 21300000, guid: eac45a64b2fca7f448fe0b082f7eb72d, type: 3}
   - {fileID: 21300000, guid: ca2e2ba4e1b30e645975af3165b22ec2, type: 3}
   - {fileID: 21300000, guid: d80fdba47e9418a4e901ceaee62442ae, type: 3}
@@ -148,6 +149,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 4f5faabcee61ee7479b6656b8bbdafa6, type: 3}
   - {fileID: 21300000, guid: 61f81b0daf8e8ac43bda17dad50ab71b, type: 3}
   - {fileID: 21300000, guid: 289a433dabefb4047abf89c4cd5eafe7, type: 3}
+  - {fileID: 21300000, guid: f566c2bde398dab4fa01391222b64b10, type: 3}
   - {fileID: 21300000, guid: 66c974bdcdcd170449941dd51831797e, type: 3}
   - {fileID: 21300000, guid: 5e96b20e223b0044ab60f4e4ed2df126, type: 3}
   - {fileID: 21300000, guid: aca0591e51b28744985b75ef2637f2d7, type: 3}
@@ -194,6 +196,7 @@ SpriteAtlas:
   - btn_disable
   - Chest_Wood
   - icon_timmer
+  - frame_active_skill
   - img_skill_cool_bg
   - expIcon2
   - icon_collect_1
@@ -251,6 +254,7 @@ SpriteAtlas:
   - btn_menu
   - piece_cat2
   - 2
+  - mask_hole
   - rat_04
   - img_Rank_01
   - btn_detail

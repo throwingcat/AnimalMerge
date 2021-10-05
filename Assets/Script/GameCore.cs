@@ -129,9 +129,9 @@ public class GameCore : MonoBehaviour
         SyncManager.PlayerInfo playerInfo = new SyncManager.PlayerInfo();
         playerInfo.HeroKey = PlayerHeroKey;
         playerInfo.MMR = PlayerInfo.Instance.RankScore;
-        playerInfo.Name =  PlayerInfo.Instance.NickName;
+        playerInfo.Name = PlayerInfo.Instance.NickName;
         SyncManager.Request(playerInfo);
-        
+
         //게임 카메라 루트 활성화
         BattleCameraGroup.SetActive(true);
 
@@ -390,7 +390,7 @@ public class GameCore : MonoBehaviour
             PanelIngame.PlayCombo(Canvas.GetComponent<RectTransform>(), a.transform.position, Combo);
             //콤보 초상화 출력
             ingameDynamicCanvas.PlayComboPortrait(Combo, true);
-            
+
             PlayerBattleTracker.Update(PlayerTracker.MERGE_COUNT, 1);
         }
 
@@ -886,6 +886,7 @@ public class GameCore : MonoBehaviour
     #region Input
 
     private bool isPress;
+    private Vector2 _touchBegin = Vector2.zero;
 
     protected virtual void InputUpdate()
     {
@@ -894,7 +895,9 @@ public class GameCore : MonoBehaviour
 
         if (isPress)
         {
-            if (CurrentReadyUnit != null)
+            PanelIngame.InputActiveSkill.On(_touchBegin, Utils.GetTouchPoint());
+
+            if (CurrentReadyUnit != null && PanelIngame.InputActiveSkill.isActive == false)
             {
                 var input_pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 CurrentReadyUnit.transform.position =
@@ -917,11 +920,22 @@ public class GameCore : MonoBehaviour
     protected void OnPress()
     {
         isPress = true;
+        _touchBegin = Utils.GetTouchPoint();
     }
 
     protected void OnRelease()
     {
         isPress = false;
+
+        if (IsPlayer && PanelIngame.InputActiveSkill.isActive)
+        {
+            bool isActive = 0.8f <= PanelIngame.InputActiveSkill.ActiveProgress;
+            if(isActive)
+                UseSkill();
+            PanelIngame.InputActiveSkill.Off();
+            
+            return;
+        }
 
         if (CurrentReadyUnit != null)
         {

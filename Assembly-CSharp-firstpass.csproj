@@ -815,6 +815,10 @@
       <Project>{f1580a4b-0e7f-8cd4-bfd5-a48861788752}</Project>
       <Name>CFXRRuntime</Name>
     </ProjectReference>
+    <ProjectReference Include="Coffee.SoftMaskForUGUI_Demo.csproj">
+      <Project>{ec1aca19-745b-c9eb-5a9d-30fbea36807f}</Project>
+      <Name>Coffee.SoftMaskForUGUI_Demo</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

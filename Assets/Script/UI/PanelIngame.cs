@@ -52,6 +52,7 @@ public class PanelIngame : SUIPanel
     public Image PassiveSkillIcon;
     public GameObject PassiveSkillActivate;
 
+    public IngameInputActiveSkill InputActiveSkill;
     #region Enemy Screen
 
     private readonly List<IngameBadBlock> _enemyBadBlocks = new List<IngameBadBlock>();
@@ -65,6 +66,9 @@ public class PanelIngame : SUIPanel
         base.OnShow();
 
         EnterPortraitTween.gameObject.SetActive(true);
+        
+        SetActiveGameOverTimer(false);
+        InputActiveSkill.gameObject.SetActive(false);
     }
 
     protected override void OnHide()
