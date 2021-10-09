@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coffee.UIParticle", "Coffee
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagePack.Annotations", "MessagePack.Annotations.csproj", "{0c84f949-ed2f-f0f9-fbea-2ff681d75e71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coffee.SoftMaskForUGUI_Demo", "Coffee.SoftMaskForUGUI_Demo.csproj", "{ec1aca19-745b-c9eb-5a9d-30fbea36807f}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LunarConsoleEditor", "LunarConsoleEditor.csproj", "{c9f8e04d-e9e1-8195-3c36-995387e41d4c}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coffee.UIParticle.Editor", "Coffee.UIParticle.Editor.csproj", "{18076e48-b7f2-43c4-cbd9-b7445ae69951}"
@@ -69,10 +67,6 @@ Global
 		{0c84f949-ed2f-f0f9-fbea-2ff681d75e71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0c84f949-ed2f-f0f9-fbea-2ff681d75e71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0c84f949-ed2f-f0f9-fbea-2ff681d75e71}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ec1aca19-745b-c9eb-5a9d-30fbea36807f}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ec1aca19-745b-c9eb-5a9d-30fbea36807f}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ec1aca19-745b-c9eb-5a9d-30fbea36807f}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ec1aca19-745b-c9eb-5a9d-30fbea36807f}.Release|Any CPU.Build.0 = Release|Any CPU
 		{c9f8e04d-e9e1-8195-3c36-995387e41d4c}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{c9f8e04d-e9e1-8195-3c36-995387e41d4c}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{c9f8e04d-e9e1-8195-3c36-995387e41d4c}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -18,5 +18,6 @@ namespace Packet
         CHANGE_HERO,
         PURCHASE_PREMIUM_PASS,
         RECEIVE_PASS_REWARD,
+        RECEIVE_PLAYER_LEVEL_REWARD,
     }
 }

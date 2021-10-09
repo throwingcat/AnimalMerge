@@ -19,8 +19,16 @@ public class CellBattlePass : MonoBehaviour , IScrollCell
     
     public GameObject ReceivePassReward;
     public GameObject ReceivePremiumPassReward;
-
     public GameObject ReceiveRewardButton;
+    
+    public class Data : IScrollData
+    {
+        public BattlePass Pass;
+        public int PrevPoint;
+        public int NextPoint;
+        public int PlayerPoint;
+        public bool isLock;
+    }
     
     private  CellBattlePass SetPass(BattlePass pass)
     {
@@ -98,22 +106,13 @@ public class CellBattlePass : MonoBehaviour , IScrollCell
         }
     }
     
-    public class Data : IScrollData
-    {
-        public BattlePass Pass;
-        public int PrevPoint;
-        public int NextPoint;
-        public int PlayerPoint;
-        public bool isLock;
-    }
-    
     public void UpdateCell(IScrollData data)
     {
-        var celldata = data as Data;
+        var cellData = data as Data;
 
-        SetPass(celldata.Pass)
-            .SetLock(celldata.isLock)
-            .SetPlayerPoint(celldata.PrevPoint, celldata.NextPoint, celldata.PlayerPoint);
+        SetPass(cellData.Pass)
+            .SetLock(cellData.isLock)
+            .SetPlayerPoint(cellData.PrevPoint, cellData.NextPoint, cellData.PlayerPoint);
         UpdateRewardReceive();
     }
 

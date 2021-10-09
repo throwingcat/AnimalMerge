@@ -44,11 +44,22 @@ namespace Server
             }
         }
 
+        private float _updateDelay = 1f;
+        private float _updateDelta = 1f;
         public void OnUpdate()
         {
+            _updateDelta += Time.deltaTime;
             foreach (var DB in DBList)
                 if (DB.isReservedUpdate)
-                    DB.DoUpdate();
+                {
+                    if (_updateDelay <= _updateDelta)
+                    {
+                        DB.DoUpdate();
+                        DB.isReservedUpdate = false;
+                        _updateDelta = 0f;
+                        break;
+                    }
+                }
         }
 
         public void OnReceivePacket(byte[] bytes)
@@ -86,6 +97,9 @@ namespace Server
                     break;
                 case ePACKET_TYPE.RECEIVE_PASS_REWARD:
                     ReceivePassReward(packet);
+                    break;
+                case ePACKET_TYPE.RECEIVE_PLAYER_LEVEL_REWARD:
+                    ReceivePlayerLevelReward(packet);
                     break;
             }
         }
@@ -164,6 +178,24 @@ namespace Server
             return null;
         }
 
+        #region Player Level Reward
+        public void ReceivePlayerLevelReward(PacketBase packet)
+        {
+            var key = packet.hash["level_key"].ToString();
+            var rewards = PlayerInfo.Instance.ReceiveReward(key);
+            GetRewards(rewards, () =>
+            {
+                UpdateDB<DBBattlePassInfo>(() =>
+                {
+                    var packetReward = new PacketReward();
+                    packetReward.PacketType = ePACKET_TYPE.RECEIVE_PLAYER_LEVEL_REWARD;
+                    packetReward.hash = packet.hash;
+                    packetReward.Rewards = rewards;
+                    SendPacket(packetReward);
+                });
+            });
+        }
+        #endregion
         #region Lobby - Hero Select
 
         private void ChangeHero(PacketBase packet)

@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using SheetData;
+using Server;
 using UnityEngine;
 using UnityEngine.UI;
 using Violet;
@@ -10,23 +10,24 @@ using Violet;
 public class PageBattlePass : LobbyPageBase
 {
     private Coroutine _coroutine;
+
+    private string _currentSeason = "";
     private bool _isUpdate;
 
     public Text Point;
     public SUILoopScroll ScrollView;
-    public Text SeasonRemainTime;
 
     public GameObject SeasonIn;
     public GameObject SeasonOut;
-    
-    private string _currentSeason = ""; 
+    public Text SeasonRemainTime;
+
     public override void OnShow()
     {
         base.OnShow();
-        
+
         if (_coroutine == null)
             _coroutine = StartCoroutine(UpdateProcess());
-        
+
         Refresh();
     }
 
@@ -36,7 +37,7 @@ public class PageBattlePass : LobbyPageBase
         if (season_enable)
         {
             _currentSeason = BattlePassInfo.CurrentSeason.key;
-            
+
             var list = BattlePassInfo.Instance.SeasonPassItems;
 
             var items = new List<CellBattlePass.Data>();
@@ -82,8 +83,8 @@ public class PageBattlePass : LobbyPageBase
             //시즌 변경 확인
             if (_currentSeason.Equals(BattlePassInfo.CurrentSeason.key) == false)
             {
-                bool isDone = false;
-                Server.AnimalMergeServer.Instance.DownloadDB<Server.DBBattlePassInfo>(() =>
+                var isDone = false;
+                AnimalMergeServer.Instance.DownloadDB<DBBattlePassInfo>(() =>
                 {
                     _currentSeason = BattlePassInfo.CurrentSeason.key;
                     Refresh();
@@ -92,7 +93,7 @@ public class PageBattlePass : LobbyPageBase
                 while (isDone == false)
                     yield return new WaitForSeconds(1f);
             }
-            
+
             var eanble_season = RefreshSeasonState();
             if (eanble_season == false)
             {
@@ -140,11 +141,11 @@ public class PageBattlePass : LobbyPageBase
 
     public bool RefreshSeasonState()
     {
-        bool isResult = BattlePassInfo.CurrentSeason != null;
+        var isResult = BattlePassInfo.CurrentSeason != null;
 
         if (SeasonIn.activeSelf != isResult)
             SeasonIn.SetActive(isResult);
-        if (SeasonOut.activeSelf != (!isResult))
+        if (SeasonOut.activeSelf != !isResult)
             SeasonOut.SetActive(!isResult);
 
         return isResult;

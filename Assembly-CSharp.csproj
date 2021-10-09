@@ -253,7 +253,7 @@
      <Compile Include="Assets\Script\Data\Localization.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Manager\TableManager.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUITween.cs" />
-     <Compile Include="Assets\Script\UI\PageBattlePass.cs" />
+     <Compile Include="Assets\Script\UI\Lobby Page\PageBattlePass.cs" />
      <Compile Include="Assets\Script\Packet\PacketBase.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleAudio.cs" />
      <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\Serializables.cs" />
@@ -270,6 +270,10 @@
      <Compile Include="Assets\Script\Uitls\ScrollRectDisableDrag.cs" />
      <Compile Include="Assets\Script\PlayerData\ChestInventory.cs" />
      <Compile Include="Assets\Script\UI\PartSimpleNotice.cs" />
+     <Compile Include="Assets\Script\UI\PanelPlayerLevelReward.cs" />
+     <Compile Include="Assets\Script\UI\PlayerLevelReward\CellPlayerLevelReward.cs" />
+     <Compile Include="Assets\Script\Data\PlayerLevel.cs" />
+     <Compile Include="Assets\Script\Data\Partial\PlayerLevel.cs" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
      <None Include="Assets\Hovl Studio\Fantastic cartoon VFX\Shaders\SlashOld.shader" />
      <None Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Readme.txt" />
@@ -1063,10 +1067,6 @@
     <ProjectReference Include="CFXRRuntime.csproj">
       <Project>{f1580a4b-0e7f-8cd4-bfd5-a48861788752}</Project>
       <Name>CFXRRuntime</Name>
-    </ProjectReference>
-    <ProjectReference Include="Coffee.SoftMaskForUGUI_Demo.csproj">
-      <Project>{ec1aca19-745b-c9eb-5a9d-30fbea36807f}</Project>
-      <Name>Coffee.SoftMaskForUGUI_Demo</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

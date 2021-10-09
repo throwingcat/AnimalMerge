@@ -1,3 +1,4 @@
+using System.Reflection;
 using BackEnd;
 
 namespace Server
@@ -13,7 +14,9 @@ namespace Server
         {
             var param = new Param();
 
-            var fields = PlayerInfo.Instance.GetType().GetFields();
+            PlayerInfo.Instance.Refresh();
+            
+            var fields = PlayerInfo.Instance.GetType().GetFields(BindingFlags.Public);
             foreach (var field in fields)
                 param.Add(field.Name, field.GetValue(PlayerInfo.Instance));
 
@@ -32,8 +35,6 @@ namespace Server
                         _onFinishUpdate?.Invoke();
                         _onFinishUpdate = null;
                     });
-
-            isReservedUpdate = false;
         }
 
         public override void Download(System.Action onFinishDownload)
@@ -50,11 +51,14 @@ namespace Server
                     if (bro.GetReturnValuetoJSON()["rows"].Count <= 0)
                     {
                         //최초 설정
-                        PlayerInfo.Instance.GUID = GameManager.Instance.GUID;
-                        PlayerInfo.Instance.NickName = Backend.UserNickName;
-                        PlayerInfo.Instance.Level = 1;
-                        PlayerInfo.Instance.RankScore = 0;
-                        PlayerInfo.Instance.SelectHero = "Cat";
+                        PlayerInfo.Instance.OnUpdate(
+                            GameManager.Instance.GUID,
+                            Backend.UserNickName,
+                            1,
+                            0,
+                            "Cat",
+                            "",
+                            false);
                         Update(onFinishDownload);
                         return;
                     }
@@ -78,6 +82,7 @@ namespace Server
                                 }
                             }
                         }
+                    PlayerInfo.Instance.OnUpdate();
                 }
                 onFinishDownload?.Invoke();
             });

@@ -44,8 +44,6 @@ namespace Server
                     _onFinishUpdate = null;
                 });
             }
-            
-            isReservedUpdate = false;
         }
 
         public override void Download(Action onFinishDownload)

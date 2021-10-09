@@ -1,12 +1,12 @@
 using Violet;
-using System;
-
+ using System;
 namespace SheetData
 {
-    public partial class BattlePassSeason : CSVDataBase
-    {
-        public DateTime StartTime { get; set; }
+ public partial class BattlePassSeason : CSVDataBase 
+{ 
+	public DateTime StartTime { get; set; }
 
-        public DateTime EndTime { get; set; }
-    }
+	public DateTime EndTime { get; set; }
+
+}
 }
