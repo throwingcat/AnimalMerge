@@ -160,13 +160,16 @@
      <Compile Include="Assets\Script\Data\PlayerTrackerInfo.cs" />
      <Compile Include="Assets\Script\Uitls\DOTweenPlayer.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIDissolve.cs" />
+     <Compile Include="Assets\Script\UI\PanelPlayerLevelReward.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\UI\CanvasLayerTag.cs" />
      <Compile Include="Assets\Script\Data\Partial\EnvironmentValueSheet.cs" />
      <Compile Include="Assets\Script\UI\Adventure\CellChapter.cs" />
+     <Compile Include="Assets\Script\Data\Partial\PlayerLevel.cs" />
      <Compile Include="Assets\Script\Data\Chest.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\Matrix2x3.cs" />
      <Compile Include="Assets\Script\Data\UnitLevel.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIDragSlider.cs" />
+     <Compile Include="Assets\Script\UI\PlayerLevelReward\CellPlayerLevelReward.cs" />
      <Compile Include="Assets\Script\Data\Achievement.cs" />
      <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\ParticleSystemController.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPanelInfo.cs" />
@@ -182,6 +185,7 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUICanvasFitter.cs" />
      <Compile Include="Assets\Script\UI\PopupGetReward.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\CSVGenerator\CSVGenerator.cs" />
+     <Compile Include="Assets\Script\Data\PlayerLevel.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIMultiLoopScroll.cs" />
      <Compile Include="Assets\Hovl Studio\Toon Projectiles 2\Scripts\ProjectileMover.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UITransitionEffect.cs" />
@@ -270,10 +274,6 @@
      <Compile Include="Assets\Script\Uitls\ScrollRectDisableDrag.cs" />
      <Compile Include="Assets\Script\PlayerData\ChestInventory.cs" />
      <Compile Include="Assets\Script\UI\PartSimpleNotice.cs" />
-     <Compile Include="Assets\Script\UI\PanelPlayerLevelReward.cs" />
-     <Compile Include="Assets\Script\UI\PlayerLevelReward\CellPlayerLevelReward.cs" />
-     <Compile Include="Assets\Script\Data\PlayerLevel.cs" />
-     <Compile Include="Assets\Script\Data\Partial\PlayerLevel.cs" />
      <None Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
      <None Include="Assets\Hovl Studio\Fantastic cartoon VFX\Shaders\SlashOld.shader" />
      <None Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Readme.txt" />
