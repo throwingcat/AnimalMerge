@@ -58,8 +58,6 @@ namespace Server
                     chest.isChanged = false;
                 }
             }
-
-            isReservedUpdate = false;
         }
 
         public override void Download(Action onFinishDownload)

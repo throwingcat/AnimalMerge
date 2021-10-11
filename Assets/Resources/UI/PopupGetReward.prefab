@@ -718,7 +718,7 @@ MonoBehaviour:
   cells:
   - {fileID: 2847910258039647492}
   Message: {fileID: 2847910256743814969}
-  GridLayoutGroup: {fileID: 0}
+  GridLayoutGroup: {fileID: 2847910256706513473}
 --- !u!1 &2847910257005869817
 GameObject:
   m_ObjectHideFlags: 0

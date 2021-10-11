@@ -41,8 +41,6 @@ namespace Server
                     _onFinishUpdate?.Invoke();
                     _onFinishUpdate = null;
                 });
-
-            isReservedUpdate = false;
         }
 
         public override void Download(Action onFinishDownload)

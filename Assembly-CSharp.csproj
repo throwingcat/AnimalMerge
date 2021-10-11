@@ -160,13 +160,16 @@
      <Compile Include="Assets\Script\Data\PlayerTrackerInfo.cs" />
      <Compile Include="Assets\Script\Uitls\DOTweenPlayer.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UIDissolve.cs" />
+     <Compile Include="Assets\Script\UI\PanelPlayerLevelReward.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\UI\CanvasLayerTag.cs" />
      <Compile Include="Assets\Script\Data\Partial\EnvironmentValueSheet.cs" />
      <Compile Include="Assets\Script\UI\Adventure\CellChapter.cs" />
+     <Compile Include="Assets\Script\Data\Partial\PlayerLevel.cs" />
      <Compile Include="Assets\Script\Data\Chest.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\Common\Matrix2x3.cs" />
      <Compile Include="Assets\Script\Data\UnitLevel.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIDragSlider.cs" />
+     <Compile Include="Assets\Script\UI\PlayerLevelReward\CellPlayerLevelReward.cs" />
      <Compile Include="Assets\Script\Data\Achievement.cs" />
      <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\ParticleSystemController.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIPanelInfo.cs" />
@@ -182,6 +185,7 @@
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUICanvasFitter.cs" />
      <Compile Include="Assets\Script\UI\PopupGetReward.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\CSVGenerator\CSVGenerator.cs" />
+     <Compile Include="Assets\Script\Data\PlayerLevel.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUIMultiLoopScroll.cs" />
      <Compile Include="Assets\Hovl Studio\Toon Projectiles 2\Scripts\ProjectileMover.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\UIEffect\Scripts\UITransitionEffect.cs" />
@@ -253,7 +257,7 @@
      <Compile Include="Assets\Script\Data\Localization.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\Manager\TableManager.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\SUI\SUITween.cs" />
-     <Compile Include="Assets\Script\UI\PageBattlePass.cs" />
+     <Compile Include="Assets\Script\UI\Lobby Page\PageBattlePass.cs" />
      <Compile Include="Assets\Script\Packet\PacketBase.cs" />
      <Compile Include="Assets\Submodules\Violet\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleAudio.cs" />
      <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\Serializables.cs" />
@@ -1063,10 +1067,6 @@
     <ProjectReference Include="CFXRRuntime.csproj">
       <Project>{f1580a4b-0e7f-8cd4-bfd5-a48861788752}</Project>
       <Name>CFXRRuntime</Name>
-    </ProjectReference>
-    <ProjectReference Include="Coffee.SoftMaskForUGUI_Demo.csproj">
-      <Project>{ec1aca19-745b-c9eb-5a9d-30fbea36807f}</Project>
-      <Name>Coffee.SoftMaskForUGUI_Demo</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

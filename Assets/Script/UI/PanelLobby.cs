@@ -75,6 +75,10 @@ public class PanelLobby : SUIPanel
         MovePage(page);
     }
 
+    public void OnClickPlayerLevelReward()
+    {
+        UIManager.Instance.Show<PanelPlayerLevelReward>();
+    }
     #region 매칭 취소
 
     public void OnClickMatchCancel()
@@ -98,4 +102,5 @@ public class PanelLobby : SUIPanel
     }
 
     #endregion
+    
 }

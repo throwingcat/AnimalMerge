@@ -38,6 +38,9 @@
       "Name": "PlayerTrackerInfo"
     },
     {
+      "Name": "PlayerLevel"
+    },
+    {
       "Name": "SpawnPhase"
     },
     {

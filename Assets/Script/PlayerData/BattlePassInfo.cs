@@ -154,6 +154,7 @@ public class BattlePassInfo
             return true;
         return false;
     }
+    
     public class BattlePassRewardInfo
     {
         public bool isReceivedPassReward;
