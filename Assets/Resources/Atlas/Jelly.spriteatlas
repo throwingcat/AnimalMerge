@@ -62,5 +62,5 @@ SpriteAtlas:
   - slime_05
   - portrait_slime_face
   m_RenderDataMap: {}
-  m_Tag: Slime
+  m_Tag: Jelly
   m_IsVariant: 0
