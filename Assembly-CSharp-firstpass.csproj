@@ -306,6 +306,9 @@
  <Reference Include="TheBackend.iOS">
  <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/Android/TheBackend.iOS.dll</HintPath>
  </Reference>
+ <Reference Include="DOTween">
+ <HintPath>C:/Git/AnimalMerge/Assets/Violet/External Asset/Demigiant/DOTween/DOTween.dll</HintPath>
+ </Reference>
  <Reference Include="Backend">
  <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/Backend.dll</HintPath>
  </Reference>
@@ -318,17 +321,14 @@
  <Reference Include="System.Runtime.CompilerServices.Unsafe">
  <HintPath>C:/Git/AnimalMerge/Assets/Plugins/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
  </Reference>
- <Reference Include="LitJSON">
- <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/LitJSON.dll</HintPath>
+ <Reference Include="DOTweenPro">
+ <HintPath>C:/Git/AnimalMerge/Assets/Violet/External Asset/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
  </Reference>
  <Reference Include="DemiLib">
  <HintPath>C:/Git/AnimalMerge/Assets/Violet/External Asset/Demigiant/DemiLib/Core/DemiLib.dll</HintPath>
  </Reference>
- <Reference Include="DOTween">
- <HintPath>C:/Git/AnimalMerge/Assets/Violet/External Asset/Demigiant/DOTween/DOTween.dll</HintPath>
- </Reference>
- <Reference Include="DOTweenPro">
- <HintPath>C:/Git/AnimalMerge/Assets/Violet/External Asset/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
+ <Reference Include="LitJSON">
+ <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/LitJSON.dll</HintPath>
  </Reference>
  <Reference Include="mscorlib">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.18f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -803,6 +803,10 @@
       <Project>{1067a6a7-68bf-a9f5-6bf9-3f3c41685e3b}</Project>
       <Name>LunarConsole</Name>
     </ProjectReference>
+    <ProjectReference Include="Coffee.UIParticle.csproj">
+      <Project>{b0a15342-0b73-2d37-3664-eba9146d83c4}</Project>
+      <Name>Coffee.UIParticle</Name>
+    </ProjectReference>
     <ProjectReference Include="MessagePack.Annotations.csproj">
       <Project>{0c84f949-ed2f-f0f9-fbea-2ff681d75e71}</Project>
       <Name>MessagePack.Annotations</Name>
@@ -810,10 +814,6 @@
     <ProjectReference Include="CFXRRuntime.csproj">
       <Project>{f1580a4b-0e7f-8cd4-bfd5-a48861788752}</Project>
       <Name>CFXRRuntime</Name>
-    </ProjectReference>
-    <ProjectReference Include="Coffee.UIParticle.csproj">
-      <Project>{b0a15342-0b73-2d37-3664-eba9146d83c4}</Project>
-      <Name>Coffee.UIParticle</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
