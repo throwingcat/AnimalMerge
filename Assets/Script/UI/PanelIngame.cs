@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Define;
 using DG.Tweening;
 using SheetData;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Violet;
@@ -31,7 +32,7 @@ public class PanelIngame : SUIPanel
     public GameObject BadBlockTimerRoot;
     public Text BadBlockTimerText;
 
-    public Text Score;
+    public TextMeshProUGUI Score;
     public RectTransform VFXComboParent;
     public GameObject VFXComboPrefab;
 

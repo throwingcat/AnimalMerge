@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class VFXCombo : MonoBehaviour
 {
     public RectTransform RectTransform;
-    public Text ComboCount;
+    public TextMeshProUGUI ComboCount;
     public Image ComboText;
     private float _duration = 0f;
     private float _delta = 0f;

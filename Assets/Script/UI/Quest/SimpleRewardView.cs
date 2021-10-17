@@ -12,7 +12,9 @@ public class SimpleRewardView : MonoBehaviour
     public void Set(ItemInfo reward)
     {
         var item = reward.Key.ToTableData<Item>();
-        Icon.sprite = item.Texture.ToSprite();
-        Amount.text = reward.ToString();
+        if (Icon != null)
+            Icon.sprite = item.Texture.ToSprite();
+        if (Amount != null)
+            Amount.text = reward.ToString();
     }
 }

@@ -13,7 +13,7 @@ public class CellBattlePass : MonoBehaviour , IScrollCell
     public List<SimpleRewardView> PremiumRewards;
     public GameObject PremiumPassLock;
     public Text Score;
-    public Slider ScoreSlider;
+    public SlicedFilledImage ScoreSlider;
     public RectTransform ScliderRectTransform;
     public BattlePass BattlePass;
     
@@ -72,9 +72,8 @@ public class CellBattlePass : MonoBehaviour , IScrollCell
             ScliderRectTransform.sizeDelta = new Vector2(ScliderRectTransform.sizeDelta.x,125f);
         }
 
-
         var t = Mathf.InverseLerp(from, to, score);
-        ScoreSlider.value = t;
+        ScoreSlider.fillAmount = t;
         return this;
     }
 

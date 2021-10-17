@@ -1,5 +1,7 @@
 using System.Reflection;
 using BackEnd;
+using LitJson;
+using Newtonsoft.Json;
 
 namespace Server
 {
@@ -15,10 +17,9 @@ namespace Server
             var param = new Param();
 
             PlayerInfo.Instance.Refresh();
-            
-            var fields = PlayerInfo.Instance.GetType().GetFields(BindingFlags.Public);
-            foreach (var field in fields)
-                param.Add(field.Name, field.GetValue(PlayerInfo.Instance));
+
+            string json = JsonConvert.SerializeObject(PlayerInfo.Instance);
+            param.Add("Json",json);
 
             if (InDate.IsNullOrEmpty())
                 SendQueue.Enqueue(Backend.GameData.Insert, DB_KEY(), param, bro =>
@@ -51,38 +52,28 @@ namespace Server
                     if (bro.GetReturnValuetoJSON()["rows"].Count <= 0)
                     {
                         //최초 설정
-                        PlayerInfo.Instance.OnUpdate(
-                            GameManager.Instance.GUID,
-                            Backend.UserNickName,
-                            1,
-                            0,
-                            "Cat",
-                            "",
-                            false);
-                        Update(onFinishDownload);
-                        return;
+                        PlayerInfo.Instance.GUID = GameManager.Instance.GUID;
+                        PlayerInfo.Instance.NickName = Backend.UserNickName;
+                        PlayerInfo.Instance.Level = 1;
+                        PlayerInfo.Instance.Exp = 0;
+                        PlayerInfo.Instance.RankScore = 0;
+                        PlayerInfo.Instance.SelectHero ="Cat";
+                        PlayerInfo.Instance.RewardInfoJson = "";
+                        PlayerInfo.Instance.isPurchasePremium = false;
                     }
-
-                    var rows = bro.Rows();
-                    for (var i = 0; i < rows.Count; i++)
-                        foreach (var key in rows[i].Keys)
+                    else
+                    {
+                        var rows = bro.Rows();
+                        foreach (JsonData row in rows)
                         {
-                            var fields = PlayerInfo.Instance.GetType().GetFields();
-                            foreach (var field in fields)
-                            {
-                                if (key == "inDate")
-                                {
-                                    if (InDate.IsNullOrEmpty())
-                                        InDate = rows[i][key]["S"].ToString();
-                                }
-
-                                if (field.Name == key)
-                                {
-                                    AnimalMergeServer.ApplyField(field, PlayerInfo.Instance, rows[i], key);
-                                }
-                            }
+                            var inDate = row["inDate"]["S"].ToString();
+                            var json = row["Json"]["S"].ToString();
+                            InDate = inDate;
+                            PlayerInfo.Instance.Update(json);
                         }
-                    PlayerInfo.Instance.OnUpdate();
+
+                        PlayerInfo.Instance.OnUpdate();
+                    }
                 }
                 onFinishDownload?.Invoke();
             });

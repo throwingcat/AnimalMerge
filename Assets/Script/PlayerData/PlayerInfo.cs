@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using SheetData;
@@ -5,18 +6,35 @@ using Violet;
 
 public class PlayerInfo
 {
+    #region Instance
     private static PlayerInfo _instance;
-
+    public static PlayerInfo Instance
+    {
+        get
+        {
+            if (_instance == null)
+                _instance = new PlayerInfo();
+            return _instance;
+        }
+    }
+    #endregion
+    
     public string GUID;
     public int Level;
+    public int Exp;
     public string NickName;
     public int RankScore;
     public string SelectHero;
     public string RewardInfoJson;
     public bool isPurchasePremium;
 
+    [JsonIgnore]
     private List<PlayerLevelRewardInfo> _playerLevelRewardInfos = new List<PlayerLevelRewardInfo>();
 
+    public void Update(string json)
+    {
+        _instance = JsonConvert.DeserializeObject<PlayerInfo>(json);
+    } 
     public void Refresh()
     {
         List<PlayerLevelRewardInfo> result = new List<PlayerLevelRewardInfo>();
@@ -28,21 +46,6 @@ public class PlayerInfo
         }
 
         RewardInfoJson = JsonConvert.SerializeObject(result);
-    }
-
-    public void OnUpdate(string guid, string nick, int level, int score, string hero, string reward_info, bool premium)
-    {
-        GUID = guid;
-        NickName = nick;
-        Level = level;
-        RankScore = score;
-        SelectHero = hero;
-        RewardInfoJson = reward_info;
-        isPurchasePremium = premium;
-
-        _playerLevelRewardInfos = new List<PlayerLevelRewardInfo>();
-        if (RewardInfoJson.IsNullOrEmpty() == false)
-            _playerLevelRewardInfos = JsonConvert.DeserializeObject<List<PlayerLevelRewardInfo>>(RewardInfoJson);
     }
 
     public void OnUpdate()
@@ -127,15 +130,45 @@ public class PlayerInfo
         return false;
     }
 
-    public static PlayerInfo Instance
+    public void GetExp(int exp)
     {
-        get
+        if (isMaxLevel()) return;
+        
+        Exp += exp;
+        var sheet = GetLevelSheet();
+        if (sheet.exp <= Exp)
         {
-            if (_instance == null)
-                _instance = new PlayerInfo();
-            return _instance;
+            Level++;
+            Exp -= sheet.exp;
         }
     }
+
+    public PlayerLevel GetLevelSheet()
+    {
+        var sheet = TableManager.Instance.GetTable<PlayerLevel>();
+        foreach (var row in sheet)
+        {
+            var data = row.Value as PlayerLevel;
+            if (data.level == Level)
+                return data;
+        }
+
+        return null;
+    }
+
+    public bool isMaxLevel()
+    {
+        var sheet = GetLevelSheet();
+        if (sheet != null)
+        {
+            if (0 < sheet.exp)
+                return false;
+        }
+
+        return true;
+    }
+
+    
 
     public class PlayerLevelRewardInfo
     {

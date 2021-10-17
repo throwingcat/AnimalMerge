@@ -92,10 +92,12 @@ public class UIManager : MonoSingleton<UIManager>
             var prefab = ResourceManager.Instance.LoadPrefab(path);
             var layer = isPopup == false ? GetLayer(eUILayer.Panel) : GetLayer(eUILayer.Popup);
             var panel = Instantiate(prefab, layer.CachedRectTransform);
-
+        
             panel.SetActive(false);
 
             var component = panel.GetComponent<SUIPanel>();
+            var rt = panel.GetComponent<RectTransform>();
+            rt.anchoredPosition = Vector2.zero;
             _cachedPanel.Add(key, component);
         }
 

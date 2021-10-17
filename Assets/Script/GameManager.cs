@@ -220,47 +220,14 @@ public class GameManager : MonoBehaviour
     {
         bool isDone = false;
 
-        Debug.Log("Download PlayerInfo");
-        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBPlayerInfo>(() => { isDone = true; });
-        while (isDone == false)
-            yield return null;
-        isDone = false;
-        
-        Debug.Log("Download Inventory");
-        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBInventory>(() => { isDone = true; });
-        while (isDone == false)
-            yield return null;
-        isDone = false;
-
-        Debug.Log("Download ChestInventory");
-        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBChestInventory>(() => { isDone = true; });
-        while (isDone == false)
-            yield return null;
-        isDone = false;
-
-        Debug.Log("Download UnitInventory");
-        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBUnitInventory>(() => { isDone = true; });
-        while (isDone == false)
-            yield return null;
-        isDone = false;
-        
-        Debug.Log("Download PlayerTracker");
-        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBPlayerTracker>(() => { isDone = true; });
-        while (isDone == false)
-            yield return null;
-        isDone = false;
-        
-        Debug.Log("Download QuestInfo");
-        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBQuestInfo>(() => { isDone = true; });
-        while (isDone == false)
-            yield return null;
-        isDone = false;
-        
-        Debug.Log("Download DBBattlePassInfo");
-        Server.AnimalMergeServer.Instance.DownloadDB<Server.DBBattlePassInfo>(() => { isDone = true; });
-        while (isDone == false)
-            yield return null;
-        isDone = false;
+        foreach (var db in Server.AnimalMergeServer.Instance.DBList)
+        {
+            Debug.Log(string.Format("Download {0}",db.GetType()));
+            isDone = false;
+            db.Download(() => { isDone = true;});
+            while (isDone == false)
+                yield return null;
+        }
     }
 
     public void ChangeGameState(eGAME_STATE state)

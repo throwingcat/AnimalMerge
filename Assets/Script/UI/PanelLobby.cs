@@ -62,7 +62,6 @@ public class PanelLobby : SUIPanel
 
     public void RefreshScroll()
     {
-    
         var destination = CurrentPage.Index == 0 ? 0f : (float) CurrentPage.Index / (Page.Count - 1);
         DOTween.To(() => PageScroll.horizontalNormalizedPosition,
                 x => PageScroll.horizontalNormalizedPosition = x,

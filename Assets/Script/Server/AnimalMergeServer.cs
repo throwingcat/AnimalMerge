@@ -46,6 +46,7 @@ namespace Server
 
         private float _updateDelay = 1f;
         private float _updateDelta = 1f;
+
         public void OnUpdate()
         {
             _updateDelta += Time.deltaTime;
@@ -179,6 +180,7 @@ namespace Server
         }
 
         #region Player Level Reward
+
         public void ReceivePlayerLevelReward(PacketBase packet)
         {
             var key = packet.hash["level_key"].ToString();
@@ -195,7 +197,9 @@ namespace Server
                 });
             });
         }
+
         #endregion
+
         #region Lobby - Hero Select
 
         private void ChangeHero(PacketBase packet)
@@ -273,10 +277,10 @@ namespace Server
             if (isWin == false)
             {
                 PlayerTracker.Instance.Report(PlayerTracker.BATTLE_LOSE, 1);
-                PlayerInfo.Instance.RankScore -= 5;
-
-                //플레이어 정보 업데이트
-                UpdateDB<DBPlayerInfo>(() => { UpdateDB<DBPlayerTracker>(() => { onFinishBattleResult(packet); }); });
+                BattleLoseProcess_PlayerInfo(() =>
+                {
+                    UpdateDB<DBPlayerTracker>(() => { onFinishBattleResult(packet); });
+                });
             }
             //승리 처리
             else
@@ -311,55 +315,93 @@ namespace Server
 
         public void BattleWinProcess(Action onFinish)
         {
-            PlayerInfo.Instance.RankScore += 5;
-
-            UpdateDB<DBPlayerInfo>(() =>
+            //종료 확인
+            int res_count = 0;
+            Action checkFinish = () =>
             {
-                //새로운 상자 추가
-                var emptySlot = ChestInventory.Instance.GetEmptySlot();
-                if (emptySlot != null)
+                if (res_count == 0)
+                    onFinish?.Invoke();
+            };
+
+            //보상 지급
+            res_count++;
+            BattleWinProcess_Reward(() =>
+            {
+                res_count--;
+                checkFinish?.Invoke();
+            });
+
+            //플레이어 정보 갱신
+            res_count++;
+            BattleWinProcess_PlayerInfo(() =>
+            {
+                res_count--;
+                checkFinish?.Invoke();
+            });
+        }
+
+        private void BattleWinProcess_Reward(Action onFinish)
+        {
+            //새로운 상자 추가
+            var emptySlot = ChestInventory.Instance.GetEmptySlot();
+            if (emptySlot != null)
+            {
+                //랜덤 상자 선택
+                var default_chest = TableManager.Instance.GetTable<Chest>().Where(
+                    _ => (_.Value as Chest)?.group == "default");
+
+                var random = new List<double>();
+                var keys = new List<string>();
+                foreach (var row in default_chest)
                 {
-                    //랜덤 상자 선택
-                    var default_chest = TableManager.Instance.GetTable<Chest>().Where(
-                        _ => (_.Value as Chest)?.group == "default");
+                    var chest = row.Value as Chest;
+                    random.Add(chest.ratio);
+                    keys.Add(chest.key);
+                }
 
-                    var random = new List<double>();
-                    var keys = new List<string>();
-                    foreach (var row in default_chest)
-                    {
-                        var chest = row.Value as Chest;
-                        random.Add(chest.ratio);
-                        keys.Add(chest.key);
-                    }
+                var index = Utils.RandomPick(random);
 
-                    var index = Utils.RandomPick(random);
+                ChestInventory.Instance.Insert(keys[index]);
 
-                    ChestInventory.Instance.Insert(keys[index]);
+                UpdateDB<DBChestInventory>(() => { onFinish?.Invoke(); });
+            }
+            else
+            {
+                //보유한 상자중에 선택
+                var inDate = new List<string>();
 
+                foreach (var chest in ChestInventory.Instance.ChestSlots)
+                    if (chest.Grade < EnvironmentValue.CHEST_GRADE_MAX && chest.isProgress == false)
+                        inDate.Add(chest.inDate);
+
+                if (0 < inDate.Count)
+                {
+                    var pick = Utils.RandomPickDefault(inDate);
+                    ChestInventory.Instance.Upgrade(pick);
+                    //DB 업데이트
                     UpdateDB<DBChestInventory>(() => { onFinish?.Invoke(); });
                 }
                 else
                 {
-                    //보유한 상자중에 선택
-                    var inDate = new List<string>();
-
-                    foreach (var chest in ChestInventory.Instance.ChestSlots)
-                        if (chest.Grade < EnvironmentValue.CHEST_GRADE_MAX && chest.isProgress == false)
-                            inDate.Add(chest.inDate);
-
-                    if (0 < inDate.Count)
-                    {
-                        var pick = Utils.RandomPickDefault(inDate);
-                        ChestInventory.Instance.Upgrade(pick);
-                        //DB 업데이트
-                        UpdateDB<DBChestInventory>(() => { onFinish?.Invoke(); });
-                    }
-                    else
-                    {
-                        onFinish?.Invoke();
-                    }
+                    onFinish?.Invoke();
                 }
-            });
+            }
+        }
+
+        private void BattleWinProcess_PlayerInfo(Action onFinish)
+        {
+            //플레이어 정보 갱신            
+            PlayerInfo.Instance.RankScore += 5;
+            PlayerInfo.Instance.GetExp(15);
+            UpdateDB<DBPlayerInfo>(() => { onFinish?.Invoke(); });
+        }
+
+        private void BattleLoseProcess_PlayerInfo(Action onFinish)
+        {
+            //플레이어 정보 갱신            
+            PlayerInfo.Instance.RankScore += 3;
+            PlayerInfo.Instance.GetExp(7);
+            UpdateDB<DBPlayerInfo>(() => { onFinish?.Invoke(); });
         }
 
         #endregion

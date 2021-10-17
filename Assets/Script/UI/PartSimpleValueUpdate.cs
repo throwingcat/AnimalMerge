@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,17 +10,19 @@ public class PartSimpleValueUpdate : MonoBehaviour
         PlayerLevel,
         PlayerExp,
         Coin,
-        Jewel,
+        Jewel
     }
 
-    public eType Type;
-    private int _prevValue = -1;
+    private Coroutine _coroutine;
     private int _currentValue = -1;
+    private int _prevValue = -1;
+    public bool isActive;
+    public Slider Slider;
+    public SlicedFilledImage SliderFilledImage;
+
+    public eType Type;
 
     public Text Value;
-    public Slider Slider;
-    public bool isActive = false;
-    private Coroutine _coroutine;
 
     private void OnEnable()
     {
@@ -51,6 +51,23 @@ public class PartSimpleValueUpdate : MonoBehaviour
                         _currentValue = PlayerInfo.Instance.Level;
                     break;
                 case eType.PlayerExp:
+                    if (PlayerInfo.Instance != null)
+                    {
+                        if (PlayerInfo.Instance.isMaxLevel())
+                        {
+                            _currentValue = 100;
+                        }
+                        else
+                        {
+                            var sheet = PlayerInfo.Instance.GetLevelSheet();
+                            if (sheet != null)
+                            {
+                                var max = sheet.exp;
+                                _currentValue = (int) (Mathf.InverseLerp(0, max, PlayerInfo.Instance.Exp) * 100);
+                            }
+                        }
+                    }
+
                     break;
                 case eType.Coin:
                     if (Inventory.Instance != null)
@@ -74,30 +91,30 @@ public class PartSimpleValueUpdate : MonoBehaviour
 
     public void UpdateValue(int from)
     {
-        DOTween.To(() => from, (x) =>
+        switch (Type)
         {
-            if (Slider != null)
+            case eType.PlayerLevel:
+                Value.text = _currentValue.ToString();
+                break;
+            case eType.PlayerExp:
             {
-                if (Type == eType.PlayerExp)
-                    Slider.value = x / 100f;
+                Value.text = string.Format("{0}%", _currentValue);
+                if (Slider != null)
+                    Slider.value = _currentValue / 100f;
+                if (SliderFilledImage != null)
+                    SliderFilledImage.fillAmount = _currentValue / 100f;
             }
-
-            if (Value != null)
+                break;
+            case eType.Coin:
+            case eType.Jewel:
             {
-                switch (Type)
+                DOTween.To(() => from, x =>
                 {
-                    case eType.PlayerLevel:
-                        Value.text = x.ToString();
-                        break;
-                    case eType.PlayerExp:
-                        Value.text = string.Format("{0]%", x);
-                        break;
-                    case eType.Coin:
-                    case eType.Jewel:
+                    if (Value != null)
                         Value.text = Utils.ParseComma(x);
-                        break;
-                }
+                }, _currentValue, 0.33f);
             }
-        }, _currentValue, 0.33f);
+                break;
+        }
     }
 }

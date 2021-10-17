@@ -180,13 +180,8 @@ public class GameCore : MonoBehaviour
                 else
                     _unitSpawnDelayDelta -= delta;
 
-                if (Input.GetKeyDown(KeyCode.Space))
-                    OnReceiveAttack(10);
                 if (Input.GetKeyDown(KeyCode.P))
-                {
                     GameOver(GameManager.GetTime());
-                }
-
                 if (Input.GetKeyDown(KeyCode.A))
                 {
                     ChargeSkillGauge(EnvironmentValue.SKILL_CHARGE_MAX_VALUE);
