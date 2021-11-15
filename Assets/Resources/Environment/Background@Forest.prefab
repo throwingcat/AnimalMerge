@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3136311761514393738}
   - component: {fileID: 5921308029441037243}
   - component: {fileID: 6686016821135564396}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0003_\uBC18\uC9DD\uC774
     (10)"
   m_TagString: Untagged
@@ -4927,7 +4927,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 10
   m_RenderMode: 0
   m_SortMode: 0
@@ -4965,7 +4965,7 @@ GameObject:
   - component: {fileID: 1240423419015292064}
   - component: {fileID: 2045647039081860092}
   - component: {fileID: 7757720924931019173}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0003_\uBC18\uC9DD\uC774
     (1)"
   m_TagString: Untagged
@@ -9881,7 +9881,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 10
   m_RenderMode: 0
   m_SortMode: 0
@@ -9920,7 +9920,7 @@ GameObject:
   - component: {fileID: 3959573281673338756}
   - component: {fileID: 3791717600600697484}
   - component: {fileID: 5337420863417391012}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0004_\uD770\uBCC4_3"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9979,7 +9979,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 11
   m_Sprite: {fileID: 21300000, guid: 608a01bdbee63434e8149010e59fd825, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -10125,7 +10125,7 @@ GameObject:
   - component: {fileID: 1696169767082465955}
   - component: {fileID: 5794471848051743667}
   - component: {fileID: 7672372515887096460}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0007_\uD070\uAD6C\uB984
     (1)"
   m_TagString: Untagged
@@ -10185,7 +10185,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 21
   m_Sprite: {fileID: 21300000, guid: ca4b9479d45c9ac47a1c2ab13bbcba12, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -10434,7 +10434,7 @@ GameObject:
   - component: {fileID: 8052321489513542666}
   - component: {fileID: 8756460778131641855}
   - component: {fileID: 665436870287994055}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0003_\uBC18\uC9DD\uC774"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15349,7 +15349,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 10
   m_RenderMode: 0
   m_SortMode: 0
@@ -15387,7 +15387,7 @@ GameObject:
   - component: {fileID: 1485479696507855861}
   - component: {fileID: 5315198241230222004}
   - component: {fileID: 6373604504690736951}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0003_\uBC18\uC9DD\uC774
     (6)"
   m_TagString: Untagged
@@ -20303,7 +20303,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 10
   m_RenderMode: 0
   m_SortMode: 0
@@ -20341,7 +20341,7 @@ GameObject:
   - component: {fileID: 3679060874852099170}
   - component: {fileID: 7157898524505974003}
   - component: {fileID: 7891102168948052411}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0003_\uBC18\uC9DD\uC774
     (2)"
   m_TagString: Untagged
@@ -25257,7 +25257,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 10
   m_RenderMode: 0
   m_SortMode: 0
@@ -25297,7 +25297,7 @@ GameObject:
   - component: {fileID: 3036586248247279074}
   - component: {fileID: 7045669807109505469}
   - component: {fileID: 2531893009088912557}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0007_\uD070\uAD6C\uB984
     (2)"
   m_TagString: Untagged
@@ -25357,7 +25357,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 20
   m_Sprite: {fileID: 21300000, guid: ca4b9479d45c9ac47a1c2ab13bbcba12, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -25607,7 +25607,7 @@ GameObject:
   - component: {fileID: 8457629147904125880}
   - component: {fileID: 3722888518225034780}
   - component: {fileID: 7728829556381876654}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0004_\uD770\uBCC4_2"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25666,7 +25666,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 11
   m_Sprite: {fileID: 21300000, guid: a0e9d7e5ed56bf94293e398abfdba88c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -25810,7 +25810,7 @@ GameObject:
   - component: {fileID: 6435118974704955762}
   - component: {fileID: 374879538600135540}
   - component: {fileID: 7755298961313683191}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0003_\uBC18\uC9DD\uC774
     (4)"
   m_TagString: Untagged
@@ -30726,7 +30726,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 10
   m_RenderMode: 0
   m_SortMode: 0
@@ -30764,7 +30764,7 @@ GameObject:
   - component: {fileID: 7577836896435621858}
   - component: {fileID: 3717156048942271065}
   - component: {fileID: 5295609558152615367}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0003_\uBC18\uC9DD\uC774
     (8)"
   m_TagString: Untagged
@@ -35680,7 +35680,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 10
   m_RenderMode: 0
   m_SortMode: 0
@@ -35719,7 +35719,7 @@ GameObject:
   - component: {fileID: 4231920014038342806}
   - component: {fileID: 2767669647109111765}
   - component: {fileID: 6429944019811471816}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0004_\uD770\uBCC4_1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35778,7 +35778,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 11
   m_Sprite: {fileID: 21300000, guid: b7017a538b5bcdd4d9464446cf3ab5d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -35921,7 +35921,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7498606191229985587}
   - component: {fileID: 7498606191229985586}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0009_\uC67C\uCABD\uAD6C\uB984"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35980,7 +35980,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 20
   m_Sprite: {fileID: 21300000, guid: b76360d99d803514597f224f3a450b84, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -36002,7 +36002,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7498606191260192227}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: '>>>2<<<'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36033,7 +36033,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7498606191363404467}
   - component: {fileID: 7498606191363404466}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0003_\uBC18\uC9DD\uC774"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36092,7 +36092,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 4ae472d4c06bfaf4d88b06ccfcef0f14, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -36114,7 +36114,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7498606191413467567}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Background@Forest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36177,7 +36177,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7498606191484136084}
   - component: {fileID: 7498606191484136083}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0004_\uD770\uBCC4"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36236,7 +36236,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: c374d88a157100d4391ff4e25ccc8076, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -36258,7 +36258,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7498606191517972434}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: '>>>0<<<'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36289,7 +36289,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7498606191729630601}
   - component: {fileID: 7498606191729630600}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0010_\uAD6C\uB9841"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36348,7 +36348,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 20
   m_Sprite: {fileID: 21300000, guid: 6a4b707b6b7ae234d94425997e7d5160, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -36370,7 +36370,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7498606191878025803}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: '>>>1<<<'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36401,7 +36401,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7498606191955009197}
   - component: {fileID: 7498606191955009196}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0012_\uBC24\uD558\uB298"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36460,7 +36460,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f7560dd3865d37f428b1ab381e07d996, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -36483,7 +36483,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7498606192441382363}
   - component: {fileID: 7498606192441382362}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0000s_0001_\uC5B8\uB355\uAE38"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36542,7 +36542,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 40
   m_Sprite: {fileID: 21300000, guid: a9e693213f6b4c243842546938f32276, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -36565,7 +36565,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7498606192571165374}
   - component: {fileID: 7498606192571165373}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0005_\uC791\uC740\uB098\uBB34"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36624,7 +36624,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 50
   m_Sprite: {fileID: 21300000, guid: 99324c912863354498b852351e1e756a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -36647,7 +36647,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7498606192704579887}
   - component: {fileID: 7498606192704579886}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0008_\uC624\uB978\uCABD\uAD6C\uB984"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36706,7 +36706,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 20
   m_Sprite: {fileID: 21300000, guid: 82537630498db3a4f9e9090799749fce, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -36729,7 +36729,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7498606192813459053}
   - component: {fileID: 7498606192813459052}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0011_\uC6D0\uACBD\uC232"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36788,7 +36788,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 30
   m_Sprite: {fileID: 21300000, guid: 34a69d465706f1c40a62101bb9c1d97b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -36810,7 +36810,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7498606192853197614}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: '>>>3<<< '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36840,7 +36840,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7498606192888194419}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: '>>>5<<<'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36871,7 +36871,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7498606192956506492}
   - component: {fileID: 7498606192956506491}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0006_\uD070\uB098\uBB34"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36930,7 +36930,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 50
   m_Sprite: {fileID: 21300000, guid: 3bbfcf28eb00d1b448258a02fbd754d9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -36952,7 +36952,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7498606193023333553}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: '>>>4<<<'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36984,7 +36984,7 @@ GameObject:
   - component: {fileID: 1318130074461354098}
   - component: {fileID: 3173597611889690164}
   - component: {fileID: 7618722278711116390}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0003_\uBC18\uC9DD\uC774
     (9)"
   m_TagString: Untagged
@@ -41900,7 +41900,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 10
   m_RenderMode: 0
   m_SortMode: 0
@@ -41938,7 +41938,7 @@ GameObject:
   - component: {fileID: 9115273817911521217}
   - component: {fileID: 707815968741138303}
   - component: {fileID: 1620696225241582920}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0003_\uBC18\uC9DD\uC774
     (7)"
   m_TagString: Untagged
@@ -46854,7 +46854,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 10
   m_RenderMode: 0
   m_SortMode: 0
@@ -46892,7 +46892,7 @@ GameObject:
   - component: {fileID: 8866896229932476087}
   - component: {fileID: 5556859235658415586}
   - component: {fileID: 2271876232230378428}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0003_\uBC18\uC9DD\uC774
     (3)"
   m_TagString: Untagged
@@ -51808,7 +51808,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 10
   m_RenderMode: 0
   m_SortMode: 0
@@ -51846,7 +51846,7 @@ GameObject:
   - component: {fileID: 4890453773399735849}
   - component: {fileID: 2870317417848149653}
   - component: {fileID: 5986518695783734196}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\uD37C\uC990\uBC30\uACBD_\uB808\uC774\uC5B4\uBD84\uB9AC-(1)_0003_\uBC18\uC9DD\uC774
     (5)"
   m_TagString: Untagged
@@ -56762,7 +56762,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1325136633
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 10
   m_RenderMode: 0
   m_SortMode: 0
