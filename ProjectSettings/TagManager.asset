@@ -13,7 +13,7 @@ TagManager:
   - UI
   - Background UI
   - IngamePortrait
-  - 
+  - Background Environment
   - Unit
   - Unit Ready
   - Ground
@@ -38,9 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: Background
     uniqueID: 2969830663
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
