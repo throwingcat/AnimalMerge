@@ -15,8 +15,8 @@ TagManager:
   - IngamePortrait
   - 
   - Unit
-  - Unit Spawn Area
-  - 
+  - Unit Ready
+  - Ground
   - Enemy Layer
   - 
   - 
@@ -40,4 +40,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2969830663
     locked: 0

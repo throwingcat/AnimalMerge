@@ -20,6 +20,8 @@ public class PageBattlePass : LobbyPageBase
     public GameObject SeasonIn;
     public GameObject SeasonOut;
     public Text SeasonRemainTime;
+    
+    public GameObject BattlePassToolTip;
 
     public override void OnShow()
     {
@@ -28,6 +30,8 @@ public class PageBattlePass : LobbyPageBase
         if (_coroutine == null)
             _coroutine = StartCoroutine(UpdateProcess());
 
+        BattlePassToolTip.gameObject.SetActive(false);
+        
         Refresh();
     }
 
@@ -110,7 +114,7 @@ public class PageBattlePass : LobbyPageBase
                 stringBuilder.Append(string.Format("{0}{1} ", t.Days, "Day".ToLocalization()));
                 stringBuilder.Append(string.Format("{0}{1} ", t.Hours, "Hour".ToLocalization()));
                 stringBuilder.Append(string.Format("{0}{1} ", t.Minutes, "Minute".ToLocalization()));
-                stringBuilder.Append(string.Format("{0}{1}", t.Seconds, "Seconds".ToLocalization()));
+                //stringBuilder.Append(string.Format("{0}{1}", t.Seconds, "Seconds".ToLocalization()));
             }
             else
             {
@@ -119,7 +123,7 @@ public class PageBattlePass : LobbyPageBase
                 {
                     stringBuilder.Append(string.Format("{0}{1} ", t.Hours, "Hour".ToLocalization()));
                     stringBuilder.Append(string.Format("{0}{1} ", t.Minutes, "Minute".ToLocalization()));
-                    stringBuilder.Append(string.Format("{0}{1}", t.Seconds, "Seconds".ToLocalization()));
+                    //stringBuilder.Append(string.Format("{0}{1}", t.Seconds, "Seconds".ToLocalization()));
                 }
                 //Min
                 else
@@ -149,5 +153,15 @@ public class PageBattlePass : LobbyPageBase
             SeasonOut.SetActive(!isResult);
 
         return isResult;
+    }
+
+    public void OnClickToolTip()
+    {
+        BattlePassToolTip.SetActive(true);
+    }
+
+    public void OnCloseToolTip()
+    {
+        BattlePassToolTip.SetActive(false);
     }
 }

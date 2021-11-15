@@ -49,8 +49,6 @@ public class UnitBase : MonoBehaviour
 
         if (Rigidbody2D != null)
             Rigidbody2D.gravityScale = 0;
-        if (Collider2D != null)
-            Collider2D.enabled = false;
 
         Texture.sprite = GetSprite(unit_key);
         transform.localScale = Vector3.zero;
@@ -98,6 +96,8 @@ public class UnitBase : MonoBehaviour
 
     public void Drop(bool isAddForce = false)
     {
+        Utils.SetLayer("Unit", gameObject);
+
         eUnitDropState = eUnitDropState.Falling;
         if (Rigidbody2D != null)
             Rigidbody2D.gravityScale = 2;

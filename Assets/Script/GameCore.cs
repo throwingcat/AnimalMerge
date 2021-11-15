@@ -250,7 +250,7 @@ public class GameCore : MonoBehaviour
         unit.transform.SetParent(UnitParent);
         unit.transform.LocalReset();
         unit.transform.SetAsLastSibling();
-        Utils.SetLayer(UnitLayer, unit.gameObject);
+        Utils.SetLayer(UnitReadyLayer, unit.gameObject);
 
         var component = unit.GetComponent<UnitBase>();
 
@@ -745,6 +745,7 @@ public class GameCore : MonoBehaviour
     }
 
     protected virtual int UnitLayer => LayerMask.NameToLayer("Unit");
+    protected int UnitReadyLayer => LayerMask.NameToLayer("Unit Ready");
 
     #endregion
 
@@ -883,6 +884,9 @@ public class GameCore : MonoBehaviour
     private bool isPress;
     private Vector2 _touchBegin = Vector2.zero;
 
+    public GuideUnit GuideUnit = null;
+    public ContactFilter2D ContactFilter2D;
+
     protected virtual void InputUpdate()
     {
         if (Input.GetMouseButtonDown(0))
@@ -910,6 +914,49 @@ public class GameCore : MonoBehaviour
 
         if (isPress && Input.GetMouseButton(0) == false)
             OnRelease();
+
+        //Guide Unit Tracking
+        if (CurrentReadyUnit != null && PanelIngame.InputActiveSkill.isActive == false)
+        {
+            if (GuideUnit == null)
+            {
+                var prefab = ResourceManager.Instance.LoadPrefab("Units/GuideUnit");
+                var go = Instantiate(prefab);
+                GuideUnit = go.GetComponent<GuideUnit>();
+                GuideUnit.transform.SetParent(CurrentReadyUnit.transform.parent);
+                GuideUnit.transform.LocalReset();
+                GuideUnit.transform.localScale = CurrentReadyUnit.transform.localScale;
+            }
+
+            RaycastHit2D[] result = new RaycastHit2D[1];
+            if (GuideUnit != null)
+            {
+                if (GuideUnit.gameObject.activeSelf == false)
+                    GuideUnit.gameObject.SetActive(true);
+
+                GuideUnit.transform.localScale = CurrentReadyUnit.transform.localScale;
+
+                Vector2 pos = CurrentReadyUnit.transform.localPosition;
+                GuideUnit.Set(CurrentReadyUnit.Info.Key);
+                GuideUnit.transform.localPosition = pos;
+
+                CurrentReadyUnit.Collider2D.Cast(Vector2.down, ContactFilter2D, result);
+                if (result[0] == true)
+                {
+                    pos = GuideUnit.transform.position;
+                    pos.y = result[0].point.y;
+                    GuideUnit.transform.position = pos;
+                    pos = GuideUnit.transform.localPosition;
+                    pos.y += GuideUnit.transform.localScale.y;
+                    GuideUnit.transform.localPosition = pos;
+                }
+            }
+        }
+        else
+        {
+            if (GuideUnit != null && GuideUnit.gameObject.activeSelf)
+                GuideUnit.gameObject.SetActive(false);
+        }
     }
 
     protected void OnPress()
@@ -925,10 +972,10 @@ public class GameCore : MonoBehaviour
         if (IsPlayer && PanelIngame.InputActiveSkill.isActive)
         {
             bool isActive = 0.8f <= PanelIngame.InputActiveSkill.ActiveProgress;
-            if(isActive)
+            if (isActive)
                 UseSkill();
             PanelIngame.InputActiveSkill.Off();
-            
+
             return;
         }
 

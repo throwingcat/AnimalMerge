@@ -33,19 +33,19 @@ public class IngameDynamicCanvas : MonoBehaviour
         {
             PlayerPortrait.Play(combo, () =>
             {
-                PlayerSide.SetActive(false);
+                //PlayerSide.SetActive(false);
             });
-            PlayerSide.SetActive(false);
-            PlayerSide.SetActive(true);
+            //PlayerSide.SetActive(false);
+            //PlayerSide.SetActive(true);
         }
         else
         {
             EnemyPortrait.Play(combo, () =>
             {
-                EnemySide.SetActive(false);
+                //EnemySide.SetActive(false);
             });
-            EnemySide.SetActive(false);
-            EnemySide.SetActive(true);
+            // EnemySide.SetActive(false);
+            // EnemySide.SetActive(true);
         }
     }
 

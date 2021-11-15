@@ -118,6 +118,9 @@ public class QuestInfo
 
     public class QuestSlot
     {
+        //시작 카운트
+        public ulong StartCount;
+        
         //진행 카운트
         public ulong Count;
 
@@ -127,14 +130,13 @@ public class QuestInfo
         //퀘스트 키
         public string Key;
 
-
         //새로운 퀘스트 갱신 시간
         public DateTime RefreshTime;
 
         //퀘스트 만료
         [JsonIgnore] public bool isExpire => RefreshTime == null ? false : GameManager.GetTime() < RefreshTime;
         [JsonIgnore] public Quest Sheet => Key.ToTableData<Quest>();
-        [JsonIgnore] public bool isClear => Sheet != null && (ulong)Sheet.Count <= Count;
+        [JsonIgnore] public bool isClear => Sheet != null && (ulong)Sheet.Count <= StartCount - Count;
 
         [JsonIgnore]
         public string DescriptionText

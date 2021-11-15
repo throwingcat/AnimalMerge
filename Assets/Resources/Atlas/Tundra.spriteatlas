@@ -26,13 +26,13 @@ SpriteAtlas:
       padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
-      enableRotation: 1
-      enableTightPacking: 1
+      enableRotation: 0
+      enableTightPacking: 0
     secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 73ba5d71cd604cc48b81b4418798cbda, type: 3}
-    totalSpriteSurfaceArea: 1040000
+    totalSpriteSurfaceArea: 1121792
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -43,9 +43,11 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 751c2c617b923ad4b805086edff6edc0, type: 3}
   - {fileID: 21300000, guid: 87d9b313ed286ed4c8dc3662e41567bb, type: 3}
   - {fileID: 21300000, guid: f1f80726005ac3f459cfe135f971bc0e, type: 3}
+  - {fileID: 21300000, guid: 3a876366a18ba044cbaed56895f4534e, type: 3}
   - {fileID: 21300000, guid: b7b25a7766d4d3546b9be01692f411c5, type: 3}
   - {fileID: 21300000, guid: 179529ca8bcb1c54e9be84d278d0f56e, type: 3}
   - {fileID: 21300000, guid: 1beb846dee0746e4f8cd0152d6f9b135, type: 3}
+  - {fileID: 21300000, guid: ba65c4de7848cf04f9239338e6923771, type: 3}
   - {fileID: 21300000, guid: 4074f72fdc2402b4b9d1d314d1a2b925, type: 3}
   m_PackedSpriteNamesToIndex:
   - tundra_07
@@ -53,9 +55,11 @@ SpriteAtlas:
   - tundra_08
   - tundra_01
   - tundra_09
+  - portrait_tundra_face
   - tundra_05
   - tundra_06
   - tundra_04
+  - portrait_tundra_body
   - tundra_03
   m_RenderDataMap: {}
   m_Tag: Tundra

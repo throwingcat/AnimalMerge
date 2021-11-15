@@ -75,7 +75,7 @@ namespace Violet
                 case ePRESS_TYPE.Scale:
                     if (_tweener != null && _tweener.IsActive())
                         _tweener.Kill();
-                    _tweener = _rectTrn.ButtonPressPlay();
+                    _tweener = _rectTrn.ButtonPressPlay(scaleTarget);
                     break;
             }
 
