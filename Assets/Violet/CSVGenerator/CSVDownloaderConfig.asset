@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f741416313077b84db6495c052455def, type: 3}
   m_Name: CSVDownloaderConfig
   m_EditorClassIdentifier: 
-  VersionURL: https://shdd.synology.me/Simon/CMD Sheet/version.json
-  DownloadProgress: 1
-  ClassCreateFolder: {fileID: 102900000, guid: 35b7c905ae4143549a448b575c19e6c0, type: 3}
+  DownloadProgress: 0
+  ClassCreateFolder: {fileID: 0}
   GenerateProgress: 0
