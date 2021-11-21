@@ -1,12 +1,15 @@
 using System.Collections.Generic;
 using Define;
 using UnityEngine;
+using Violet;
 
 public class ActiveShake : ActiveBase
 {
     public ActiveShake(GameCore core) : base(core)
     {
     }
+
+    private VFXPlayer _vfx;
 
     protected override bool RunProcess()
     {
@@ -42,6 +45,20 @@ public class ActiveShake : ActiveBase
                 torque += EnvironmentValue.SHAKE_SKILL_TORQUE_MIN_POWER;
 
             unit.AddTorque(torque);
+        }
+
+        if (Core.IsPlayer)
+        {
+            if (_vfx == null)
+            {
+                var prefab = ResourceManager.Instance.LoadPrefab("FX_Prefabs/GameFX_Prefab/VFX@ActiveShake");
+                _vfx = GameObject.Instantiate(prefab).GetComponent<VFXPlayer>();
+                _vfx.transform.SetParent(GameManager.Instance.GameCore.PlayerScreen.transform);
+                _vfx.transform.LocalReset();
+                _vfx.gameObject.SetActive(false);
+            }
+
+            _vfx.Play(2f, null);
         }
 
         return true;
