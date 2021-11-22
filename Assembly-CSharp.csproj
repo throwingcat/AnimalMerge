@@ -107,6 +107,7 @@
      <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\RotateToMouseScript.cs" />
      <Compile Include="Assets\Script\PartBase.cs" />
      <Compile Include="Assets\Script\UI\LoadingCurtain.cs" />
+     <Compile Include="Assets\Script\Uitls\VFXPlayer.cs" />
      <Compile Include="Assets\Script\Data\BattlePassSeason.cs" />
      <Compile Include="Assets\Script\Server\DBUnitInventory.cs" />
      <Compile Include="Assets\Violet\Common\StringUtils.cs" />
@@ -275,7 +276,6 @@
      <Compile Include="Assets\Script\Uitls\ScrollRectDisableDrag.cs" />
      <Compile Include="Assets\Script\PlayerData\ChestInventory.cs" />
      <Compile Include="Assets\Script\UI\PartSimpleNotice.cs" />
-     <Compile Include="Assets\Script\Uitls\VFXPlayer.cs" />
      <None Include="Assets\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\Hovl Studio\Fantastic cartoon VFX\Shaders\SlashOld.shader" />

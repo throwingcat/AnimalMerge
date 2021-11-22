@@ -30,15 +30,20 @@ public class ActiveBase
     public void Run()
     {
         if (Point < EnvironmentValue.SKILL_CHARGE_MAX_VALUE) return;
-        if (RunProcess())
+        if (Active())
         {
             PlayerBattleTracker.Update(PlayerTracker.USE_SKILL, 1);
             Point = 0;
         }
     }
 
-    protected virtual bool RunProcess()
+    protected virtual bool Active()
     {
         return true;
+    }
+
+    protected virtual IEnumerator Process()
+    {
+        yield break;
     }
 }

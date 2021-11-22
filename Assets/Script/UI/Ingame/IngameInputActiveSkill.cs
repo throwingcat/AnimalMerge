@@ -6,7 +6,8 @@ public class IngameInputActiveSkill : MonoBehaviour
 {
     public RectTransform RectTransform;
     public RectTransform ProgressImage;
-    
+
+    public SlicedFilledImage Progress;
     private Vector2 _touchBegin;
     public bool isActive = false;
     public float ActiveProgress = 0f;
@@ -24,6 +25,7 @@ public class IngameInputActiveSkill : MonoBehaviour
                 //Utils.ScreenToCanvas( UIManager.Instance.GetCanvas(CanvasTag.eCanvasTag.Main),_touchBegin,ref RectTransform);
                 gameObject.SetActive(true);   
                 ActiveProgress = 0f;
+                Progress.fillAmount = 0f;
                 ProgressImage.sizeDelta = Vector2.one * MIN_SIZE;
             }
         }
@@ -35,6 +37,7 @@ public class IngameInputActiveSkill : MonoBehaviour
         isActive = false;
         _touchBegin = Vector2.zero;
         ActiveProgress = 0f;
+        Progress.fillAmount = 0f;
     }
 
     private float RANGE = 350f;
@@ -47,6 +50,7 @@ public class IngameInputActiveSkill : MonoBehaviour
             var current = Utils.GetTouchPoint();
             var value = current.y - _touchBegin.y;
             ActiveProgress =  value / RANGE;
+            Progress.fillAmount = ActiveProgress;
             ProgressImage.sizeDelta = Vector2.one * Mathf.Lerp(MIN_SIZE, MAX_SIZE, ActiveProgress);
         }
     }

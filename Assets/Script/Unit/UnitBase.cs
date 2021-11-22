@@ -119,7 +119,7 @@ public class UnitBase : MonoBehaviour
 
     public void AddForce(Vector2 power)
     {
-        Rigidbody2D.AddRelativeForce(power);
+        Rigidbody2D.AddForce(power);
     }
 
     public void AddTorque(float power)
