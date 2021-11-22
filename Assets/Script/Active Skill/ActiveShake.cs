@@ -49,7 +49,7 @@ public class ActiveShake : ActiveBase
             _vfx.Play(5f, null);
         }
 
-        float duration = 3f;
+        float duration = 1.5f;
         float elapsed = 0f;
         while (elapsed < duration)
         {

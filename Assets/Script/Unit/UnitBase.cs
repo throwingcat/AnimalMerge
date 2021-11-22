@@ -165,4 +165,10 @@ public class UnitBase : MonoBehaviour
     {
         GameManager.DelayInvokeCancel(_dropInvokeGUID);
     }
+
+    public virtual void FixedUpdate()
+    {
+        if (transform.localPosition.y < -940f)
+            transform.localPosition = new Vector3(transform.localPosition.x, -940f, transform.localPosition.z);
+    }
 }

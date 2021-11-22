@@ -15,4 +15,6 @@ public class SyncUnitBase : UnitBase
         transform.localScale = Vector3.one * (float)(EnvironmentValue.UNIT_BASE_SIZE * Sheet.size);
         return this;
     }
+
+    public override void FixedUpdate() { }
 }
