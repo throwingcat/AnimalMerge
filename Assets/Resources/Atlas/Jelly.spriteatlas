@@ -38,8 +38,8 @@ SpriteAtlas:
       padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
-      enableRotation: 1
-      enableTightPacking: 1
+      enableRotation: 0
+      enableTightPacking: 0
     secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
@@ -62,15 +62,15 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 9bedbd7f6764fa242acc6703ddd6e7ec, type: 3}
   m_PackedSpriteNamesToIndex:
   - portrait_slime_body
-  - Slime_09
-  - Slime_07
-  - Slime_03
-  - Slime_08
-  - Slime_04
-  - Slime_01
-  - Slime_06
-  - Slime_02
-  - Slime_05
+  - slime_09
+  - slime_07
+  - slime_03
+  - slime_08
+  - slime_04
+  - slime_01
+  - slime_06
+  - slime_02
+  - slime_05
   - portrait_slime_face
   m_RenderDataMap: {}
   m_Tag: Jelly
