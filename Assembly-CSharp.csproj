@@ -101,7 +101,7 @@
      <Compile Include="Assets\Script\TextPreset.cs" />
      <Compile Include="Assets\Violet\External Asset\SUI\SUIScrollSnap.cs" />
      <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\Common\MaterialCache.cs" />
-     <Compile Include="Assets\Script\PlayerData\PlayerInfo.cs" />
+     <Compile Include="Assets\Script\PlayerData\PlayerInfoManager.cs" />
      <Compile Include="Assets\Script\Data\Unit.cs" />
      <Compile Include="Assets\Script\Unit\GuideUnit.cs" />
      <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\RotateToMouseScript.cs" />

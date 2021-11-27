@@ -16,9 +16,9 @@ namespace Server
         {
             var param = new Param();
 
-            PlayerInfo.Instance.Refresh();
+            PlayerInfoManager.Instance.Refresh();
 
-            string json = JsonConvert.SerializeObject(PlayerInfo.Instance);
+            string json = JsonConvert.SerializeObject(PlayerInfoManager.Instance);
             param.Add("Json",json);
 
             if (InDate.IsNullOrEmpty())
@@ -52,14 +52,14 @@ namespace Server
                     if (bro.GetReturnValuetoJSON()["rows"].Count <= 0)
                     {
                         //최초 설정
-                        PlayerInfo.Instance.GUID = GameManager.Instance.GUID;
-                        PlayerInfo.Instance.NickName = Backend.UserNickName;
-                        PlayerInfo.Instance.Level = 1;
-                        PlayerInfo.Instance.Exp = 0;
-                        PlayerInfo.Instance.RankScore = 0;
-                        PlayerInfo.Instance.SelectHero ="Cat";
-                        PlayerInfo.Instance.RewardInfoJson = "";
-                        PlayerInfo.Instance.isPurchasePremium = false;
+                        PlayerInfoManager.Instance.GUID = GameManager.Instance.GUID;
+                        PlayerInfoManager.Instance.NickName = Backend.UserNickName;
+                        PlayerInfoManager.Instance.Level = 1;
+                        PlayerInfoManager.Instance.Exp = 0;
+                        PlayerInfoManager.Instance.RankScore = 0;
+                        PlayerInfoManager.Instance.SelectHero ="Cat";
+                        PlayerInfoManager.Instance.RewardInfoJson = "";
+                        PlayerInfoManager.Instance.isPurchasePremium = false;
                     }
                     else
                     {
@@ -69,10 +69,10 @@ namespace Server
                             var inDate = row["inDate"]["S"].ToString();
                             var json = row["Json"]["S"].ToString();
                             InDate = inDate;
-                            PlayerInfo.Instance.Update(json);
+                            PlayerInfoManager.Instance.Update(json);
                         }
 
-                        PlayerInfo.Instance.OnUpdate();
+                        PlayerInfoManager.Instance.OnUpdate();
                     }
                 }
                 onFinishDownload?.Invoke();

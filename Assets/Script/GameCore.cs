@@ -33,7 +33,7 @@ public class GameCore : MonoBehaviour
 
         if (IsPlayer)
         {
-            PlayerHeroKey = PlayerInfo.Instance.SelectHero;
+            PlayerHeroKey = PlayerInfoManager.Instance.SelectHero;
         }
 
         isReady = false;
@@ -128,8 +128,8 @@ public class GameCore : MonoBehaviour
         //플레이어 정보 전송
         SyncManager.PlayerInfo playerInfo = new SyncManager.PlayerInfo();
         playerInfo.HeroKey = PlayerHeroKey;
-        playerInfo.MMR = PlayerInfo.Instance.RankScore;
-        playerInfo.Name = PlayerInfo.Instance.NickName;
+        playerInfo.MMR = PlayerInfoManager.Instance.RankScore;
+        playerInfo.Name = PlayerInfoManager.Instance.NickName;
         SyncManager.Request(playerInfo);
 
         //게임 카메라 루트 활성화
@@ -154,7 +154,7 @@ public class GameCore : MonoBehaviour
         PanelIngame.RefreshPassiveSkillGauge(0f);
         PanelIngame.SetActiveWaitPlayer(true);
         PanelIngame.SetActiveCountDown(false);
-        PanelIngame.SetPlayerPortrait(PlayerInfo.Instance.NickName, PlayerHeroKey.ToTableData<Hero>());
+        PanelIngame.SetPlayerPortrait(PlayerInfoManager.Instance.NickName, PlayerHeroKey.ToTableData<Hero>());
         RefreshBadBlockUI();
         ingameDynamicCanvas.Initialize();
 
@@ -1250,7 +1250,7 @@ public class GameCore : MonoBehaviour
             //트랙커 정보 
             packet.hash.Add("tracker_json", JsonConvert.SerializeObject(PlayerBattleTracker.Tracker));
 
-            var beforeScore = PlayerInfo.Instance.RankScore;
+            var beforeScore = PlayerInfoManager.Instance.RankScore;
             NetworkManager.Instance.Request(packet, res =>
             {
                 if (res.hash.ContainsKey("first_clear"))

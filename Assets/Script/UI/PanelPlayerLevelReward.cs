@@ -14,14 +14,14 @@ public class PanelPlayerLevelReward : SUIPanel
 
     public void Refresh()
     {
-        var list = PlayerInfo.Instance.GetRewardInfos();
+        var list = PlayerInfoManager.Instance.GetRewardInfos();
         var items = new List<CellPlayerLevelReward.Data>();
         for (var i = 0; i < list.Count; i++)
             items.Add(new CellPlayerLevelReward.Data
             {
-                isLock = PlayerInfo.Instance.isPurchasePremium == false,
+                isLock = PlayerInfoManager.Instance.isPurchasePremium == false,
                 Sheet = list[i].Sheet,
-                Level = PlayerInfo.Instance.Level,
+                Level = PlayerInfoManager.Instance.Level,
                 NextLevel = i == list.Count - 1 ? 0 : list[i + 1].Sheet.level,
                 PrevLevel = i == 0 ? 0 : list[i - 1].Sheet.level
             });
@@ -36,7 +36,7 @@ public class PanelPlayerLevelReward : SUIPanel
 
         var index = items.Count - 1;
         for (var i = 0; i < items.Count; i++)
-            if (items[i].Sheet.level == PlayerInfo.Instance.Level)
+            if (items[i].Sheet.level == PlayerInfoManager.Instance.Level)
             {
                 index = i;
                 break;

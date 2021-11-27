@@ -1,43 +1,46 @@
-using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using SheetData;
 using Violet;
 
-public class PlayerInfo
+public class PlayerInfoManager
 {
     #region Instance
-    private static PlayerInfo _instance;
-    public static PlayerInfo Instance
+
+    private static PlayerInfoManager _instance;
+    public static PlayerInfoManager Instance
     {
         get
         {
             if (_instance == null)
-                _instance = new PlayerInfo();
+                _instance = new PlayerInfoManager();
             return _instance;
         }
     }
+
     #endregion
     
-    public string GUID;
-    public int Level;
+    [JsonIgnore]
+    private readonly List<PlayerLevelRewardInfo> _playerLevelRewardInfos = new List<PlayerLevelRewardInfo>();
+
     public int Exp;
+
+    public string GUID;
+    public bool isPurchasePremium;
+    public int Level;
     public string NickName;
     public int RankScore;
-    public string SelectHero;
     public string RewardInfoJson;
-    public bool isPurchasePremium;
-
-    [JsonIgnore]
-    private List<PlayerLevelRewardInfo> _playerLevelRewardInfos = new List<PlayerLevelRewardInfo>();
-
+    public string SelectHero;
+    public int ChestPoint = 0;
     public void Update(string json)
     {
-        _instance = JsonConvert.DeserializeObject<PlayerInfo>(json);
-    } 
+        _instance = JsonConvert.DeserializeObject<PlayerInfoManager>(json);
+    }
+
     public void Refresh()
     {
-        List<PlayerLevelRewardInfo> result = new List<PlayerLevelRewardInfo>();
+        var result = new List<PlayerLevelRewardInfo>();
         foreach (var info in _playerLevelRewardInfos)
         {
             if (info.isReceivedPassReward == false && info.isReceivedPremiumReward) continue;
@@ -50,31 +53,29 @@ public class PlayerInfo
 
     public void OnUpdate()
     {
-        List<PlayerLevelRewardInfo> infos = new List<PlayerLevelRewardInfo>();
+        var infos = new List<PlayerLevelRewardInfo>();
         if (RewardInfoJson.IsNullOrEmpty() == false)
             infos = JsonConvert.DeserializeObject<List<PlayerLevelRewardInfo>>(RewardInfoJson);
 
         var sheet = TableManager.Instance.GetTable<PlayerLevel>();
         foreach (var row in sheet)
         {
-            bool isInsert = false;
+            var isInsert = false;
             foreach (var info in infos)
-            {
                 if (info.Key == row.Key)
                 {
                     _playerLevelRewardInfos.Add(info);
                     isInsert = true;
                     break;
                 }
-            }
 
             if (isInsert) continue;
 
-            _playerLevelRewardInfos.Add(new PlayerLevelRewardInfo()
+            _playerLevelRewardInfos.Add(new PlayerLevelRewardInfo
             {
                 Key = row.Key,
                 isReceivedPassReward = false,
-                isReceivedPremiumReward = false,
+                isReceivedPremiumReward = false
             });
         }
     }
@@ -89,7 +90,6 @@ public class PlayerInfo
         var rewards = new List<ItemInfo>();
 
         foreach (var info in _playerLevelRewardInfos)
-        {
             if (info.Key == key)
             {
                 if (info.isReceivedPassReward == false)
@@ -104,14 +104,13 @@ public class PlayerInfo
                     info.isReceivedPremiumReward = true;
                 }
             }
-        }
 
         return rewards;
     }
 
     public bool HasReward(string key)
     {
-        Dictionary<string, PlayerLevelRewardInfo> dictionary = new Dictionary<string, PlayerLevelRewardInfo>();
+        var dictionary = new Dictionary<string, PlayerLevelRewardInfo>();
 
         foreach (var info in _playerLevelRewardInfos)
             dictionary.Add(info.Key, info);
@@ -133,7 +132,7 @@ public class PlayerInfo
     public void GetExp(int exp)
     {
         if (isMaxLevel()) return;
-        
+
         Exp += exp;
         var sheet = GetLevelSheet();
         if (sheet.exp <= Exp)
@@ -160,21 +159,18 @@ public class PlayerInfo
     {
         var sheet = GetLevelSheet();
         if (sheet != null)
-        {
             if (0 < sheet.exp)
                 return false;
-        }
 
         return true;
     }
 
-    
 
     public class PlayerLevelRewardInfo
     {
-        public string Key;
         public bool isReceivedPassReward;
         public bool isReceivedPremiumReward;
+        public string Key;
 
         [JsonIgnore] public PlayerLevel Sheet => Key.ToTableData<PlayerLevel>();
         [JsonIgnore] public ItemInfo PassReward => Sheet?.Reward;

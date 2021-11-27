@@ -21,7 +21,7 @@ public class LobbyPageMain : LobbyPageBase
     {
         base.OnShow();
 
-        RankScore.text = PlayerInfo.Instance.RankScore.ToString();
+        RankScore.text = PlayerInfoManager.Instance.RankScore.ToString();
         foreach (var chest in Chests)
             chest.OnUpdate();
         
@@ -81,7 +81,7 @@ public class LobbyPageMain : LobbyPageBase
 
     public void Refresh()
     {
-        var hero = PlayerInfo.Instance.SelectHero.ToTableData<Hero>();
+        var hero = PlayerInfoManager.Instance.SelectHero.ToTableData<Hero>();
         HeroFace.sprite = hero.face.ToSprite(hero.atlas);
     }
     

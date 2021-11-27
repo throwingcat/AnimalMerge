@@ -47,23 +47,23 @@ public class PartSimpleValueUpdate : MonoBehaviour
             switch (Type)
             {
                 case eType.PlayerLevel:
-                    if (PlayerInfo.Instance != null)
-                        _currentValue = PlayerInfo.Instance.Level;
+                    if (PlayerInfoManager.Instance != null)
+                        _currentValue = PlayerInfoManager.Instance.Level;
                     break;
                 case eType.PlayerExp:
-                    if (PlayerInfo.Instance != null)
+                    if (PlayerInfoManager.Instance != null)
                     {
-                        if (PlayerInfo.Instance.isMaxLevel())
+                        if (PlayerInfoManager.Instance.isMaxLevel())
                         {
                             _currentValue = 100;
                         }
                         else
                         {
-                            var sheet = PlayerInfo.Instance.GetLevelSheet();
+                            var sheet = PlayerInfoManager.Instance.GetLevelSheet();
                             if (sheet != null)
                             {
                                 var max = sheet.exp;
-                                _currentValue = (int) (Mathf.InverseLerp(0, max, PlayerInfo.Instance.Exp) * 100);
+                                _currentValue = (int) (Mathf.InverseLerp(0, max, PlayerInfoManager.Instance.Exp) * 100);
                             }
                         }
                     }

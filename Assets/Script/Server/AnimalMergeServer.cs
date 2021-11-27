@@ -184,7 +184,7 @@ namespace Server
         public void ReceivePlayerLevelReward(PacketBase packet)
         {
             var key = packet.hash["level_key"].ToString();
-            var rewards = PlayerInfo.Instance.ReceiveReward(key);
+            var rewards = PlayerInfoManager.Instance.ReceiveReward(key);
             GetRewards(rewards, () =>
             {
                 UpdateDB<DBBattlePassInfo>(() =>
@@ -205,7 +205,7 @@ namespace Server
         private void ChangeHero(PacketBase packet)
         {
             var hero = packet.hash["hero"].ToString();
-            PlayerInfo.Instance.SelectHero = hero;
+            PlayerInfoManager.Instance.SelectHero = hero;
             UpdateDB<DBPlayerInfo>(() => { SendPacket(packet); });
         }
 
@@ -391,16 +391,16 @@ namespace Server
         private void BattleWinProcess_PlayerInfo(Action onFinish)
         {
             //플레이어 정보 갱신            
-            PlayerInfo.Instance.RankScore += 5;
-            PlayerInfo.Instance.GetExp(15);
+            PlayerInfoManager.Instance.RankScore += 5;
+            PlayerInfoManager.Instance.GetExp(15);
             UpdateDB<DBPlayerInfo>(() => { onFinish?.Invoke(); });
         }
 
         private void BattleLoseProcess_PlayerInfo(Action onFinish)
         {
             //플레이어 정보 갱신            
-            PlayerInfo.Instance.RankScore += 3;
-            PlayerInfo.Instance.GetExp(7);
+            PlayerInfoManager.Instance.RankScore += 3;
+            PlayerInfoManager.Instance.GetExp(7);
             UpdateDB<DBPlayerInfo>(() => { onFinish?.Invoke(); });
         }
 

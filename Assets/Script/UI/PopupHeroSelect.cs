@@ -76,7 +76,7 @@ public class PopupHeroSelect : SUIPanel
             index++;
         }
 
-        if (_currentHero.key == PlayerInfo.Instance.SelectHero)
+        if (_currentHero.key == PlayerInfoManager.Instance.SelectHero)
         {
             Select.SetActive(false);
             Selected.SetActive(true);
@@ -95,8 +95,8 @@ public class PopupHeroSelect : SUIPanel
         packet.hash.Add("hero",_currentHero.key);
         NetworkManager.Instance.Request(packet, (res) =>
         {
-            PlayerInfo.Instance.SelectHero = res.hash["hero"].ToString();
-            Hero result = PlayerInfo.Instance.SelectHero.ToTableData<Hero>();
+            PlayerInfoManager.Instance.SelectHero = res.hash["hero"].ToString();
+            Hero result = PlayerInfoManager.Instance.SelectHero.ToTableData<Hero>();
             UpdateHero(result);
             onUpdateSelectedHero?.Invoke();
         });

@@ -90,7 +90,7 @@ public class CellPlayerLevelReward : MonoBehaviour, IScrollCell
                     ReceivePremiumReward.SetActive(true);
             }
 
-        if (Sheet.level <= PlayerInfo.Instance.Level)
+        if (Sheet.level <= PlayerInfoManager.Instance.Level)
         {
             var isEnable = ReceiveReward.activeSelf == false || ReceivePremiumReward.activeSelf == false;
             ReceiveRewardButton.SetActive(isEnable);
@@ -103,9 +103,9 @@ public class CellPlayerLevelReward : MonoBehaviour, IScrollCell
 
     public void OnClickReceiveReward()
     {
-        if (Sheet.level <= PlayerInfo.Instance.Level)
+        if (Sheet.level <= PlayerInfoManager.Instance.Level)
         {
-            if (PlayerInfo.Instance.HasReward(Sheet.key) == false) return;
+            if (PlayerInfoManager.Instance.HasReward(Sheet.key) == false) return;
 
             var packet = new PacketBase();
             packet.PacketType = ePACKET_TYPE.RECEIVE_PLAYER_LEVEL_REWARD;
