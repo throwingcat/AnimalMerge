@@ -21,7 +21,7 @@ public class PanelTitle : SUIPanel
             slider.value = x;
             
             var pos = Mathf.Lerp(0, loadingGauge.rect.width, x);
-            guide.anchoredPosition= new Vector2(
+            guide.anchoredPosition = new Vector2(
                 loadingGauge.rect.x + pos,
                 guide.anchoredPosition.y);
             
