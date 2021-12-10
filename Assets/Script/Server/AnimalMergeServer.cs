@@ -184,7 +184,7 @@ namespace Server
         public void ReceivePlayerLevelReward(PacketBase packet)
         {
             var key = packet.hash["level_key"].ToString();
-            var rewards = PlayerInfoManager.Instance.ReceiveReward(key);
+            var rewards = GetDB<DBPlayerInfo>().PlayerInfo.ReceiveReward(key);
             GetRewards(rewards, () =>
             {
                 UpdateDB<DBBattlePassInfo>(() =>
@@ -205,7 +205,8 @@ namespace Server
         private void ChangeHero(PacketBase packet)
         {
             var hero = packet.hash["hero"].ToString();
-            PlayerInfoManager.Instance.SelectHero = hero;
+            
+            GetDB<DBPlayerInfo>().PlayerInfo.elements.SelectHero = hero;
             UpdateDB<DBPlayerInfo>(() => { SendPacket(packet); });
         }
 
@@ -342,6 +343,8 @@ namespace Server
 
         private void BattleWinProcess_Reward(Action onFinish)
         {
+            onFinish?.Invoke();
+            return;   
             //새로운 상자 추가
             var emptySlot = ChestInventory.Instance.GetEmptySlot();
             if (emptySlot != null)
@@ -391,16 +394,19 @@ namespace Server
         private void BattleWinProcess_PlayerInfo(Action onFinish)
         {
             //플레이어 정보 갱신            
-            PlayerInfoManager.Instance.RankScore += 5;
-            PlayerInfoManager.Instance.GetExp(15);
+            var PlayerInfo = GetDB<DBPlayerInfo>().PlayerInfo;
+            PlayerInfo.elements.RankScore += 5;
+            PlayerInfo.elements.ChestPoint += 30;
+            PlayerInfo.GetExp(15);
             UpdateDB<DBPlayerInfo>(() => { onFinish?.Invoke(); });
         }
 
         private void BattleLoseProcess_PlayerInfo(Action onFinish)
         {
             //플레이어 정보 갱신            
-            PlayerInfoManager.Instance.RankScore += 3;
-            PlayerInfoManager.Instance.GetExp(7);
+            var PlayerInfo = GetDB<DBPlayerInfo>().PlayerInfo;
+            PlayerInfo.elements.RankScore += 3;
+            PlayerInfo.GetExp(7);
             UpdateDB<DBPlayerInfo>(() => { onFinish?.Invoke(); });
         }
 

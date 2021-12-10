@@ -5,6 +5,7 @@ public class PanelPlayerLevelReward : SUIPanel
 {
     public SUILoopScroll ScrollView;
 
+    public PlayerInfo PlayerInfo => PlayerDataManager.Get<PlayerInfo>();
     protected override void OnShow()
     {
         base.OnShow();
@@ -14,14 +15,16 @@ public class PanelPlayerLevelReward : SUIPanel
 
     public void Refresh()
     {
-        var list = PlayerInfoManager.Instance.GetRewardInfos();
+        var playerInfo = PlayerDataManager.Get<PlayerInfo>();
+
+        var list = playerInfo.LevelRewardInfos;
         var items = new List<CellPlayerLevelReward.Data>();
         for (var i = 0; i < list.Count; i++)
             items.Add(new CellPlayerLevelReward.Data
             {
-                isLock = PlayerInfoManager.Instance.isPurchasePremium == false,
+                isLock = playerInfo.elements.isPurchasePremium == false,
                 Sheet = list[i].Sheet,
-                Level = PlayerInfoManager.Instance.Level,
+                Level = playerInfo.elements.Level,
                 NextLevel = i == list.Count - 1 ? 0 : list[i + 1].Sheet.level,
                 PrevLevel = i == 0 ? 0 : list[i - 1].Sheet.level
             });
@@ -36,7 +39,7 @@ public class PanelPlayerLevelReward : SUIPanel
 
         var index = items.Count - 1;
         for (var i = 0; i < items.Count; i++)
-            if (items[i].Sheet.level == PlayerInfoManager.Instance.Level)
+            if (items[i].Sheet.level == playerInfo.elements.Level)
             {
                 index = i;
                 break;

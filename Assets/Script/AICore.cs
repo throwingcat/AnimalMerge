@@ -30,7 +30,7 @@ public class AICore : GameCore
 
         if (GameManager.Instance.isSinglePlay && GameManager.Instance.isAdventure == false)
         {
-            MMR = PlayerInfoManager.Instance.RankScore;
+            MMR = PlayerDataManager.Get<PlayerInfo>().elements.RankScore;
             ai_name = string.Format("AI_{0}", Random.Range(1000000, 9999999));
         }
 

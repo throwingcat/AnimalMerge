@@ -7,6 +7,7 @@ namespace Server
 {
     public class DBPlayerInfo : DBBase
     {
+        public PlayerInfo PlayerInfo = new PlayerInfo();
         public override string DB_KEY()
         {
             return "player_info";
@@ -16,9 +17,7 @@ namespace Server
         {
             var param = new Param();
 
-            PlayerInfoManager.Instance.Refresh();
-
-            string json = JsonConvert.SerializeObject(PlayerInfoManager.Instance);
+            string json = PlayerInfo.ToJson();
             param.Add("Json",json);
 
             if (InDate.IsNullOrEmpty())
@@ -52,14 +51,14 @@ namespace Server
                     if (bro.GetReturnValuetoJSON()["rows"].Count <= 0)
                     {
                         //최초 설정
-                        PlayerInfoManager.Instance.GUID = GameManager.Instance.GUID;
-                        PlayerInfoManager.Instance.NickName = Backend.UserNickName;
-                        PlayerInfoManager.Instance.Level = 1;
-                        PlayerInfoManager.Instance.Exp = 0;
-                        PlayerInfoManager.Instance.RankScore = 0;
-                        PlayerInfoManager.Instance.SelectHero ="Cat";
-                        PlayerInfoManager.Instance.RewardInfoJson = "";
-                        PlayerInfoManager.Instance.isPurchasePremium = false;
+                        PlayerInfo.elements.GUID = GameManager.Instance.GUID;
+                        PlayerInfo.elements.Nickname = Backend.UserNickName;
+                        PlayerInfo.elements.Level = 1;
+                        PlayerInfo.elements.Exp = 0;
+                        PlayerInfo.elements.RankScore = 0;
+                        PlayerInfo.elements.SelectHero ="Cat";
+                        PlayerInfo.elements.LevelRewardsJson = "";
+                        PlayerInfo.elements.isPurchasePremium = false;
                     }
                     else
                     {
@@ -69,10 +68,8 @@ namespace Server
                             var inDate = row["inDate"]["S"].ToString();
                             var json = row["Json"]["S"].ToString();
                             InDate = inDate;
-                            PlayerInfoManager.Instance.Update(json);
+                            PlayerInfo.OnUpdate(json);
                         }
-
-                        PlayerInfoManager.Instance.OnUpdate();
                     }
                 }
                 onFinishDownload?.Invoke();

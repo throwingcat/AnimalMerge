@@ -33,7 +33,8 @@ public class PopupGameResult : SUIPanel
 
         RankScoreRoot.SetActive(true);
 
-        int add = PlayerInfoManager.Instance.RankScore - beforeScore;
+        PlayerInfo playerInfo = PlayerDataManager.Get<PlayerInfo>();
+        int add = playerInfo.elements.RankScore - beforeScore;
         AddRankScoreText.text = string.Format("{0}{1}", add >= 0 ? "+" : "", add); 
         var score = beforeScore;
         DOTween.To(() => score, x =>
@@ -41,7 +42,7 @@ public class PopupGameResult : SUIPanel
             score = x;
             RankScoreText.text = Utils.ParseComma(score);
             IgnoreBackPress = false;
-        }, PlayerInfoManager.Instance.RankScore, 0.5f);
+        }, playerInfo.elements.RankScore, 0.5f);
     }
 
     public void OnClickExit()

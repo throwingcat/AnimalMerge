@@ -24,6 +24,7 @@ public class PartSimpleValueUpdate : MonoBehaviour
 
     public Text Value;
 
+    public PlayerInfo PlayerInfo = null;
     private void OnEnable()
     {
         isActive = true;
@@ -44,45 +45,50 @@ public class PartSimpleValueUpdate : MonoBehaviour
     {
         while (isActive)
         {
-            switch (Type)
+            if (PlayerInfo == null)
             {
-                case eType.PlayerLevel:
-                    if (PlayerInfoManager.Instance != null)
-                        _currentValue = PlayerInfoManager.Instance.Level;
-                    break;
-                case eType.PlayerExp:
-                    if (PlayerInfoManager.Instance != null)
-                    {
-                        if (PlayerInfoManager.Instance.isMaxLevel())
-                        {
-                            _currentValue = 100;
-                        }
-                        else
-                        {
-                            var sheet = PlayerInfoManager.Instance.GetLevelSheet();
-                            if (sheet != null)
-                            {
-                                var max = sheet.exp;
-                                _currentValue = (int) (Mathf.InverseLerp(0, max, PlayerInfoManager.Instance.Exp) * 100);
-                            }
-                        }
-                    }
-
-                    break;
-                case eType.Coin:
-                    if (Inventory.Instance != null)
-                        _currentValue = Inventory.Instance.GetAmount("Coin");
-                    break;
-                case eType.Jewel:
-                    if (Inventory.Instance != null)
-                        _currentValue = Inventory.Instance.GetAmount("Jewel");
-                    break;
+                if (PlayerDataManager.Instance != null)
+                    PlayerInfo = PlayerDataManager.Get<PlayerInfo>();
             }
-
-            if (_prevValue != _currentValue)
+            if (PlayerInfo != null)
             {
-                UpdateValue(_prevValue);
-                _prevValue = _currentValue;
+                switch (Type)
+                {
+                    case eType.PlayerLevel:
+                            _currentValue = PlayerInfo.elements.Level;
+                        break;
+                    case eType.PlayerExp:
+                            if (PlayerInfo.isMaxLevel())
+                            {
+                                _currentValue = 100;
+                            }
+                            else
+                            {
+                                var sheet = PlayerInfo.GetLevelSheet();
+                                if (sheet != null)
+                                {
+                                    var max = sheet.exp;
+                                    _currentValue =
+                                        (int) (Mathf.InverseLerp(0, max, PlayerInfo.elements.Exp) * 100);
+                                }
+                            }
+
+                        break;
+                    case eType.Coin:
+                        if (Inventory.Instance != null)
+                            _currentValue = Inventory.Instance.GetAmount("Coin");
+                        break;
+                    case eType.Jewel:
+                        if (Inventory.Instance != null)
+                            _currentValue = Inventory.Instance.GetAmount("Jewel");
+                        break;
+                }
+
+                if (_prevValue != _currentValue)
+                {
+                    UpdateValue(_prevValue);
+                    _prevValue = _currentValue;
+                }
             }
 
             yield return new WaitForSeconds(0.1f);

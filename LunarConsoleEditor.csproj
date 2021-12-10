@@ -67,8 +67,8 @@
      <Compile Include="Assets\LunarConsole\Editor\Installer.cs" />
      <Compile Include="Assets\LunarConsole\Editor\LunarConsoleEditorAnalytics.cs" />
      <Compile Include="Assets\LunarConsole\Editor\Updater.cs" />
-     <Compile Include="Assets\LunarConsole\Editor\Legacy\LunarConsoleLegacyActionsEditor.cs" />
      <Compile Include="Assets\LunarConsole\Editor\LunarConsoleEditor.cs" />
+     <Compile Include="Assets\LunarConsole\Editor\Legacy\LunarConsoleLegacyActionsEditor.cs" />
      <Compile Include="Assets\LunarConsole\Editor\EditorHelper.cs" />
      <None Include="Assets\LunarConsole\Editor\LunarConsoleEditor.asmdef" />
  <Reference Include="UnityEngine">
@@ -334,6 +334,9 @@
  </Reference>
  <Reference Include="DOTween">
  <HintPath>C:/Git/AnimalMerge/Assets/Violet/External Asset/Demigiant/DOTween/DOTween.dll</HintPath>
+ </Reference>
+ <Reference Include="ICSharpCode.NRefactory">
+ <HintPath>C:/Git/AnimalMerge/Library/PackageCache/com.unity.render-pipelines.core@10.7.0/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
  </Reference>
  <Reference Include="Backend">
  <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/Backend.dll</HintPath>
@@ -719,11 +722,11 @@
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
- <Reference Include="UnityEngine.TestRunner">
- <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
- </Reference>
  <Reference Include="UnityEditor.TestRunner">
  <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.TestRunner">
+ <HintPath>C:/Git/AnimalMerge/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

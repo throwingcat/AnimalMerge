@@ -1,13 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using BackEnd;
 using Define;
 using MessagePack;
 using MessagePack.Resolvers;
+using MessagePack.Unity;
+using MessagePack.Unity.Extension;
+using Server;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Serialization;
 using Violet;
 
 public class GameManager : MonoBehaviour
@@ -18,21 +22,22 @@ public class GameManager : MonoBehaviour
 
     public static Vector2 Resolution = new Vector2(1280, 720);
 
+    private static bool _isSerializerRegisted;
+
     private string _loadingDescription = "";
     private float _loadingProgress = 0f;
+    public GameCore AICore;
     public CSVDownloadConfig CSVDownloadConfig;
 
     public eGAME_STATE CurrentGameState = eGAME_STATE.Intro;
-    public string GUID = "";
-
-    public bool isSinglePlay = true;
-    public bool isAdventure = false;
-    public string StageKey = "";
-    public bool isUnlockHero = false;
-    public PartBase PartSceneChange;
 
     public GameCore GameCore;
-    public GameCore AICore;
+    public string GUID = "";
+    public bool isAdventure;
+
+    public bool isSinglePlay = true;
+    public bool isUnlockHero;
+    public string StageKey = "";
 
     public void Awake()
     {
@@ -80,36 +85,21 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        Server.AnimalMergeServer.Instance.OnUpdate();
+        AnimalMergeServer.Instance.OnUpdate();
     }
 
-    private void OnGUI()
-    {
-        // if (GUILayout.Button("Create BabyDuck", GUILayout.Width(Screen.width * 0.15f),
-        //     GUILayout.Height(Screen.height * 0.075f)) == true)
-        // {
-        //     PlayerData.CreateNewDuck();
-        // }
-        //
-        // if (GUILayout.Button("On Fever Mode", GUILayout.Width(Screen.width * 0.15f),
-        //     GUILayout.Height(Screen.height * 0.075f)) == true)
-        // {
-        //     Player.ChargeVolt(999999f);
-        // }
-    }
-    
+    private PanelTitle _panelTitle;
+
     private IEnumerator InitalizeProcess()
     {
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         Application.runInBackground = true;
-        #endif
-        
+#endif
         RegisterSerializer();
-        
-        PartSceneChange.OnShow();
 
         ChangeGameState(eGAME_STATE.Intro);
 
+        _panelTitle = UIManager.Instance.Show<PanelTitle>();
         //기본 데이터 다운로드
         yield return StartCoroutine(LoadSheetData());
 
@@ -118,35 +108,35 @@ public class GameManager : MonoBehaviour
 
         //게임 시작
         yield return StartCoroutine(InitializeGame());
-
-        PartSceneChange.OnHide();
     }
 
-    private static bool _isSerializerRegisted = false;
     private static void RegisterSerializer()
     {
         if (_isSerializerRegisted) return;
-        
+
         //시리얼라이저 등록
         StaticCompositeResolver.Instance.Register(
-            MessagePack.Resolvers.BuiltinResolver.Instance,
-            MessagePack.Unity.UnityResolver.Instance,
-            MessagePack.Unity.Extension.UnityBlitWithPrimitiveArrayResolver.Instance,
-            MessagePack.Resolvers.StandardResolver.Instance,
-            MessagePack.Resolvers.GeneratedResolver.Instance
+            BuiltinResolver.Instance,
+            UnityResolver.Instance,
+            UnityBlitWithPrimitiveArrayResolver.Instance,
+            StandardResolver.Instance,
+            GeneratedResolver.Instance
         );
         var options = MessagePackSerializerOptions.Standard.WithResolver(StaticCompositeResolver.Instance);
         //var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
         MessagePackSerializer.DefaultOptions = options;
-        
+
         _isSerializerRegisted = true;
     }
-    
+
     private IEnumerator LoadSheetData()
     {
         var isDone = false;
 
-        CSVDownloadConfig.Download(this, delegate { }, () =>
+        CSVDownloadConfig.Download(this, v =>
+        {
+            _panelTitle.RefreshGauge(v);
+        }, () =>
         {
             TableManager.Instance.Load();
             isDone = true;
@@ -208,7 +198,9 @@ public class GameManager : MonoBehaviour
             yield return null;
 
         if (isSinglePlay)
+        {
             ChangeGameState(eGAME_STATE.Battle);
+        }
         else
         {
             yield return StartCoroutine(DownloadDB());
@@ -218,13 +210,21 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator DownloadDB()
     {
-        bool isDone = false;
+        var isDone = false;
 
-        foreach (var db in Server.AnimalMergeServer.Instance.DBList)
+        foreach (var db in AnimalMergeServer.Instance.DBList)
         {
-            Debug.Log(string.Format("Download {0}",db.GetType()));
+            Debug.Log(string.Format("Download {0}", db.GetType()));
             isDone = false;
-            db.Download(() => { isDone = true;});
+            db.Download(() => { isDone = true; });
+            while (isDone == false)
+                yield return null;
+        }
+
+        foreach (var data in PlayerDataManager.Instance.Datas)
+        {
+            isDone = false;
+            data.Download(() => { isDone = true; });
             while (isDone == false)
                 yield return null;
         }
@@ -236,6 +236,9 @@ public class GameManager : MonoBehaviour
         switch (CurrentGameState)
         {
             case eGAME_STATE.Intro:
+                if(_panelTitle != null)
+                    _panelTitle.BackPress();
+                _panelTitle = null;
                 break;
             case eGAME_STATE.Lobby:
                 StartCoroutine(OnLeaveLobby());
@@ -279,11 +282,11 @@ public class GameManager : MonoBehaviour
         SUIPanel.IgnoreBackPress = true;
 
         UIManager.Instance.LoadingScreen.SetActive(true);
-        
+
         //모든 UI 정리
-        while(0 < SUIPanel.StackCount)
+        while (0 < SUIPanel.StackCount)
             SUIPanel.CurrentPanel.Hide();
-        
+
         GameCore.Initialize(true);
         if (isSinglePlay)
         {
@@ -291,9 +294,9 @@ public class GameManager : MonoBehaviour
             GameCore.SyncManager.SetTo(AICore);
             AICore.SyncManager.SetTo(GameCore);
         }
-        
+
         yield return new WaitForSeconds(2f);
-        
+
         UIManager.Instance.LoadingScreen.SetActive(false);
     }
 
@@ -318,19 +321,55 @@ public class GameManager : MonoBehaviour
 
         isSinglePlay = false;
         isAdventure = false;
-        
+
         SUIPanel.IgnoreBackPress = false;
-        
+
         yield break;
     }
 
 #if UNITY_EDITOR
-    [UnityEditor.InitializeOnLoadMethod]
-    static void EditorInitialize()
+    [InitializeOnLoadMethod]
+    private static void EditorInitialize()
     {
         RegisterSerializer();
     }
 #endif
+
+
+    public static void EnterBattle(bool isSinglePlay)
+    {
+        Instance.isSinglePlay = isSinglePlay;
+        Instance.ChangeGameState(eGAME_STATE.Battle);
+    }
+
+    public static void EnterAdventure(string stageKey)
+    {
+        Instance.isSinglePlay = true;
+        Instance.isAdventure = true;
+        Instance.StageKey = stageKey;
+        Instance.isUnlockHero = false;
+        Instance.ChangeGameState(eGAME_STATE.Battle);
+    }
+
+    public class BypassCertificate : CertificateHandler
+    {
+        protected override bool ValidateCertificate(byte[] certificateData)
+        {
+            //Simply return true no matter what
+            return true;
+        }
+    }
+
+    public class Guid
+    {
+        public static ulong Index;
+
+        public static ulong NewGuid()
+        {
+            return Index++;
+        }
+    }
+
     #region Utility
 
     public void LoadVFX(string key, int capacity, GameObject root = null)
@@ -440,17 +479,17 @@ public class GameManager : MonoBehaviour
 
     public class TimeSystem
     {
-        public DateTime CompleteTime { get; private set; }
         public DateTime LastUpdatedTime;
+        public DateTime CompleteTime { get; private set; }
 
         public int MaxTime { get; private set; }
 
         public int RemainSeconds => (int) (RemainMilliSeconds / 1000);
 
         public float RemainMilliSeconds =>
-            Mathf.Clamp((float) (CompleteTime - GameManager.GetTime()).TotalMilliseconds, 0, float.MaxValue);
+            Mathf.Clamp((float) (CompleteTime - GetTime()).TotalMilliseconds, 0, float.MaxValue);
 
-        public float Progress => 1f - ((RemainMilliSeconds / 1000) / MaxTime);
+        public float Progress => 1f - RemainMilliSeconds / 1000 / MaxTime;
         public bool isComplete => 0 >= RemainMilliSeconds;
 
         public void ReduceTime(int seconds)
@@ -460,45 +499,11 @@ public class GameManager : MonoBehaviour
 
         public void Set(int seconds)
         {
-            CompleteTime = GameManager.GetTime().AddSeconds(seconds);
+            CompleteTime = GetTime().AddSeconds(seconds);
             MaxTime = seconds;
-            LastUpdatedTime = GameManager.GetTime();
+            LastUpdatedTime = GetTime();
         }
     }
 
     #endregion
-    public class BypassCertificate : CertificateHandler
-    {
-        protected override bool ValidateCertificate(byte[] certificateData)
-        {
-            //Simply return true no matter what
-            return true;
-        }
-    }
-
-    
-    public static void EnterBattle(bool isSinglePlay)
-    {
-        Instance.isSinglePlay = isSinglePlay;
-        Instance.ChangeGameState(eGAME_STATE.Battle);
-    }
-
-    public static void EnterAdventure(string stageKey)
-    {
-        Instance.isSinglePlay = true;
-        Instance.isAdventure = true;
-        Instance.StageKey = stageKey;
-        Instance.isUnlockHero = false;
-        Instance.ChangeGameState(eGAME_STATE.Battle);
-    }
-
-    public class Guid
-    {
-        public static ulong Index;
-        
-        public static ulong NewGuid()
-        {
-            return Index++;
-        }
-    }
 }

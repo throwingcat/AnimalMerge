@@ -20,16 +20,15 @@ namespace Violet
 
         public const string VersionURL = "https://shdd.synology.me/Simon/Animal Merge/Sheet/version.json";
 
-        public float DownloadProgress;
-
         public Object ClassCreateFolder;
 
         public static string DOWNLOAD_PATH => Path.Combine(Application.persistentDataPath, "CSVData");
 
-        public static string LOCAL_DOWNLOAD_PATH => string.Format("{0}/{1}", Application.streamingAssetsPath, "CSVData");
+        public static string LOCAL_DOWNLOAD_PATH =>
+            string.Format("{0}/{1}", Application.streamingAssetsPath, "CSVData");
 
-        public static Dictionary<string,string> CSV = new Dictionary<string, string>();
-        
+        public static Dictionary<string, string> CSV = new Dictionary<string, string>();
+
         [SerializeField]
         public CSVDownloadConfigData Config
         {
@@ -45,7 +44,6 @@ namespace Violet
 #if UNITY_EDITOR
         public void Download(Action<float> onUpdate, Action onComplete)
         {
-            DownloadProgress = 0;
             EditorCoroutines.StartCoroutine(DownloadProcess(onUpdate, onComplete, true), this);
         }
 #endif
@@ -125,13 +123,13 @@ namespace Violet
             }
 
             //if (isForceDownload)
-                isNeedDownloadNewSheet = true;
+            isNeedDownloadNewSheet = true;
 
             //CSV Download
             if (isNeedDownloadNewSheet)
             {
                 CSV.Clear();
-                var step = 1f / Config.Files.Count;
+                int index = 0;
                 foreach (var csv in Config.Files)
                 {
                     Debug.Log(string.Format("CSV Download : {0}", csv.Name));
@@ -140,14 +138,13 @@ namespace Violet
                     req = UnityWebRequest.Get(url);
                     req.certificateHandler = new GameManager.BypassCertificate();
                     yield return req.SendWebRequest();
-
-                    DownloadProgress += step;
-                    onUpdate?.Invoke(DownloadProgress);
+                    index++;
+                    onUpdate?.Invoke(index / (float) Config.Files.Count);
 
                     string text = "";
                     if (req.isNetworkError)
                     {
-                        Debug.LogErrorFormat("CSV Download Fail (UWR) ): {0} >>> {1}" , csv.Name , req.error);
+                        Debug.LogErrorFormat("CSV Download Fail (UWR) ): {0} >>> {1}", csv.Name, req.error);
                         using (WebClient webClient = new WebClient())
                         {
                             webClient.Encoding = Encoding.UTF8;
@@ -161,16 +158,16 @@ namespace Violet
                             }
                             else
                             {
-                                Debug.LogErrorFormat("CSV Download Fail (WC) : {0} >>> {1}" , csv.Name , req.error);                                
+                                Debug.LogErrorFormat("CSV Download Fail (WC) : {0} >>> {1}", csv.Name, req.error);
                             }
-                        }                        
+                        }
                     }
                     else
                     {
                         string file = string.Format("{0}.csv", csv.Name);
                         var path = Path.Combine(downloadPath, file);
                         File.WriteAllText(path, req.downloadHandler.text);
-                        CSV.Add(path,req.downloadHandler.text);
+                        CSV.Add(path, req.downloadHandler.text);
                     }
                 }
 
@@ -179,9 +176,8 @@ namespace Violet
                     string.IsNullOrEmpty(versionFileText) == false)
                     File.WriteAllText(versionFilePath, versionFileText);
             }
-
-            DownloadProgress = 1f;
-            onUpdate?.Invoke(DownloadProgress);
+            
+            onUpdate?.Invoke(1f);
             onComplete?.Invoke();
         }
 

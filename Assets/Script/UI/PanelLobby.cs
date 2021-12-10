@@ -72,11 +72,15 @@ public class PanelLobby : SUIPanel
 
     public void OnClickPageButton(int page)
     {
+        PartSimpleNotice.Show("공사중 입니다!");
+        return;
         MovePage(page);
     }
 
     public void OnClickPlayerLevelReward()
     {
+        PartSimpleNotice.Show("공사중 입니다!");
+        return;
         UIManager.Instance.Show<PanelPlayerLevelReward>();
     }
     #region 매칭 취소

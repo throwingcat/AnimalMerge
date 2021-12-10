@@ -23,6 +23,7 @@ public class GameCore : MonoBehaviour
 
     #endregion
 
+    private PlayerInfo PlayerInfo => PlayerDataManager.Get<PlayerInfo>();
     protected float HorizontalSpawnLimit =>
         (float) (500f - EnvironmentValue.UNIT_BASE_SIZE * CurrentReadyUnit.Sheet.size *
             EnvironmentValue.WORLD_RATIO);
@@ -33,7 +34,7 @@ public class GameCore : MonoBehaviour
 
         if (IsPlayer)
         {
-            PlayerHeroKey = PlayerInfoManager.Instance.SelectHero;
+            PlayerHeroKey = PlayerInfo.elements.SelectHero;
         }
 
         isReady = false;
@@ -128,8 +129,8 @@ public class GameCore : MonoBehaviour
         //플레이어 정보 전송
         SyncManager.PlayerInfo playerInfo = new SyncManager.PlayerInfo();
         playerInfo.HeroKey = PlayerHeroKey;
-        playerInfo.MMR = PlayerInfoManager.Instance.RankScore;
-        playerInfo.Name = PlayerInfoManager.Instance.NickName;
+        playerInfo.MMR = PlayerInfo.elements.RankScore;
+        playerInfo.Name = PlayerInfo.elements.Nickname;
         SyncManager.Request(playerInfo);
 
         //게임 카메라 루트 활성화
@@ -154,7 +155,7 @@ public class GameCore : MonoBehaviour
         PanelIngame.RefreshPassiveSkillGauge(0f);
         PanelIngame.SetActiveWaitPlayer(true);
         PanelIngame.SetActiveCountDown(false);
-        PanelIngame.SetPlayerPortrait(PlayerInfoManager.Instance.NickName, PlayerHeroKey.ToTableData<Hero>());
+        PanelIngame.SetPlayerPortrait(PlayerInfo.elements.Nickname, PlayerHeroKey.ToTableData<Hero>());
         RefreshBadBlockUI();
         ingameDynamicCanvas.Initialize();
 
@@ -1250,7 +1251,8 @@ public class GameCore : MonoBehaviour
             //트랙커 정보 
             packet.hash.Add("tracker_json", JsonConvert.SerializeObject(PlayerBattleTracker.Tracker));
 
-            var beforeScore = PlayerInfoManager.Instance.RankScore;
+            PlayerInfo playerInfo = PlayerDataManager.Get<PlayerInfo>();
+            var beforeScore = playerInfo.elements.RankScore;
             NetworkManager.Instance.Request(packet, res =>
             {
                 if (res.hash.ContainsKey("first_clear"))

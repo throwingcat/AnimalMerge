@@ -17,15 +17,9 @@ public class CellHeroSelect : MonoBehaviour
     {
         Hero = hero;
         if (Hero.isUnlock)
-        {
             Face.sprite = hero.face.ToSprite(hero.atlas);
-            Name.text = hero.name.ToLocalization();
-        }
         else
-        {
             Face.sprite = UNKNOWN_FACE.ToSprite();
-            Name.text = "???";
-        }
     }
 
     public void SetClickEvent(Action<CellHeroSelect> onClick)
