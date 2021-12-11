@@ -1147,7 +1147,7 @@ public class GameCore : MonoBehaviour
                     OnReceivePlayerInfoPacket(p as SyncManager.PlayerInfo);
                     break;
                 case SyncManager.ePacketType.Ready:
-                    OnReceiveReadyPacket(p as SyncManager.Ready);
+                    OnReceiveReadyPacket((SyncManager.Ready)p);
                     break;
                 case SyncManager.ePacketType.UnitUpdate:
                     if (IsPlayer)

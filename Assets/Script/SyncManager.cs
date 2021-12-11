@@ -200,9 +200,9 @@ public class SyncManager
     [MessagePackObject]
     public class PlayerInfo : PacketBase
     {
-        [Key(3)] public string HeroKey;
-        [Key(2)] public int MMR;
-        [Key(1)] public string Name;
+        [Key(0)] public string HeroKey;
+        [Key(1)] public int MMR;
+        [Key(2)] public string Name;
 
         public PlayerInfo()
         {
@@ -284,8 +284,8 @@ public class SyncManager
     [MessagePackObject]
     public class GameResult : PacketBase
     {
-        [Key(2)] public DateTime GameOverTime;
-        [Key(1)] public bool isGameOver;
+        [Key(1)] public DateTime GameOverTime;
+        [Key(2)] public bool isGameOver;
 
         public GameResult()
         {
