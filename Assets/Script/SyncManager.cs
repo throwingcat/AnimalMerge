@@ -263,6 +263,7 @@ public class SyncManager
             foreach(var bytes in UnitDatas)
             {
                 var unit = MessagePackSerializer.Deserialize<UnitData>(bytes);
+                result.Add(unit);
             }
 
             return result;
