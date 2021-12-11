@@ -160,6 +160,8 @@ public class SyncManager
                     isContains = true;
                     switch (p.PacketType)
                     {
+                        case ePacketType.PlayerInfo:
+                            break;
                         case ePacketType.Ready:
                             break;
                         case ePacketType.UnitUpdate:
@@ -200,9 +202,9 @@ public class SyncManager
     [MessagePackObject]
     public class PlayerInfo : PacketBase
     {
-        [Key(0)] public string HeroKey;
-        [Key(1)] public int MMR;
-        [Key(2)] public string Name;
+        [Key(1)] public string HeroKey;
+        [Key(2)] public int MMR;
+        [Key(3)] public string Name;
 
         public PlayerInfo()
         {
