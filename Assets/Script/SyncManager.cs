@@ -94,8 +94,8 @@ public class SyncManager
             u.UnitKey = unit.Sheet.key;
             u.UnitPosition = new SVector3(unit.transform.localPosition);
             u.UnitRotation = new SVector3(unit.transform.localRotation.eulerAngles);
-
-            pUpdateUnit.UnitsDatas.Add(u);
+            
+            pUpdateUnit.UnitDatas.Add(MessagePackSerializer.Serialize(u));
         }
 
         _syncPacket.Packets.Add(pUpdateUnit);
@@ -172,9 +172,7 @@ public class SyncManager
     public class UnitData
     {
         [Key(0)] public string UnitKey;
-
         [Key(1)] public SVector3 UnitPosition;
-
         [Key(2)] public SVector3 UnitRotation;
     }
 
@@ -252,11 +250,22 @@ public class SyncManager
     [MessagePackObject]
     public class UpdateUnit : SyncPacketBase
     {
-        [Key(1)] public List<UnitData> UnitsDatas = new List<UnitData>();
+        [Key(1)] public List<byte[]> UnitDatas = new List<byte[]>();
 
         public UpdateUnit()
         {
             PacketType = ePacketType.UpdateUnit;
+        }
+
+        public List<UnitData> Convert()
+        {
+            List<UnitData> result = new List<UnitData>();
+            foreach(var bytes in UnitDatas)
+            {
+                var unit = MessagePackSerializer.Deserialize<UnitData>(bytes);
+            }
+
+            return result;
         }
     }
 

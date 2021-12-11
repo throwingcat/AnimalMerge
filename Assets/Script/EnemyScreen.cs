@@ -27,7 +27,8 @@ public class EnemyScreen : MonoBehaviour
         _units.Clear();
 
         //Get
-        foreach (var unit in packet.UnitsDatas)
+        var units = packet.Convert();
+        foreach (var unit in units)
         {
             var sheet = unit.UnitKey.ToTableData<Unit>();
             string pool_key = string.Format("{0}_{1}", "sync", sheet.key);
