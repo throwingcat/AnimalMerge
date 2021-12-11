@@ -1375,5 +1375,15 @@ public class GameCore : MonoBehaviour
             }, duration);
     }
 
+    public static Unit ConvertSyncUnitKey(sbyte key)
+    {
+        string master = GameManager.Instance.GameCore._enemyPlayerInfo.HeroKey;
+        if (key == 0)
+                return "bad".ToTableData<Unit>();
+        if (Unit.Sorted.ContainsKey(master))
+            return Unit.Sorted[master][key];
+        return null;
+    }
+
     #endregion
 }
