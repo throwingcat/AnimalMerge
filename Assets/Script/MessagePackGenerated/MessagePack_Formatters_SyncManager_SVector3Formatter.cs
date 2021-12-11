@@ -30,8 +30,10 @@ namespace MessagePack.Formatters
                 return;
             }
 
-            writer.WriteArrayHeader(1);
-            writer.Write(value.xyz);
+            writer.WriteArrayHeader(3);
+            writer.Write(value.x);
+            writer.Write(value.y);
+            writer.Write(value.z);
         }
 
         public global::SyncManager.SVector3 Deserialize(ref global::MessagePack.MessagePackReader reader, global::MessagePack.MessagePackSerializerOptions options)
@@ -50,7 +52,13 @@ namespace MessagePack.Formatters
                 switch (i)
                 {
                     case 0:
-                        ____result.xyz = reader.ReadUInt64();
+                        ____result.x = reader.ReadInt16();
+                        break;
+                    case 1:
+                        ____result.y = reader.ReadInt16();
+                        break;
+                    case 2:
+                        ____result.z = reader.ReadInt16();
                         break;
                     default:
                         reader.Skip();
