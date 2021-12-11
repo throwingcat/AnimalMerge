@@ -30,7 +30,7 @@ public class EnemyScreen : MonoBehaviour
         var units = packet.Convert();
         foreach (var unit in units)
         {
-            var sheet = unit.UnitKey.ToString().ToTableData<Unit>();
+            var sheet = unit.UnitKey.ToTableData<Unit>();
             string pool_key = string.Format("{0}_{1}", "sync", sheet.key);
             var pool = GameObjectPool.GetPool(pool_key);
             if (pool == null)

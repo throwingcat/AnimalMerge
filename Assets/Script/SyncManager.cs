@@ -92,7 +92,7 @@ public class SyncManager
         foreach (var unit in units)
         {
             var u = new UnitData();
-            u.UnitKey = unit.Sheet.key.ToCharArray();
+            u.UnitKey = unit.Sheet.key;
             u.UnitPosition = new SVector3(unit.transform.localPosition);
             u.UnitRotation = new SVector3(unit.transform.localRotation.eulerAngles);
 
@@ -172,7 +172,7 @@ public class SyncManager
     [MessagePackObject]
     public class UnitData
     {
-        [Key(0)] public char[] UnitKey;
+        [Key(0)] public string UnitKey;
         [Key(1)] public SVector3 UnitPosition;
         [Key(2)] public SVector3 UnitRotation;
     }
