@@ -95,8 +95,8 @@ public class SyncManager
             u.UnitKey = unit.Sheet.key;
             u.UnitPosition = new SVector3(unit.transform.localPosition);
             u.UnitRotation = new SVector3(unit.transform.localRotation.eulerAngles);
-            
-            pUpdateUnit.UnitDatas.Add(MessagePackSerializer.Serialize(u,lz4Options));
+
+            pUpdateUnit.UnitDatas.Add(MessagePackSerializer.Serialize(u, lz4Options));
         }
 
         _syncPacket.Packets.Add(pUpdateUnit);
@@ -133,7 +133,6 @@ public class SyncManager
                     _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(packet as GameResult));
                     break;
             }
-            
         }
 
         //싱글 플레이의 경우 From < - > To 끼리 바로 통신
@@ -149,7 +148,7 @@ public class SyncManager
         if (Backend.Match.IsMatchServerConnect() && Backend.Match.IsInGameServerConnect())
         {
             var bytes = MessagePackSerializer.Serialize(_syncPacket);
-            Debug.Log(string.Format("패킷 전송량 : {0}",bytes.Length));
+            Debug.Log(string.Format("패킷 전송량 : {0}", bytes.Length));
             _syncPacket.Packets.Clear();
             _syncPacket.Bytes.Clear();
             Backend.Match.SendDataToInGameRoom(bytes);
@@ -262,10 +261,11 @@ public class SyncManager
         public List<UnitData> Convert()
         {
             List<UnitData> result = new List<UnitData>();
-            var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
-            foreach(var bytes in UnitDatas)
+            var lz4Options =
+                MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
+            foreach (var bytes in UnitDatas)
             {
-                var unit = MessagePackSerializer.Deserialize<UnitData>(bytes,lz4Options);
+                var unit = MessagePackSerializer.Deserialize<UnitData>(bytes, lz4Options);
                 result.Add(unit);
             }
 
@@ -338,29 +338,23 @@ public class SyncManager
     [MessagePackObject]
     public class SVector3
     {
-        [Key(0)] public float x;
-
-        [Key(1)] public float y;
-
-        [Key(2)] public float z;
+        [Key(0)] public float xyz;
 
         public SVector3()
         {
-            x = 0f;
-            y = 0f;
-            z = 0f;
+            xyz = 0f;
         }
 
         public SVector3(Vector3 vec)
         {
-            x = vec.x;
-            y = vec.y;
-            z = vec.z;
+            xyz = vec.x;
+            xyz = xyz + vec.y * 1000;
+            xyz = xyz + vec.z * 1000000;
         }
 
         public Vector3 ToVector3()
         {
-            return new Vector3(x, y, z);
+            return new Vector3(xyz % 1000, xyz % 1000000 / 1000, xyz % 1000000000 / 1000000);
         }
     }
 }
