@@ -92,7 +92,7 @@ public class SyncManager
         foreach (var unit in units)
         {
             var u = new UnitData();
-            u.UnitKey = (sbyte)unit.Sheet.index;
+            u.UnitKey = (sbyte) unit.Sheet.index;
             u.UnitPosition = new SVector3(unit.transform.localPosition);
             u.UnitRotation = new SVector3(unit.transform.localRotation.eulerAngles);
 
@@ -147,7 +147,7 @@ public class SyncManager
         //매치 서버로 송신
         if (Backend.Match.IsMatchServerConnect() && Backend.Match.IsInGameServerConnect())
         {
-            var bytes = MessagePackSerializer.Serialize(_syncPacket);
+            var bytes = MessagePackSerializer.Serialize(_syncPacket, lz4Options);
             Debug.Log(string.Format("패킷 전송량 : {0}", bytes.Length));
             _syncPacket.Packets.Clear();
             _syncPacket.Bytes.Clear();

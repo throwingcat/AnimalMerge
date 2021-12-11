@@ -1141,38 +1141,42 @@ public class GameCore : MonoBehaviour
 
     public void OnReceiveSyncPacket(SyncManager.SyncPacket syncPacket)
     {
+        var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
         foreach (var bytes in syncPacket.Bytes)
         {
-            SyncManager.SyncPacketBase packet = MessagePackSerializer.Deserialize<SyncManager.SyncPacketBase>(bytes);
-            Debug.Log(string.Format("Receive Sync Packet : {0}", packet.PacketType));
+            SyncManager.SyncPacketBase packet =
+                MessagePackSerializer.Deserialize<SyncManager.SyncPacketBase>(bytes, lz4Options);
             switch (packet.PacketType)
             {
                 case SyncManager.ePacketType.PlayerInfo:
-                    OnReceivePlayerInfoPacket(MessagePackSerializer.Deserialize<SyncManager.PlayerInfo>(bytes));
+                    OnReceivePlayerInfoPacket(
+                        MessagePackSerializer.Deserialize<SyncManager.PlayerInfo>(bytes, lz4Options));
                     break;
                 case SyncManager.ePacketType.Ready:
-                    OnReceiveReadyPacket(MessagePackSerializer.Deserialize<SyncManager.Ready>(bytes));
+                    OnReceiveReadyPacket(MessagePackSerializer.Deserialize<SyncManager.Ready>(bytes, lz4Options));
                     break;
                 case SyncManager.ePacketType.UpdateUnit:
                     if (IsPlayer)
-                        OnReceiveUpdateUnit(MessagePackSerializer.Deserialize<SyncManager.UpdateUnit>(bytes));
+                        OnReceiveUpdateUnit(
+                            MessagePackSerializer.Deserialize<SyncManager.UpdateUnit>(bytes, lz4Options));
                     break;
                 case SyncManager.ePacketType.AttackDamage:
                 {
-                    var convert = MessagePackSerializer.Deserialize<SyncManager.AttackDamage>(bytes);
+                    var convert = MessagePackSerializer.Deserialize<SyncManager.AttackDamage>(bytes, lz4Options);
                     OnReceiveAttack(convert.Damage);
                 }
                     break;
                 case SyncManager.ePacketType.UpdateAttackCombo:
                 {
-                    var convert = MessagePackSerializer.Deserialize<SyncManager.UpdateAttackCombo>(bytes);
+                    var convert = MessagePackSerializer.Deserialize<SyncManager.UpdateAttackCombo>(bytes, lz4Options);
                     OnReceiveCombo(convert.Combo);
                 }
                     break;
                 case SyncManager.ePacketType.UpdateStackDamage:
                     if (IsPlayer)
                     {
-                        var convert = MessagePackSerializer.Deserialize<SyncManager.UpdateStackDamage>(bytes);
+                        var convert =
+                            MessagePackSerializer.Deserialize<SyncManager.UpdateStackDamage>(bytes, lz4Options);
                         PanelIngame.RefreshEnemyBadBlock(convert.StackDamage);
                         RefreshBadBlockUI();
                     }
@@ -1180,7 +1184,7 @@ public class GameCore : MonoBehaviour
                     break;
                 case SyncManager.ePacketType.GameResult:
                 {
-                    var convert = MessagePackSerializer.Deserialize<SyncManager.GameResult>(bytes);
+                    var convert = MessagePackSerializer.Deserialize<SyncManager.GameResult>(bytes, lz4Options);
                     OnReceiveGameResult(convert.isGameOver, convert.GameOverTime);
                 }
                     break;
@@ -1379,7 +1383,7 @@ public class GameCore : MonoBehaviour
     {
         string master = GameManager.Instance.GameCore._enemyPlayerInfo.HeroKey;
         if (key == 0)
-                return "bad".ToTableData<Unit>();
+            return "bad".ToTableData<Unit>();
         if (Unit.Sorted.ContainsKey(master))
             return Unit.Sorted[master][key];
         return null;
