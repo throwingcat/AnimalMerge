@@ -88,6 +88,7 @@ public class SyncManager
         var units = new List<UnitBase>();
         units.AddRange(From.UnitsInField);
         units.AddRange(From.BadUnits);
+        var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
         foreach (var unit in units)
         {
             var u = new UnitData();
@@ -95,7 +96,7 @@ public class SyncManager
             u.UnitPosition = new SVector3(unit.transform.localPosition);
             u.UnitRotation = new SVector3(unit.transform.localRotation.eulerAngles);
             
-            pUpdateUnit.UnitDatas.Add(MessagePackSerializer.Serialize(u));
+            pUpdateUnit.UnitDatas.Add(MessagePackSerializer.Serialize(u,lz4Options));
         }
 
         _syncPacket.Packets.Add(pUpdateUnit);
@@ -260,9 +261,10 @@ public class SyncManager
         public List<UnitData> Convert()
         {
             List<UnitData> result = new List<UnitData>();
+            var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
             foreach(var bytes in UnitDatas)
             {
-                var unit = MessagePackSerializer.Deserialize<UnitData>(bytes);
+                var unit = MessagePackSerializer.Deserialize<UnitData>(bytes,lz4Options);
                 result.Add(unit);
             }
 
