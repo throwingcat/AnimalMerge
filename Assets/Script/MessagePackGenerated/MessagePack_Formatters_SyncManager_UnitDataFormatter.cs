@@ -32,7 +32,7 @@ namespace MessagePack.Formatters
 
             global::MessagePack.IFormatterResolver formatterResolver = options.Resolver;
             writer.WriteArrayHeader(3);
-            formatterResolver.GetFormatterWithVerify<string>().Serialize(ref writer, value.UnitKey, options);
+            formatterResolver.GetFormatterWithVerify<char[]>().Serialize(ref writer, value.UnitKey, options);
             formatterResolver.GetFormatterWithVerify<global::SyncManager.SVector3>().Serialize(ref writer, value.UnitPosition, options);
             formatterResolver.GetFormatterWithVerify<global::SyncManager.SVector3>().Serialize(ref writer, value.UnitRotation, options);
         }
@@ -54,7 +54,7 @@ namespace MessagePack.Formatters
                 switch (i)
                 {
                     case 0:
-                        ____result.UnitKey = formatterResolver.GetFormatterWithVerify<string>().Deserialize(ref reader, options);
+                        ____result.UnitKey = formatterResolver.GetFormatterWithVerify<char[]>().Deserialize(ref reader, options);
                         break;
                     case 1:
                         ____result.UnitPosition = formatterResolver.GetFormatterWithVerify<global::SyncManager.SVector3>().Deserialize(ref reader, options);

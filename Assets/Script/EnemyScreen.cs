@@ -30,7 +30,7 @@ public class EnemyScreen : MonoBehaviour
         var units = packet.Convert();
         foreach (var unit in units)
         {
-            var sheet = unit.UnitKey.ToTableData<Unit>();
+            var sheet = unit.UnitKey.ToString().ToTableData<Unit>();
             string pool_key = string.Format("{0}_{1}", "sync", sheet.key);
             var pool = GameObjectPool.GetPool(pool_key);
             if (pool == null)
@@ -48,7 +48,7 @@ public class EnemyScreen : MonoBehaviour
             var unitBase = go.GetComponent<UnitBase>();
 
             unitBase.transform.SetParent(_unitParent);
-            unitBase.OnSpawn(unit.UnitKey, null, null)
+            unitBase.OnSpawn(unit.UnitKey.ToString(), null, null)
                 .SetPosition(unit.UnitPosition.ToVector3())
                 .SetRotation(unit.UnitRotation.ToVector3());
             unitBase.gameObject.SetActive(true);

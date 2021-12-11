@@ -92,7 +92,7 @@ public class SyncManager
         foreach (var unit in units)
         {
             var u = new UnitData();
-            u.UnitKey = unit.Sheet.key;
+            u.UnitKey = unit.Sheet.key.ToCharArray();
             u.UnitPosition = new SVector3(unit.transform.localPosition);
             u.UnitRotation = new SVector3(unit.transform.localRotation.eulerAngles);
 
@@ -172,7 +172,7 @@ public class SyncManager
     [MessagePackObject]
     public class UnitData
     {
-        [Key(0)] public string UnitKey;
+        [Key(0)] public char[] UnitKey;
         [Key(1)] public SVector3 UnitPosition;
         [Key(2)] public SVector3 UnitRotation;
     }
@@ -338,18 +338,18 @@ public class SyncManager
     [MessagePackObject]
     public class SVector3
     {
-        [Key(0)] public float xyz;
+        [Key(0)] public ulong xyz;
 
         public SVector3()
         {
-            xyz = 0f;
+            xyz = 0;
         }
 
         public SVector3(Vector3 vec)
         {
-            xyz = vec.x;
-            xyz = xyz + vec.y * 1000;
-            xyz = xyz + vec.z * 1000000;
+            xyz = (ulong)(vec.x);
+            xyz = (ulong)(xyz + vec.y * 1000);
+            xyz = (ulong)(xyz + vec.z * 1000000);
         }
 
         public Vector3 ToVector3()

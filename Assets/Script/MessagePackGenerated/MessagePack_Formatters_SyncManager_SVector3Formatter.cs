@@ -50,7 +50,7 @@ namespace MessagePack.Formatters
                 switch (i)
                 {
                     case 0:
-                        ____result.xyz = reader.ReadSingle();
+                        ____result.xyz = reader.ReadUInt64();
                         break;
                     default:
                         reader.Skip();
