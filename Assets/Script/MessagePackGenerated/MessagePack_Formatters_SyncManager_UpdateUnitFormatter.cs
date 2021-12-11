@@ -33,7 +33,7 @@ namespace MessagePack.Formatters
             global::MessagePack.IFormatterResolver formatterResolver = options.Resolver;
             writer.WriteArrayHeader(2);
             formatterResolver.GetFormatterWithVerify<global::SyncManager.ePacketType>().Serialize(ref writer, value.PacketType, options);
-            formatterResolver.GetFormatterWithVerify<global::System.Collections.Generic.List<byte[]>>().Serialize(ref writer, value.UnitDatas, options);
+            formatterResolver.GetFormatterWithVerify<global::System.Collections.Generic.List<global::SyncManager.UnitData>>().Serialize(ref writer, value.UnitDatas, options);
         }
 
         public global::SyncManager.UpdateUnit Deserialize(ref global::MessagePack.MessagePackReader reader, global::MessagePack.MessagePackSerializerOptions options)
@@ -56,7 +56,7 @@ namespace MessagePack.Formatters
                         ____result.PacketType = formatterResolver.GetFormatterWithVerify<global::SyncManager.ePacketType>().Deserialize(ref reader, options);
                         break;
                     case 1:
-                        ____result.UnitDatas = formatterResolver.GetFormatterWithVerify<global::System.Collections.Generic.List<byte[]>>().Deserialize(ref reader, options);
+                        ____result.UnitDatas = formatterResolver.GetFormatterWithVerify<global::System.Collections.Generic.List<global::SyncManager.UnitData>>().Deserialize(ref reader, options);
                         break;
                     default:
                         reader.Skip();

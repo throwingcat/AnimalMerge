@@ -88,7 +88,6 @@ public class SyncManager
         var units = new List<UnitBase>();
         units.AddRange(From.UnitsInField);
         units.AddRange(From.BadUnits);
-        var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
         foreach (var unit in units)
         {
             var u = new UnitData();
@@ -96,7 +95,7 @@ public class SyncManager
             u.UnitPosition = new SVector3(unit.transform.localPosition);
             u.UnitRotation = new SVector3(unit.transform.localRotation.eulerAngles);
 
-            pUpdateUnit.UnitDatas.Add(MessagePackSerializer.Serialize(u, lz4Options));
+            pUpdateUnit.UnitDatas.Add(u);
         }
 
         _syncPacket.Packets.Add(pUpdateUnit);
@@ -134,21 +133,21 @@ public class SyncManager
                     break;
             }
         }
-
+        
         //싱글 플레이의 경우 From < - > To 끼리 바로 통신
         if (GameManager.Instance.isSinglePlay)
         {
             To.SyncManager.Receive(_syncPacket);
             _syncPacket.Packets.Clear();
-            _syncPacket.Bytes.Clear();
+            _syncPacket.Bytes.Clear();    
             return;
         }
 
         //매치 서버로 송신
         if (Backend.Match.IsMatchServerConnect() && Backend.Match.IsInGameServerConnect())
         {
+            var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
             var bytes = MessagePackSerializer.Serialize(_syncPacket, lz4Options);
-            Debug.Log(string.Format("패킷 전송량 : {0}", bytes.Length));
             _syncPacket.Packets.Clear();
             _syncPacket.Bytes.Clear();
             Backend.Match.SendDataToInGameRoom(bytes);
@@ -251,7 +250,7 @@ public class SyncManager
     [MessagePackObject]
     public class UpdateUnit : SyncPacketBase
     {
-        [Key(1)] public List<byte[]> UnitDatas = new List<byte[]>();
+        [Key(1)] public List<UnitData> UnitDatas = new List<UnitData>();
 
         public UpdateUnit()
         {
@@ -261,12 +260,10 @@ public class SyncManager
         public List<UnitData> Convert()
         {
             List<UnitData> result = new List<UnitData>();
-            var lz4Options =
-                MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
             foreach (var bytes in UnitDatas)
             {
-                var unit = MessagePackSerializer.Deserialize<UnitData>(bytes, lz4Options);
-                result.Add(unit);
+                //var unit = MessagePackSerializer.Deserialize<UnitData>(bytes, lz4Options);
+                result.Add(bytes);
             }
 
             return result;
