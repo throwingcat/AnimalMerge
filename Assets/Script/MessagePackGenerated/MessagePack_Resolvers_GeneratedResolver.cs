@@ -63,11 +63,11 @@ namespace MessagePack.Resolvers
                 { typeof(global::ItemInfo), 9 },
                 { typeof(global::SyncManager.AttackDamage), 10 },
                 { typeof(global::SyncManager.GameResult), 11 },
-                { typeof(global::SyncManager.SyncPacketBase), 12 },
-                { typeof(global::SyncManager.PlayerInfo), 13 },
-                { typeof(global::SyncManager.Ready), 14 },
-                { typeof(global::SyncManager.SVector3), 15 },
-                { typeof(global::SyncManager.SyncPacket), 16 },
+                { typeof(global::SyncManager.PlayerInfo), 12 },
+                { typeof(global::SyncManager.Ready), 13 },
+                { typeof(global::SyncManager.SVector3), 14 },
+                { typeof(global::SyncManager.SyncPacket), 15 },
+                { typeof(global::SyncManager.SyncPacketBase), 16 },
                 { typeof(global::SyncManager.UnitData), 17 },
                 { typeof(global::SyncManager.UpdateUnit), 18 },
             };
@@ -95,11 +95,11 @@ namespace MessagePack.Resolvers
                 case 9: return new MessagePack.Formatters.ItemInfoFormatter();
                 case 10: return new MessagePack.Formatters.SyncManager_AttackDamageFormatter();
                 case 11: return new MessagePack.Formatters.SyncManager_GameResultFormatter();
-                case 12: return new MessagePack.Formatters.SyncManager_PacketBaseFormatter();
-                case 13: return new MessagePack.Formatters.SyncManager_PlayerInfoFormatter();
-                case 14: return new MessagePack.Formatters.SyncManager_ReadyFormatter();
-                case 15: return new MessagePack.Formatters.SyncManager_SVector3Formatter();
-                case 16: return new MessagePack.Formatters.SyncManager_SyncPacketFormatter();
+                case 12: return new MessagePack.Formatters.SyncManager_PlayerInfoFormatter();
+                case 13: return new MessagePack.Formatters.SyncManager_ReadyFormatter();
+                case 14: return new MessagePack.Formatters.SyncManager_SVector3Formatter();
+                case 15: return new MessagePack.Formatters.SyncManager_SyncPacketFormatter();
+                case 16: return new MessagePack.Formatters.SyncManager_SyncPacketBaseFormatter();
                 case 17: return new MessagePack.Formatters.SyncManager_UnitDataFormatter();
                 case 18: return new MessagePack.Formatters.SyncManager_UpdateUnitFormatter();
                 default: return null;

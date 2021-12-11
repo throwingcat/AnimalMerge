@@ -294,6 +294,7 @@
      <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Resolvers_GeneratedResolver.cs" />
      <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_PacketBaseFormatter.cs" />
      <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_SyncPacketFormatter.cs" />
+     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_SyncPacketBaseFormatter.cs" />
      <None Include="Assets\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\Hovl Studio\Fantastic cartoon VFX\Shaders\SlashOld.shader" />

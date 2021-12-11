@@ -1137,17 +1137,19 @@ public class GameCore : MonoBehaviour
     {
     }
 
-    public void OnReceiveSyncPacket(SyncManager.SyncPacket packet)
+    public void OnReceiveSyncPacket(SyncManager.SyncPacket syncPacket)
     {
-        foreach (var p in packet.Packets)
+        foreach (var p in syncPacket.Packets)
         {
+            SyncManager.SyncPacketBase packet = p;
+            
             switch (p.PacketType)
             {
                 case SyncManager.ePacketType.PlayerInfo:
-                    OnReceivePlayerInfoPacket(p as SyncManager.PlayerInfo);
+                    OnReceivePlayerInfoPacket(packet as SyncManager.PlayerInfo);
                     break;
                 case SyncManager.ePacketType.Ready:
-                    OnReceiveReadyPacket((SyncManager.Ready)p);
+                    OnReceiveReadyPacket((SyncManager.Ready)packet);
                     break;
                 case SyncManager.ePacketType.UnitUpdate:
                     if (IsPlayer)
