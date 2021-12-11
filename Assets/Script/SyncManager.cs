@@ -338,23 +338,31 @@ public class SyncManager
     [MessagePackObject]
     public class SVector3
     {
-        [Key(0)] public ulong xyz;
+        [Key(0)] public short x;
+        [Key(1)] public short y;
+        [Key(2)] public short z;
 
         public SVector3()
         {
-            xyz = 0;
+            x = 0;
+            y = 0;
+            z = 0;
         }
 
         public SVector3(Vector3 vec)
         {
-            xyz = (ulong)(vec.x);
-            xyz = (ulong)(xyz + vec.y * 1000);
-            xyz = (ulong)(xyz + vec.z * 1000000);
+            x = (short) (vec.x * 10);
+            y = (short) (vec.y * 10);
+            z = (short) (vec.z * 10);
+            // xyz = (ulong)(vec.x);
+            // xyz = (ulong)(xyz + vec.y * 1000);
+            // xyz = (ulong)(xyz + vec.z * 1000000);
         }
 
         public Vector3 ToVector3()
         {
-            return new Vector3(xyz % 1000, xyz % 1000000 / 1000, xyz % 1000000000 / 1000000);
+            return new Vector3(x / 10f, y / 10f, z / 10f);
+            //return new Vector3(xyz % 1000, xyz % 1000000 / 1000, xyz % 1000000000 / 1000000);
         }
     }
 }
