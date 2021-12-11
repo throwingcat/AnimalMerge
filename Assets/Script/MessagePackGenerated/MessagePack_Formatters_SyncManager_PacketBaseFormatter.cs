@@ -19,10 +19,10 @@ namespace MessagePack.Formatters
     using global::System.Buffers;
     using global::MessagePack;
 
-    public sealed class SyncManager_PacketBaseFormatter : global::MessagePack.Formatters.IMessagePackFormatter<global::SyncManager.PacketBase>
+    public sealed class SyncManager_PacketBaseFormatter : global::MessagePack.Formatters.IMessagePackFormatter<global::SyncManager.SyncPacketBase>
     {
 
-        public void Serialize(ref global::MessagePack.MessagePackWriter writer, global::SyncManager.PacketBase value, global::MessagePack.MessagePackSerializerOptions options)
+        public void Serialize(ref global::MessagePack.MessagePackWriter writer, global::SyncManager.SyncPacketBase value, global::MessagePack.MessagePackSerializerOptions options)
         {
             if (value == null)
             {
@@ -35,7 +35,7 @@ namespace MessagePack.Formatters
             formatterResolver.GetFormatterWithVerify<global::SyncManager.ePacketType>().Serialize(ref writer, value.PacketType, options);
         }
 
-        public global::SyncManager.PacketBase Deserialize(ref global::MessagePack.MessagePackReader reader, global::MessagePack.MessagePackSerializerOptions options)
+        public global::SyncManager.SyncPacketBase Deserialize(ref global::MessagePack.MessagePackReader reader, global::MessagePack.MessagePackSerializerOptions options)
         {
             if (reader.TryReadNil())
             {
@@ -45,7 +45,7 @@ namespace MessagePack.Formatters
             options.Security.DepthStep(ref reader);
             global::MessagePack.IFormatterResolver formatterResolver = options.Resolver;
             var length = reader.ReadArrayHeader();
-            var ____result = new global::SyncManager.PacketBase();
+            var ____result = new global::SyncManager.SyncPacketBase();
 
             for (int i = 0; i < length; i++)
             {

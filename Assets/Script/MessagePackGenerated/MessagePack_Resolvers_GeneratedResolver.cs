@@ -53,7 +53,7 @@ namespace MessagePack.Resolvers
             {
                 { typeof(global::System.Collections.Generic.Dictionary<string, object>), 0 },
                 { typeof(global::System.Collections.Generic.List<global::ItemInfo>), 1 },
-                { typeof(global::System.Collections.Generic.List<global::SyncManager.PacketBase>), 2 },
+                { typeof(global::System.Collections.Generic.List<global::SyncManager.SyncPacketBase>), 2 },
                 { typeof(global::System.Collections.Generic.List<global::SyncManager.UnitData>), 3 },
                 { typeof(global::Define.eItemType), 4 },
                 { typeof(global::Packet.ePACKET_TYPE), 5 },
@@ -63,7 +63,7 @@ namespace MessagePack.Resolvers
                 { typeof(global::ItemInfo), 9 },
                 { typeof(global::SyncManager.AttackDamage), 10 },
                 { typeof(global::SyncManager.GameResult), 11 },
-                { typeof(global::SyncManager.PacketBase), 12 },
+                { typeof(global::SyncManager.SyncPacketBase), 12 },
                 { typeof(global::SyncManager.PlayerInfo), 13 },
                 { typeof(global::SyncManager.Ready), 14 },
                 { typeof(global::SyncManager.SVector3), 15 },
@@ -85,7 +85,7 @@ namespace MessagePack.Resolvers
             {
                 case 0: return new global::MessagePack.Formatters.DictionaryFormatter<string, object>();
                 case 1: return new global::MessagePack.Formatters.ListFormatter<global::ItemInfo>();
-                case 2: return new global::MessagePack.Formatters.ListFormatter<global::SyncManager.PacketBase>();
+                case 2: return new global::MessagePack.Formatters.ListFormatter<global::SyncManager.SyncPacketBase>();
                 case 3: return new global::MessagePack.Formatters.ListFormatter<global::SyncManager.UnitData>();
                 case 4: return new MessagePack.Formatters.Define.eItemTypeFormatter();
                 case 5: return new MessagePack.Formatters.Packet.ePACKET_TYPEFormatter();

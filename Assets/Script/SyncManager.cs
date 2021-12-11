@@ -76,9 +76,9 @@ public class SyncManager
         To = to;
     }
 
-    public void Request(PacketBase packet)
+    public void Request(SyncPacketBase syncPacket)
     {
-        _syncPacket.Add(packet);
+        _syncPacket.Add(syncPacket);
     }
     
     public void Capture()
@@ -149,9 +149,9 @@ public class SyncManager
     [MessagePackObject]
     public class SyncPacket
     {
-        [Key(0)] public List<PacketBase> Packets = new List<PacketBase>();
+        [Key(0)] public List<SyncPacketBase> Packets = new List<SyncPacketBase>();
 
-        public void Add<T>(T packet) where T : PacketBase
+        public void Add<T>(T packet) where T : SyncPacketBase
         {
             var isContains = false;
             foreach (var p in Packets)
@@ -167,13 +167,13 @@ public class SyncManager
                         case ePacketType.UnitUpdate:
                             break;
                         case ePacketType.AttackDamage:
-                            p.UpdateValue(((AttackDamage) packet).Damage);
+                            p.UpdateValue((packet as AttackDamage).Damage);
                             break;
                         case ePacketType.UpdateAttackCombo:
-                            p.UpdateValue(((UpdateAttackCombo) packet).Combo);
+                            p.UpdateValue((packet as UpdateAttackCombo).Combo);
                             break;
                         case ePacketType.UpdateStackDamage:
-                            p.UpdateValue(((UpdateStackDamage) packet).StackDamage);
+                            p.UpdateValue((packet as UpdateStackDamage).StackDamage);
                             break;
                         case ePacketType.GameResult:
                             break;
@@ -190,7 +190,7 @@ public class SyncManager
     }
 
     [MessagePackObject]
-    public class PacketBase
+    public class SyncPacketBase
     {
         [Key(0)] public ePacketType PacketType = ePacketType.None;
 
@@ -200,7 +200,7 @@ public class SyncManager
     }
 
     [MessagePackObject]
-    public class PlayerInfo : PacketBase
+    public class PlayerInfo : SyncPacketBase
     {
         [Key(1)] public string HeroKey;
         [Key(2)] public int MMR;
@@ -213,7 +213,7 @@ public class SyncManager
     }
 
     [MessagePackObject]
-    public class Ready : PacketBase
+    public class Ready : SyncPacketBase
     {
         [Key(1)] public DateTime ReadyTime;
 
@@ -224,7 +224,7 @@ public class SyncManager
     }
 
     [MessagePackObject]
-    public class UpdateUnit : PacketBase
+    public class UpdateUnit : SyncPacketBase
     {
         [Key(1)] public List<UnitData> UnitsDatas = new List<UnitData>();
 
@@ -235,7 +235,7 @@ public class SyncManager
     }
 
     [MessagePackObject]
-    public class AttackDamage : PacketBase
+    public class AttackDamage : SyncPacketBase
     {
         [Key(1)] public int Damage;
 
@@ -251,7 +251,7 @@ public class SyncManager
         }
     }
 
-    public class UpdateAttackCombo : PacketBase
+    public class UpdateAttackCombo : SyncPacketBase
     {
         [Key(1)] public int Combo;
 
@@ -267,7 +267,7 @@ public class SyncManager
         }
     }
 
-    public class UpdateStackDamage : PacketBase
+    public class UpdateStackDamage : SyncPacketBase
     {
         [Key(1)] public int StackDamage;
 
@@ -284,7 +284,7 @@ public class SyncManager
     }
 
     [MessagePackObject]
-    public class GameResult : PacketBase
+    public class GameResult : SyncPacketBase
     {
         [Key(1)] public DateTime GameOverTime;
         [Key(2)] public bool isGameOver;
