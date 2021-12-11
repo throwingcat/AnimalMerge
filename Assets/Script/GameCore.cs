@@ -5,6 +5,7 @@ using BackEnd;
 using Common;
 using Define;
 using DG.Tweening;
+using MessagePack;
 using Newtonsoft.Json;
 using Packet;
 using SheetData;
@@ -1139,46 +1140,38 @@ public class GameCore : MonoBehaviour
 
     public void OnReceiveSyncPacket(SyncManager.SyncPacket syncPacket)
     {
-        foreach (var p in syncPacket.Packets)
+        foreach(var bytes in syncPacket.Bytes)
         {
-            SyncManager.SyncPacketBase packet = p;
+            SyncManager.SyncPacketBase packet = MessagePackSerializer.Deserialize<SyncManager.SyncPacketBase>(bytes);
             
-            switch (p.PacketType)
+            switch (packet)
             {
-                case SyncManager.ePacketType.PlayerInfo:
-                    OnReceivePlayerInfoPacket(packet as SyncManager.PlayerInfo);
+                case SyncManager.PlayerInfo playerInfo:
+                    OnReceivePlayerInfoPacket(playerInfo);
                     break;
-                case SyncManager.ePacketType.Ready:
-                    OnReceiveReadyPacket((SyncManager.Ready)packet);
+                case SyncManager.Ready ready:
+                    OnReceiveReadyPacket(ready);
                     break;
-                case SyncManager.ePacketType.UnitUpdate:
+                case SyncManager.UpdateUnit updateUnit:
                     if (IsPlayer)
-                        OnReceiveUpdateUnit(p as SyncManager.UpdateUnit);
+                        OnReceiveUpdateUnit(updateUnit);
                     break;
-                case SyncManager.ePacketType.AttackDamage:
-                    OnReceiveAttack((p as SyncManager.AttackDamage).Damage);
+                case SyncManager.AttackDamage attackDamage:
+                    OnReceiveAttack(attackDamage.Damage);
                     break;
-                case SyncManager.ePacketType.UpdateAttackCombo:
-                    OnReceiveCombo((p as SyncManager.UpdateAttackCombo).Combo);
+                case SyncManager.UpdateAttackCombo updateAttackCombo:
+                    OnReceiveCombo(updateAttackCombo.Combo);
                     break;
-                case SyncManager.ePacketType.UpdateStackDamage:
+                case SyncManager.UpdateStackDamage updateStackDamage:
                     if (IsPlayer)
                     {
-                        PanelIngame.RefreshEnemyBadBlock((p as SyncManager.UpdateStackDamage).StackDamage);
+                        PanelIngame.RefreshEnemyBadBlock(updateStackDamage.StackDamage);
                         RefreshBadBlockUI();
                     }
-
                     break;
-                case SyncManager.ePacketType.GameResult:
-                {
-                    var result = p as SyncManager.GameResult;
-                    OnReceiveGameResult(result.isGameOver, result.GameOverTime);
-                }
+                case SyncManager.GameResult gameResult:
+                    OnReceiveGameResult(gameResult.isGameOver, gameResult.GameOverTime);
                     break;
-                case SyncManager.ePacketType.None:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
     }

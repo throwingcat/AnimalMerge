@@ -80,7 +80,7 @@ public class SyncManager
     {
         _syncPacket.Add(syncPacket);
     }
-    
+
     public void Capture()
     {
         //유닛 목록 업데이트
@@ -105,11 +105,16 @@ public class SyncManager
 
         OnSyncCapture?.Invoke(_syncPacket);
 
+        _syncPacket.Bytes.Clear();
+        foreach (var packet in _syncPacket.Packets)
+            _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(packet));
+
         //싱글 플레이의 경우 From < - > To 끼리 바로 통신
         if (GameManager.Instance.isSinglePlay)
         {
             To.SyncManager.Receive(_syncPacket);
             _syncPacket.Packets.Clear();
+            _syncPacket.Bytes.Clear();
             return;
         }
 
@@ -118,6 +123,7 @@ public class SyncManager
         {
             var bytes = MessagePackSerializer.Serialize(_syncPacket);
             _syncPacket.Packets.Clear();
+            _syncPacket.Bytes.Clear();
             Backend.Match.SendDataToInGameRoom(bytes);
         }
     }
@@ -149,40 +155,32 @@ public class SyncManager
     [MessagePackObject]
     public class SyncPacket
     {
-        [Key(0)] public List<SyncPacketBase> Packets = new List<SyncPacketBase>();
+        [Key(0)] public List<byte[]> Bytes = new List<byte[]>();
+
+        [IgnoreMember] public List<SyncPacketBase> Packets = new List<SyncPacketBase>();
 
         public void Add<T>(T packet) where T : SyncPacketBase
         {
             var isContains = false;
             foreach (var p in Packets)
+            {
                 if (p.PacketType == packet.PacketType)
                 {
                     isContains = true;
-                    switch (p.PacketType)
+                    switch (p)
                     {
-                        case ePacketType.PlayerInfo:
+                        case AttackDamage attackDamage:
+                            p.UpdateValue(attackDamage.Damage);
                             break;
-                        case ePacketType.Ready:
+                        case UpdateAttackCombo updateAttackCombo:
+                            p.UpdateValue(updateAttackCombo.Combo);
                             break;
-                        case ePacketType.UnitUpdate:
+                        case UpdateStackDamage updateStackDamage:
+                            p.UpdateValue(updateStackDamage.StackDamage);
                             break;
-                        case ePacketType.AttackDamage:
-                            p.UpdateValue((packet as AttackDamage).Damage);
-                            break;
-                        case ePacketType.UpdateAttackCombo:
-                            p.UpdateValue((packet as UpdateAttackCombo).Combo);
-                            break;
-                        case ePacketType.UpdateStackDamage:
-                            p.UpdateValue((packet as UpdateStackDamage).StackDamage);
-                            break;
-                        case ePacketType.GameResult:
-                            break;
-                        case ePacketType.None:
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
                     }
                 }
+            }
 
             if (isContains == false)
                 Packets.Add(packet);
