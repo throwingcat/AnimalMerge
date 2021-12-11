@@ -149,6 +149,7 @@ public class SyncManager
         if (Backend.Match.IsMatchServerConnect() && Backend.Match.IsInGameServerConnect())
         {
             var bytes = MessagePackSerializer.Serialize(_syncPacket);
+            Debug.Log(string.Format("패킷 전송량 : {0}",bytes.Length));
             _syncPacket.Packets.Clear();
             _syncPacket.Bytes.Clear();
             Backend.Match.SendDataToInGameRoom(bytes);
