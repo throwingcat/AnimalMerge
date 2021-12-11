@@ -52,8 +52,8 @@ namespace MessagePack.Resolvers
             lookup = new global::System.Collections.Generic.Dictionary<Type, int>(19)
             {
                 { typeof(global::System.Collections.Generic.Dictionary<string, object>), 0 },
-                { typeof(global::System.Collections.Generic.List<global::ItemInfo>), 1 },
-                { typeof(global::System.Collections.Generic.List<global::SyncManager.SyncPacketBase>), 2 },
+                { typeof(global::System.Collections.Generic.List<byte[]>), 1 },
+                { typeof(global::System.Collections.Generic.List<global::ItemInfo>), 2 },
                 { typeof(global::System.Collections.Generic.List<global::SyncManager.UnitData>), 3 },
                 { typeof(global::Define.eItemType), 4 },
                 { typeof(global::Packet.ePACKET_TYPE), 5 },
@@ -84,8 +84,8 @@ namespace MessagePack.Resolvers
             switch (key)
             {
                 case 0: return new global::MessagePack.Formatters.DictionaryFormatter<string, object>();
-                case 1: return new global::MessagePack.Formatters.ListFormatter<global::ItemInfo>();
-                case 2: return new global::MessagePack.Formatters.ListFormatter<global::SyncManager.SyncPacketBase>();
+                case 1: return new global::MessagePack.Formatters.ListFormatter<byte[]>();
+                case 2: return new global::MessagePack.Formatters.ListFormatter<global::ItemInfo>();
                 case 3: return new global::MessagePack.Formatters.ListFormatter<global::SyncManager.UnitData>();
                 case 4: return new MessagePack.Formatters.Define.eItemTypeFormatter();
                 case 5: return new MessagePack.Formatters.Packet.ePACKET_TYPEFormatter();

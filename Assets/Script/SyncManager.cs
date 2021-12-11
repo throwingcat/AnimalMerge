@@ -11,7 +11,7 @@ public class SyncManager
     {
         PlayerInfo,
         Ready,
-        UnitUpdate,
+        UpdateUnit,
         AttackDamage,
         UpdateAttackCombo,
         UpdateStackDamage,
@@ -107,7 +107,33 @@ public class SyncManager
 
         _syncPacket.Bytes.Clear();
         foreach (var packet in _syncPacket.Packets)
-            _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(packet));
+        {
+            switch (packet.PacketType)
+            {
+                case ePacketType.PlayerInfo:
+                    _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(packet as PlayerInfo));
+                    break;
+                case ePacketType.Ready:
+                    _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(packet as Ready));
+                    break;
+                case ePacketType.UpdateUnit:
+                    _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(packet as UpdateUnit));
+                    break;
+                case ePacketType.AttackDamage:
+                    _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(packet as AttackDamage));
+                    break;
+                case ePacketType.UpdateAttackCombo:
+                    _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(packet as UpdateAttackCombo));
+                    break;
+                case ePacketType.UpdateStackDamage:
+                    _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(packet as UpdateStackDamage));
+                    break;
+                case ePacketType.GameResult:
+                    _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(packet as GameResult));
+                    break;
+            }
+            
+        }
 
         //싱글 플레이의 경우 From < - > To 끼리 바로 통신
         if (GameManager.Instance.isSinglePlay)
@@ -156,7 +182,6 @@ public class SyncManager
     public class SyncPacket
     {
         [Key(0)] public List<byte[]> Bytes = new List<byte[]>();
-
         [IgnoreMember] public List<SyncPacketBase> Packets = new List<SyncPacketBase>();
 
         public void Add<T>(T packet) where T : SyncPacketBase
@@ -169,6 +194,9 @@ public class SyncManager
                     isContains = true;
                     switch (p)
                     {
+                        case PlayerInfo playerInfo:
+                            Debug.Log(playerInfo.Name);
+                            break;
                         case AttackDamage attackDamage:
                             p.UpdateValue(attackDamage.Damage);
                             break;
@@ -228,7 +256,7 @@ public class SyncManager
 
         public UpdateUnit()
         {
-            PacketType = ePacketType.UnitUpdate;
+            PacketType = ePacketType.UpdateUnit;
         }
     }
 

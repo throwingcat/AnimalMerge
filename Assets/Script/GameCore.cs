@@ -1144,33 +1144,43 @@ public class GameCore : MonoBehaviour
         {
             SyncManager.SyncPacketBase packet = MessagePackSerializer.Deserialize<SyncManager.SyncPacketBase>(bytes);
             
-            switch (packet)
+            switch (packet.PacketType)
             {
-                case SyncManager.PlayerInfo playerInfo:
-                    OnReceivePlayerInfoPacket(playerInfo);
+                case SyncManager.ePacketType.PlayerInfo:
+                    OnReceivePlayerInfoPacket(MessagePackSerializer.Deserialize<SyncManager.PlayerInfo>(bytes));
                     break;
-                case SyncManager.Ready ready:
-                    OnReceiveReadyPacket(ready);
+                case SyncManager.ePacketType.Ready:
+                    OnReceiveReadyPacket(MessagePackSerializer.Deserialize<SyncManager.Ready>(bytes));
                     break;
-                case SyncManager.UpdateUnit updateUnit:
+                case SyncManager.ePacketType.UpdateUnit:
                     if (IsPlayer)
-                        OnReceiveUpdateUnit(updateUnit);
+                        OnReceiveUpdateUnit(MessagePackSerializer.Deserialize<SyncManager.UpdateUnit>(bytes));
                     break;
-                case SyncManager.AttackDamage attackDamage:
-                    OnReceiveAttack(attackDamage.Damage);
+                case SyncManager.ePacketType.AttackDamage:
+                {
+                    var convert = MessagePackSerializer.Deserialize<SyncManager.AttackDamage>(bytes);
+                    OnReceiveAttack(convert.Damage);
+                }
                     break;
-                case SyncManager.UpdateAttackCombo updateAttackCombo:
-                    OnReceiveCombo(updateAttackCombo.Combo);
+                case SyncManager.ePacketType.UpdateAttackCombo:
+                {
+                    var convert = MessagePackSerializer.Deserialize<SyncManager.UpdateAttackCombo>(bytes);
+                    OnReceiveCombo(convert.Combo);
+                }
                     break;
-                case SyncManager.UpdateStackDamage updateStackDamage:
+                case SyncManager.ePacketType.UpdateStackDamage:
                     if (IsPlayer)
                     {
-                        PanelIngame.RefreshEnemyBadBlock(updateStackDamage.StackDamage);
+                        var convert = MessagePackSerializer.Deserialize<SyncManager.UpdateStackDamage>(bytes);
+                        PanelIngame.RefreshEnemyBadBlock(convert.StackDamage);
                         RefreshBadBlockUI();
                     }
                     break;
-                case SyncManager.GameResult gameResult:
-                    OnReceiveGameResult(gameResult.isGameOver, gameResult.GameOverTime);
+                case SyncManager.ePacketType.GameResult:
+                {
+                    var convert = MessagePackSerializer.Deserialize<SyncManager.GameResult>(bytes);
+                    OnReceiveGameResult(convert.isGameOver, convert.GameOverTime);
+                }
                     break;
             }
         }

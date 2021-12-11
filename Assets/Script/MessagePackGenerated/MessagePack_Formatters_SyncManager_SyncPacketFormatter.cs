@@ -32,7 +32,7 @@ namespace MessagePack.Formatters
 
             global::MessagePack.IFormatterResolver formatterResolver = options.Resolver;
             writer.WriteArrayHeader(1);
-            formatterResolver.GetFormatterWithVerify<global::System.Collections.Generic.List<global::SyncManager.SyncPacketBase>>().Serialize(ref writer, value.Packets, options);
+            formatterResolver.GetFormatterWithVerify<global::System.Collections.Generic.List<byte[]>>().Serialize(ref writer, value.Bytes, options);
         }
 
         public global::SyncManager.SyncPacket Deserialize(ref global::MessagePack.MessagePackReader reader, global::MessagePack.MessagePackSerializerOptions options)
@@ -52,7 +52,7 @@ namespace MessagePack.Formatters
                 switch (i)
                 {
                     case 0:
-                        ____result.Packets = formatterResolver.GetFormatterWithVerify<global::System.Collections.Generic.List<global::SyncManager.SyncPacketBase>>().Deserialize(ref reader, options);
+                        ____result.Bytes = formatterResolver.GetFormatterWithVerify<global::System.Collections.Generic.List<byte[]>>().Deserialize(ref reader, options);
                         break;
                     default:
                         reader.Skip();
