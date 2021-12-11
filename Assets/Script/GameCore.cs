@@ -25,6 +25,7 @@ public class GameCore : MonoBehaviour
     #endregion
 
     private PlayerInfo PlayerInfo => PlayerDataManager.Get<PlayerInfo>();
+
     protected float HorizontalSpawnLimit =>
         (float) (500f - EnvironmentValue.UNIT_BASE_SIZE * CurrentReadyUnit.Sheet.size *
             EnvironmentValue.WORLD_RATIO);
@@ -1140,10 +1141,10 @@ public class GameCore : MonoBehaviour
 
     public void OnReceiveSyncPacket(SyncManager.SyncPacket syncPacket)
     {
-        foreach(var bytes in syncPacket.Bytes)
+        foreach (var bytes in syncPacket.Bytes)
         {
             SyncManager.SyncPacketBase packet = MessagePackSerializer.Deserialize<SyncManager.SyncPacketBase>(bytes);
-            
+            Debug.Log(string.Format("Receive Sync Packet : {0}", packet.PacketType));
             switch (packet.PacketType)
             {
                 case SyncManager.ePacketType.PlayerInfo:
@@ -1175,6 +1176,7 @@ public class GameCore : MonoBehaviour
                         PanelIngame.RefreshEnemyBadBlock(convert.StackDamage);
                         RefreshBadBlockUI();
                     }
+
                     break;
                 case SyncManager.ePacketType.GameResult:
                 {
