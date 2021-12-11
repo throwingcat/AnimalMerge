@@ -48,7 +48,7 @@ public class EnemyScreen : MonoBehaviour
             var unitBase = go.GetComponent<UnitBase>();
 
             unitBase.transform.SetParent(_unitParent);
-            unitBase.OnSpawn(unit.UnitKey.ToString(), null, null)
+            unitBase.OnSpawn(sheet.key, null, null)
                 .SetPosition(unit.UnitPosition.ToVector3())
                 .SetRotation(unit.UnitRotation.ToVector3());
             unitBase.gameObject.SetActive(true);
