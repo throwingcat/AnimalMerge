@@ -151,7 +151,7 @@ public class SyncManager
     {
         [Key(0)] public List<PacketBase> Packets = new List<PacketBase>();
 
-        public void Add(PacketBase packet)
+        public void Add<T>(T packet) where T : PacketBase
         {
             var isContains = false;
             foreach (var p in Packets)
