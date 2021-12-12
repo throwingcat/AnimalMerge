@@ -108,16 +108,26 @@ public class SyncManager
         _syncPacket.Bytes.Clear();
         foreach (var packet in _syncPacket.Packets)
         {
+            Debug.Log(string.Format("Serialize {0}", packet.PacketType));
             switch (packet.PacketType)
             {
                 case ePacketType.PlayerInfo:
-                    _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(packet as PlayerInfo));
+                {
+                    PlayerInfo convert = packet as PlayerInfo;
+                    _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(convert));
+                }
                     break;
                 case ePacketType.Ready:
-                    _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(packet as Ready));
+                {
+                    Ready convert = packet as Ready;
+                    _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(convert));
+                }
                     break;
                 case ePacketType.UpdateUnit:
-                    _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(packet as UpdateUnit));
+                {
+                    UpdateUnit convert = packet as UpdateUnit;
+                    _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(convert));
+                }
                     break;
                 case ePacketType.AttackDamage:
                     _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(packet as AttackDamage));
@@ -133,20 +143,21 @@ public class SyncManager
                     break;
             }
         }
-        
+
         //싱글 플레이의 경우 From < - > To 끼리 바로 통신
         if (GameManager.Instance.isSinglePlay)
         {
             To.SyncManager.Receive(_syncPacket);
             _syncPacket.Packets.Clear();
-            _syncPacket.Bytes.Clear();    
+            _syncPacket.Bytes.Clear();
             return;
         }
 
         //매치 서버로 송신
         if (Backend.Match.IsMatchServerConnect() && Backend.Match.IsInGameServerConnect())
         {
-            var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
+            var lz4Options =
+                MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
             var bytes = MessagePackSerializer.Serialize(_syncPacket, lz4Options);
             _syncPacket.Packets.Clear();
             _syncPacket.Bytes.Clear();
