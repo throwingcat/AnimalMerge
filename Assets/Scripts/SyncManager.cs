@@ -112,7 +112,6 @@ public class SyncManager
 
         var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
         var bytes = MessagePackSerializer.Serialize(_syncPacket, lz4Options);
-        Debug.LogWarning("Packet Size : " +bytes.Length);
         
         //싱글 플레이의 경우 From < - > To 끼리 바로 통신
         if (GameManager.Instance.isSinglePlay)
