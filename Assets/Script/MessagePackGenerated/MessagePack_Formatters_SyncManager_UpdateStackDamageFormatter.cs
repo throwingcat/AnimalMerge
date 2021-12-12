@@ -19,10 +19,10 @@ namespace MessagePack.Formatters
     using global::System.Buffers;
     using global::MessagePack;
 
-    public sealed class SyncManager_PacketBaseFormatter : global::MessagePack.Formatters.IMessagePackFormatter<global::SyncManager.SyncPacketBase>
+    public sealed class SyncManager_UpdateStackDamageFormatter : global::MessagePack.Formatters.IMessagePackFormatter<global::SyncManager.UpdateStackDamage>
     {
 
-        public void Serialize(ref global::MessagePack.MessagePackWriter writer, global::SyncManager.SyncPacketBase value, global::MessagePack.MessagePackSerializerOptions options)
+        public void Serialize(ref global::MessagePack.MessagePackWriter writer, global::SyncManager.UpdateStackDamage value, global::MessagePack.MessagePackSerializerOptions options)
         {
             if (value == null)
             {
@@ -30,12 +30,12 @@ namespace MessagePack.Formatters
                 return;
             }
 
-            global::MessagePack.IFormatterResolver formatterResolver = options.Resolver;
-            writer.WriteArrayHeader(1);
-            formatterResolver.GetFormatterWithVerify<global::SyncManager.ePacketType>().Serialize(ref writer, value.PacketType, options);
+            writer.WriteArrayHeader(2);
+            writer.WriteNil();
+            writer.Write(value.StackDamage);
         }
 
-        public global::SyncManager.SyncPacketBase Deserialize(ref global::MessagePack.MessagePackReader reader, global::MessagePack.MessagePackSerializerOptions options)
+        public global::SyncManager.UpdateStackDamage Deserialize(ref global::MessagePack.MessagePackReader reader, global::MessagePack.MessagePackSerializerOptions options)
         {
             if (reader.TryReadNil())
             {
@@ -43,16 +43,15 @@ namespace MessagePack.Formatters
             }
 
             options.Security.DepthStep(ref reader);
-            global::MessagePack.IFormatterResolver formatterResolver = options.Resolver;
             var length = reader.ReadArrayHeader();
-            var ____result = new global::SyncManager.SyncPacketBase();
+            var ____result = new global::SyncManager.UpdateStackDamage();
 
             for (int i = 0; i < length; i++)
             {
                 switch (i)
                 {
-                    case 0:
-                        ____result.PacketType = formatterResolver.GetFormatterWithVerify<global::SyncManager.ePacketType>().Deserialize(ref reader, options);
+                    case 1:
+                        ____result.StackDamage = reader.ReadInt32();
                         break;
                     default:
                         reader.Skip();

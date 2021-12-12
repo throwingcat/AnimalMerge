@@ -133,7 +133,7 @@ public class GameCore : MonoBehaviour
         playerInfo.HeroKey = PlayerHeroKey;
         playerInfo.MMR = PlayerInfo.elements.RankScore;
         playerInfo.Name = PlayerInfo.elements.Nickname;
-        SyncManager.Request(playerInfo);
+        SyncManager.Request(SyncManager.ePacketType.PlayerInfo, MessagePackSerializer.Serialize(playerInfo));
 
         //게임 카메라 루트 활성화
         BattleCameraGroup.SetActive(true);
@@ -1141,34 +1141,31 @@ public class GameCore : MonoBehaviour
 
     public void OnReceiveSyncPacket(SyncManager.SyncPacket syncPacket)
     {
-        var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
         foreach (var bytes in syncPacket.Bytes)
         {
-            SyncManager.SyncPacketBase packet =
-                MessagePackSerializer.Deserialize<SyncManager.SyncPacketBase>(bytes, lz4Options);
-            switch (packet.PacketType)
+            switch (bytes.Key)
             {
                 case SyncManager.ePacketType.PlayerInfo:
                     OnReceivePlayerInfoPacket(
-                        MessagePackSerializer.Deserialize<SyncManager.PlayerInfo>(bytes, lz4Options));
+                        MessagePackSerializer.Deserialize<SyncManager.PlayerInfo>(bytes.Value));
                     break;
                 case SyncManager.ePacketType.Ready:
-                    OnReceiveReadyPacket(MessagePackSerializer.Deserialize<SyncManager.Ready>(bytes, lz4Options));
+                    OnReceiveReadyPacket(MessagePackSerializer.Deserialize<SyncManager.Ready>(bytes.Value));
                     break;
                 case SyncManager.ePacketType.UpdateUnit:
                     if (IsPlayer)
                         OnReceiveUpdateUnit(
-                            MessagePackSerializer.Deserialize<SyncManager.UpdateUnit>(bytes, lz4Options));
+                            MessagePackSerializer.Deserialize<SyncManager.UpdateUnit>(bytes.Value));
                     break;
                 case SyncManager.ePacketType.AttackDamage:
                 {
-                    var convert = MessagePackSerializer.Deserialize<SyncManager.AttackDamage>(bytes, lz4Options);
+                    var convert = MessagePackSerializer.Deserialize<SyncManager.AttackDamage>(bytes.Value);
                     OnReceiveAttack(convert.Damage);
                 }
                     break;
                 case SyncManager.ePacketType.UpdateAttackCombo:
                 {
-                    var convert = MessagePackSerializer.Deserialize<SyncManager.UpdateAttackCombo>(bytes, lz4Options);
+                    var convert = MessagePackSerializer.Deserialize<SyncManager.UpdateAttackCombo>(bytes.Value);
                     OnReceiveCombo(convert.Combo);
                 }
                     break;
@@ -1176,7 +1173,7 @@ public class GameCore : MonoBehaviour
                     if (IsPlayer)
                     {
                         var convert =
-                            MessagePackSerializer.Deserialize<SyncManager.UpdateStackDamage>(bytes, lz4Options);
+                            MessagePackSerializer.Deserialize<SyncManager.UpdateStackDamage>(bytes.Value);
                         PanelIngame.RefreshEnemyBadBlock(convert.StackDamage);
                         RefreshBadBlockUI();
                     }
@@ -1184,7 +1181,7 @@ public class GameCore : MonoBehaviour
                     break;
                 case SyncManager.ePacketType.GameResult:
                 {
-                    var convert = MessagePackSerializer.Deserialize<SyncManager.GameResult>(bytes, lz4Options);
+                    var convert = MessagePackSerializer.Deserialize<SyncManager.GameResult>(bytes.Value);
                     OnReceiveGameResult(convert.isGameOver, convert.GameOverTime);
                 }
                     break;

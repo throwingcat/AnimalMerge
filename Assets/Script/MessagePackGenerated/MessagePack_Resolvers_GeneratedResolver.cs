@@ -49,10 +49,10 @@ namespace MessagePack.Resolvers
 
         static GeneratedResolverGetFormatterHelper()
         {
-            lookup = new global::System.Collections.Generic.Dictionary<Type, int>(19)
+            lookup = new global::System.Collections.Generic.Dictionary<Type, int>(20)
             {
-                { typeof(global::System.Collections.Generic.Dictionary<string, object>), 0 },
-                { typeof(global::System.Collections.Generic.List<byte[]>), 1 },
+                { typeof(global::System.Collections.Generic.Dictionary<global::SyncManager.ePacketType, byte[]>), 0 },
+                { typeof(global::System.Collections.Generic.Dictionary<string, object>), 1 },
                 { typeof(global::System.Collections.Generic.List<global::ItemInfo>), 2 },
                 { typeof(global::System.Collections.Generic.List<global::SyncManager.UnitData>), 3 },
                 { typeof(global::Define.eItemType), 4 },
@@ -67,9 +67,10 @@ namespace MessagePack.Resolvers
                 { typeof(global::SyncManager.Ready), 13 },
                 { typeof(global::SyncManager.SVector3), 14 },
                 { typeof(global::SyncManager.SyncPacket), 15 },
-                { typeof(global::SyncManager.SyncPacketBase), 16 },
-                { typeof(global::SyncManager.UnitData), 17 },
-                { typeof(global::SyncManager.UpdateUnit), 18 },
+                { typeof(global::SyncManager.UnitData), 16 },
+                { typeof(global::SyncManager.UpdateAttackCombo), 17 },
+                { typeof(global::SyncManager.UpdateStackDamage), 18 },
+                { typeof(global::SyncManager.UpdateUnit), 19 },
             };
         }
 
@@ -83,8 +84,8 @@ namespace MessagePack.Resolvers
 
             switch (key)
             {
-                case 0: return new global::MessagePack.Formatters.DictionaryFormatter<string, object>();
-                case 1: return new global::MessagePack.Formatters.ListFormatter<byte[]>();
+                case 0: return new global::MessagePack.Formatters.DictionaryFormatter<global::SyncManager.ePacketType, byte[]>();
+                case 1: return new global::MessagePack.Formatters.DictionaryFormatter<string, object>();
                 case 2: return new global::MessagePack.Formatters.ListFormatter<global::ItemInfo>();
                 case 3: return new global::MessagePack.Formatters.ListFormatter<global::SyncManager.UnitData>();
                 case 4: return new MessagePack.Formatters.Define.eItemTypeFormatter();
@@ -99,9 +100,10 @@ namespace MessagePack.Resolvers
                 case 13: return new MessagePack.Formatters.SyncManager_ReadyFormatter();
                 case 14: return new MessagePack.Formatters.SyncManager_SVector3Formatter();
                 case 15: return new MessagePack.Formatters.SyncManager_SyncPacketFormatter();
-                case 16: return new MessagePack.Formatters.SyncManager_SyncPacketBaseFormatter();
-                case 17: return new MessagePack.Formatters.SyncManager_UnitDataFormatter();
-                case 18: return new MessagePack.Formatters.SyncManager_UpdateUnitFormatter();
+                case 16: return new MessagePack.Formatters.SyncManager_UnitDataFormatter();
+                case 17: return new MessagePack.Formatters.SyncManager_UpdateAttackComboFormatter();
+                case 18: return new MessagePack.Formatters.SyncManager_UpdateStackDamageFormatter();
+                case 19: return new MessagePack.Formatters.SyncManager_UpdateUnitFormatter();
                 default: return null;
             }
         }

@@ -184,7 +184,6 @@
      <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\ParticleSystemController.cs" />
      <Compile Include="Assets\Violet\External Asset\SUI\SUIPanelInfo.cs" />
      <Compile Include="Assets\Script\UI\PanelLobby.cs" />
-     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_SyncPacketBaseFormatter.cs" />
      <Compile Include="Assets\Violet\Manager\UIManager.cs" />
      <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_PlayerInfoFormatter.cs" />
      <Compile Include="Assets\Violet\Common\MonoObjectPool.cs" />
@@ -253,7 +252,6 @@
      <Compile Include="Assets\Violet\UI\PartCurtain.cs" />
      <Compile Include="Assets\Violet\Common\FXController.cs" />
      <Compile Include="Assets\Script\Data\BattlePass.cs" />
-     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_PacketBaseFormatter.cs" />
      <Compile Include="Assets\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModulePhysics.cs" />
      <Compile Include="Assets\Violet\Common\SubscribeBase.cs" />
      <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\ProjectileMoveScript.cs" />
@@ -295,6 +293,8 @@
      <Compile Include="Assets\Script\Uitls\ScrollRectDisableDrag.cs" />
      <Compile Include="Assets\Script\PlayerData\ChestInventory.cs" />
      <Compile Include="Assets\Script\UI\PartSimpleNotice.cs" />
+     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_UpdateAttackComboFormatter.cs" />
+     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_UpdateStackDamageFormatter.cs" />
      <None Include="Assets\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\Hovl Studio\Fantastic cartoon VFX\Shaders\SlashOld.shader" />

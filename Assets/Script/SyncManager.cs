@@ -31,43 +31,48 @@ public class SyncManager
         From = from;
         From.MyReadyTime.Subscribe(value =>
         {
-            _syncPacket.Add(new Ready
-            {
-                ReadyTime = value
-            });
+            _syncPacket.Add(ePacketType.Ready,
+                MessagePackSerializer.Serialize(new Ready
+                {
+                    ReadyTime = value
+                }));
         }, false);
 
         From.MyStackDamage.Subscribe(value =>
         {
-            _syncPacket.Add(new UpdateStackDamage
-            {
-                StackDamage = value
-            });
+            _syncPacket.Add(ePacketType.UpdateStackDamage,
+                MessagePackSerializer.Serialize(new UpdateStackDamage
+                {
+                    StackDamage = value
+                }));
         }, false);
 
         From.AttackDamage.Subscribe(value =>
         {
-            _syncPacket.Add(new AttackDamage
-            {
-                Damage = value
-            });
+            _syncPacket.Add(ePacketType.AttackDamage,
+                MessagePackSerializer.Serialize(new AttackDamage
+                {
+                    Damage = value
+                }));
         }, false);
 
         From.AttackComboValue.Subscribe(value =>
         {
-            _syncPacket.Add(new UpdateAttackCombo
-            {
-                Combo = value
-            });
+            _syncPacket.Add(ePacketType.UpdateAttackCombo,
+                MessagePackSerializer.Serialize(new UpdateAttackCombo
+                {
+                    Combo = value
+                }));
         }, false);
 
         From.isGameOver.Subscribe(value =>
         {
-            _syncPacket.Add(new GameResult
-            {
-                isGameOver = value,
-                GameOverTime = From.GameOverTime
-            });
+            _syncPacket.Add(ePacketType.GameResult,
+                MessagePackSerializer.Serialize(new GameResult
+                {
+                    isGameOver = value,
+                    GameOverTime = From.GameOverTime
+                }));
         }, false);
     }
 
@@ -76,9 +81,9 @@ public class SyncManager
         To = to;
     }
 
-    public void Request(SyncPacketBase syncPacket)
+    public void Request(ePacketType type, byte[] bytes)
     {
-        _syncPacket.Add(syncPacket);
+        _syncPacket.Add(type, bytes);
     }
 
     public void Capture()
@@ -98,57 +103,21 @@ public class SyncManager
             pUpdateUnit.UnitDatas.Add(u);
         }
 
-        _syncPacket.Packets.Add(pUpdateUnit);
+        _syncPacket.Add(ePacketType.UpdateUnit, MessagePackSerializer.Serialize(pUpdateUnit));
 
         From.AttackDamage.Clear();
         From.AttackComboValue.Clear();
 
         OnSyncCapture?.Invoke(_syncPacket);
 
-        _syncPacket.Bytes.Clear();
-        foreach (var packet in _syncPacket.Packets)
-        {
-            Debug.Log(string.Format("Serialize {0}", packet.PacketType));
-            switch (packet.PacketType)
-            {
-                case ePacketType.PlayerInfo:
-                {
-                    PlayerInfo convert = packet as PlayerInfo;
-                    _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(convert));
-                }
-                    break;
-                case ePacketType.Ready:
-                {
-                    Ready convert = packet as Ready;
-                    _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(convert));
-                }
-                    break;
-                case ePacketType.UpdateUnit:
-                {
-                    UpdateUnit convert = packet as UpdateUnit;
-                    _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(convert));
-                }
-                    break;
-                case ePacketType.AttackDamage:
-                    _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(packet as AttackDamage));
-                    break;
-                case ePacketType.UpdateAttackCombo:
-                    _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(packet as UpdateAttackCombo));
-                    break;
-                case ePacketType.UpdateStackDamage:
-                    _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(packet as UpdateStackDamage));
-                    break;
-                case ePacketType.GameResult:
-                    _syncPacket.Bytes.Add(MessagePackSerializer.Serialize(packet as GameResult));
-                    break;
-            }
-        }
-
+        var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
+        var bytes = MessagePackSerializer.Serialize(_syncPacket, lz4Options);
+        Debug.LogWarning("Packet Size : " +bytes.Length);
+        
         //싱글 플레이의 경우 From < - > To 끼리 바로 통신
         if (GameManager.Instance.isSinglePlay)
         {
             To.SyncManager.Receive(_syncPacket);
-            _syncPacket.Packets.Clear();
             _syncPacket.Bytes.Clear();
             return;
         }
@@ -156,10 +125,6 @@ public class SyncManager
         //매치 서버로 송신
         if (Backend.Match.IsMatchServerConnect() && Backend.Match.IsInGameServerConnect())
         {
-            var lz4Options =
-                MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
-            var bytes = MessagePackSerializer.Serialize(_syncPacket, lz4Options);
-            _syncPacket.Packets.Clear();
             _syncPacket.Bytes.Clear();
             Backend.Match.SendDataToInGameRoom(bytes);
         }
@@ -190,83 +155,60 @@ public class SyncManager
     [MessagePackObject]
     public class SyncPacket
     {
-        [Key(0)] public List<byte[]> Bytes = new List<byte[]>();
-        [IgnoreMember] public List<SyncPacketBase> Packets = new List<SyncPacketBase>();
+        [Key(0)] public Dictionary<ePacketType, byte[]> Bytes = new Dictionary<ePacketType, byte[]>();
 
-        public void Add<T>(T packet) where T : SyncPacketBase
+        public void Add(ePacketType type, byte[] bytes)
         {
             var isContains = false;
-            foreach (var p in Packets)
-            {
-                if (p.PacketType == packet.PacketType)
-                {
-                    isContains = true;
-                    switch (p)
-                    {
-                        case PlayerInfo playerInfo:
-                            Debug.Log(playerInfo.Name);
-                            break;
-                        case AttackDamage attackDamage:
-                            p.UpdateValue(attackDamage.Damage);
-                            break;
-                        case UpdateAttackCombo updateAttackCombo:
-                            p.UpdateValue(updateAttackCombo.Combo);
-                            break;
-                        case UpdateStackDamage updateStackDamage:
-                            p.UpdateValue(updateStackDamage.StackDamage);
-                            break;
-                    }
-                }
-            }
-
-            if (isContains == false)
-                Packets.Add(packet);
+            if (Bytes.ContainsKey(type))
+                Bytes[type] = bytes;
+            else
+                Bytes.Add(type, bytes);
+            // foreach (var p in Packets)
+            // {
+            //     if (p.PacketType == packet.PacketType)
+            //     {
+            //         isContains = true;
+            //         switch (p)
+            //         {
+            //             case PlayerInfo playerInfo:
+            //                 Debug.Log(playerInfo.Name);
+            //                 break;
+            //             case AttackDamage attackDamage:
+            //                 p.UpdateValue(attackDamage.Damage);
+            //                 break;
+            //             case UpdateAttackCombo updateAttackCombo:
+            //                 p.UpdateValue(updateAttackCombo.Combo);
+            //                 break;
+            //             case UpdateStackDamage updateStackDamage:
+            //                 p.UpdateValue(updateStackDamage.StackDamage);
+            //                 break;
+            //         }
+            //     }
+            // }
+            //
+            // if (isContains == false)
+            //     Packets.Add(packet);
         }
     }
-
     [MessagePackObject]
-    public class SyncPacketBase
-    {
-        [Key(0)] public ePacketType PacketType = ePacketType.None;
-
-        public virtual void UpdateValue(int value)
-        {
-        }
-    }
-
-    [MessagePackObject]
-    public class PlayerInfo : SyncPacketBase
+    public class PlayerInfo 
     {
         [Key(1)] public string HeroKey;
         [Key(2)] public int MMR;
         [Key(3)] public string Name;
-
-        public PlayerInfo()
-        {
-            PacketType = ePacketType.PlayerInfo;
-        }
     }
 
     [MessagePackObject]
-    public class Ready : SyncPacketBase
+    public class Ready 
     {
         [Key(1)] public DateTime ReadyTime;
-
-        public Ready()
-        {
-            PacketType = ePacketType.Ready;
-        }
     }
 
     [MessagePackObject]
-    public class UpdateUnit : SyncPacketBase
+    public class UpdateUnit 
     {
         [Key(1)] public List<UnitData> UnitDatas = new List<UnitData>();
-
-        public UpdateUnit()
-        {
-            PacketType = ePacketType.UpdateUnit;
-        }
 
         public List<UnitData> Convert()
         {
@@ -282,64 +224,28 @@ public class SyncManager
     }
 
     [MessagePackObject]
-    public class AttackDamage : SyncPacketBase
+    public class AttackDamage
     {
         [Key(1)] public int Damage;
-
-        public AttackDamage()
-        {
-            PacketType = ePacketType.AttackDamage;
-        }
-
-        public override void UpdateValue(int value)
-        {
-            base.UpdateValue(value);
-            Damage = value;
-        }
-    }
-
-    public class UpdateAttackCombo : SyncPacketBase
-    {
-        [Key(1)] public int Combo;
-
-        public UpdateAttackCombo()
-        {
-            PacketType = ePacketType.UpdateAttackCombo;
-        }
-
-        public override void UpdateValue(int value)
-        {
-            base.UpdateValue(value);
-            Combo = value;
-        }
-    }
-
-    public class UpdateStackDamage : SyncPacketBase
-    {
-        [Key(1)] public int StackDamage;
-
-        public UpdateStackDamage()
-        {
-            PacketType = ePacketType.UpdateStackDamage;
-        }
-
-        public override void UpdateValue(int value)
-        {
-            base.UpdateValue(value);
-            StackDamage = value;
-        }
     }
 
     [MessagePackObject]
-    public class GameResult : SyncPacketBase
+    public class UpdateAttackCombo
+    {
+        [Key(1)] public int Combo;
+    }
+
+    [MessagePackObject]
+    public class UpdateStackDamage
+    {
+        [Key(1)] public int StackDamage;
+    }
+
+    [MessagePackObject]
+    public class GameResult
     {
         [Key(1)] public DateTime GameOverTime;
         [Key(2)] public bool isGameOver;
-
-        public GameResult()
-        {
-            PacketType = ePacketType.GameResult;
-        }
     }
 
     [Serializable]

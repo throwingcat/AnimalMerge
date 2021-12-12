@@ -32,7 +32,7 @@ namespace MessagePack.Formatters
 
             global::MessagePack.IFormatterResolver formatterResolver = options.Resolver;
             writer.WriteArrayHeader(3);
-            formatterResolver.GetFormatterWithVerify<global::SyncManager.ePacketType>().Serialize(ref writer, value.PacketType, options);
+            writer.WriteNil();
             formatterResolver.GetFormatterWithVerify<global::System.DateTime>().Serialize(ref writer, value.GameOverTime, options);
             writer.Write(value.isGameOver);
         }
@@ -53,9 +53,6 @@ namespace MessagePack.Formatters
             {
                 switch (i)
                 {
-                    case 0:
-                        ____result.PacketType = formatterResolver.GetFormatterWithVerify<global::SyncManager.ePacketType>().Deserialize(ref reader, options);
-                        break;
                     case 1:
                         ____result.GameOverTime = formatterResolver.GetFormatterWithVerify<global::System.DateTime>().Deserialize(ref reader, options);
                         break;

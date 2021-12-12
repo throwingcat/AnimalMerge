@@ -1,4 +1,5 @@
 using Define;
+using MessagePack;
 using SheetData;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ public class AICore : GameCore
     public override void Initialize(bool isPlayer)
     {
         IsPlayer = isPlayer;
-        
+
         Initialize();
 
         string ai_name = "";
@@ -39,8 +40,9 @@ public class AICore : GameCore
         playerInfo.HeroKey = PlayerHeroKey;
         playerInfo.MMR = MMR;
         playerInfo.Name = ai_name;
-        SyncManager.Request(playerInfo);
-        
+        SyncManager.Request(SyncManager.ePacketType.PlayerInfo,
+            MessagePackSerializer.Serialize(playerInfo));
+
         var mmr_ratio = Mathf.InverseLerp(EnvironmentValue.AI_INPUT_DELAY_LOW_MMR,
             EnvironmentValue.AI_INPUT_DELAY_HIGH_MMR, MMR);
 

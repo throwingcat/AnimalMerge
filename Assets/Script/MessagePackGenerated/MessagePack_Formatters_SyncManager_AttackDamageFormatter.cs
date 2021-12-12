@@ -30,9 +30,8 @@ namespace MessagePack.Formatters
                 return;
             }
 
-            global::MessagePack.IFormatterResolver formatterResolver = options.Resolver;
             writer.WriteArrayHeader(2);
-            formatterResolver.GetFormatterWithVerify<global::SyncManager.ePacketType>().Serialize(ref writer, value.PacketType, options);
+            writer.WriteNil();
             writer.Write(value.Damage);
         }
 
@@ -44,7 +43,6 @@ namespace MessagePack.Formatters
             }
 
             options.Security.DepthStep(ref reader);
-            global::MessagePack.IFormatterResolver formatterResolver = options.Resolver;
             var length = reader.ReadArrayHeader();
             var ____result = new global::SyncManager.AttackDamage();
 
@@ -52,9 +50,6 @@ namespace MessagePack.Formatters
             {
                 switch (i)
                 {
-                    case 0:
-                        ____result.PacketType = formatterResolver.GetFormatterWithVerify<global::SyncManager.ePacketType>().Deserialize(ref reader, options);
-                        break;
                     case 1:
                         ____result.Damage = reader.ReadInt32();
                         break;
