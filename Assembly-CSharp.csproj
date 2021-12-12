@@ -101,14 +101,14 @@
      <Compile Include="Assets\Violet\Common\CSVReader.cs" />
      <Compile Include="Assets\Violet\Audio\AudioManager.cs" />
      <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\SaveParticleSystemScript.cs" />
-     <Compile Include="Assets\Script\TextPreset.cs" />
+     <Compile Include="Assets\Script\Uitls\TextPreset.cs" />
      <Compile Include="Assets\Violet\External Asset\SUI\SUIScrollSnap.cs" />
      <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\Common\MaterialCache.cs" />
      <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_SVector3Formatter.cs" />
      <Compile Include="Assets\Script\Data\Unit.cs" />
      <Compile Include="Assets\Script\Unit\GuideUnit.cs" />
      <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\RotateToMouseScript.cs" />
-     <Compile Include="Assets\Script\PartBase.cs" />
+     <Compile Include="Assets\Script\UI\PartBase.cs" />
      <Compile Include="Assets\Script\UI\LoadingCurtain.cs" />
      <Compile Include="Assets\Script\Uitls\VFXPlayer.cs" />
      <Compile Include="Assets\Script\Data\BattlePassSeason.cs" />

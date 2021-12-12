@@ -1382,7 +1382,7 @@ public class GameCore : MonoBehaviour
         if (key == 0)
             return "bad".ToTableData<Unit>();
         if (Unit.Sorted.ContainsKey(master))
-            return Unit.Sorted[master][key];
+            return Unit.Sorted[master][key - 1];
         return null;
     }
 

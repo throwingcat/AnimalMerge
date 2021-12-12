@@ -164,31 +164,6 @@ public class SyncManager
                 Bytes[type] = bytes;
             else
                 Bytes.Add(type, bytes);
-            // foreach (var p in Packets)
-            // {
-            //     if (p.PacketType == packet.PacketType)
-            //     {
-            //         isContains = true;
-            //         switch (p)
-            //         {
-            //             case PlayerInfo playerInfo:
-            //                 Debug.Log(playerInfo.Name);
-            //                 break;
-            //             case AttackDamage attackDamage:
-            //                 p.UpdateValue(attackDamage.Damage);
-            //                 break;
-            //             case UpdateAttackCombo updateAttackCombo:
-            //                 p.UpdateValue(updateAttackCombo.Combo);
-            //                 break;
-            //             case UpdateStackDamage updateStackDamage:
-            //                 p.UpdateValue(updateStackDamage.StackDamage);
-            //                 break;
-            //         }
-            //     }
-            // }
-            //
-            // if (isContains == false)
-            //     Packets.Add(packet);
         }
     }
     [MessagePackObject]
