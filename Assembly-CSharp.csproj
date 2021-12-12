@@ -56,6 +56,7 @@
      <Compile Include="Assets\Violet\External Asset\Demigiant\DOTweenPro\DOTweenProShortcuts.cs" />
      <Compile Include="Assets\Violet\External Asset\Demigiant\DOTweenPro\DOTweenTextMeshPro.cs" />
      <Compile Include="Assets\Script\Server\DBChestInventory.cs" />
+     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_Common_PacketRewardFormatter.cs" />
      <Compile Include="Assets\Script\Data\Quest.cs" />
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_LightIntensityFade.cs" />
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo.cs" />
@@ -82,6 +83,7 @@
      <Compile Include="Assets\Violet\Manager\MonoBehaviourPool.cs" />
      <Compile Include="Assets\Violet\EditorCoroutine\EditorCoroutineExtensions.cs" />
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Spawn System\CFX_SpawnSystem.cs" />
+     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_ReadyFormatter.cs" />
      <Compile Include="Assets\Violet\External Asset\SUI\SUIButton.cs" />
      <Compile Include="Assets\Script\Data\SpawnPhase.cs" />
      <Compile Include="Assets\Violet\External Asset\SUI\SUIFlow.cs" />
@@ -93,6 +95,7 @@
      <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\Common\EffectPlayer.cs" />
      <Compile Include="Assets\Violet\External Asset\SUI\SUIFlowText.cs" />
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
+     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_AttackDamageFormatter.cs" />
      <Compile Include="Assets\Violet\Manager\SceneDirector.cs" />
      <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\UIEffectCapturedImage.cs" />
      <Compile Include="Assets\Violet\Common\CSVReader.cs" />
@@ -101,6 +104,7 @@
      <Compile Include="Assets\Script\TextPreset.cs" />
      <Compile Include="Assets\Violet\External Asset\SUI\SUIScrollSnap.cs" />
      <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\Common\MaterialCache.cs" />
+     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_SVector3Formatter.cs" />
      <Compile Include="Assets\Script\Data\Unit.cs" />
      <Compile Include="Assets\Script\Unit\GuideUnit.cs" />
      <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\RotateToMouseScript.cs" />
@@ -129,7 +133,9 @@
      <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\SpawnProjectilesScript.cs" />
      <Compile Include="Assets\Script\AICore.cs" />
      <Compile Include="Assets\Script\Data\Chapter.cs" />
+     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Resolvers_GeneratedResolver.cs" />
      <Compile Include="Assets\Violet\External Asset\SUI\SUIPressButton.cs" />
+     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_Packet_ePACKET_TYPEFormatter.cs" />
      <Compile Include="Assets\Violet\External Asset\SUI\SUILoopScroll.cs" />
      <Compile Include="Assets\Script\PlayerData\PlayerDataBase.cs" />
      <Compile Include="Assets\Hovl Studio\Fantastic cartoon VFX\Demo scenes\CameraHolder.cs" />
@@ -173,10 +179,14 @@
      <Compile Include="Assets\Violet\External Asset\SUI\SUIDragSlider.cs" />
      <Compile Include="Assets\Script\UI\PlayerLevelReward\CellPlayerLevelReward.cs" />
      <Compile Include="Assets\Script\Data\Achievement.cs" />
+     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_GameResultFormatter.cs" />
+     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_Common_PacketBaseFormatter.cs" />
      <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\ParticleSystemController.cs" />
      <Compile Include="Assets\Violet\External Asset\SUI\SUIPanelInfo.cs" />
      <Compile Include="Assets\Script\UI\PanelLobby.cs" />
+     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_SyncPacketBaseFormatter.cs" />
      <Compile Include="Assets\Violet\Manager\UIManager.cs" />
+     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_PlayerInfoFormatter.cs" />
      <Compile Include="Assets\Violet\Common\MonoObjectPool.cs" />
      <Compile Include="Assets\Script\Data\Item.cs" />
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_InspectorHelp.cs" />
@@ -189,6 +199,7 @@
      <Compile Include="Assets\Script\PlayerData\PlayerData.PlayerInfo.cs" />
      <Compile Include="Assets\Script\UI\PopupGetReward.cs" />
      <Compile Include="Assets\Violet\CSVGenerator\CSVGenerator.cs" />
+     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_UnitDataFormatter.cs" />
      <Compile Include="Assets\Script\Data\PlayerLevel.cs" />
      <Compile Include="Assets\Violet\External Asset\SUI\SUIMultiLoopScroll.cs" />
      <Compile Include="Assets\Hovl Studio\Toon Projectiles 2\Scripts\ProjectileMover.cs" />
@@ -220,6 +231,9 @@
      <Compile Include="Assets\Script\UI\Lobby Page\PageQuest.cs" />
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
      <Compile Include="Assets\Script\Data\Partial\BattlePass.cs" />
+     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_SyncPacketFormatter.cs" />
+     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_UpdateUnitFormatter.cs" />
+     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_Define_eItemTypeFormatter.cs" />
      <Compile Include="Assets\Script\PlayerData\UnitInventory.cs" />
      <Compile Include="Assets\Script\PlayerData\PlayerTracker.cs" />
      <Compile Include="Assets\Violet\External Asset\SUI\SUIDragRect.cs" />
@@ -231,6 +245,7 @@
      <Compile Include="Assets\Script\UI\Lobby Page\LobbyPageCollection.cs" />
      <Compile Include="Assets\Violet\Common\Singleton.cs" />
      <Compile Include="Assets\Script\UI\Ingame\IngameInputActiveSkill.cs" />
+     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_ePacketTypeFormatter.cs" />
      <Compile Include="Assets\Violet\Common\ICSVDataBase.cs" />
      <Compile Include="Assets\Script\NetworkManager.cs" />
      <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\Common\ParameterTexture.cs" />
@@ -238,6 +253,7 @@
      <Compile Include="Assets\Violet\UI\PartCurtain.cs" />
      <Compile Include="Assets\Violet\Common\FXController.cs" />
      <Compile Include="Assets\Script\Data\BattlePass.cs" />
+     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_PacketBaseFormatter.cs" />
      <Compile Include="Assets\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModulePhysics.cs" />
      <Compile Include="Assets\Violet\Common\SubscribeBase.cs" />
      <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\ProjectileMoveScript.cs" />
@@ -249,6 +265,7 @@
      <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_ShurikenThreadFix.cs" />
      <Compile Include="Assets\Violet\Common\Utils.cs" />
      <Compile Include="Assets\Script\Server\AnimalMergeServer.cs" />
+     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_ItemInfoFormatter.cs" />
      <Compile Include="Assets\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleUI.cs" />
      <Compile Include="Assets\Script\Passive Skill\CatPassive.cs" />
      <Compile Include="Assets\Script\Common\PacketBase.cs" />
@@ -278,23 +295,6 @@
      <Compile Include="Assets\Script\Uitls\ScrollRectDisableDrag.cs" />
      <Compile Include="Assets\Script\PlayerData\ChestInventory.cs" />
      <Compile Include="Assets\Script\UI\PartSimpleNotice.cs" />
-     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_AttackDamageFormatter.cs" />
-     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_ItemInfoFormatter.cs" />
-     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_Common_PacketRewardFormatter.cs" />
-     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_ReadyFormatter.cs" />
-     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_PlayerInfoFormatter.cs" />
-     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_GameResultFormatter.cs" />
-     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_Packet_ePACKET_TYPEFormatter.cs" />
-     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_Common_PacketBaseFormatter.cs" />
-     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_UnitDataFormatter.cs" />
-     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_ePacketTypeFormatter.cs" />
-     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_SVector3Formatter.cs" />
-     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_UpdateUnitFormatter.cs" />
-     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_Define_eItemTypeFormatter.cs" />
-     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Resolvers_GeneratedResolver.cs" />
-     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_PacketBaseFormatter.cs" />
-     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_SyncPacketFormatter.cs" />
-     <Compile Include="Assets\Script\MessagePackGenerated\MessagePack_Formatters_SyncManager_SyncPacketBaseFormatter.cs" />
      <None Include="Assets\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\Hovl Studio\Fantastic cartoon VFX\Shaders\SlashOld.shader" />

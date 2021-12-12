@@ -11,7 +11,6 @@ using Server;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.Serialization;
 using Violet;
 
 public class GameManager : MonoBehaviour
@@ -26,6 +25,8 @@ public class GameManager : MonoBehaviour
 
     private string _loadingDescription = "";
     private float _loadingProgress = 0f;
+
+    private PanelTitle _panelTitle;
     public GameCore AICore;
     public CSVDownloadConfig CSVDownloadConfig;
 
@@ -88,8 +89,6 @@ public class GameManager : MonoBehaviour
         AnimalMergeServer.Instance.OnUpdate();
     }
 
-    private PanelTitle _panelTitle;
-
     private IEnumerator InitalizeProcess()
     {
 #if UNITY_EDITOR
@@ -114,17 +113,28 @@ public class GameManager : MonoBehaviour
     {
         if (_isSerializerRegisted) return;
 
-        //시리얼라이저 등록
         StaticCompositeResolver.Instance.Register(
-            BuiltinResolver.Instance,
             UnityResolver.Instance,
             UnityBlitWithPrimitiveArrayResolver.Instance,
             StandardResolver.Instance,
             GeneratedResolver.Instance
         );
-        var options = MessagePackSerializerOptions.Standard.WithResolver(StaticCompositeResolver.Instance);
-        //var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
-        MessagePackSerializer.DefaultOptions = options;
+
+         var options = MessagePackSerializerOptions.Standard.WithResolver(StaticCompositeResolver.Instance);
+         MessagePackSerializer.DefaultOptions = options;
+         
+        //
+        // //시리얼라이저 등록
+        // StaticCompositeResolver.Instance.Register(
+        //     BuiltinResolver.Instance,
+        //     UnityResolver.Instance,
+        //     UnityBlitWithPrimitiveArrayResolver.Instance,
+        //     StandardResolver.Instance,
+        //     GeneratedResolver.Instance
+        // );
+        // var options = MessagePackSerializerOptions.Standard.WithResolver(StaticCompositeResolver.Instance);
+        // //var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
+        // MessagePackSerializer.DefaultOptions = options;
 
         _isSerializerRegisted = true;
     }
@@ -133,10 +143,7 @@ public class GameManager : MonoBehaviour
     {
         var isDone = false;
 
-        CSVDownloadConfig.Download(this, v =>
-        {
-            _panelTitle.RefreshGauge(v);
-        }, () =>
+        CSVDownloadConfig.Download(this, v => { _panelTitle.RefreshGauge(v); }, () =>
         {
             TableManager.Instance.Load();
             isDone = true;
@@ -236,7 +243,7 @@ public class GameManager : MonoBehaviour
         switch (CurrentGameState)
         {
             case eGAME_STATE.Intro:
-                if(_panelTitle != null)
+                if (_panelTitle != null)
                     _panelTitle.BackPress();
                 _panelTitle = null;
                 break;
