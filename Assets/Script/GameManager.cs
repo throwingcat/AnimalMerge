@@ -116,8 +116,8 @@ public class GameManager : MonoBehaviour
         StaticCompositeResolver.Instance.Register(
             UnityResolver.Instance,
             UnityBlitWithPrimitiveArrayResolver.Instance,
-            StandardResolver.Instance,
-            GeneratedResolver.Instance
+            GeneratedResolver.Instance,
+            StandardResolver.Instance
         );
 
          var options = MessagePackSerializerOptions.Standard.WithResolver(StaticCompositeResolver.Instance);
