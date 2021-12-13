@@ -1,57 +1,51 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Common;
 using DG.Tweening;
-using Packet;
 using SheetData;
 using UnityEngine;
 using UnityEngine.UI;
-using Violet;
 
 public class PartLobbyChest : MonoBehaviour
 {
-    public Image[] Texture;
-    public Text NeedTime;
-    public Text RemainTime;
-
-    public GameObject Empty;
-    public GameObject Ready;
-    public GameObject Progress;
-    public GameObject Complete;
-
-    public GameObject[] ReadyGrade;
-    public GameObject[] ProgressGrade;
-
-    public GameObject Root;
-
     public enum eSTATE
     {
         Empty,
         Ready,
         Progress,
-        Complete,
+        Complete
     }
 
+    public GameObject Complete;
+
+    public GameObject Empty;
+    public int Index;
+    public Text NeedTime;
+    public GameObject Progress;
+    public GameObject[] ProgressGrade;
+    public GameObject Ready;
+
+    public GameObject[] ReadyGrade;
+    public Text RemainTime;
+
+    public GameObject Root;
+
     public eSTATE State = eSTATE.Empty;
-    public int Index = 0;
+    public Image[] Texture;
 
     public ChestInventory.ChestSlot ChestSlot
     {
         get
         {
             if (Index < ChestInventory.Instance.ChestSlots.Length)
-            {
                 if (ChestInventory.Instance.ChestSlots[Index].inDate.IsNullOrEmpty() == false &&
                     ChestInventory.Instance.ChestSlots[Index].Key.IsNullOrEmpty() == false)
                     return ChestInventory.Instance.ChestSlots[Index];
-            }
 
             return null;
         }
     }
 
-    public SheetData.Chest Sheet
+    public Chest Sheet
     {
         get
         {
@@ -64,13 +58,12 @@ public class PartLobbyChest : MonoBehaviour
     public void OnUpdate()
     {
         if (ChestSlot == null)
+        {
             SetEmpty();
+        }
         else
         {
-            foreach (var t in Texture)
-            {
-                t.sprite = Sheet.texture.ToSprite();
-            }
+            foreach (var t in Texture) t.sprite = Sheet.texture.ToSprite();
 
             var chest = ChestInventory.Instance.ChestSlots[Index];
 
@@ -85,14 +78,10 @@ public class PartLobbyChest : MonoBehaviour
 
                 //진행중
                 if (0 < remain.TotalSeconds)
-                {
                     SetProgress((long) remain.TotalSeconds);
-                }
                 //완료
                 else
-                {
                     SetComplete();
-                }
             }
         }
     }
@@ -112,11 +101,8 @@ public class PartLobbyChest : MonoBehaviour
             NeedTime.text = Utils.ParseSeconds(Sheet.time);
         }
 
-        int grade = ChestSlot.Grade;
-        for (int i = 0; i < ReadyGrade.Length; i++)
-        {
-            ReadyGrade[i].SetActive(i < grade);
-        }
+        var grade = ChestSlot.Grade;
+        for (var i = 0; i < ReadyGrade.Length; i++) ReadyGrade[i].SetActive(i < grade);
     }
 
     public void SetProgress(long remain_seconds)
@@ -125,11 +111,8 @@ public class PartLobbyChest : MonoBehaviour
         {
             State = eSTATE.Progress;
             SetActiveRoot(State);
-            int grade = ChestSlot.Grade;
-            for (int i = 0; i < ProgressGrade.Length; i++)
-            {
-                ProgressGrade[i].SetActive(i < grade);
-            }
+            var grade = ChestSlot.Grade;
+            for (var i = 0; i < ProgressGrade.Length; i++) ProgressGrade[i].SetActive(i < grade);
         }
 
         RemainTime.text = Utils.ParseSeconds(remain_seconds);
@@ -165,7 +148,6 @@ public class PartLobbyChest : MonoBehaviour
     public void OnClick()
     {
         if (Sheet != null)
-        {
             switch (State)
             {
                 case eSTATE.Empty:
@@ -181,12 +163,12 @@ public class PartLobbyChest : MonoBehaviour
                 case eSTATE.Complete:
                 {
                     var packet = new PacketBase();
-                    packet.PacketType = ePACKET_TYPE.CHEST_COMPLETE;
+                    packet.PacketType = ePacketType.CHEST_COMPLETE;
                     packet.hash = new Dictionary<string, object>();
                     packet.hash.Add("inDate", ChestSlot.inDate);
                     packet.hash.Add("chest_key", ChestSlot.Key);
-                    
-                    NetworkManager.Instance.Request(packet, (res) =>
+
+                    NetworkManager.Instance.Request(packet, res =>
                     {
                         var packet = res as PacketReward;
                         var popup = UIManager.Instance.ShowPopup<PopupChestOpen>();
@@ -195,6 +177,5 @@ public class PartLobbyChest : MonoBehaviour
                 }
                     break;
             }
-        }
     }
 }

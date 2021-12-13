@@ -36,12 +36,11 @@ public class AICore : GameCore
         }
 
         //플레이어 정보 전송
-        SyncManager.PlayerInfo playerInfo = new SyncManager.PlayerInfo();
+        SyncPacketCollection.PlayerInfo playerInfo = new SyncPacketCollection.PlayerInfo();
         playerInfo.HeroKey = PlayerHeroKey;
         playerInfo.MMR = MMR;
         playerInfo.Name = ai_name;
-        SyncManager.Request(SyncManager.ePacketType.PlayerInfo,
-            MessagePackSerializer.Serialize(playerInfo));
+        SyncManager.Request(playerInfo);
 
         var mmr_ratio = Mathf.InverseLerp(EnvironmentValue.AI_INPUT_DELAY_LOW_MMR,
             EnvironmentValue.AI_INPUT_DELAY_HIGH_MMR, MMR);

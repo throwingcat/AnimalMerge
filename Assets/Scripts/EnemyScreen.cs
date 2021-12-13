@@ -13,7 +13,7 @@ public class EnemyScreen : MonoBehaviour
 
     private List<UnitBase> _units = new List<UnitBase>();
 
-    public void Refresh(SyncManager.UpdateUnit packet)
+    public void Refresh(SyncPacketCollection.UpdateUnit packet)
     {
         //Restore
         foreach (var unit in _units)

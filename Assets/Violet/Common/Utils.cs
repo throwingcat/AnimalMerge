@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using MessagePack;
 using SheetData;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Violet;
@@ -403,6 +405,16 @@ public class Utils
     {
         double ratio = 1.0 + level.ToString().ToTableData<UnitLevel>().upgrade_ratio;
         return (decimal) (baseDamage * 2 * ratio);
+    }
+
+    public static byte[] Serialize<T>(T value)
+    {
+        return MessagePackSerializer.Serialize(value);
+    }
+
+    public static T Deserialize<T>(byte[] bytes)
+    {
+        return MessagePackSerializer.Deserialize<T>(bytes);
     }
 }
 

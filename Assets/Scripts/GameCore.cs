@@ -5,10 +5,9 @@ using BackEnd;
 using Common;
 using Define;
 using DG.Tweening;
-using MessagePack;
 using Newtonsoft.Json;
-using Packet;
 using SheetData;
+using SyncPacketCollection;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.U2D;
@@ -17,13 +16,6 @@ using Violet.Audio;
 
 public class GameCore : MonoBehaviour
 {
-    #region Environment
-
-    [Header("환경")] public string INGAME_BGM;
-    public GameObject BattleCameraGroup;
-
-    #endregion
-
     private PlayerInfo PlayerInfo => PlayerDataManager.Get<PlayerInfo>();
 
     protected float HorizontalSpawnLimit =>
@@ -34,10 +26,7 @@ public class GameCore : MonoBehaviour
     {
         #region 데이터 초기화
 
-        if (IsPlayer)
-        {
-            PlayerHeroKey = PlayerInfo.elements.SelectHero;
-        }
+        if (IsPlayer) PlayerHeroKey = PlayerInfo.elements.SelectHero;
 
         isReady = false;
         isLaunchGame = false;
@@ -98,10 +87,9 @@ public class GameCore : MonoBehaviour
         SetEnableDeadline(false);
 
         SyncManager = new SyncManager(this);
-        SyncManager.OnSyncCapture = OnCaptureSyncPacket;
-        SyncManager.OnSyncReceive = OnReceiveSyncPacket;
+        SyncManager.OnSyncReceive = OnReceivePacket;
 
-        float delay = IsPlayer ? 0.1f : 2f;
+        var delay = IsPlayer ? 0.1f : 2f;
 
         isReady = true;
         GameManager.DelayInvoke(() =>
@@ -129,11 +117,11 @@ public class GameCore : MonoBehaviour
         Initialize();
 
         //플레이어 정보 전송
-        SyncManager.PlayerInfo playerInfo = new SyncManager.PlayerInfo();
+        var playerInfo = new SyncPacketCollection.PlayerInfo();
         playerInfo.HeroKey = PlayerHeroKey;
         playerInfo.MMR = PlayerInfo.elements.RankScore;
         playerInfo.Name = PlayerInfo.elements.Nickname;
-        SyncManager.Request(SyncManager.ePacketType.PlayerInfo, MessagePackSerializer.Serialize(playerInfo));
+        SyncManager.Request(playerInfo);
 
         //게임 카메라 루트 활성화
         BattleCameraGroup.SetActive(true);
@@ -173,7 +161,6 @@ public class GameCore : MonoBehaviour
     {
         if (isReady == false) return;
         if (isGameStart)
-        {
             if (isGameOver.Value == false)
             {
                 _elapsedGameTimer += delta;
@@ -201,7 +188,6 @@ public class GameCore : MonoBehaviour
 
                 GameOverUpdate(delta);
             }
-        }
 
         #region Sync
 
@@ -440,7 +426,7 @@ public class GameCore : MonoBehaviour
 
         //var comboBonus = Combo > 3 ? 3 * Combo : 0;
         var unitDamage = Utils.GetUnitDamage(a.Sheet.score, a.Info.Level);
-        int badBlock = (int) ((unitDamage * Combo) * SuddenDeathRatio(_elapsedGameTimer));
+        var badBlock = (int) (unitDamage * Combo * SuddenDeathRatio(_elapsedGameTimer));
 
         //내 방해블록 제거
         if (0 < MyStackDamage.Value)
@@ -453,7 +439,7 @@ public class GameCore : MonoBehaviour
             //내 방해블록 제거 + 상대방에게 공격
             if (MyStackDamage.Value <= 0)
             {
-                int damage = Mathf.Abs(MyStackDamage.Value);
+                var damage = Mathf.Abs(MyStackDamage.Value);
                 AttackDamage.Set(damage);
 
                 if (IsPlayer)
@@ -497,7 +483,7 @@ public class GameCore : MonoBehaviour
 
     public void RemoveBadBlock(UnitBase unit)
     {
-        int damage = (int) (5 * SuddenDeathRatio(_elapsedGameTimer));
+        var damage = (int) (5 * SuddenDeathRatio(_elapsedGameTimer));
         PlayRemoveBadUnitDamage(damage, unit);
         RemoveUnit(unit);
     }
@@ -604,6 +590,68 @@ public class GameCore : MonoBehaviour
             PanelIngame.RefreshSkillGauge(0f);
     }
 
+    private IEnumerator GameStartProcess()
+    {
+        if (IsPlayer)
+        {
+            PanelIngame.SetActiveWaitPlayer(false);
+            yield return new WaitForSeconds(1f);
+            if (IsPlayer)
+                PanelIngame.PlayEnterAnimation();
+            yield return new WaitForSeconds(1f);
+            PanelIngame.SetActiveCountDown(true);
+        }
+        else
+        {
+            yield return new WaitForSeconds(2f);
+        }
+
+        var duration = (float) (GameStartTime - GameManager.GetTime()).TotalSeconds;
+        var elapsed = 0f;
+
+        var _prevIndex = -1;
+        while (elapsed <= duration)
+        {
+            elapsed += Time.deltaTime;
+
+            if (IsPlayer)
+            {
+                //0 ~ 2
+                var index = (int) elapsed;
+
+                if (_prevIndex != index)
+                {
+                    PanelIngame.SetCountDown(index);
+                    _prevIndex = index;
+                }
+            }
+
+            yield return null;
+        }
+
+        isGameStart = true;
+
+        if (IsPlayer)
+        {
+            PanelIngame.SetCountDown(3);
+            yield return new WaitForSeconds(0.5f);
+            PanelIngame.SetActiveCountDown(false);
+        }
+    }
+
+    public void GameOver(DateTime time)
+    {
+        GameOverTime = time;
+        isGameOver.Set(true);
+    }
+
+    #region Environment
+
+    [Header("환경")] public string INGAME_BGM;
+    public GameObject BattleCameraGroup;
+
+    #endregion
+
     #region System
 
     [Header("시스템")] public SubscribeValue<DateTime> MyReadyTime = new SubscribeValue<DateTime>(new DateTime());
@@ -676,10 +724,7 @@ public class GameCore : MonoBehaviour
         if (GameOverLine.activeSelf)
         {
             GameoverTimeoutDelta += delta;
-            if (EnvironmentValue.GAME_OVER_TIME_OUT <= GameoverTimeoutDelta)
-            {
-                GameOver(GameManager.GetTime());
-            }
+            if (EnvironmentValue.GAME_OVER_TIME_OUT <= GameoverTimeoutDelta) GameOver(GameManager.GetTime());
 
             if (IsPlayer)
                 PanelIngame.SetGameOverTimer(GameoverTimeoutDelta / EnvironmentValue.GAME_OVER_TIME_OUT);
@@ -735,13 +780,11 @@ public class GameCore : MonoBehaviour
     {
         get
         {
-            List<UnitBase> result = new List<UnitBase>();
+            var result = new List<UnitBase>();
             var list = IgnoreUnitGUID;
             foreach (var unit in UnitsInField)
-            {
                 if (list.Contains(unit.GUID))
                     result.Add(unit);
-            }
 
             return result;
         }
@@ -782,7 +825,7 @@ public class GameCore : MonoBehaviour
     private int _badBlockMaxDropOneTime =>
         (int) Mathf.Clamp(
             EnvironmentValue.BAD_BLOCK_DROP_COUNT_MIN +
-            (_elapsedGameTimer * EnvironmentValue.BAD_BLOCK_INCREASE_DROP_COUNT_PER_SECOND),
+            _elapsedGameTimer * EnvironmentValue.BAD_BLOCK_INCREASE_DROP_COUNT_PER_SECOND,
             EnvironmentValue.BAD_BLOCK_DROP_COUNT_MIN, EnvironmentValue.BAD_BLOCK_DROP_COUNT_MAX);
 
     private readonly List<List<Vector3>> Floors = new List<List<Vector3>>();
@@ -799,8 +842,8 @@ public class GameCore : MonoBehaviour
 
             _badBlockTimerDelta += delta;
 
-            float t = EnvironmentValue.BAD_BLOCK_TIMER_MAX -
-                      (_elapsedGameTimer * EnvironmentValue.BAD_BLOCK_TIMER_PER_SECOND);
+            var t = EnvironmentValue.BAD_BLOCK_TIMER_MAX -
+                    _elapsedGameTimer * EnvironmentValue.BAD_BLOCK_TIMER_PER_SECOND;
             t = Mathf.Clamp(t, EnvironmentValue.BAD_BLOCK_TIMER_MIN, EnvironmentValue.BAD_BLOCK_TIMER_MAX);
 
             if (IsPlayer)
@@ -845,7 +888,7 @@ public class GameCore : MonoBehaviour
     {
         if (Floors.Count == 0)
         {
-            int vertical = EnvironmentValue.BAD_BLOCK_DROP_COUNT_MAX / EnvironmentValue.BAD_BLOCK_HORIZONTAL_MAX_COUNT;
+            var vertical = EnvironmentValue.BAD_BLOCK_DROP_COUNT_MAX / EnvironmentValue.BAD_BLOCK_HORIZONTAL_MAX_COUNT;
             for (var i = 0; i < vertical; i++)
             {
                 Floors.Add(new List<Vector3>());
@@ -887,7 +930,7 @@ public class GameCore : MonoBehaviour
     private bool isPress;
     private Vector2 _touchBegin = Vector2.zero;
 
-    public GuideUnit GuideUnit = null;
+    public GuideUnit GuideUnit;
     public ContactFilter2D ContactFilter2D;
 
     protected virtual void InputUpdate()
@@ -931,7 +974,7 @@ public class GameCore : MonoBehaviour
                 GuideUnit.transform.localScale = CurrentReadyUnit.transform.localScale;
             }
 
-            RaycastHit2D[] result = new RaycastHit2D[1];
+            var result = new RaycastHit2D[1];
             if (GuideUnit != null)
             {
                 if (GuideUnit.gameObject.activeSelf == false)
@@ -974,7 +1017,7 @@ public class GameCore : MonoBehaviour
 
         if (IsPlayer && PanelIngame.InputActiveSkill.isActive)
         {
-            bool isActive = 0.8f <= PanelIngame.InputActiveSkill.ActiveProgress;
+            var isActive = 0.8f <= PanelIngame.InputActiveSkill.ActiveProgress;
             if (isActive)
                 UseSkill();
             PanelIngame.InputActiveSkill.Off();
@@ -1086,112 +1129,55 @@ public class GameCore : MonoBehaviour
 
     #endregion
 
-    private IEnumerator GameStartProcess()
-    {
-        if (IsPlayer)
-        {
-            PanelIngame.SetActiveWaitPlayer(false);
-            yield return new WaitForSeconds(1f);
-            if (IsPlayer)
-                PanelIngame.PlayEnterAnimation();
-            yield return new WaitForSeconds(1f);
-            PanelIngame.SetActiveCountDown(true);
-        }
-        else
-            yield return new WaitForSeconds(2f);
-
-        float duration = (float) (GameStartTime - GameManager.GetTime()).TotalSeconds;
-        float elapsed = 0f;
-
-        int _prevIndex = -1;
-        while (elapsed <= duration)
-        {
-            elapsed += Time.deltaTime;
-
-            if (IsPlayer)
-            {
-                //0 ~ 2
-                int index = (int) elapsed;
-
-                if (_prevIndex != index)
-                {
-                    PanelIngame.SetCountDown(index);
-                    _prevIndex = index;
-                }
-            }
-
-            yield return null;
-        }
-
-        isGameStart = true;
-
-        if (IsPlayer)
-        {
-            PanelIngame.SetCountDown(3);
-            yield return new WaitForSeconds(0.5f);
-            PanelIngame.SetActiveCountDown(false);
-        }
-    }
-
     #region Sync
 
-    public void OnCaptureSyncPacket(SyncManager.SyncPacket packet)
+    public void OnReceivePacket(SyncPacketBase packet)
     {
-    }
-
-    public void OnReceiveSyncPacket(SyncManager.SyncPacket syncPacket)
-    {
-        foreach (var bytes in syncPacket.Bytes)
+        switch ((SyncPacketCollection.ePacketType)packet.PacketType)
         {
-            switch (bytes.Key)
+            case SyncPacketCollection.ePacketType.PlayerInfo:
+                OnReceivePlayerInfoPacket(packet as SyncPacketCollection.PlayerInfo);
+                break;
+            case SyncPacketCollection.ePacketType.Ready:
+                OnReceiveReadyPacket(packet as Ready);
+                break;
+            case SyncPacketCollection.ePacketType.UpdateUnit:
+                if (IsPlayer)
+                    OnReceiveUpdateUnit(packet as UpdateUnit);
+                break;
+            case SyncPacketCollection.ePacketType.AttackDamage:
             {
-                case SyncManager.ePacketType.PlayerInfo:
-                    OnReceivePlayerInfoPacket(
-                        MessagePackSerializer.Deserialize<SyncManager.PlayerInfo>(bytes.Value));
-                    break;
-                case SyncManager.ePacketType.Ready:
-                    OnReceiveReadyPacket(MessagePackSerializer.Deserialize<SyncManager.Ready>(bytes.Value));
-                    break;
-                case SyncManager.ePacketType.UpdateUnit:
-                    if (IsPlayer)
-                        OnReceiveUpdateUnit(
-                            MessagePackSerializer.Deserialize<SyncManager.UpdateUnit>(bytes.Value));
-                    break;
-                case SyncManager.ePacketType.AttackDamage:
-                {
-                    var convert = MessagePackSerializer.Deserialize<SyncManager.AttackDamage>(bytes.Value);
-                    OnReceiveAttack(convert.Damage);
-                }
-                    break;
-                case SyncManager.ePacketType.UpdateAttackCombo:
-                {
-                    var convert = MessagePackSerializer.Deserialize<SyncManager.UpdateAttackCombo>(bytes.Value);
-                    OnReceiveCombo(convert.Combo);
-                }
-                    break;
-                case SyncManager.ePacketType.UpdateStackDamage:
-                    if (IsPlayer)
-                    {
-                        var convert =
-                            MessagePackSerializer.Deserialize<SyncManager.UpdateStackDamage>(bytes.Value);
-                        PanelIngame.RefreshEnemyBadBlock(convert.StackDamage);
-                        RefreshBadBlockUI();
-                    }
-
-                    break;
-                case SyncManager.ePacketType.GameResult:
-                {
-                    var convert = MessagePackSerializer.Deserialize<SyncManager.GameResult>(bytes.Value);
-                    OnReceiveGameResult(convert.isGameOver, convert.GameOverTime);
-                }
-                    break;
+                var convert = packet as AttackDamage;
+                OnReceiveAttack(convert.Damage);
             }
+                break;
+            case SyncPacketCollection.ePacketType.UpdateAttackCombo:
+            {
+                var convert = packet as UpdateAttackCombo;
+                OnReceiveCombo(convert.Combo);
+            }
+                break;
+            case SyncPacketCollection.ePacketType.UpdateStackDamage:
+                if (IsPlayer)
+                {
+                    var convert = packet as UpdateStackDamage;
+                    PanelIngame.RefreshEnemyBadBlock(convert.StackDamage);
+                    RefreshBadBlockUI();
+                }
+
+                break;
+            case SyncPacketCollection.ePacketType.GameResult:
+            {
+                var convert = packet as GameResult;
+                OnReceiveGameResult(convert.isGameOver, convert.GameOverTime);
+            }
+                break;
         }
     }
 
-    private SyncManager.PlayerInfo _enemyPlayerInfo;
+    private SyncPacketCollection.PlayerInfo _enemyPlayerInfo;
 
-    public void OnReceivePlayerInfoPacket(SyncManager.PlayerInfo packet)
+    public void OnReceivePlayerInfoPacket(SyncPacketCollection.PlayerInfo packet)
     {
         _enemyPlayerInfo = packet;
         if (IsPlayer)
@@ -1205,7 +1191,7 @@ public class GameCore : MonoBehaviour
         PanelIngame.SetEnemyPortrait(_enemyPlayerInfo.Name, _enemyPlayerInfo.HeroKey.ToTableData<Hero>());
     }
 
-    private void OnReceiveReadyPacket(SyncManager.Ready ready)
+    private void OnReceiveReadyPacket(Ready ready)
     {
         if (isReady && isLaunchGame == false)
         {
@@ -1219,7 +1205,7 @@ public class GameCore : MonoBehaviour
         }
     }
 
-    public void OnReceiveUpdateUnit(SyncManager.UpdateUnit packet)
+    public void OnReceiveUpdateUnit(UpdateUnit packet)
     {
         EnemyScreen.Refresh(packet);
     }
@@ -1249,7 +1235,7 @@ public class GameCore : MonoBehaviour
         if (IsPlayer)
         {
             var packet = new PacketBase();
-            packet.PacketType = ePACKET_TYPE.REPORT_GAME_RESULT;
+            packet.PacketType = Common.ePacketType.REPORT_GAME_RESULT;
             packet.hash.Add("is_win", isWin);
 
             //모험모드 스테이지 데이터
@@ -1259,7 +1245,7 @@ public class GameCore : MonoBehaviour
             //트랙커 정보 
             packet.hash.Add("tracker_json", JsonConvert.SerializeObject(PlayerBattleTracker.Tracker));
 
-            PlayerInfo playerInfo = PlayerDataManager.Get<PlayerInfo>();
+            var playerInfo = PlayerDataManager.Get<PlayerInfo>();
             var beforeScore = playerInfo.elements.RankScore;
             NetworkManager.Instance.Request(packet, res =>
             {
@@ -1289,12 +1275,6 @@ public class GameCore : MonoBehaviour
     }
 
     #endregion
-
-    public void GameOver(DateTime time)
-    {
-        GameOverTime = time;
-        isGameOver.Set(true);
-    }
 
     #region Utility
 
@@ -1344,7 +1324,6 @@ public class GameCore : MonoBehaviour
             PanelIngame.Clear();
             ingameDynamicCanvas.Exit();
             //이벤트 초기화
-            SyncManager.OnSyncCapture = null;
             SyncManager.OnSyncReceive = null;
             Backend.Match.OnMatchRelay -= SyncManager.OnReceiveMatchRelay;
 
@@ -1358,13 +1337,13 @@ public class GameCore : MonoBehaviour
         return (decimal) (1 + EnvironmentValue.DAMAGE_PER_SECOND * elapsed);
     }
 
-    public bool isPauseCollider = false;
+    public bool isPauseCollider;
     private ulong _pauseColliderID;
 
     public void PauseCollider(float duration)
     {
         isPauseCollider = true;
-        int layer = UnitLayer;
+        var layer = UnitLayer;
         Physics2D.IgnoreLayerCollision(layer, layer, true);
 
         GameManager.DelayInvokeCancel(_pauseColliderID);
@@ -1378,7 +1357,7 @@ public class GameCore : MonoBehaviour
 
     public static Unit ConvertSyncUnitKey(sbyte key)
     {
-        string master = GameManager.Instance.GameCore._enemyPlayerInfo.HeroKey;
+        var master = GameManager.Instance.GameCore._enemyPlayerInfo.HeroKey;
         if (key == 0)
             return "bad".ToTableData<Unit>();
         if (Unit.Sorted.ContainsKey(master))

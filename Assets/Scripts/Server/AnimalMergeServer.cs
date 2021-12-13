@@ -2,13 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using Common;
 using Define;
 using LitJson;
 using MessagePack;
 using Newtonsoft.Json;
-using Packet;
 using SheetData;
 using UnityEngine;
 using Violet;
@@ -19,6 +17,9 @@ namespace Server
     public class AnimalMergeServer
     {
         private static AnimalMergeServer _instance;
+
+        private readonly float _updateDelay = 1f;
+        private float _updateDelta = 1f;
 
         public List<DBBase> DBList = new List<DBBase>();
 
@@ -44,15 +45,11 @@ namespace Server
             }
         }
 
-        private float _updateDelay = 1f;
-        private float _updateDelta = 1f;
-
         public void OnUpdate()
         {
             _updateDelta += Time.deltaTime;
             foreach (var DB in DBList)
                 if (DB.isReservedUpdate)
-                {
                     if (_updateDelay <= _updateDelta)
                     {
                         DB.DoUpdate();
@@ -60,7 +57,6 @@ namespace Server
                         _updateDelta = 0f;
                         break;
                     }
-                }
         }
 
         public void OnReceivePacket(byte[] bytes)
@@ -69,37 +65,37 @@ namespace Server
 
             switch (packet.PacketType)
             {
-                case ePACKET_TYPE.REPORT_GAME_RESULT:
+                case ePacketType.REPORT_GAME_RESULT:
                     BattleResult(packet);
                     break;
-                case ePACKET_TYPE.CHEST_PROGRESS:
+                case ePacketType.CHEST_PROGRESS:
                     ProgressChest(packet);
                     break;
-                case ePACKET_TYPE.CHEST_COMPLETE:
+                case ePacketType.CHEST_COMPLETE:
                     CompleteChest(packet);
                     break;
-                case ePACKET_TYPE.UNIT_LEVEL_UP:
+                case ePacketType.UNIT_LEVEL_UP:
                     UnitLevelUpProcess(packet);
                     break;
-                case ePACKET_TYPE.QUEST_REFRESH:
+                case ePacketType.QUEST_REFRESH:
                     QuestRefresh(packet);
                     break;
-                case ePACKET_TYPE.QUEST_COMPLETE:
+                case ePacketType.QUEST_COMPLETE:
                     QuestComplete(packet);
                     break;
-                case ePACKET_TYPE.DAILY_QUEST_REWARD:
+                case ePacketType.DAILY_QUEST_REWARD:
                     DailyQuestReward(packet);
                     break;
-                case ePACKET_TYPE.CHANGE_HERO:
+                case ePacketType.CHANGE_HERO:
                     ChangeHero(packet);
                     break;
-                case ePACKET_TYPE.PURCHASE_PREMIUM_PASS:
+                case ePacketType.PURCHASE_PREMIUM_PASS:
                     PurchasePremiumPass(packet);
                     break;
-                case ePACKET_TYPE.RECEIVE_PASS_REWARD:
+                case ePacketType.RECEIVE_PASS_REWARD:
                     ReceivePassReward(packet);
                     break;
-                case ePACKET_TYPE.RECEIVE_PLAYER_LEVEL_REWARD:
+                case ePacketType.RECEIVE_PLAYER_LEVEL_REWARD:
                     ReceivePlayerLevelReward(packet);
                     break;
             }
@@ -190,7 +186,7 @@ namespace Server
                 UpdateDB<DBBattlePassInfo>(() =>
                 {
                     var packetReward = new PacketReward();
-                    packetReward.PacketType = ePACKET_TYPE.RECEIVE_PLAYER_LEVEL_REWARD;
+                    packetReward.PacketType = ePacketType.RECEIVE_PLAYER_LEVEL_REWARD;
                     packetReward.hash = packet.hash;
                     packetReward.Rewards = rewards;
                     SendPacket(packetReward);
@@ -205,7 +201,7 @@ namespace Server
         private void ChangeHero(PacketBase packet)
         {
             var hero = packet.hash["hero"].ToString();
-            
+
             GetDB<DBPlayerInfo>().PlayerInfo.elements.SelectHero = hero;
             UpdateDB<DBPlayerInfo>(() => { SendPacket(packet); });
         }
@@ -237,13 +233,11 @@ namespace Server
         {
             var isUpdate = false;
             foreach (var quest in QuestInfo.Instance.QuestSlots)
-            {
                 if (tracker.ContainsKey(quest.Sheet.TrackerKey))
                 {
                     quest.Count += tracker[quest.Sheet.TrackerKey];
                     isUpdate = true;
                 }
-            }
 
             if (isUpdate)
                 UpdateDB<DBQuestInfo>(() => { onFinish?.Invoke(); });
@@ -317,7 +311,7 @@ namespace Server
         public void BattleWinProcess(Action onFinish)
         {
             //종료 확인
-            int res_count = 0;
+            var res_count = 0;
             Action checkFinish = () =>
             {
                 if (res_count == 0)
@@ -344,7 +338,7 @@ namespace Server
         private void BattleWinProcess_Reward(Action onFinish)
         {
             onFinish?.Invoke();
-            return;   
+            return;
             //새로운 상자 추가
             var emptySlot = ChestInventory.Instance.GetEmptySlot();
             if (emptySlot != null)
@@ -436,7 +430,7 @@ namespace Server
                 GetRewards(rewards, () =>
                 {
                     var packetReward = new PacketReward();
-                    packetReward.PacketType = ePACKET_TYPE.CHEST_COMPLETE;
+                    packetReward.PacketType = ePacketType.CHEST_COMPLETE;
                     packetReward.hash = packet.hash;
                     packetReward.Rewards = rewards;
                     SendPacket(packetReward);
@@ -554,7 +548,7 @@ namespace Server
                     UpdateDB<DBPlayerTracker>(() =>
                     {
                         var packetReward = new PacketReward();
-                        packetReward.PacketType = ePACKET_TYPE.QUEST_COMPLETE;
+                        packetReward.PacketType = ePacketType.QUEST_COMPLETE;
                         packetReward.hash = packet.hash;
                         packetReward.Rewards = rewards;
                         SendPacket(packetReward);
@@ -580,7 +574,7 @@ namespace Server
                     GetRewards(rewards, () =>
                     {
                         var packetReward = new PacketReward();
-                        packetReward.PacketType = ePACKET_TYPE.DAILY_QUEST_REWARD;
+                        packetReward.PacketType = ePacketType.DAILY_QUEST_REWARD;
                         packetReward.hash = packet.hash;
                         packetReward.Rewards = rewards;
                         SendPacket(packetReward);
@@ -599,7 +593,7 @@ namespace Server
 
         public void GetBattlePassPoint(int point, Action onFinish)
         {
-            ValidateBattlePassSeason((validate) =>
+            ValidateBattlePassSeason(validate =>
             {
                 if (validate)
                 {
@@ -607,13 +601,15 @@ namespace Server
                     UpdateDB<DBBattlePassInfo>(onFinish);
                 }
                 else
+                {
                     onFinish?.Invoke();
+                }
             });
         }
 
         public void PurchasePremiumPass(PacketBase packet)
         {
-            ValidateBattlePassSeason((validate) =>
+            ValidateBattlePassSeason(validate =>
             {
                 if (validate)
                 {
@@ -621,7 +617,7 @@ namespace Server
                     UpdateDB<DBBattlePassInfo>(() =>
                     {
                         var packetReward = new PacketReward();
-                        packetReward.PacketType = ePACKET_TYPE.RECEIVE_PASS_REWARD;
+                        packetReward.PacketType = ePacketType.RECEIVE_PASS_REWARD;
                         packetReward.hash = packet.hash;
                         packetReward.Rewards = new List<ItemInfo>();
                         SendPacket(packetReward);
@@ -630,7 +626,7 @@ namespace Server
                 else
                 {
                     var packetReward = new PacketReward();
-                    packetReward.PacketType = ePACKET_TYPE.RECEIVE_PASS_REWARD;
+                    packetReward.PacketType = ePacketType.RECEIVE_PASS_REWARD;
                     packetReward.hash = packet.hash;
                     packetReward.Rewards = new List<ItemInfo>();
                     packetReward.SetError("season_expire");
@@ -641,7 +637,7 @@ namespace Server
 
         public void ReceivePassReward(PacketBase packet)
         {
-            ValidateBattlePassSeason((validate) =>
+            ValidateBattlePassSeason(validate =>
             {
                 if (validate)
                 {
@@ -652,7 +648,7 @@ namespace Server
                         UpdateDB<DBBattlePassInfo>(() =>
                         {
                             var packetReward = new PacketReward();
-                            packetReward.PacketType = ePACKET_TYPE.RECEIVE_PASS_REWARD;
+                            packetReward.PacketType = ePacketType.RECEIVE_PASS_REWARD;
                             packetReward.hash = packet.hash;
                             packetReward.Rewards = rewards;
                             SendPacket(packetReward);
@@ -662,7 +658,7 @@ namespace Server
                 else
                 {
                     var packetReward = new PacketReward();
-                    packetReward.PacketType = ePACKET_TYPE.RECEIVE_PASS_REWARD;
+                    packetReward.PacketType = ePacketType.RECEIVE_PASS_REWARD;
                     packetReward.hash = packet.hash;
                     packetReward.Rewards = new List<ItemInfo>();
                     packetReward.SetError("season_expire");
@@ -673,14 +669,16 @@ namespace Server
 
         public void ValidateBattlePassSeason(Action<bool> onFinish)
         {
-            bool isValidate = true;
+            var isValidate = true;
 
             //참가한 시즌이 없음
             if (BattlePassInfo.Instance.JoinSeason == null)
                 isValidate = false;
             //진행중인 시즌이 없음
             if (BattlePassInfo.CurrentSeason == null)
+            {
                 isValidate = false;
+            }
             //현재 진행중이 시즌과 참가한 시즌이 다름
             else
             {

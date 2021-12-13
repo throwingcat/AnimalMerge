@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ public static class MPC
             RedirectStandardError = true,
             UseShellExecute = false,
             FileName = "mpc",
-            Arguments = "-i ./Scripts/ -o ./Scripts/MessagePackGenerated.cs",
+            Arguments = "-i ./Scripts/Shared/ -o ./Scripts/Shared/MessagePackGenerated.cs",
             WorkingDirectory = Application.dataPath
         };
 
@@ -60,3 +61,4 @@ public static class MPC
         return tcs.Task;
     }
 }
+#endif

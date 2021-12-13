@@ -1,5 +1,4 @@
 using Common;
-using Packet;
 using SheetData;
 using UnityEngine;
 using UnityEngine.UI;
@@ -90,7 +89,7 @@ public class CellPlayerLevelReward : MonoBehaviour, IScrollCell
                     ReceivePremiumReward.SetActive(true);
             }
 
-        PlayerInfo playerInfo = PlayerDataManager.Get<PlayerInfo>();
+        var playerInfo = PlayerDataManager.Get<PlayerInfo>();
         if (Sheet.level <= playerInfo.elements.Level)
         {
             var isEnable = ReceiveReward.activeSelf == false || ReceivePremiumReward.activeSelf == false;
@@ -104,14 +103,14 @@ public class CellPlayerLevelReward : MonoBehaviour, IScrollCell
 
     public void OnClickReceiveReward()
     {
-        PlayerInfo playerInfo = PlayerDataManager.Get<PlayerInfo>();
-        
+        var playerInfo = PlayerDataManager.Get<PlayerInfo>();
+
         if (Sheet.level <= playerInfo.elements.Level)
         {
             if (playerInfo.HasReward(Sheet.key) == false) return;
 
             var packet = new PacketBase();
-            packet.PacketType = ePACKET_TYPE.RECEIVE_PLAYER_LEVEL_REWARD;
+            packet.PacketType = ePacketType.RECEIVE_PLAYER_LEVEL_REWARD;
             packet.hash["level_key"] = Sheet.key;
             NetworkManager.Instance.Request(packet, res =>
             {

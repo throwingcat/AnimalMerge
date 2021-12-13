@@ -1,4 +1,3 @@
-using System.Net.Configuration;
 using Define;
 using MessagePack;
 using SheetData;

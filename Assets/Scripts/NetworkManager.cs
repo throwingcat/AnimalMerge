@@ -1,12 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using BackEnd;
 using BackEnd.Tcp;
 using Common;
 using MessagePack;
-using Packet;
+using Server;
 using UnityEngine;
 using Violet;
 
@@ -15,7 +14,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
     public void Update()
     {
         //일반 통신 업데이트
-        for (int i = 0; i < _reservedPacket.Count; i++)
+        for (var i = 0; i < _reservedPacket.Count; i++)
         {
             SendPacket(_reservedPacket[i]);
             _reservedPacket.RemoveAt(i--);
@@ -23,10 +22,8 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
         //매칭 업데이트
         if (Backend.Match != null)
-        {
             if (Backend.Match.IsMatchServerConnect())
                 Backend.Match.Poll();
-        }
     }
 
     #region 로그인
@@ -37,7 +34,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         if (GameManager.Instance.GUID.IsNullOrEmpty())
             GameManager.Instance.GUID = SystemInfo.deviceUniqueIdentifier;
 
-        bool isLoginComplete = false;
+        var isLoginComplete = false;
 
         //액세스 토큰 로그인 시도
         var bro = Backend.BMember.LoginWithTheBackendToken();
@@ -72,7 +69,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
     public bool CreateNickname(string nickname)
     {
-        BackendReturnObject bro = Backend.BMember.CreateNickname(nickname);
+        var bro = Backend.BMember.CreateNickname(nickname);
         if (bro.IsSuccess())
         {
             Debug.Log("닉네임 생성 성공");
@@ -158,11 +155,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         //게임룸 접속
         yield return StartCoroutine(JoinGameRoom());
         //게임룸 접속 실패
-        if (MatchingStep != eMatchingStep.JOIN_GAMEROOM_COMPLETE)
-        {
-            Debug.LogError("게임룸 접속 실패");
-            yield break;
-        }
+        if (MatchingStep != eMatchingStep.JOIN_GAMEROOM_COMPLETE) Debug.LogError("게임룸 접속 실패");
     }
 
     #region 매치서버 접속
@@ -171,7 +164,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
     {
         MatchingStep = eMatchingStep.MATCHSERVER_CONNECT;
 
-        ErrorInfo errorInfo = new ErrorInfo();
+        var errorInfo = new ErrorInfo();
 
         var isSocketConnect = Backend.Match.JoinMatchMakingServer(out errorInfo);
 
@@ -235,7 +228,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
     #region 매칭 신청
 
-    public float MatchMakingElapsed = 0f;
+    public float MatchMakingElapsed;
 
     private IEnumerator MatchMaking()
     {
@@ -243,8 +236,8 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         MatchingStep = eMatchingStep.MATCHING;
 
         //매치 메이킹 신청
-        BackendReturnObject bro = Backend.Match.GetMatchList();
-        string indate = bro.GetInDate();
+        var bro = Backend.Match.GetMatchList();
+        var indate = bro.GetInDate();
         Debug.LogFormat("Match Making InDate : {0}", indate);
         Backend.Match.RequestMatchMaking(MatchType.Random, MatchModeType.OneOnOne, indate);
         //매치 메이킹 응답 이벤트 등록
@@ -260,7 +253,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
             {
                 MatchMakingElapsed = 0f;
 
-                int index = 0;
+                var index = 0;
                 while (true)
                 {
                     var panel = SUIPanel.GetPanel(index++);
@@ -314,7 +307,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         var isReconnect = false;
         ErrorInfo errorInfo = null;
 
-        bool isDone = false;
+        var isDone = false;
         if (Backend.Match.JoinGameServer(serverAddress, serverPort, isReconnect, out errorInfo))
         {
             //인게임서버 접속 응답 이벤트 등록
@@ -332,7 +325,6 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         else
         {
             MatchingStep = eMatchingStep.ERROR;
-            yield break;
         }
     }
 
@@ -381,26 +373,24 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
     #region 일반
 
-    private List<PacketBase> _reservedPacket = new List<PacketBase>();
-    private Dictionary<ulong, Action<PacketBase>> _waitingPacket = new Dictionary<ulong, Action<PacketBase>>();
+    private readonly List<PacketBase> _reservedPacket = new List<PacketBase>();
+    private readonly Dictionary<ulong, Action<PacketBase>> _waitingPacket = new Dictionary<ulong, Action<PacketBase>>();
 
     public void Request(PacketBase packet, Action<PacketBase> onReceive)
     {
         LoadingCurtain.Instance.SetActive(true);
-        
-        bool isContains = false;
+
+        var isContains = false;
         foreach (var r in _reservedPacket)
-        {
             if (r.PacketType == packet.PacketType)
             {
                 isContains = true;
                 break;
             }
-        }
 
         if (isContains)
             return;
-        ulong packetGUID = GameManager.Guid.NewGuid();
+        var packetGUID = GameManager.Guid.NewGuid();
 
         packet.hash.Add("player_guid", GameManager.Instance.GUID);
         packet.hash.Add("packet_guid", packetGUID);
@@ -418,28 +408,28 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         //서버로 데이터 송신
         var bytes = MessagePackSerializer.Serialize(packet);
 
-        Server.AnimalMergeServer.Instance.OnReceivePacket(bytes);
+        AnimalMergeServer.Instance.OnReceivePacket(bytes);
     }
 
     public void ReceivePacket(byte[] bytes)
     {
         LoadingCurtain.Instance.SetActive(false);
-        
-        PacketBase packet = MessagePackSerializer.Deserialize<PacketBase>(bytes);
 
-        ulong guid = (ulong) packet.hash["packet_guid"];
+        var packet = MessagePackSerializer.Deserialize<PacketBase>(bytes);
+
+        var guid = (ulong) packet.hash["packet_guid"];
 
         if (_waitingPacket.ContainsKey(guid))
         {
             switch (packet.PacketType)
             {
-                case ePACKET_TYPE.CHEST_COMPLETE:
-                case ePACKET_TYPE.QUEST_COMPLETE:
-                case ePACKET_TYPE.DAILY_QUEST_REWARD:
-                case ePACKET_TYPE.PURCHASE_PREMIUM_PASS:
-                case ePACKET_TYPE.RECEIVE_PASS_REWARD:
+                case ePacketType.CHEST_COMPLETE:
+                case ePacketType.QUEST_COMPLETE:
+                case ePacketType.DAILY_QUEST_REWARD:
+                case ePacketType.PURCHASE_PREMIUM_PASS:
+                case ePacketType.RECEIVE_PASS_REWARD:
                 {
-                    PacketReward res = MessagePackSerializer.Deserialize<PacketReward>(bytes);
+                    var res = MessagePackSerializer.Deserialize<PacketReward>(bytes);
                     _waitingPacket[guid]?.Invoke(res);
                 }
                     break;

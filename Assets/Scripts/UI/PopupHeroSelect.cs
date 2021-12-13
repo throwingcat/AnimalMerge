@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Common;
-using Packet;
 using SheetData;
 using UnityEngine;
 using UnityEngine.UI;
@@ -94,7 +93,7 @@ public class PopupHeroSelect : SUIPanel
         PlayerInfo playerInfo = PlayerDataManager.Get<PlayerInfo>();
         
         PacketBase packet = new PacketBase();
-        packet.PacketType = ePACKET_TYPE.CHANGE_HERO;
+        packet.PacketType = ePacketType.CHANGE_HERO;
         packet.hash.Add("hero",_currentHero.key);
         NetworkManager.Instance.Request(packet, (res) =>
         {

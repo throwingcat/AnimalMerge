@@ -1,14 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
 using Common;
-using Packet;
 using UnityEngine;
 
 public class PageQuest : MonoBehaviour
 {
-    public SlicedFilledImage PointSlider;
     public List<CellQeustInfo> Cells = new List<CellQeustInfo>();
     public List<PartQuestDailyReward> DailyRewards = new List<PartQuestDailyReward>();
+    public SlicedFilledImage PointSlider;
 
     public void Show()
     {
@@ -20,11 +18,12 @@ public class PageQuest : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
     public void RefreshDailyReward()
     {
-        for (int i = 0; i < DailyRewards.Count; i++)
+        for (var i = 0; i < DailyRewards.Count; i++)
         {
-            PartQuestDailyReward.eState state = PartQuestDailyReward.eState.Disable;
+            var state = PartQuestDailyReward.eState.Disable;
             if (QuestInfo.Instance.ReceiveReward[i] == false)
             {
                 if (QuestInfo.Instance.RewardPoint[i] <= QuestInfo.Instance.QuestPoint)
@@ -57,20 +56,20 @@ public class PageQuest : MonoBehaviour
 
     public void QuestRefresh(int index)
     {
-        PacketBase packet = new PacketBase();
-        packet.PacketType = ePACKET_TYPE.QUEST_REFRESH;
+        var packet = new PacketBase();
+        packet.PacketType = ePacketType.QUEST_REFRESH;
         packet.hash.Add("slot_index", index);
         NetworkManager.Instance.Request(packet,
-            (res) => { Cells[index].Set(this, QuestInfo.Instance.QuestSlots[index]); });
+            res => { Cells[index].Set(this, QuestInfo.Instance.QuestSlots[index]); });
     }
 
     public void QuestComplete(int index)
     {
-        PacketBase packet = new PacketBase();
-        packet.PacketType = ePACKET_TYPE.QUEST_COMPLETE;
+        var packet = new PacketBase();
+        packet.PacketType = ePacketType.QUEST_COMPLETE;
         packet.hash.Add("slot_index", index);
         NetworkManager.Instance.Request(packet,
-            (res) =>
+            res =>
             {
                 var p = res as PacketReward;
 
@@ -90,12 +89,12 @@ public class PageQuest : MonoBehaviour
         if (QuestInfo.Instance.QuestPoint < QuestInfo.Instance.RewardPoint[index]) return;
         //이미 받음
         if (QuestInfo.Instance.ReceiveReward[index]) return;
-        
-        PacketBase packet = new PacketBase();
-        packet.PacketType = ePACKET_TYPE.DAILY_QUEST_REWARD;
+
+        var packet = new PacketBase();
+        packet.PacketType = ePacketType.DAILY_QUEST_REWARD;
         packet.hash.Add("index", index);
         NetworkManager.Instance.Request(packet,
-            (res) =>
+            res =>
             {
                 var p = res as PacketReward;
 

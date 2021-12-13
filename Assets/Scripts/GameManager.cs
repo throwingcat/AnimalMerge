@@ -112,31 +112,17 @@ public class GameManager : MonoBehaviour
     private static void RegisterSerializer()
     {
         if (_isSerializerRegisted) return;
+        _isSerializerRegisted = true;
+
+        Debug.Log("RegisterSerializer");
 
         StaticCompositeResolver.Instance.Register(
-            UnityResolver.Instance,
-            UnityBlitWithPrimitiveArrayResolver.Instance,
             GeneratedResolver.Instance,
             StandardResolver.Instance
         );
 
-         var options = MessagePackSerializerOptions.Standard.WithResolver(StaticCompositeResolver.Instance);
-         MessagePackSerializer.DefaultOptions = options;
-         
-        //
-        // //시리얼라이저 등록
-        // StaticCompositeResolver.Instance.Register(
-        //     BuiltinResolver.Instance,
-        //     UnityResolver.Instance,
-        //     UnityBlitWithPrimitiveArrayResolver.Instance,
-        //     StandardResolver.Instance,
-        //     GeneratedResolver.Instance
-        // );
-        // var options = MessagePackSerializerOptions.Standard.WithResolver(StaticCompositeResolver.Instance);
-        // //var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
-        // MessagePackSerializer.DefaultOptions = options;
-
-        _isSerializerRegisted = true;
+        var options = MessagePackSerializerOptions.Standard.WithResolver(StaticCompositeResolver.Instance);
+        MessagePackSerializer.DefaultOptions = options;
     }
 
     private IEnumerator LoadSheetData()

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Common;
 using Newtonsoft.Json;
-using Packet;
 using Server;
 using SheetData;
 using Violet;
@@ -73,7 +72,7 @@ public class QuestInfo
             if (QuestSlots[index].isClear)
             {
                 var packet = new PacketBase();
-                packet.PacketType = ePACKET_TYPE.QUEST_COMPLETE;
+                packet.PacketType = ePacketType.QUEST_COMPLETE;
                 packet.hash = new Dictionary<string, object>();
                 packet.hash.Add("index", index);
                 NetworkManager.Instance.Request(packet, res =>
@@ -118,9 +117,6 @@ public class QuestInfo
 
     public class QuestSlot
     {
-        //시작 카운트
-        public ulong StartCount;
-        
         //진행 카운트
         public ulong Count;
 
@@ -133,10 +129,13 @@ public class QuestInfo
         //새로운 퀘스트 갱신 시간
         public DateTime RefreshTime;
 
+        //시작 카운트
+        public ulong StartCount;
+
         //퀘스트 만료
         [JsonIgnore] public bool isExpire => RefreshTime == null ? false : GameManager.GetTime() < RefreshTime;
         [JsonIgnore] public Quest Sheet => Key.ToTableData<Quest>();
-        [JsonIgnore] public bool isClear => Sheet != null && (ulong)Sheet.Count <= StartCount - Count;
+        [JsonIgnore] public bool isClear => Sheet != null && (ulong) Sheet.Count <= StartCount - Count;
 
         [JsonIgnore]
         public string DescriptionText
