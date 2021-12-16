@@ -931,6 +931,7 @@ public class GameCore : MonoBehaviour
     private Vector2 _touchBegin = Vector2.zero;
 
     public GuideUnit GuideUnit;
+    public GuideLine GuideLine;
     public ContactFilter2D ContactFilter2D;
 
     protected virtual void InputUpdate()
@@ -972,6 +973,12 @@ public class GameCore : MonoBehaviour
                 GuideUnit.transform.SetParent(CurrentReadyUnit.transform.parent);
                 GuideUnit.transform.LocalReset();
                 GuideUnit.transform.localScale = CurrentReadyUnit.transform.localScale;
+
+                prefab = ResourceManager.Instance.LoadPrefab("Units/GuideLine");
+                go = Instantiate(prefab);
+                GuideLine = go.GetComponent<GuideLine>();
+                GuideLine.transform.SetParent(CurrentReadyUnit.transform.parent);
+                GuideLine.transform.LocalReset();
             }
 
             var result = new RaycastHit2D[1];
@@ -995,6 +1002,7 @@ public class GameCore : MonoBehaviour
                     pos = GuideUnit.transform.localPosition;
                     pos.y += GuideUnit.transform.localScale.y;
                     GuideUnit.transform.localPosition = pos;
+                    GuideLine.UpdatePosition(CurrentReadyUnit.transform.position,GuideUnit.transform.position);
                 }
             }
         }

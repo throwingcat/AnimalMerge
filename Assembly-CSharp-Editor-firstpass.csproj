@@ -324,7 +324,7 @@
  <HintPath>C:/Git/AnimalMerge/Assets/Violet/External Asset/Demigiant/DOTween/DOTween.dll</HintPath>
  </Reference>
  <Reference Include="ICSharpCode.NRefactory">
- <HintPath>C:/Git/AnimalMerge/Library/PackageCache/com.unity.render-pipelines.core@10.7.0/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+ <HintPath>C:/Git/AnimalMerge/Library/PackageCache/com.unity.render-pipelines.core@10.8.0/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
  </Reference>
  <Reference Include="Backend">
  <HintPath>C:/Git/AnimalMerge/Assets/TheBackend/Plugins/Backend.dll</HintPath>

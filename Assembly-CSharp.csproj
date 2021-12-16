@@ -280,6 +280,7 @@
      <Compile Include="Assets\Scripts\Uitls\ScrollRectDisableDrag.cs" />
      <Compile Include="Assets\Scripts\PlayerData\ChestInventory.cs" />
      <Compile Include="Assets\Scripts\UI\PartSimpleNotice.cs" />
+     <Compile Include="Assets\Scripts\Unit\GuideLine.cs" />
      <None Include="Assets\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\Hovl Studio\Fantastic cartoon VFX\Shaders\SlashOld.shader" />
