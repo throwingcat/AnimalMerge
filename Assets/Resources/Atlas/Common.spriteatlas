@@ -123,6 +123,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 18aac0d7000c87149ad9d27bfe79d4db, type: 3}
   - {fileID: 21300000, guid: 80f9cb08e31c8be4fbfc968cc63d69c3, type: 3}
   - {fileID: 21300000, guid: e913c04885ba5504488138a043b60201, type: 3}
+  - {fileID: 21300000, guid: 45fa01482971a1c4ca642a4e59afeaba, type: 3}
   - {fileID: 21300000, guid: 5cc34e4864d4522489a65f9f344251e1, type: 3}
   - {fileID: 21300000, guid: 63039fa88c39e594db084d0398f48244, type: 3}
   - {fileID: 21300000, guid: 7ba729c8c75d143429906a1d00851df1, type: 3}
@@ -239,6 +240,7 @@ SpriteAtlas:
   - gauge_bg
   - gauge_exp_fg3
   - btn_menu_04
+  - img_focusCircle
   - icon_goldMark
   - btn_menu_03
   - img_nextSlot

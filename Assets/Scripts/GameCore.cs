@@ -977,15 +977,20 @@ public class GameCore : MonoBehaviour
                 prefab = ResourceManager.Instance.LoadPrefab("Units/GuideLine");
                 go = Instantiate(prefab);
                 GuideLine = go.GetComponent<GuideLine>();
-                GuideLine.transform.SetParent(CurrentReadyUnit.transform.parent);
                 GuideLine.transform.LocalReset();
+                GuideLine.transform.SetParent(CurrentReadyUnit.transform.parent);
+                GuideLine.transform.localPosition = Vector3.zero;
+                GuideLine.transform.localRotation = Quaternion.identity;
             }
 
             var result = new RaycastHit2D[1];
             if (GuideUnit != null)
             {
                 if (GuideUnit.gameObject.activeSelf == false)
+                {
                     GuideUnit.gameObject.SetActive(true);
+                    GuideLine.gameObject.SetActive(true);
+                }
 
                 GuideUnit.transform.localScale = CurrentReadyUnit.transform.localScale;
 
@@ -1009,7 +1014,10 @@ public class GameCore : MonoBehaviour
         else
         {
             if (GuideUnit != null && GuideUnit.gameObject.activeSelf)
+            {
                 GuideUnit.gameObject.SetActive(false);
+                GuideLine.gameObject.SetActive(false);
+            }
         }
     }
 

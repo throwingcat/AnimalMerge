@@ -6,7 +6,6 @@ using UnityEngine;
 public class GuideUnit : MonoBehaviour
 {
     public SpriteRenderer Face;
-    public SpriteRenderer GuideLine;
 
     public void Set(string unit_key)
     {
