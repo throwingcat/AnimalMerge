@@ -41,78 +41,46 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DOTween\DOTween.dll" />
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DOTweenPro\DOTweenPro.dll" />
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DOTween\Editor\DOTweenEditor.dll" />
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DemiLib\Core\DemiLib.dll" />
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DemiLib\Core\Editor\DemiEditor.dll" />
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DOTweenPro\Editor\DOTweenProEditor.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Violet\Common\SubscribeBase.cs" />
-    <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\UITransitionEffect.cs" />
     <Compile Include="Assets\Scripts\Unit\GuideUnit.cs" />
     <Compile Include="Assets\Scripts\Data\ItemInfo.cs" />
     <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\SaveParticleSystemScript.cs" />
     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutoRotate.cs" />
-    <Compile Include="Assets\Violet\External Asset\SUI\SUIDragRect.cs" />
-    <Compile Include="Assets\Violet\Common\MonoObjectPool.cs" />
     <Compile Include="Assets\Scripts\Data\Partial\Hero.cs" />
-    <Compile Include="Assets\Violet\JoyStick\Script\JoyStick.cs" />
     <Compile Include="Assets\Scripts\UI\LoadingScreen.cs" />
-    <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\UIShadow.cs" />
     <Compile Include="Assets\Scripts\UI\Lobby Page\LobbyPageBase.cs" />
-    <Compile Include="Assets\Violet\Manager\SceneDirector.cs" />
     <Compile Include="Assets\Scripts\Passive Skill\CatPassive.cs" />
-    <Compile Include="Assets\Violet\External Asset\SUI\SUICanvasFitter.cs" />
-    <Compile Include="Assets\Violet\External Asset\SUI\SUITween.cs" />
     <Compile Include="Assets\Scripts\UI\PopupLogin.cs" />
-    <Compile Include="Assets\Violet\CSVGenerator\CSVDownloader.cs" />
-    <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\Common\ShadowStyle.cs" />
-    <Compile Include="Assets\Violet\UI\CanvasLayerTag.cs" />
     <Compile Include="Assets\Scripts\PlayerData\PlayerTracker.cs" />
-    <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\Common\Packer.cs" />
-    <Compile Include="Assets\Violet\Common\Define.cs" />
     <Compile Include="Assets\Scripts\UI\PartComboPortrait.cs" />
     <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\ParticleSystemController.cs" />
-    <Compile Include="Assets\Violet\Common\StringUtils.cs" />
     <Compile Include="Assets\Scripts\Unit\GuideLine.cs" />
     <Compile Include="Assets\Scripts\Server\DBPlayerInfo.cs" />
-    <Compile Include="Assets\Violet\CSVGenerator\CSVGenerator.cs" />
     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
     <Compile Include="Assets\Scripts\Data\Partial\Unit.cs" />
-    <Compile Include="Assets\Violet\Common\Logger.cs" />
-    <Compile Include="Assets\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\Scripts\Shared\MessagePackGenerated.cs" />
-    <Compile Include="Assets\Violet\External Asset\SUI\SUIMultiLoopScroll.cs" />
-    <Compile Include="Assets\Violet\External Asset\SUI\SUIPanelInfo.cs" />
     <Compile Include="Assets\Scripts\Data\Partial\BattlePass.cs" />
     <Compile Include="Assets\Scripts\UI\PartSimpleNotice.cs" />
     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_LightIntensityFade.cs" />
     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_ShurikenThreadFix.cs" />
     <Compile Include="Assets\Scripts\UI\PartSimpleValueUpdate.cs" />
     <Compile Include="Assets\Scripts\Data\Arena.cs" />
-    <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\Common\BlurMode.cs" />
     <Compile Include="Assets\Scripts\Data\Partial\Achivement.cs" />
     <Compile Include="Assets\Scripts\Data\BattlePassSeason.cs" />
-    <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\UIHsvModifier.cs" />
-    <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\Common\ToneMode.cs" />
     <Compile Include="Assets\Scripts\UI\PopupGameResult.cs" />
     <Compile Include="Assets\Scripts\Server\DBBase.cs" />
     <Compile Include="Assets\Scripts\Server\DBChestInventory.cs" />
     <Compile Include="Assets\Scripts\Uitls\CameraResolution.cs" />
-    <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\UIShiny.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerLevelReward\CellPlayerLevelReward.cs" />
     <Compile Include="Assets\Scripts\PlayerData\PlayerData.PlayerInfo.cs" />
-    <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\Common\ColorMode.cs" />
     <Compile Include="Assets\Scripts\NetworkManager.cs" />
     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_New.cs" />
     <Compile Include="Assets\Scripts\PlayerData\PlayerDataManager.cs" />
     <Compile Include="Assets\Scripts\SyncManager.cs" />
     <Compile Include="Assets\Scripts\Data\Partial\Stage.cs" />
-    <Compile Include="Assets\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleSprite.cs" />
     <Compile Include="Assets\Scripts\UI\PopupChestUnlock.cs" />
     <Compile Include="Assets\Scripts\Data\Partial\PlayerLevel.cs" />
     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_InspectorHelp.cs" />
@@ -120,29 +88,22 @@
     <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\Serializables.cs" />
     <Compile Include="Assets\Hovl Studio\Toon Projectiles 2\Demo scene\DemoShooting.cs" />
     <Compile Include="Assets\Scripts\Uitls\DOTweenPlayer.cs" />
-    <Compile Include="Assets\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleAudio.cs" />
     <Compile Include="Assets\Scripts\UI\HeroSelect\CellHeroSelect.cs" />
     <Compile Include="Assets\Scripts\Data\Stage.cs" />
-    <Compile Include="Assets\Violet\Common\Singleton.cs" />
     <Compile Include="Assets\Scripts\UI\PopupUnitInfo.cs" />
-    <Compile Include="Assets\Violet\EditorCoroutine\EditorCoroutines.cs" />
     <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\CameraShakeSimpleScript.cs" />
     <Compile Include="Assets\Scripts\Data\Chest.cs" />
-    <Compile Include="Assets\Violet\External Asset\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
     <Compile Include="Assets\Scripts\EnemyScreen.cs" />
     <Compile Include="Assets\Scripts\Server\DBInventory.cs" />
     <Compile Include="Assets\Scripts\UI\Lobby Page\LobbyPageMain.cs" />
-    <Compile Include="Assets\Violet\Manager\UIManager.cs" />
     <Compile Include="Assets\Scripts\Data\Partial\SpawnPhase.cs" />
     <Compile Include="Assets\Scripts\Data\UnitLevel.cs" />
     <Compile Include="Assets\Scripts\UI\Lobby Page\PageAchievement.cs" />
     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Spawn System\CFX_SpawnSystem.cs" />
-    <Compile Include="Assets\Violet\External Asset\SUI\SUIButton.cs" />
     <Compile Include="Assets\Scripts\Server\DBPlayerTracker.cs" />
     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutodestructWhenNoChildren.cs" />
     <Compile Include="Assets\Scripts\UI\Quest\CellAchievement.cs" />
     <Compile Include="Assets\Scripts\UI\Ingame\IngameBadBlock.cs" />
-    <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\Common\Matrix2x3.cs" />
     <Compile Include="Assets\Scripts\PlayerData\PlayerDataBase.cs" />
     <Compile Include="Assets\Scripts\UI\SlicedFilledImage.cs" />
     <Compile Include="Assets\Scripts\UI\Quest\SimpleRewardView.cs" />
@@ -150,33 +111,17 @@
     <Compile Include="Assets\Scripts\PlayerData\BattlePassInfo.cs" />
     <Compile Include="Assets\Scripts\UI\Lobby Page\LobbyPageQuest.cs" />
     <Compile Include="Assets\Scripts\Data\EnvironmentValueSheet.cs" />
-    <Compile Include="Assets\Violet\External Asset\Demigiant\DOTweenPro\DOTweenTextMeshPro.cs" />
-    <Compile Include="Assets\Violet\Audio\AudioManager.cs" />
     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDir.cs" />
-    <Compile Include="Assets\Violet\External Asset\Demigiant\DOTweenPro\DOTweenProShortcuts.cs" />
     <Compile Include="Assets\Scripts\Data\Partial\EnvironmentValueSheet.cs" />
     <Compile Include="Assets\Scripts\UI\Lobby Page\PageBattlePass.cs" />
-    <Compile Include="Assets\Violet\External Asset\SUI\SUIToggle.cs" />
-    <Compile Include="Assets\Violet\Common\MonoObjectPoolManager.cs" />
     <Compile Include="Assets\Scripts\UI\Adventure\CellStage.cs" />
     <Compile Include="Assets\Scripts\Data\Achievement.cs" />
     <Compile Include="Assets\Scripts\Server\DBQuestInfo.cs" />
-    <Compile Include="Assets\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleUI.cs" />
     <Compile Include="Assets\Scripts\UI\PanelLobby.cs" />
     <Compile Include="Assets\Scripts\UI\PopupUnitUpgrade.cs" />
-    <Compile Include="Assets\Violet\UI\PartCurtain.cs" />
-    <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\Common\UIEffectBase.cs" />
-    <Compile Include="Assets\Violet\Common\Utils.cs" />
-    <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\Common\ParameterTexture.cs" />
     <Compile Include="Assets\Scripts\UI\Ingame\VFXCombo.cs" />
-    <Compile Include="Assets\Violet\External Asset\SUI\SUILetterSpacing.cs" />
     <Compile Include="Assets\Hovl Studio\Fantastic cartoon VFX\Demo scenes\CameraHolder.cs" />
-    <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\UIFlip.cs" />
-    <Compile Include="Assets\Violet\Manager\TableManager.cs" />
     <Compile Include="Assets\Scripts\UI\Battle Pass\CellBattlePass.cs" />
-    <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\Common\MaterialCache.cs" />
-    <Compile Include="Assets\Violet\JoyStick\Script\JoyStickReceiver.cs" />
-    <Compile Include="Assets\Violet\UI\UITracker.cs" />
     <Compile Include="Assets\Hovl Studio\Toon Projectiles 2\Scripts\AutoDestroyPS.cs" />
     <Compile Include="Assets\MPC.cs" />
     <Compile Include="Assets\Scripts\UI\Ingame\IngamePlayerPortrait.cs" />
@@ -185,8 +130,6 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\ParticleSystemControllerEditor.cs" />
     <Compile Include="Assets\Scripts\PlayerData\UnitInventory.cs" />
-    <Compile Include="Assets\Violet\External Asset\SUI\SUIFitter.cs" />
-    <Compile Include="Assets\Violet\External Asset\MUI\MToggle.cs" />
     <Compile Include="Assets\Scripts\UI\PopupHeroSelect.cs" />
     <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\SpawnProjectilesScript.cs" />
     <Compile Include="Assets\Scripts\Data\Unit.cs" />
@@ -194,99 +137,65 @@
     <Compile Include="Assets\Scripts\PlayerData\QuestInfo.cs" />
     <Compile Include="Assets\Scripts\UI\PopupHeroUnlock.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitBase.cs" />
-    <Compile Include="Assets\Violet\Manager\RenderTextureManager.cs" />
-    <Compile Include="Assets\Violet\Common\CSVReader.cs" />
-    <Compile Include="Assets\Violet\Manager\ResourceManager.cs" />
     <Compile Include="Assets\Scripts\UI\Quest\PartQuestDailyReward.cs" />
-    <Compile Include="Assets\Violet\Audio\AudioItem.cs" />
     <Compile Include="Assets\Scripts\Data\PlayerLevel.cs" />
     <Compile Include="Assets\Scripts\Uitls\TextPreset.cs" />
     <Compile Include="Assets\Hovl Studio\Toon Projectiles 2\Scripts\ProjectileMover.cs" />
     <Compile Include="Assets\Scripts\UI\Quest\CellQeustInfo.cs" />
-    <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\UIGradient.cs" />
     <Compile Include="Assets\Scripts\Server\DBBattlePassInfo.cs" />
-    <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\UIDissolve.cs" />
-    <Compile Include="Assets\Violet\CSVGenerator\CSVDownloadConfigCore.cs" />
     <Compile Include="Assets\Scripts\UI\PopupGetReward.cs" />
-    <Compile Include="Assets\Violet\External Asset\SUI\SUIDragSlider.cs" />
     <Compile Include="Assets\Scripts\PlayerData\ChestInventory.cs" />
     <Compile Include="Assets\Scripts\UI\Adventure\PanelAdventure.cs" />
     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RotateCamera.cs" />
-    <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\UIEffectCapturedImage.cs" />
     <Compile Include="Assets\Scripts\Data\Localization.cs" />
     <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\ProjectileMoveScript.cs" />
-    <Compile Include="Assets\Violet\UI\CanvasTag.cs" />
-    <Compile Include="Assets\Scripts\UI\PanelTitle.cs" />
     <Compile Include="Assets\Scripts\UI\PanelPlayerLevelReward.cs" />
+    <Compile Include="Assets\Scripts\UI\PanelTitle.cs" />
     <Compile Include="Assets\Scripts\Server\AnimalMergeServer.cs" />
     <Compile Include="Assets\Scripts\AICore.cs" />
     <Compile Include="Assets\Scripts\PlayerData\PlayerBattleTracker.cs" />
     <Compile Include="Assets\Scripts\Data\BattlePass.cs" />
     <Compile Include="Assets\Scripts\Server\DBAchievement.cs" />
     <Compile Include="Assets\Scripts\PlayerData\AchievementInfo.cs" />
-    <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\UIEffect.cs" />
-    <Compile Include="Assets\Violet\CSVGenerator\CSVDownloadConfig.cs" />
     <Compile Include="Assets\Scripts\Passive Skill\PassiveBase.cs" />
     <Compile Include="Assets\Scripts\Uitls\ScrollRectDisableDrag.cs" />
-    <Compile Include="Assets\Violet\Common\CSVDataBase.cs" />
-    <Compile Include="Assets\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModulePhysics2D.cs" />
-    <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\Common\EffectPlayer.cs" />
-    <Compile Include="Assets\Violet\External Asset\SUI\SUIPressButton.cs" />
-    <Compile Include="Assets\Violet\External Asset\SUI\SUISlider.cs" />
     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo.cs" />
     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutoDestructShuriken.cs" />
     <Compile Include="Assets\Scripts\Server\DBUnitInventory.cs" />
     <Compile Include="Assets\Scripts\UI\PartItemCard.cs" />
-    <Compile Include="Assets\Violet\Manager\MonoBehaviourPool.cs" />
     <Compile Include="Assets\Scripts\UI\Adventure\CellChapter.cs" />
     <Compile Include="Assets\Scripts\Active Skill\ActiveShake.cs" />
-    <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\Common\EffectArea.cs" />
     <Compile Include="Assets\Scripts\Shared\PacketBase.cs" />
     <Compile Include="Assets\Scripts\Unit\SyncUnitBase.cs" />
-    <Compile Include="Assets\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\Scripts\UI\PanelIngame.cs" />
     <Compile Include="Assets\Scripts\UI\PartLobbyChest.cs" />
-    <Compile Include="Assets\Violet\External Asset\SUI\SUITouchable.cs" />
-    <Compile Include="Assets\Violet\EditorCoroutine\EditorCoroutineExtensions.cs" />
-    <Compile Include="Assets\Violet\External Asset\Demigiant\DOTweenPro\DOTweenTk2d.cs" />
     <Compile Include="Assets\Scripts\Data\Chapter.cs" />
-    <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\Common\MaterialResolver.cs" />
     <Compile Include="Assets\Scripts\Data\SpawnPhase.cs" />
     <Compile Include="Assets\Scripts\UI\Ingame\IngameInputActiveSkill.cs" />
     <Compile Include="Assets\Scripts\Data\Hero.cs" />
     <Compile Include="Assets\Scripts\Data\PlayerTrackerInfo.cs" />
     <Compile Include="Assets\Hovl Studio\Fantastic cartoon VFX\Scripts\Rotator.cs" />
-    <Compile Include="Assets\Violet\Common\ICSVDataBase.cs" />
-    <Compile Include="Assets\Violet\External Asset\SUI\SUIFlow.cs" />
-    <Compile Include="Assets\Violet\External Asset\SUI\SUIPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Lobby Page\PageQuest.cs" />
     <Compile Include="Assets\Scripts\Uitls\VFXPlayer.cs" />
-    <Compile Include="Assets\Violet\External Asset\SUI\SUIScrollSnap.cs" />
     <Compile Include="Assets\Scripts\Shared\SyncPacketCollection.cs" />
     <Compile Include="Assets\Scripts\Define.cs" />
-    <Compile Include="Assets\Violet\External Asset\SUI\SUILoopScroll.cs" />
     <Compile Include="Assets\Scripts\UI\Lobby Page\LobbyPageCollection.cs" />
     <Compile Include="Assets\Scripts\UI\PopupChestOpen.cs" />
-    <Compile Include="Assets\Violet\External Asset\Demigiant\DOTween\Modules\DOTweenModulePhysics.cs" />
     <Compile Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Scripts\RotateToMouseScript.cs" />
     <Compile Include="Assets\Scripts\UI\PartBase.cs" />
     <Compile Include="Assets\Scripts\PlayerData\Inventory.cs" />
     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_Translate.cs" />
     <Compile Include="Assets\Scripts\UI\Ingame\IngameDynamicCanvas.cs" />
-    <Compile Include="Assets\Violet\Common\FXController.cs" />
     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
     <Compile Include="Assets\Scripts\Data\DailyQuestRewardInfo.cs" />
-    <Compile Include="Assets\Violet\External Asset\SUI\SUIFlowText.cs" />
     <Compile Include="Assets\Scripts\Data\Item.cs" />
     <Compile Include="Assets\Scripts\UI\Adventure\ChapterScrollViewBank.cs" />
-    <None Include="Assets\Violet\External Asset\UIEffect\Shaders\UI-Effect-Shiny.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\Hovl Studio\Fantastic cartoon VFX\Shaders\SlashOld.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Readme.txt" />
     <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Glow.shader" />
     <None Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Shaders\Additive_Scroll01.shader" />
-    <None Include="Assets\Violet\External Asset\UIEffect\Shaders\UI-Effect-Dissolve.shader" />
     <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Ubershader.shader" />
     <None Include="Assets\JMO Assets\Cartoon FX (legacy)\Shaders\CFXM_MobileParticleAB_Alpha8.shader" />
     <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR_SETTINGS.cginc" />
@@ -297,11 +206,9 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\Hovl Studio\Toon Projectiles 2\Shaders\DissolveNoise.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
-    <None Include="Assets\Violet\External Asset\UIEffect\Shaders\UI-Effect.cginc" />
     <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-firestore-unity\maven-metadata.xml" />
     <None Include="Assets\JMO Assets\Cartoon FX Easy Editor\CartoonFX Easy Editor Readme.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
-    <None Include="Assets\Violet\External Asset\UIEffect\Shaders\UI-Effect-Transition.shader" />
     <None Include="Assets\Hovl Studio\Toon Projectiles 2\Shaders\Distortion.shader" />
     <None Include="Assets\Hovl Studio\Toon Projectiles 2\Shaders\Blend_TwoSides.shader" />
     <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-app-unity\maven-metadata.xml" />
@@ -316,7 +223,6 @@
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
-    <None Include="Assets\Violet\External Asset\UIEffect\Shaders\UI-Effect.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
     <None Include="Assets\Hovl Studio\Fantastic cartoon VFX\Demo scenes\Readme.txt" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
@@ -325,19 +231,14 @@
     <None Include="Assets\Hovl Studio\Toon Projectiles 2\Demo scene\HDRP and URP(LWRP).txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Prefabs\Texts\_Make your own text effect.txt" />
-    <None Include="Assets\Violet\External Asset\UIEffect\Shaders\UI-EffectCapture.shader" />
-    <None Include="Assets\Violet\External Asset\Demigiant\DOTweenPro\readme.txt" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Shaders\Additive_EdgeSoft.shader" />
     <None Include="Assets\JMO Assets\Cartoon FX Remaster\Readme Cartoon FX Remaster.txt" />
-    <None Include="Assets\Violet\External Asset\Demigiant\DemiLib\Core\DemiLib.xml" />
     <None Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Shaders\AlphaBlended_EdgeSoft.shader" />
     <None Include="Assets\GabrielAguiarProductions\Unique_Projectiles_Volume_1\Shaders\AlphaBlended_Scroll01.shader" />
     <None Include="Assets\JMO Assets\Cartoon FX (legacy)\Shaders\CFXM_MobileParticleAdd_Alpha8.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\Hovl Studio\Fantastic cartoon VFX\Shaders\Blood.shader" />
-    <None Include="Assets\Violet\External Asset\UIEffect3.3.8\Shaders\UIAdditive.shader" />
-    <None Include="Assets\Violet\External Asset\Demigiant\DOTween\readme.txt" />
     <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Procedural Ring.shader" />
     <None Include="Assets\Resources\CSVConfig.json" />
     <None Include="Assets\Hovl Studio\Toon Projectiles 2\Shaders\Add_CenterGlow.shader" />
@@ -348,7 +249,6 @@
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_WaterWiggle.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
-    <None Include="Assets\Violet\External Asset\UIEffect\Shaders\UI-Effect-HSV.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne.json" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
     <Reference Include="UnityEngine">
@@ -600,41 +500,47 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Collections.LowLevel.ILSupport">
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.unity.collections@1.2.4\Unity.Collections.LowLevel.ILSupport\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+    </Reference>
     <Reference Include="Firebase.App">
-      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.App.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Assets\Firebase\Plugins\Firebase.App.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.Firestore">
-      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.Firestore.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Assets\Firebase\Plugins\Firebase.Firestore.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.TaskExtension">
-      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.TaskExtension.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Assets\Firebase\Plugins\Firebase.TaskExtension.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.Auth">
-      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.Auth.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>C:\Git\AnimalMerge\Assets\Plugins\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Assets\Firebase\Plugins\Firebase.Auth.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.Database">
-      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.Database.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Assets\Firebase\Plugins\Firebase.Database.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe">
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.violet.framework@6bd5d1927c\Runtime\Plugins\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.Platform">
-      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.Platform.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Assets\Firebase\Plugins\Firebase.Platform.dll</HintPath>
     </Reference>
     <Reference Include="Google.MiniJson">
-      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Google.MiniJson.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Assets\Firebase\Plugins\Google.MiniJson.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
-      <HintPath>C:\Git\AnimalMerge\Assets\Violet\External Asset\Demigiant\DOTween\DOTween.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.violet.framework@6bd5d1927c\Plugins\DOTweenPro\Demigiant\DOTween\DOTween.dll</HintPath>
     </Reference>
-    <Reference Include="DemiLib">
-      <HintPath>C:\Git\AnimalMerge\Assets\Violet\External Asset\Demigiant\DemiLib\Core\DemiLib.dll</HintPath>
+    <Reference Include="Microsoft.NET.StringTools">
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.violet.framework@6bd5d1927c\Runtime\Plugins\Microsoft.NET.StringTools.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenPro">
-      <HintPath>C:\Git\AnimalMerge\Assets\Violet\External Asset\Demigiant\DOTweenPro\DOTweenPro.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.violet.framework@6bd5d1927c\Plugins\DOTweenPro\Demigiant\DOTweenPro\DOTweenPro.dll</HintPath>
+    </Reference>
+    <Reference Include="DemiLib">
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.violet.framework@6bd5d1927c\Plugins\DOTweenPro\Demigiant\DemiLib\Core\DemiLib.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -1017,11 +923,17 @@
     <Reference Include="System.Xml.Serialization">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\NetStandard\compat\2.1.0\shims\netfx\System.Xml.Serialization.dll</HintPath>
     </Reference>
+    <Reference Include="Violet">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Violet.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.IK.Runtime">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.IK.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.AI.Navigation.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
@@ -1029,8 +941,8 @@
     <Reference Include="Unity.2D.Common.Path.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.Common.Path.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Services.Core">
-      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.Services.Core.dll</HintPath>
+    <Reference Include="Coffee.SoftMaskForUGUI.Editor">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Coffee.SoftMaskForUGUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.PixelPerfect.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.PixelPerfect.Editor.dll</HintPath>
@@ -1038,8 +950,14 @@
     <Reference Include="Unity.Rider.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="DOTweenPro.Scripts">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\DOTweenPro.Scripts.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Config.Runtime">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Config.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
@@ -1047,32 +965,41 @@
     <Reference Include="Unity.Mathematics.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Services.Core.Environments">
-      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.Services.Core.Environments.dll</HintPath>
+    <Reference Include="Coffee.SoftMaskForUGUI">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Coffee.SoftMaskForUGUI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Collections">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.Collections.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.SpriteShape.Runtime">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="PPv2URPConverters">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\PPv2URPConverters.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.PixelPerfect">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.PixelPerfect.dll</HintPath>
     </Reference>
-    <Reference Include="Coffee.SoftMaskForUGUI.Editor">
-      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Coffee.SoftMaskForUGUI.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Services.Core.Analytics">
-      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.Services.Core.Analytics.dll</HintPath>
+    <Reference Include="Coffee.UIEffectSnapshot.Editor">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Coffee.UIEffectSnapshot.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation.Editor.ConversionSystem">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.AI.Navigation.Editor.ConversionSystem.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.EditorCoroutines.Editor">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.EditorCoroutines.Editor.dll</HintPath>
     </Reference>
     <Reference Include="PsdPlugin">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\PsdPlugin.dll</HintPath>
@@ -1086,6 +1013,9 @@
     <Reference Include="Unity.Burst">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.Burst.dll</HintPath>
     </Reference>
+    <Reference Include="Coffee.UIParticle">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Coffee.UIParticle.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Advertisements">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\UnityEngine.Advertisements.dll</HintPath>
     </Reference>
@@ -1094,15 +1024,6 @@
     </Reference>
     <Reference Include="Unity.ShaderGraph.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Path.Editor">
-      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.Path.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Coffee.SoftMaskForUGUI">
-      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Coffee.SoftMaskForUGUI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Animation.Triangle.Runtime">
-      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.Animation.Triangle.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Advertisements.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\UnityEngine.Advertisements.Editor.dll</HintPath>
@@ -1115,6 +1036,15 @@
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween.Modules">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\DOTween.Modules.dll</HintPath>
+    </Reference>
+    <Reference Include="UIEffect">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\UIEffect.dll</HintPath>
+    </Reference>
+    <Reference Include="Coffee.UIEffectSnapshot">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Coffee.UIEffectSnapshot.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InternalAPIEngineBridge.001">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.InternalAPIEngineBridge.001.dll</HintPath>
@@ -1130,6 +1060,9 @@
     </Reference>
     <Reference Include="Unity.InternalAPIEditorBridge.001">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.001.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation.Updater">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.AI.Navigation.Updater.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Psdimporter.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.Psdimporter.Editor.dll</HintPath>
@@ -1149,6 +1082,9 @@
     <Reference Include="Unity.Searcher.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.AI.Navigation.Editor">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.AI.Navigation.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.SpriteShape.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.SpriteShape.Editor.dll</HintPath>
     </Reference>
@@ -1157,9 +1093,6 @@
     </Reference>
     <Reference Include="Unity.2D.Animation.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.Animation.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Monetization">
-      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\UnityEngine.Monetization.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.IK.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.IK.Editor.dll</HintPath>
@@ -1193,10 +1126,6 @@
     <ProjectReference Include="LunarConsole.csproj">
       <Project>{1067a6a7-68bf-a9f5-6bf9-3f3c41685e3b}</Project>
       <Name>LunarConsole</Name>
-    </ProjectReference>
-    <ProjectReference Include="Coffee.UIParticle.csproj">
-      <Project>{b0a15342-0b73-2d37-3664-eba9146d83c4}</Project>
-      <Name>Coffee.UIParticle</Name>
     </ProjectReference>
     <ProjectReference Include="CFXREditor.csproj">
       <Project>{cb0c5c62-3126-4983-743e-7846da511a1f}</Project>

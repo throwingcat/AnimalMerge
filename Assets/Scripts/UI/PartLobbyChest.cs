@@ -37,8 +37,7 @@ public class PartLobbyChest : MonoBehaviour
         get
         {
             if (Index < ChestInventory.Instance.ChestSlots.Length)
-                if (ChestInventory.Instance.ChestSlots[Index].inDate.IsNullOrEmpty() == false &&
-                    ChestInventory.Instance.ChestSlots[Index].Key.IsNullOrEmpty() == false)
+                if (ChestInventory.Instance.ChestSlots[Index].key.IsNullOrEmpty() == false)
                     return ChestInventory.Instance.ChestSlots[Index];
 
             return null;
@@ -50,7 +49,7 @@ public class PartLobbyChest : MonoBehaviour
         get
         {
             if (ChestSlot != null)
-                return ChestSlot.Key.ToTableData<Chest>();
+                return ChestSlot.key.ToTableData<Chest>();
             return null;
         }
     }
@@ -74,7 +73,7 @@ public class PartLobbyChest : MonoBehaviour
             }
             else
             {
-                var remain = chest.StartTime.AddSeconds(Sheet.time) - GameManager.GetTime();
+                var remain = chest.startTime.AddSeconds(Sheet.time) - GameManager.GetTime();
 
                 //진행중
                 if (0 < remain.TotalSeconds)
@@ -101,7 +100,7 @@ public class PartLobbyChest : MonoBehaviour
             NeedTime.text = Utils.ParseSeconds(Sheet.time);
         }
 
-        var grade = ChestSlot.Grade;
+        var grade = ChestSlot.grade;
         for (var i = 0; i < ReadyGrade.Length; i++) ReadyGrade[i].SetActive(i < grade);
     }
 
@@ -111,7 +110,7 @@ public class PartLobbyChest : MonoBehaviour
         {
             State = eSTATE.Progress;
             SetActiveRoot(State);
-            var grade = ChestSlot.Grade;
+            var grade = ChestSlot.grade;
             for (var i = 0; i < ProgressGrade.Length; i++) ProgressGrade[i].SetActive(i < grade);
         }
 
@@ -165,15 +164,14 @@ public class PartLobbyChest : MonoBehaviour
                     var packet = new PacketBase();
                     packet.PacketType = ePacketType.CHEST_COMPLETE;
                     packet.hash = new Dictionary<string, object>();
-                    packet.hash.Add("inDate", ChestSlot.inDate);
-                    packet.hash.Add("chest_key", ChestSlot.Key);
+                    packet.hash.Add("chest_key", ChestSlot.key);
 
-                    NetworkManager.Instance.Request(packet, res =>
-                    {
-                        var packet = res as PacketReward;
-                        var popup = UIManager.Instance.ShowPopup<PopupChestOpen>();
-                        popup.Set(res.hash["chest_key"].ToString(), packet.Rewards);
-                    });
+                    // NetworkManager.Instance.Request(packet, res =>
+                    // {
+                    //     var packet = res as PacketReward;
+                    //     var popup = UIManager.Instance.ShowPopup<PopupChestOpen>();
+                    //     popup.Set(res.hash["chest_key"].ToString(), packet.Rewards);
+                    // });
                 }
                     break;
             }

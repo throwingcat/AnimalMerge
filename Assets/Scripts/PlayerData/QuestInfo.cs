@@ -27,19 +27,19 @@ public class QuestInfo
         }
     }
 
-    public void OnUpdate(int point, string day, string questJson, string receviedRewardJson)
+    public void OnUpdate(DBQuestInfo.Attribute attribute)
     {
-        QuestPoint = point;
+        QuestPoint = attribute.point;
         QuestSlots = new List<QuestSlot>();
-        QuestDay = DateTime.Parse(day);
+        QuestDay = DateTime.Parse(attribute.day);
         ReceiveReward = null;
-        if (receviedRewardJson.IsNullOrEmpty() == false)
-            ReceiveReward = JsonConvert.DeserializeObject<List<bool>>(receviedRewardJson);
+        if (attribute.receivedRewardJson.IsNullOrEmpty() == false)
+            ReceiveReward = JsonConvert.DeserializeObject<List<bool>>(attribute.receivedRewardJson);
         if (ReceiveReward == null)
             ReceiveReward = new List<bool> {false, false, false};
 
-        if (questJson.IsNullOrEmpty() == false)
-            QuestSlots = JsonConvert.DeserializeObject<List<QuestSlot>>(questJson);
+        if (attribute.questJson.IsNullOrEmpty() == false)
+            QuestSlots = JsonConvert.DeserializeObject<List<QuestSlot>>(attribute.questJson);
 
         if (QuestSlots == null || QuestSlots.Count == 0)
         {
@@ -65,23 +65,7 @@ public class QuestInfo
             }
         }
     }
-
-    public void Complete(int index)
-    {
-        if (index < QuestSlots.Count)
-            if (QuestSlots[index].isClear)
-            {
-                var packet = new PacketBase();
-                packet.PacketType = ePacketType.QUEST_COMPLETE;
-                packet.hash = new Dictionary<string, object>();
-                packet.hash.Add("index", index);
-                NetworkManager.Instance.Request(packet, res =>
-                {
-                    var packet = res as PacketReward;
-                });
-            }
-    }
-
+    
     public bool HasReward(int index)
     {
         return ReceiveReward[index] == false;

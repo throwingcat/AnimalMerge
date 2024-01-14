@@ -23,8 +23,8 @@ public class PopupUnitUpgrade : SUIPanel
         string name = sheet.name.ToLocalization();
         Unit.SetName(string.Format("{0} {1}", level, name));
         
-        var before = Utils.GetUnitDamage(sheet.score, unit.Level - 1);
-        var after = Utils.GetUnitDamage(sheet.score, unit.Level);
+        var before = GameCore.GetUnitDamage(sheet.score, unit.Level - 1);
+        var after = GameCore.GetUnitDamage(sheet.score, unit.Level);
 
         before = Math.Truncate(before * 10) / 10;
         after = Math.Truncate(after * 10) / 10;

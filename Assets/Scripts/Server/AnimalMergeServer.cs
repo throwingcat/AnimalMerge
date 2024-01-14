@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Common;
 using Define;
-using LitJson;
 using MessagePack;
 using Newtonsoft.Json;
 using SheetData;
@@ -49,14 +47,17 @@ namespace Server
         {
             _updateDelta += Time.deltaTime;
             foreach (var DB in DBList)
+            {
                 if (DB.isReservedUpdate)
+                {
                     if (_updateDelay <= _updateDelta)
                     {
-                        DB.DoUpdate();
-                        DB.isReservedUpdate = false;
+                        DB.Save();
                         _updateDelta = 0f;
                         break;
                     }
+                }
+            }
         }
 
         public void OnReceivePacket(byte[] bytes)
@@ -124,20 +125,19 @@ namespace Server
         public void DownloadDB<T>(Action onFinish) where T : DBBase
         {
             var db = GetDB<T>();
-            db.Download(onFinish);
+            db.Load(onFinish);
         }
 
         public void UpdateDB<T>(Action onFinish) where T : DBBase
         {
             var db = GetDB<T>();
-            db.Update(onFinish);
+            db.SaveReserve(onFinish);
         }
 
         public void SendPacket<T>(T packet) where T : PacketBase
         {
             var bytes = MessagePackSerializer.Serialize(packet);
-
-            NetworkManager.Instance.ReceivePacket(bytes);
+            //NetworkManager.Instance.ReceivePacket(bytes);
         }
 
         public void GetRewards(List<ItemInfo> rewards, Action onFinish)
@@ -202,7 +202,7 @@ namespace Server
         {
             var hero = packet.hash["hero"].ToString();
 
-            GetDB<DBPlayerInfo>().PlayerInfo.elements.SelectHero = hero;
+            GetDB<DBPlayerInfo>().PlayerInfo.attribute.SelectHero = hero;
             UpdateDB<DBPlayerInfo>(() => { SendPacket(packet); });
         }
 
@@ -368,8 +368,8 @@ namespace Server
                 var inDate = new List<string>();
 
                 foreach (var chest in ChestInventory.Instance.ChestSlots)
-                    if (chest.Grade < EnvironmentValue.CHEST_GRADE_MAX && chest.isProgress == false)
-                        inDate.Add(chest.inDate);
+                    if (chest.grade < EnvironmentValue.CHEST_GRADE_MAX && chest.isProgress == false)
+                        inDate.Add(chest.guid);
 
                 if (0 < inDate.Count)
                 {
@@ -389,8 +389,8 @@ namespace Server
         {
             //플레이어 정보 갱신            
             var PlayerInfo = GetDB<DBPlayerInfo>().PlayerInfo;
-            PlayerInfo.elements.RankScore += 5;
-            PlayerInfo.elements.ChestPoint += 30;
+            PlayerInfo.attribute.RankScore += 5;
+            PlayerInfo.attribute.ChestPoint += 30;
             PlayerInfo.GetExp(15);
             UpdateDB<DBPlayerInfo>(() => { onFinish?.Invoke(); });
         }
@@ -399,7 +399,7 @@ namespace Server
         {
             //플레이어 정보 갱신            
             var PlayerInfo = GetDB<DBPlayerInfo>().PlayerInfo;
-            PlayerInfo.elements.RankScore += 3;
+            PlayerInfo.attribute.RankScore += 3;
             PlayerInfo.GetExp(7);
             UpdateDB<DBPlayerInfo>(() => { onFinish?.Invoke(); });
         }
@@ -688,8 +688,7 @@ namespace Server
 
             if (isValidate == false)
             {
-                BattlePassInfo.Instance.JoinSeasonKey =
-                    BattlePassInfo.CurrentSeason == null ? "" : BattlePassInfo.CurrentSeason.key;
+                BattlePassInfo.Instance.JoinSeasonKey = BattlePassInfo.CurrentSeason == null ? "" : BattlePassInfo.CurrentSeason.key;
                 BattlePassInfo.Instance.Point = 0;
                 BattlePassInfo.Instance.RewardInfos = new List<BattlePassInfo.BattlePassRewardInfo>();
                 BattlePassInfo.Instance.isPurchasePremiumPass = false;
@@ -699,69 +698,6 @@ namespace Server
             else
             {
                 onFinish?.Invoke(BattlePassInfo.CurrentSeason != null);
-            }
-        }
-
-        #endregion
-
-        #region Utils
-
-        public static string WhichDataTypeIsIt(JsonData data, string key)
-        {
-            if (data.Keys.Contains(key))
-            {
-                if (data[key].Keys.Contains("S")) // string
-                    return "S";
-                if (data[key].Keys.Contains("N")) // number
-                    return "N";
-                if (data[key].Keys.Contains("M")) // map
-                    return "M";
-                if (data[key].Keys.Contains("L")) // list
-                    return "L";
-                if (data[key].Keys.Contains("BOOL")) // boolean
-                    return "BOOL";
-                if (data[key].Keys.Contains("NULL")) // null
-                    return "NULL";
-                return null;
-            }
-
-            return null;
-        }
-
-        public static void ApplyField(FieldInfo field, object target, JsonData row, string key)
-        {
-            var type = WhichDataTypeIsIt(row, key);
-            var value = row[key][type].ToString();
-
-            var fieldType = field.FieldType.Name;
-            fieldType = fieldType.ToLower();
-
-            switch (fieldType)
-            {
-                case "bool":
-                case "boolean":
-                    field.SetValue(target, bool.Parse(value));
-                    break;
-                case "int":
-                case "int32":
-                    field.SetValue(target, int.Parse(value));
-                    break;
-                case "float":
-                case "single":
-                    field.SetValue(target, float.Parse(value));
-                    break;
-                case "double":
-                    field.SetValue(target, double.Parse(value));
-                    break;
-                case "string":
-                    field.SetValue(target, value);
-                    break;
-                case "datetime":
-                    field.SetValue(target, DateTime.Parse(value));
-                    break;
-                default:
-                    Debug.LogFormat("Not supported type {0}", fieldType);
-                    break;
             }
         }
 

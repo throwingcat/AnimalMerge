@@ -1,14 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using BackEnd;
 using Define;
 using MessagePack;
 using MessagePack.Resolvers;
-using MessagePack.Unity;
-using MessagePack.Unity.Extension;
 using Server;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 using Violet;
@@ -102,9 +98,6 @@ public class GameManager : MonoBehaviour
         //기본 데이터 다운로드
         yield return StartCoroutine(LoadSheetData());
 
-        //서버 접속
-        yield return StartCoroutine(ConnectionServer());
-
         //게임 시작
         yield return StartCoroutine(InitializeGame());
     }
@@ -138,57 +131,42 @@ public class GameManager : MonoBehaviour
             yield return null;
     }
 
-    private IEnumerator ConnectionServer()
-    {
-        //뒤끝 SDK 초기화
-        var bro = Backend.Initialize(true);
-        if (bro.IsSuccess())
-        {
-        }
-        else
-        {
-            Application.Quit();
-        }
-
-        yield break;
-    }
-
     private IEnumerator InitializeGame()
     {
-        var isDone = false;
-        //로그인
-        var result = NetworkManager.Instance.Login();
-        while (result == false)
-        {
-            Debug.Log("로그인 재시도");
-            yield return new WaitForSeconds(1f);
-            result = NetworkManager.Instance.Login();
-        }
-
-        var indate = Backend.UserInDate;
-        var nickname = Backend.UserNickName;
-
-        //닉네임 생성
-        if (nickname.IsNullOrEmpty())
-        {
-            var popup = UIManager.Instance.ShowPopup<PopupLogin>();
-            popup.OnFinish = text =>
-            {
-                var result = NetworkManager.Instance.CreateNickname(text);
-                if (result)
-                {
-                    SUIPanel.BackPressForce();
-                    isDone = true;
-                }
-            };
-        }
-        else
-        {
-            isDone = true;
-        }
-
-        while (isDone == false)
-            yield return null;
+        // var isDone = false;
+        // //로그인
+        // var result = NetworkManager.Instance.Login();
+        // while (result == false)
+        // {
+        //     Debug.Log("로그인 재시도");
+        //     yield return new WaitForSeconds(1f);
+        //     result = NetworkManager.Instance.Login();
+        // }
+        //
+        // var indate = ""; //Backend.UserInDate;
+        // var nickname = ""; //Backend.UserNickName;
+        //
+        // //닉네임 생성
+        // if (nickname.IsNullOrEmpty())
+        // {
+        //     var popup = UIManager.Instance.ShowPopup<PopupLogin>();
+        //     popup.OnFinish = text =>
+        //     {
+        //         var result = NetworkManager.Instance.CreateNickname(text);
+        //         if (result)
+        //         {
+        //             SUIPanel.BackPressForce();
+        //             isDone = true;
+        //         }
+        //     };
+        // }
+        // else
+        // {
+        //     isDone = true;
+        // }
+        //
+        // while (isDone == false)
+        //     yield return null;
 
         if (isSinglePlay)
         {
@@ -209,7 +187,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log(string.Format("Download {0}", db.GetType()));
             isDone = false;
-            db.Download(() => { isDone = true; });
+            db.Load(() => { isDone = true; });
             while (isDone == false)
                 yield return null;
         }
@@ -274,7 +252,7 @@ public class GameManager : MonoBehaviour
     {
         SUIPanel.IgnoreBackPress = true;
 
-        UIManager.Instance.LoadingScreen.SetActive(true);
+        //UIManager.Instance.LoadingScreen.SetActive(true);
 
         //모든 UI 정리
         while (0 < SUIPanel.StackCount)
@@ -290,7 +268,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        UIManager.Instance.LoadingScreen.SetActive(false);
+        //UIManager.Instance.LoadingScreen.SetActive(false);
     }
 
     private IEnumerator OnLeaveBattle()
@@ -304,12 +282,6 @@ public class GameManager : MonoBehaviour
         {
             //게임 오브젝트 삭제
             GameCore.Clear();
-
-            //네트워크 종료
-            NetworkManager.Instance.ClearEvent();
-            NetworkManager.Instance.DisconnectIngameServer();
-            NetworkManager.Instance.DisconnectGameRoom();
-            NetworkManager.Instance.DisconnectMatchServer();
         }
 
         isSinglePlay = false;
@@ -321,7 +293,7 @@ public class GameManager : MonoBehaviour
     }
 
 #if UNITY_EDITOR
-    [InitializeOnLoadMethod]
+    //[InitializeOnLoadMethod]
     private static void EditorInitialize()
     {
         RegisterSerializer();

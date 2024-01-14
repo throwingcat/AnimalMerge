@@ -41,12 +41,6 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DOTween\DOTween.dll" />
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DOTweenPro\DOTweenPro.dll" />
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DOTween\Editor\DOTweenEditor.dll" />
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DemiLib\Core\DemiLib.dll" />
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DemiLib\Core\Editor\DemiEditor.dll" />
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DOTweenPro\Editor\DOTweenProEditor.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
@@ -470,41 +464,47 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Collections.LowLevel.ILSupport">
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.unity.collections@1.2.4\Unity.Collections.LowLevel.ILSupport\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+    </Reference>
     <Reference Include="Firebase.App">
-      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.App.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Assets\Firebase\Plugins\Firebase.App.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.Firestore">
-      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.Firestore.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Assets\Firebase\Plugins\Firebase.Firestore.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.TaskExtension">
-      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.TaskExtension.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Assets\Firebase\Plugins\Firebase.TaskExtension.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.Auth">
-      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.Auth.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>C:\Git\AnimalMerge\Assets\Plugins\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Assets\Firebase\Plugins\Firebase.Auth.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.Database">
-      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.Database.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Assets\Firebase\Plugins\Firebase.Database.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe">
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.violet.framework@6bd5d1927c\Runtime\Plugins\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.Platform">
-      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.Platform.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Assets\Firebase\Plugins\Firebase.Platform.dll</HintPath>
     </Reference>
     <Reference Include="Google.MiniJson">
-      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Google.MiniJson.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Assets\Firebase\Plugins\Google.MiniJson.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
-      <HintPath>C:\Git\AnimalMerge\Assets\Violet\External Asset\Demigiant\DOTween\DOTween.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.violet.framework@6bd5d1927c\Plugins\DOTweenPro\Demigiant\DOTween\DOTween.dll</HintPath>
     </Reference>
-    <Reference Include="DemiLib">
-      <HintPath>C:\Git\AnimalMerge\Assets\Violet\External Asset\Demigiant\DemiLib\Core\DemiLib.dll</HintPath>
+    <Reference Include="Microsoft.NET.StringTools">
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.violet.framework@6bd5d1927c\Runtime\Plugins\Microsoft.NET.StringTools.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenPro">
-      <HintPath>C:\Git\AnimalMerge\Assets\Violet\External Asset\Demigiant\DOTweenPro\DOTweenPro.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.violet.framework@6bd5d1927c\Plugins\DOTweenPro\Demigiant\DOTweenPro\DOTweenPro.dll</HintPath>
+    </Reference>
+    <Reference Include="DemiLib">
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.violet.framework@6bd5d1927c\Plugins\DOTweenPro\Demigiant\DemiLib\Core\DemiLib.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -887,11 +887,17 @@
     <Reference Include="System.Xml.Serialization">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\NetStandard\compat\2.1.0\shims\netfx\System.Xml.Serialization.dll</HintPath>
     </Reference>
+    <Reference Include="Violet">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Violet.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.IK.Runtime">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.IK.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.AI.Navigation.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
@@ -899,8 +905,8 @@
     <Reference Include="Unity.2D.Common.Path.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.Common.Path.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Services.Core">
-      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.Services.Core.dll</HintPath>
+    <Reference Include="Coffee.SoftMaskForUGUI.Editor">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Coffee.SoftMaskForUGUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.PixelPerfect.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.PixelPerfect.Editor.dll</HintPath>
@@ -908,8 +914,14 @@
     <Reference Include="Unity.Rider.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="DOTweenPro.Scripts">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\DOTweenPro.Scripts.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Config.Runtime">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Config.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
@@ -917,32 +929,41 @@
     <Reference Include="Unity.Mathematics.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Services.Core.Environments">
-      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.Services.Core.Environments.dll</HintPath>
+    <Reference Include="Coffee.SoftMaskForUGUI">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Coffee.SoftMaskForUGUI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Collections">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.Collections.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.SpriteShape.Runtime">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="PPv2URPConverters">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\PPv2URPConverters.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.PixelPerfect">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.PixelPerfect.dll</HintPath>
     </Reference>
-    <Reference Include="Coffee.SoftMaskForUGUI.Editor">
-      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Coffee.SoftMaskForUGUI.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Services.Core.Analytics">
-      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.Services.Core.Analytics.dll</HintPath>
+    <Reference Include="Coffee.UIEffectSnapshot.Editor">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Coffee.UIEffectSnapshot.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation.Editor.ConversionSystem">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.AI.Navigation.Editor.ConversionSystem.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.EditorCoroutines.Editor">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.EditorCoroutines.Editor.dll</HintPath>
     </Reference>
     <Reference Include="PsdPlugin">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\PsdPlugin.dll</HintPath>
@@ -956,6 +977,9 @@
     <Reference Include="Unity.Burst">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.Burst.dll</HintPath>
     </Reference>
+    <Reference Include="Coffee.UIParticle">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Coffee.UIParticle.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Advertisements">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\UnityEngine.Advertisements.dll</HintPath>
     </Reference>
@@ -964,15 +988,6 @@
     </Reference>
     <Reference Include="Unity.ShaderGraph.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Path.Editor">
-      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.Path.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Coffee.SoftMaskForUGUI">
-      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Coffee.SoftMaskForUGUI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Animation.Triangle.Runtime">
-      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.Animation.Triangle.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Advertisements.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\UnityEngine.Advertisements.Editor.dll</HintPath>
@@ -985,6 +1000,15 @@
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween.Modules">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\DOTween.Modules.dll</HintPath>
+    </Reference>
+    <Reference Include="UIEffect">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\UIEffect.dll</HintPath>
+    </Reference>
+    <Reference Include="Coffee.UIEffectSnapshot">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Coffee.UIEffectSnapshot.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InternalAPIEngineBridge.001">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.InternalAPIEngineBridge.001.dll</HintPath>
@@ -1000,6 +1024,9 @@
     </Reference>
     <Reference Include="Unity.InternalAPIEditorBridge.001">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.001.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation.Updater">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.AI.Navigation.Updater.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Psdimporter.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.Psdimporter.Editor.dll</HintPath>
@@ -1019,6 +1046,9 @@
     <Reference Include="Unity.Searcher.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.AI.Navigation.Editor">
+      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.AI.Navigation.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.SpriteShape.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.SpriteShape.Editor.dll</HintPath>
     </Reference>
@@ -1027,9 +1057,6 @@
     </Reference>
     <Reference Include="Unity.2D.Animation.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.Animation.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Monetization">
-      <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\UnityEngine.Monetization.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.IK.Editor">
       <HintPath>C:\Git\AnimalMerge\Library\ScriptAssemblies\Unity.2D.IK.Editor.dll</HintPath>
@@ -1059,10 +1086,6 @@
     <ProjectReference Include="LunarConsole.csproj">
       <Project>{1067a6a7-68bf-a9f5-6bf9-3f3c41685e3b}</Project>
       <Name>LunarConsole</Name>
-    </ProjectReference>
-    <ProjectReference Include="Coffee.UIParticle.csproj">
-      <Project>{b0a15342-0b73-2d37-3664-eba9146d83c4}</Project>
-      <Name>Coffee.UIParticle</Name>
     </ProjectReference>
     <ProjectReference Include="CFXREditor.csproj">
       <Project>{cb0c5c62-3126-4983-743e-7846da511a1f}</Project>

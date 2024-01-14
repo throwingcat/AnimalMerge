@@ -22,9 +22,9 @@ public class PanelPlayerLevelReward : SUIPanel
         for (var i = 0; i < list.Count; i++)
             items.Add(new CellPlayerLevelReward.Data
             {
-                isLock = playerInfo.elements.isPurchasePremium == false,
+                isLock = playerInfo.attribute.isPurchasePremium == false,
                 Sheet = list[i].Sheet,
-                Level = playerInfo.elements.Level,
+                Level = playerInfo.attribute.Level,
                 NextLevel = i == list.Count - 1 ? 0 : list[i + 1].Sheet.level,
                 PrevLevel = i == 0 ? 0 : list[i - 1].Sheet.level
             });
@@ -39,7 +39,7 @@ public class PanelPlayerLevelReward : SUIPanel
 
         var index = items.Count - 1;
         for (var i = 0; i < items.Count; i++)
-            if (items[i].Sheet.level == playerInfo.elements.Level)
+            if (items[i].Sheet.level == playerInfo.attribute.Level)
             {
                 index = i;
                 break;

@@ -92,10 +92,6 @@ public class PanelLobby : SUIPanel
 
     public void OnMatchingCancel()
     {
-        NetworkManager.Instance.DisconnectGameRoom();
-        NetworkManager.Instance.DisconnectIngameServer();
-        NetworkManager.Instance.DisconnectMatchServer();
-
         Matching.SetActive(false);
     }
 

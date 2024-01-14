@@ -1,105 +1,77 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using BackEnd;
-using LitJson;
+using Google.MiniJSON;
 using Newtonsoft.Json;
-using SheetData;
-using UnityEngine;
-using Violet;
+using Newtonsoft.Json.Serialization;
 
 namespace Server
 {
     public class DBBattlePassInfo : DBBase
     {
+        public class Attribute
+        {
+            public string season;
+            public int point;
+            public List<BattlePassInfo.BattlePassRewardInfo> rewardInfo;
+            public bool purchasePremiumPass;
+        }
+        
         public override string DB_KEY()
         {
             return "battlepass_info";
         }
 
-        public override void DoUpdate()
+        public override void Save()
         {
-            base.DoUpdate();
-
-            var param = new Param();
-            param.Add("Season", BattlePassInfo.Instance.JoinSeasonKey);
-            param.Add("Point", BattlePassInfo.Instance.Point);
-            param.Add("RewardInfo", JsonConvert.SerializeObject(BattlePassInfo.Instance.RewardInfos));
-            param.Add("PurchasePremiumPass",BattlePassInfo.Instance.isPurchasePremiumPass);
+            var param = new Attribute();
+            param.season = BattlePassInfo.Instance.JoinSeasonKey;
+            param.point = BattlePassInfo.Instance.Point;
+            param.rewardInfo = BattlePassInfo.Instance.RewardInfos;
+            param.purchasePremiumPass = BattlePassInfo.Instance.isPurchasePremiumPass;
             
-            if (InDate.IsNullOrEmpty())
-            {
-                SendQueue.Enqueue(Backend.GameData.Insert, DB_KEY(), param, bro =>
-                {
-                    InDate = bro.GetInDate();
-                    _onFinishUpdate?.Invoke();
-                    _onFinishUpdate = null;
-                });
-            }
-            else
-            {
-                SendQueue.Enqueue(Backend.GameData.Update, DB_KEY(), InDate, param, bro =>
-                {
-                    _onFinishUpdate?.Invoke();
-                    _onFinishUpdate = null;
-                });
-            }
+            _Save(param);
         }
 
-        public override void Download(Action onFinishDownload)
+        public override void Load(Action onFinishDownload)
         {
-            SendQueue.Enqueue(Backend.GameData.GetMyData, DB_KEY(),
-                new Where(), 1, bro =>
+            _Load((json) =>
+            {
+                var lAttribute = JsonConvert.DeserializeObject(json) as Attribute;
+                BattlePassInfo.Instance.OnUpdate(
+                    lAttribute.season,
+                    lAttribute.point,
+                    lAttribute.rewardInfo,
+                    lAttribute.purchasePremiumPass);
+
+                //진행중인 시즌이 없음
+                if (BattlePassInfo.CurrentSeason == null)
                 {
-                    var rows = bro.Rows();
-
-                    string seasonKey = "";
-                    int point = 0;
-                    bool purchase = false;
-                    string rewardInfoJson = "";
-                    if (rows != null)
+                    if (BattlePassInfo.Instance.JoinSeason != null)
                     {
-                        foreach (JsonData row in rows)
-                        {
-                            var inDate = row["inDate"]["S"].ToString();
-                            InDate = inDate;
-
-                            seasonKey = row["Season"]["S"].ToString();
-                            point = int.Parse(row["Point"]["N"].ToString());
-                            purchase = bool.Parse(row["PurchasePremiumPass"]["BOOL"].ToString());
-                            rewardInfoJson = row["RewardInfo"]["S"].ToString();
-                        }
-                    }
-
-                    //데이터 한번 업데이트 하고
-                    BattlePassInfo.Instance.OnUpdate(seasonKey, point, rewardInfoJson, purchase);
-                    
-                    //진행중인 시즌이 없음
-                    if (BattlePassInfo.CurrentSeason == null)
-                    {
-                        if (BattlePassInfo.Instance.JoinSeason != null)
-                        {
-                            BattlePassInfo.Instance.OnUpdate("", 0, "", false);
-                            Update(onFinishDownload);
-                        }
-                        else
-                            onFinishDownload?.Invoke();
+                        BattlePassInfo.Instance.OnUpdate("", 0, new(), false);
+                        SaveReserve(onFinishDownload);
                     }
                     else
                     {
-                        //현재 시즌과 참가 시즌이 다름
-                        var season = BattlePassInfo.CurrentSeason;
-                        if (BattlePassInfo.Instance.JoinSeason == null || BattlePassInfo.Instance.JoinSeason.key != season.key)
-                        {
-                            BattlePassInfo.Instance.OnUpdate(season.key,0,"",false);
-                            Update(onFinishDownload);
-                        }
-                        else
-                            onFinishDownload?.Invoke();
+                        onFinishDownload?.Invoke();
                     }
-                    
-                    
-                });
+                }
+                else
+                {
+                    //현재 시즌과 참가 시즌이 다름
+                    var season = BattlePassInfo.CurrentSeason;
+                    if (BattlePassInfo.Instance.JoinSeason == null ||
+                        BattlePassInfo.Instance.JoinSeason.key != season.key)
+                    {
+                        BattlePassInfo.Instance.OnUpdate(season.key, 0, new(), false);
+                        SaveReserve(onFinishDownload);
+                    }
+                    else
+                    {
+                        onFinishDownload?.Invoke();
+                    }
+                }
+            });
         }
     }
 }

@@ -28,7 +28,7 @@ public class PopupChestUnlock : SUIPanel
         CardQuantity.text = _chestSlot.GetRewardAmount().ToString();
         NeedTime.text = Utils.ParseSeconds(_chestSlot.Sheet.time);
 
-        for (var i = 0; i < Grade.Length; i++) Grade[i].SetActive(i < _chestSlot.Grade);
+        for (var i = 0; i < Grade.Length; i++) Grade[i].SetActive(i < _chestSlot.grade);
     }
 
     public void OnClickBackground()
@@ -38,11 +38,10 @@ public class PopupChestUnlock : SUIPanel
 
     public void OnClickUnlock()
     {
-        ChestInventory.Instance.Progress(_chestSlot.inDate);
+        ChestInventory.Instance.Progress(_chestSlot.guid);
 
         var packet = new PacketBase();
         packet.PacketType = ePacketType.CHEST_PROGRESS;
-        packet.hash.Add("inDate", _chestSlot.inDate);
-        NetworkManager.Instance.Request(packet, packet => { BackPress(); });
+        //NetworkManager.Instance.Request(packet, packet => { BackPress(); });
     }
 }

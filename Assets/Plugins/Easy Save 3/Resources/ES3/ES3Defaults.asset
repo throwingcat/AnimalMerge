@@ -34,11 +34,10 @@ MonoBehaviour:
     - CFXREditor
     - CFXRRuntime
     - PsdPlugin
-    - Assembly-CSharp
     - LunarConsole
-    - Coffee.UIParticle
+    - PPv2URPConverters
+    - Assembly-CSharp
     - LunarConsoleEditor
-    - Coffee.UIParticle.Editor
     - MessagePack.Annotations
     - CFXRDemo
     - Coffee.SoftMaskForUGUI

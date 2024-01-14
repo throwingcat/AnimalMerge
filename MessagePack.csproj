@@ -41,12 +41,6 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DOTween\DOTween.dll" />
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DOTweenPro\DOTweenPro.dll" />
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DOTween\Editor\DOTweenEditor.dll" />
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DemiLib\Core\DemiLib.dll" />
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DemiLib\Core\Editor\DemiEditor.dll" />
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DOTweenPro\Editor\DOTweenProEditor.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
@@ -132,8 +126,8 @@
     <Compile Include="Assets\Scripts\MessagePack\Resolvers\NativeDecimalResolver.cs" />
     <Compile Include="Assets\Scripts\MessagePack\Formatters\ExpandoObjectFormatter.cs" />
     <Compile Include="Assets\Scripts\MessagePack\Resolvers\DynamicObjectResolver.cs" />
-    <Compile Include="Assets\Scripts\MessagePack\Nil.cs" />
     <Compile Include="Assets\Scripts\MessagePack\Formatters\MultiDimensionalArrayFormatter.cs" />
+    <Compile Include="Assets\Scripts\MessagePack\Nil.cs" />
     <Compile Include="Assets\Scripts\MessagePack\StreamPolyfillExtensions.cs" />
     <Compile Include="Assets\Scripts\MessagePack\Unity\Extension\UnityBlitResolver.cs" />
     <Compile Include="Assets\Scripts\MessagePack\Resolvers\ExpandoObjectResolver.cs" />
@@ -413,7 +407,7 @@
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>C:\Git\AnimalMerge\Assets\Plugins\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.violet.framework@6bd5d1927c\Runtime\Plugins\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

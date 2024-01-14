@@ -1,8 +1,4 @@
 using System;
-using BackEnd;
-using LitJson;
-using Newtonsoft.Json;
-using UnityEngine;
 
 namespace Server
 {
@@ -13,56 +9,18 @@ namespace Server
             return "inventory";
         }
 
-        public override void DoUpdate()
+        public override void Save()
         {
-            var json = JsonConvert.SerializeObject(Inventory.Instance.Items);
-            var param = new Param();
-            param.Add("Json", json);
-
-            if (InDate.IsNullOrEmpty())
-                SendQueue.Enqueue(Backend.GameData.Insert, DB_KEY(), param, bro =>
-                {
-                    InDate = bro.GetInDate();
-                    _onFinishUpdate?.Invoke();
-                    _onFinishUpdate = null;
-                });
-            else
-                SendQueue.Enqueue(Backend.GameData.Update, DB_KEY(), InDate, param, bro =>
-                {
-                    _onFinishUpdate?.Invoke();
-                    _onFinishUpdate = null;
-                });
+            _Save(Inventory.Instance.Items);
         }
 
-        public override void Download(Action onFinishDownload)
+        public override void Load(Action onFinishDownload)
         {
-            SendQueue.Enqueue(Backend.GameData.GetMyData, DB_KEY(),
-                new Where(), 10, bro =>
-                {
-                    if (bro.IsSuccess() == false)
-                    {
-                        Debug.Log(bro);
-                    }
-                    else
-                    {
-                        if (bro.GetReturnValuetoJSON()["rows"].Count <= 0)
-                        {
-                        }
-                        else
-                        {
-                            var rows = bro.Rows();
-                            foreach (JsonData row in rows)
-                            {
-                                var inDate = row["inDate"]["S"].ToString();
-                                var json = row["Json"]["S"].ToString();
-                                InDate = inDate;
-                                Inventory.Instance.Update(json);
-                            }
-                        }
-                    }
-
-                    onFinishDownload?.Invoke();
-                });
+            _Load(json =>
+            {
+                Inventory.Instance.Update(json);
+                onFinishDownload?.Invoke();
+            });
         }
     }
 }

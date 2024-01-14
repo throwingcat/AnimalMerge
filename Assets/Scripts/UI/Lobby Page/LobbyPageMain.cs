@@ -1,9 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using BackEnd;
-using Define;
-using Server;
 using SheetData;
 using TMPro;
 using UnityEngine;
@@ -26,7 +21,7 @@ public class LobbyPageMain : LobbyPageBase
     {
         base.OnShow();
 
-        RankScore.text = PlayerDataManager.Get<PlayerInfo>().elements.RankScore.ToString();
+        RankScore.text = PlayerDataManager.Get<PlayerInfo>().attribute.RankScore.ToString();
 
         foreach (var chest in Chests)
             chest.OnUpdate();
@@ -87,7 +82,7 @@ public class LobbyPageMain : LobbyPageBase
 
     public void RefreshChest()
     {
-        var point = PlayerDataManager.Get<PlayerInfo>().elements.ChestPoint;
+        var point = PlayerDataManager.Get<PlayerInfo>().attribute.ChestPoint;
         ChestSlider.fillAmount = point / 100f;
         ChestPointValue.text = string.Format("{0}/{1}", point, 100);
     }
@@ -95,9 +90,9 @@ public class LobbyPageMain : LobbyPageBase
     public void RefreshHero()
     {
         var info = PlayerDataManager.Get<PlayerInfo>();
-        if (info.elements.SelectHero.IsNullOrEmpty() == false)
+        if (info.attribute.SelectHero.IsNullOrEmpty() == false)
         {
-            var hero = info.elements.SelectHero.ToTableData<Hero>();
+            var hero = info.attribute.SelectHero.ToTableData<Hero>();
             HeroFace.sprite = hero.face.ToSprite(hero.atlas);
         }
     }
@@ -106,15 +101,16 @@ public class LobbyPageMain : LobbyPageBase
 
     public void OnClickGameStart()
     {
-        Backend.Match.OnMatchInGameStart -= OnMatchInGameStart;
-        Backend.Match.OnMatchInGameStart += OnMatchInGameStart;
-
-        NetworkManager.Instance.OnMatchingStart();
+        // Backend.Match.OnMatchInGameStart -= OnMatchInGameStart;
+        // Backend.Match.OnMatchInGameStart += OnMatchInGameStart;
+        //
+        // NetworkManager.Instance.OnMatchingStart();
 
         if (SUIPanel.CurrentPanel is PanelLobby)
         {
             PanelLobby panel = SUIPanel.CurrentPanel as PanelLobby;
-            panel.Matching.SetActive(true);
+            //panel.Matching.SetActive(true);
+            panel.MatchMakingAI();
         }
     }
 

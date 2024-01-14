@@ -7,15 +7,15 @@ using Violet;
 
 public class PlayerInfo : PlayerDataBase
 {
-    public Elements elements = new Elements();
+    public Elements attribute = new Elements();
 
     public List<PlayerLevelRewardInfo> LevelRewardInfos = new List<PlayerLevelRewardInfo>();
 
     public override void OnUpdate(string json)
     {
-        elements = JsonConvert.DeserializeObject<Elements>(json);
+        attribute = JsonConvert.DeserializeObject<Elements>(json);
         
-        LevelRewardInfos = JsonConvert.DeserializeObject<List<PlayerLevelRewardInfo>>(elements.LevelRewardsJson);
+        LevelRewardInfos = JsonConvert.DeserializeObject<List<PlayerLevelRewardInfo>>(attribute.LevelRewardsJson);
         if (LevelRewardInfos == null)
             LevelRewardInfos = new List<PlayerLevelRewardInfo>();
     }
@@ -35,7 +35,7 @@ public class PlayerInfo : PlayerDataBase
         var sheet = TableManager.Instance.GetTable<PlayerLevel>();
         foreach (var row in sheet)
         {
-            if (row.Value is PlayerLevel data && data.level == elements.Level)
+            if (row.Value is PlayerLevel data && data.level == attribute.Level)
                 return data;
         }
 
@@ -68,7 +68,7 @@ public class PlayerInfo : PlayerDataBase
         if (dictionary[key].isReceivedPassReward == false)
             return true;
 
-        if (elements.isPurchasePremium && dictionary[key].isReceivedPremiumReward == false)
+        if (attribute.isPurchasePremium && dictionary[key].isReceivedPremiumReward == false)
             return true;
         return false;
     }
@@ -78,7 +78,7 @@ public class PlayerInfo : PlayerDataBase
     
     public string ToJson()
     {
-        return JsonConvert.SerializeObject(elements);
+        return JsonConvert.SerializeObject(attribute);
     }
     
     public List<ItemInfo> ReceiveReward(string key)
@@ -94,7 +94,7 @@ public class PlayerInfo : PlayerDataBase
                     info.isReceivedPassReward = true;
                 }
 
-                if (info.isReceivedPremiumReward == false && elements.isPurchasePremium)
+                if (info.isReceivedPremiumReward == false && attribute.isPurchasePremium)
                 {
                     rewards.Add(info.PremiumReward);
                     info.isReceivedPremiumReward = true;
@@ -108,12 +108,12 @@ public class PlayerInfo : PlayerDataBase
     {
         if (isMaxLevel()) return;
 
-        elements.Exp += exp;
+        attribute.Exp += exp;
         var sheet = GetLevelSheet();
-        if (sheet.exp <= elements.Exp)
+        if (sheet.exp <= attribute.Exp)
         {
-            elements.Level++;
-            elements.Exp -= sheet.exp;
+            attribute.Level++;
+            attribute.Exp -= sheet.exp;
         }
     }
     #endregion
@@ -147,7 +147,7 @@ public class PlayerInfo : PlayerDataBase
             get
             {
                 var playerInfo = PlayerDataManager.Get<PlayerInfo>();
-                if (playerInfo.elements.isPurchasePremium)
+                if (playerInfo.attribute.isPurchasePremium)
                     return isReceivedPassReward && isReceivedPremiumReward;
                 return isReceivedPassReward;
             }

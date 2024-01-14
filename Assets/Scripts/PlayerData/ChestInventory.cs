@@ -1,7 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Xml.Schema;
 using Define;
+using SheetData;
+using UnityEngine.Serialization;
 
 public class ChestInventory
 {
@@ -25,12 +25,12 @@ public class ChestInventory
 
     public ChestSlot GetEmptySlot()
     {
-        if(ChestSlots == null)
+        if (ChestSlots == null)
             ChestSlots = new ChestSlot[EnvironmentValue.CHEST_SLOT_MAX_COUNT];
         foreach (var slot in ChestSlots)
         {
             if (slot == null) continue;
-            if (slot.Key.IsNullOrEmpty())
+            if (slot.key.IsNullOrEmpty())
                 return slot;
         }
 
@@ -42,12 +42,12 @@ public class ChestInventory
         var slot = GetEmptySlot();
         if (slot != null)
         {
-            slot.Key = key;
+            slot.key = key;
             slot.isProgress = false;
-            slot.Grade = 0;
-            slot.StartTime = new DateTime();
-            slot.GetTime = GameManager.GetTime();
-            
+            slot.grade = 0;
+            slot.startTime = new DateTime();
+            slot.getTime = GameManager.GetTime();
+
             slot.isChanged = true;
         }
     }
@@ -55,22 +55,20 @@ public class ChestInventory
     public void Upgrade(string inDate)
     {
         foreach (var chest in ChestSlots)
-        {
-            if (chest.inDate == inDate)
+            if (chest.guid == inDate)
             {
-                chest.Grade++;
+                chest.grade++;
                 chest.isChanged = true;
             }
-        }
     }
 
-    public void Progress(string inDate)
+    public void Progress(string guid)
     {
         foreach (var chest in ChestSlots)
         {
-            if (chest.inDate == inDate)
+            if (chest.guid == guid)
             {
-                chest.StartTime = GameManager.GetTime();
+                chest.startTime = GameManager.GetTime();
                 chest.isProgress = true;
                 chest.isChanged = true;
                 break;
@@ -81,19 +79,19 @@ public class ChestInventory
     public void Remove(string inDate)
     {
         for (var i = 0; i < ChestSlots.Length; i++)
-            if (ChestSlots[i].inDate == inDate)
+            if (ChestSlots[i].guid == inDate)
             {
-                ChestSlots[i].Key = "";
+                ChestSlots[i].key = "";
                 ChestSlots[i].isChanged = true;
             }
     }
 
     public bool isContains(string inDate)
     {
-        for (int i = 0; i < ChestSlots.Length; i++)
+        for (var i = 0; i < ChestSlots.Length; i++)
         {
             if (ChestSlots[i] == null) continue;
-            if (ChestSlots[i].inDate == inDate)
+            if (ChestSlots[i].guid == inDate)
                 return true;
         }
 
@@ -102,41 +100,40 @@ public class ChestInventory
 
     public ChestSlot Get(string inDate)
     {
-        for (int i = 0; i < ChestSlots.Length; i++)
-        {
-            if (ChestSlots[i].inDate == inDate)
+        for (var i = 0; i < ChestSlots.Length; i++)
+            if (ChestSlots[i].guid == inDate)
                 return ChestSlots[i];
-        }
 
         return null;
     }
 
+    [Serializable]
     public class ChestSlot
     {
-        public string inDate;
+        public string guid;
         public bool isChanged;
-        public int Index;
-        public string Key;
-        public bool isProgress = false;
-        public int Grade = 0;
-        public DateTime StartTime;
-        public DateTime GetTime;
+        public int index;
+        public string key;
+        public bool isProgress;
+        public int grade;
+        public DateTime getTime;
+        public DateTime startTime;
 
-        public SheetData.Chest Sheet => Key.ToTableData<SheetData.Chest>();
+        public Chest Sheet => key.ToTableData<Chest>();
 
         public int GetGoldMin()
         {
-            return (int) (Sheet.gold_min + ((Sheet.gold_min * 0.5f * Grade)));
+            return (int)(Sheet.gold_min + Sheet.gold_min * 0.5f * grade);
         }
 
         public int GetGoldMax()
         {
-            return (int) (Sheet.gold_max + ((Sheet.gold_max * 0.5f * Grade)));
+            return (int)(Sheet.gold_max + Sheet.gold_max * 0.5f * grade);
         }
 
         public int GetRewardAmount()
         {
-            return (int) (Sheet.amount + ((Sheet.amount * 0.5f * Grade)));
+            return (int)(Sheet.amount + Sheet.amount * 0.5f * grade);
         }
     }
 }

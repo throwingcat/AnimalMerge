@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using BackEnd;
-using BackEnd.Tcp;
 using Common;
 using MessagePack;
 using Server;
@@ -11,6 +9,7 @@ using Violet;
 
 public class NetworkManager : MonoSingleton<NetworkManager>
 {
+    /*
     public void Update()
     {
         //일반 통신 업데이트
@@ -476,4 +475,5 @@ public class NetworkManager : MonoSingleton<NetworkManager>
     }
 
     #endregion
+    */
 }

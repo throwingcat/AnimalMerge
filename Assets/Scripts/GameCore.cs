@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using BackEnd;
 using Common;
 using Define;
 using DG.Tweening;
@@ -19,14 +18,14 @@ public class GameCore : MonoBehaviour
     private PlayerInfo PlayerInfo => PlayerDataManager.Get<PlayerInfo>();
 
     protected float HorizontalSpawnLimit =>
-        (float) (500f - EnvironmentValue.UNIT_BASE_SIZE * CurrentReadyUnit.Sheet.size *
+        (float)(500f - EnvironmentValue.UNIT_BASE_SIZE * CurrentReadyUnit.Sheet.size *
             EnvironmentValue.WORLD_RATIO);
 
     protected virtual void Initialize()
     {
         #region 데이터 초기화
 
-        if (IsPlayer) PlayerHeroKey = PlayerInfo.elements.SelectHero;
+        if (IsPlayer) PlayerHeroKey = PlayerInfo.attribute.SelectHero;
 
         isReady = false;
         isLaunchGame = false;
@@ -119,8 +118,8 @@ public class GameCore : MonoBehaviour
         //플레이어 정보 전송
         var playerInfo = new SyncPacketCollection.PlayerInfo();
         playerInfo.HeroKey = PlayerHeroKey;
-        playerInfo.MMR = PlayerInfo.elements.RankScore;
-        playerInfo.Name = PlayerInfo.elements.Nickname;
+        playerInfo.MMR = PlayerInfo.attribute.RankScore;
+        playerInfo.Name = PlayerInfo.attribute.Nickname;
         SyncManager.Request(playerInfo);
 
         //게임 카메라 루트 활성화
@@ -145,15 +144,13 @@ public class GameCore : MonoBehaviour
         PanelIngame.RefreshPassiveSkillGauge(0f);
         PanelIngame.SetActiveWaitPlayer(true);
         PanelIngame.SetActiveCountDown(false);
-        PanelIngame.SetPlayerPortrait(PlayerInfo.elements.Nickname, PlayerHeroKey.ToTableData<Hero>());
+        PanelIngame.SetPlayerPortrait(PlayerInfo.attribute.Nickname, PlayerHeroKey.ToTableData<Hero>());
         RefreshBadBlockUI();
         ingameDynamicCanvas.Initialize();
 
         //매치 릴레이 세팅
         if (GameManager.Instance.isSinglePlay == false)
         {
-            Backend.Match.OnMatchRelay -= SyncManager.OnReceiveMatchRelay;
-            Backend.Match.OnMatchRelay += SyncManager.OnReceiveMatchRelay;
         }
     }
 
@@ -425,8 +422,8 @@ public class GameCore : MonoBehaviour
         remove_bad_units.Clear();
 
         //var comboBonus = Combo > 3 ? 3 * Combo : 0;
-        var unitDamage = Utils.GetUnitDamage(a.Sheet.score, a.Info.Level);
-        var badBlock = (int) (unitDamage * Combo * SuddenDeathRatio(_elapsedGameTimer));
+        var unitDamage = GetUnitDamage(a.Sheet.score, a.Info.Level);
+        var badBlock = (int)(unitDamage * Combo * (double)SuddenDeathRatio(_elapsedGameTimer));
 
         //내 방해블록 제거
         if (0 < MyStackDamage.Value)
@@ -483,7 +480,7 @@ public class GameCore : MonoBehaviour
 
     public void RemoveBadBlock(UnitBase unit)
     {
-        var damage = (int) (5 * SuddenDeathRatio(_elapsedGameTimer));
+        var damage = (int)(5 * SuddenDeathRatio(_elapsedGameTimer));
         PlayRemoveBadUnitDamage(damage, unit);
         RemoveUnit(unit);
     }
@@ -606,7 +603,7 @@ public class GameCore : MonoBehaviour
             yield return new WaitForSeconds(2f);
         }
 
-        var duration = (float) (GameStartTime - GameManager.GetTime()).TotalSeconds;
+        var duration = (float)(GameStartTime - GameManager.GetTime()).TotalSeconds;
         var elapsed = 0f;
 
         var _prevIndex = -1;
@@ -617,7 +614,7 @@ public class GameCore : MonoBehaviour
             if (IsPlayer)
             {
                 //0 ~ 2
-                var index = (int) elapsed;
+                var index = (int)elapsed;
 
                 if (_prevIndex != index)
                 {
@@ -823,7 +820,7 @@ public class GameCore : MonoBehaviour
     private float _badBlockTimerDelta;
 
     private int _badBlockMaxDropOneTime =>
-        (int) Mathf.Clamp(
+        (int)Mathf.Clamp(
             EnvironmentValue.BAD_BLOCK_DROP_COUNT_MIN +
             _elapsedGameTimer * EnvironmentValue.BAD_BLOCK_INCREASE_DROP_COUNT_PER_SECOND,
             EnvironmentValue.BAD_BLOCK_DROP_COUNT_MIN, EnvironmentValue.BAD_BLOCK_DROP_COUNT_MAX);
@@ -1007,7 +1004,7 @@ public class GameCore : MonoBehaviour
                     pos = GuideUnit.transform.localPosition;
                     pos.y += GuideUnit.transform.localScale.y;
                     GuideUnit.transform.localPosition = pos;
-                    GuideLine.UpdatePosition(CurrentReadyUnit.transform.position,GuideUnit.transform.position);
+                    GuideLine.UpdatePosition(CurrentReadyUnit.transform.position, GuideUnit.transform.position);
                 }
             }
         }
@@ -1262,31 +1259,31 @@ public class GameCore : MonoBehaviour
             packet.hash.Add("tracker_json", JsonConvert.SerializeObject(PlayerBattleTracker.Tracker));
 
             var playerInfo = PlayerDataManager.Get<PlayerInfo>();
-            var beforeScore = playerInfo.elements.RankScore;
-            NetworkManager.Instance.Request(packet, res =>
-            {
-                if (res.hash.ContainsKey("first_clear"))
-                {
-                    var isFirstClear = (bool) res.hash["first_clear"];
-                    if (isFirstClear)
-                    {
-                        var stage = (string) res.hash["stage"];
-                        var heroes = TableManager.Instance.GetTable<Hero>();
-                        foreach (var row in heroes)
-                        {
-                            var hero = row.Value as Hero;
-                            if (hero.unlock_condition == stage)
-                            {
-                                GameManager.Instance.isUnlockHero = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                var popup = UIManager.Instance.ShowPopup<PopupGameResult>();
-                popup.SetResult(isWin, beforeScore);
-            });
+            var beforeScore = playerInfo.attribute.RankScore;
+            // NetworkManager.Instance.Request(packet, res =>
+            // {
+            //     if (res.hash.ContainsKey("first_clear"))
+            //     {
+            //         var isFirstClear = (bool)res.hash["first_clear"];
+            //         if (isFirstClear)
+            //         {
+            //             var stage = (string)res.hash["stage"];
+            //             var heroes = TableManager.Instance.GetTable<Hero>();
+            //             foreach (var row in heroes)
+            //             {
+            //                 var hero = row.Value as Hero;
+            //                 if (hero.unlock_condition == stage)
+            //                 {
+            //                     GameManager.Instance.isUnlockHero = true;
+            //                     break;
+            //                 }
+            //             }
+            //         }
+            //     }
+            //
+            //     var popup = UIManager.Instance.ShowPopup<PopupGameResult>();
+            //     popup.SetResult(isWin, beforeScore);
+            // });
         }
     }
 
@@ -1341,7 +1338,6 @@ public class GameCore : MonoBehaviour
             ingameDynamicCanvas.Exit();
             //이벤트 초기화
             SyncManager.OnSyncReceive = null;
-            Backend.Match.OnMatchRelay -= SyncManager.OnReceiveMatchRelay;
 
             //오디오 종료
             AudioManager.Instance.StopBGM();
@@ -1350,7 +1346,7 @@ public class GameCore : MonoBehaviour
 
     public decimal SuddenDeathRatio(float elapsed)
     {
-        return (decimal) (1 + EnvironmentValue.DAMAGE_PER_SECOND * elapsed);
+        return (decimal)(1 + EnvironmentValue.DAMAGE_PER_SECOND * elapsed);
     }
 
     public bool isPauseCollider;
@@ -1382,4 +1378,9 @@ public class GameCore : MonoBehaviour
     }
 
     #endregion
+
+    public static double GetUnitDamage(int score, int level)
+    {
+        return score * level;
+    }
 }

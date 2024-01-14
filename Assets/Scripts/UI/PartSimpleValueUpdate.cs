@@ -55,7 +55,7 @@ public class PartSimpleValueUpdate : MonoBehaviour
                 switch (Type)
                 {
                     case eType.PlayerLevel:
-                            _currentValue = PlayerInfo.elements.Level;
+                            _currentValue = PlayerInfo.attribute.Level;
                         break;
                     case eType.PlayerExp:
                             if (PlayerInfo.isMaxLevel())
@@ -69,7 +69,7 @@ public class PartSimpleValueUpdate : MonoBehaviour
                                 {
                                     var max = sheet.exp;
                                     _currentValue =
-                                        (int) (Mathf.InverseLerp(0, max, PlayerInfo.elements.Exp) * 100);
+                                        (int) (Mathf.InverseLerp(0, max, PlayerInfo.attribute.Exp) * 100);
                                 }
                             }
 

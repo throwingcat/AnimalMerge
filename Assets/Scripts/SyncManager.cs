@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using BackEnd;
-using BackEnd.Tcp;
 using MessagePack;
 using SyncPacketCollection;
 
@@ -106,9 +104,9 @@ public class SyncManager
             }
             else
             {
-                //매치 서버로 송신
-                if (Backend.Match.IsMatchServerConnect() && Backend.Match.IsInGameServerConnect())
-                    Backend.Match.SendDataToInGameRoom(bytes);
+                // //매치 서버로 송신
+                // if (Backend.Match.IsMatchServerConnect() && Backend.Match.IsInGameServerConnect())
+                //     Backend.Match.SendDataToInGameRoom(bytes);
             }
         }
 
@@ -120,10 +118,10 @@ public class SyncManager
         OnSyncReceive?.Invoke(packet);
     }
 
-    public void OnReceiveMatchRelay(MatchRelayEventArgs args)
-    {
-        var packet = Utils.Deserialize<SyncPacketBase>(args.BinaryUserData);
-        if (args.From.NickName != Backend.UserNickName)
-            Receive(packet);
-    }
+    // public void OnReceiveMatchRelay(MatchRelayEventArgs args)
+    // {
+    //     var packet = Utils.Deserialize<SyncPacketBase>(args.BinaryUserData);
+    //     if (args.From.NickName != Backend.UserNickName)
+    //         Receive(packet);
+    // }
 }

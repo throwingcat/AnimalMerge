@@ -111,10 +111,10 @@ public class CellBattlePass : MonoBehaviour, IScrollCell
             var packet = new PacketBase();
             packet.PacketType = ePacketType.RECEIVE_PASS_REWARD;
             packet.hash["pass_key"] = BattlePass.key;
-            NetworkManager.Instance.Request(packet, res =>
-            {
-                if (res.isSuccess()) UpdateRewardReceive();
-            });
+            // NetworkManager.Instance.Request(packet, res =>
+            // {
+            //     if (res.isSuccess()) UpdateRewardReceive();
+            // });
         }
     }
 

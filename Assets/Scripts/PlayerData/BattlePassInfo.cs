@@ -55,11 +55,11 @@ public class BattlePassInfo
 
     #endregion
 
-    public void OnUpdate(string season, int point, string rewardInfoJson, bool purchase)
+    public void OnUpdate(string season, int point, List<BattlePassRewardInfo> rewardInfo, bool purchase)
     {
         JoinSeasonKey = season;
         Point = point;
-        RewardInfos = JsonConvert.DeserializeObject<List<BattlePassRewardInfo>>(rewardInfoJson);
+        RewardInfos = rewardInfo;
         if (RewardInfos == null)
             RewardInfos = new List<BattlePassRewardInfo>();
 

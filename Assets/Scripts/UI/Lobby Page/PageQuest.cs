@@ -59,8 +59,8 @@ public class PageQuest : MonoBehaviour
         var packet = new PacketBase();
         packet.PacketType = ePacketType.QUEST_REFRESH;
         packet.hash.Add("slot_index", index);
-        NetworkManager.Instance.Request(packet,
-            res => { Cells[index].Set(this, QuestInfo.Instance.QuestSlots[index]); });
+        // NetworkManager.Instance.Request(packet,
+        //     res => { Cells[index].Set(this, QuestInfo.Instance.QuestSlots[index]); });
     }
 
     public void QuestComplete(int index)
@@ -68,19 +68,19 @@ public class PageQuest : MonoBehaviour
         var packet = new PacketBase();
         packet.PacketType = ePacketType.QUEST_COMPLETE;
         packet.hash.Add("slot_index", index);
-        NetworkManager.Instance.Request(packet,
-            res =>
-            {
-                var p = res as PacketReward;
-
-                if (0 < p.Rewards.Count)
-                {
-                    var popup = UIManager.Instance.ShowPopup<PopupGetReward>();
-                    popup.Set(p.Rewards);
-                }
-
-                RefreshQuestList();
-            });
+        // NetworkManager.Instance.Request(packet,
+        //     res =>
+        //     {
+        //         var p = res as PacketReward;
+        //
+        //         if (0 < p.Rewards.Count)
+        //         {
+        //             var popup = UIManager.Instance.ShowPopup<PopupGetReward>();
+        //             popup.Set(p.Rewards);
+        //         }
+        //
+        //         RefreshQuestList();
+        //     });
     }
 
     public void ReceiveDailyReward(int index)
@@ -93,18 +93,18 @@ public class PageQuest : MonoBehaviour
         var packet = new PacketBase();
         packet.PacketType = ePacketType.DAILY_QUEST_REWARD;
         packet.hash.Add("index", index);
-        NetworkManager.Instance.Request(packet,
-            res =>
-            {
-                var p = res as PacketReward;
-
-                if (0 < p.Rewards.Count)
-                {
-                    var popup = UIManager.Instance.ShowPopup<PopupGetReward>();
-                    popup.Set(p.Rewards);
-                }
-
-                RefreshDailyReward();
-            });
+        // NetworkManager.Instance.Request(packet,
+        //     res =>
+        //     {
+        //         var p = res as PacketReward;
+        //
+        //         if (0 < p.Rewards.Count)
+        //         {
+        //             var popup = UIManager.Instance.ShowPopup<PopupGetReward>();
+        //             popup.Set(p.Rewards);
+        //         }
+        //
+        //         RefreshDailyReward();
+        //     });
     }
 }

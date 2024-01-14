@@ -41,12 +41,6 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DOTween\DOTween.dll" />
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DOTweenPro\DOTweenPro.dll" />
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DOTween\Editor\DOTweenEditor.dll" />
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DemiLib\Core\DemiLib.dll" />
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DemiLib\Core\Editor\DemiEditor.dll" />
-    <Analyzer Include="C:\Git\AnimalMerge\Packages\com.violet.framework\Plugins\DOTweenPro\Demigiant\DOTweenPro\Editor\DOTweenProEditor.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
@@ -321,77 +315,83 @@
     <Reference Include="Google.PackageManagerResolver">
       <HintPath>C:\Git\AnimalMerge\Assets\ExternalDependencyManager\Editor\1.2.177\Google.PackageManagerResolver.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Collections.LowLevel.ILSupport">
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.unity.collections@1.2.4\Unity.Collections.LowLevel.ILSupport\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+    </Reference>
     <Reference Include="Firebase.App">
-      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.App.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Assets\Firebase\Plugins\Firebase.App.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Plastic.Antlr3.Runtime">
-      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.unity.collab-proxy@1.13.5\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.unity.collab-proxy@2.2.0\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="unityplastic">
-      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.unity.collab-proxy@1.13.5\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.unity.collab-proxy@2.2.0\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.Firestore">
-      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.Firestore.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Assets\Firebase\Plugins\Firebase.Firestore.dll</HintPath>
     </Reference>
     <Reference Include="Google.IOSResolver">
       <HintPath>C:\Git\AnimalMerge\Assets\ExternalDependencyManager\Editor\1.2.177\Google.IOSResolver.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Plastic.Newtonsoft.Json">
-      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.unity.collab-proxy@1.13.5\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.unity.collab-proxy@2.2.0\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.TaskExtension">
-      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.TaskExtension.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Assets\Firebase\Plugins\Firebase.TaskExtension.dll</HintPath>
     </Reference>
     <Reference Include="Google.VersionHandler">
       <HintPath>C:\Git\AnimalMerge\Assets\ExternalDependencyManager\Editor\Google.VersionHandler.dll</HintPath>
     </Reference>
     <Reference Include="log4netPlastic">
-      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.unity.collab-proxy@1.13.5\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.unity.collab-proxy@2.2.0\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.Auth">
-      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.Auth.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Assets\Firebase\Plugins\Firebase.Auth.dll</HintPath>
     </Reference>
     <Reference Include="Google.VersionHandlerImpl">
       <HintPath>C:\Git\AnimalMerge\Assets\ExternalDependencyManager\Editor\1.2.177\Google.VersionHandlerImpl.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>C:\Git\AnimalMerge\Assets\Plugins\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
     <Reference Include="Firebase.Database">
-      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.Database.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Assets\Firebase\Plugins\Firebase.Database.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe">
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.violet.framework@6bd5d1927c\Runtime\Plugins\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.Platform">
-      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.Platform.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Assets\Firebase\Plugins\Firebase.Platform.dll</HintPath>
     </Reference>
     <Reference Include="Google.MiniJson">
-      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Google.MiniJson.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Assets\Firebase\Plugins\Google.MiniJson.dll</HintPath>
     </Reference>
     <Reference Include="Google.JarResolver">
       <HintPath>C:\Git\AnimalMerge\Assets\ExternalDependencyManager\Editor\1.2.177\Google.JarResolver.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.Editor">
-      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Editor\Firebase.Editor.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Assets\Firebase\Editor\Firebase.Editor.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
-      <HintPath>C:\Git\AnimalMerge\Assets\Violet\External Asset\Demigiant\DOTween\DOTween.dll</HintPath>
-    </Reference>
-    <Reference Include="DemiLib">
-      <HintPath>C:\Git\AnimalMerge\Assets\Violet\External Asset\Demigiant\DemiLib\Core\DemiLib.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTweenEditor">
-      <HintPath>C:\Git\AnimalMerge\Assets\Violet\External Asset\Demigiant\DOTween\Editor\DOTweenEditor.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.violet.framework@6bd5d1927c\Plugins\DOTweenPro\Demigiant\DOTween\DOTween.dll</HintPath>
     </Reference>
     <Reference Include="DemiEditor">
-      <HintPath>C:\Git\AnimalMerge\Assets\Violet\External Asset\Demigiant\DemiLib\Core\Editor\DemiEditor.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.violet.framework@6bd5d1927c\Plugins\DOTweenPro\Demigiant\DemiLib\Core\Editor\DemiEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.NET.StringTools">
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.violet.framework@6bd5d1927c\Runtime\Plugins\Microsoft.NET.StringTools.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenPro">
-      <HintPath>C:\Git\AnimalMerge\Assets\Violet\External Asset\Demigiant\DOTweenPro\DOTweenPro.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.violet.framework@6bd5d1927c\Plugins\DOTweenPro\Demigiant\DOTweenPro\DOTweenPro.dll</HintPath>
+    </Reference>
+    <Reference Include="DemiLib">
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.violet.framework@6bd5d1927c\Plugins\DOTweenPro\Demigiant\DemiLib\Core\DemiLib.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenProEditor">
-      <HintPath>C:\Git\AnimalMerge\Assets\Violet\External Asset\Demigiant\DOTweenPro\Editor\DOTweenProEditor.dll</HintPath>
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.violet.framework@6bd5d1927c\Plugins\DOTweenPro\Demigiant\DOTweenPro\Editor\DOTweenProEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTweenEditor">
+      <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.violet.framework@6bd5d1927c\Plugins\DOTweenPro\Demigiant\DOTween\Editor\DOTweenEditor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
