@@ -30,18 +30,18 @@ MonoBehaviour:
     serializationDepthLimit: 64
     assemblyNames:
     - MessagePack
-    - Assembly-CSharp
     - Assembly-CSharp-firstpass
-    - LunarConsole
-    - Coffee.SoftMaskForUGUI
-    - CFXRDemo
+    - CFXREditor
     - CFXRRuntime
-    - Coffee.UIParticle
-    - MessagePack.Annotations
     - PsdPlugin
+    - Assembly-CSharp
+    - LunarConsole
+    - Coffee.UIParticle
     - LunarConsoleEditor
     - Coffee.UIParticle.Editor
-    - CFXREditor
+    - MessagePack.Annotations
+    - CFXRDemo
+    - Coffee.SoftMaskForUGUI
     - Coffee.SoftMaskForUGUI.Editor
     - CFXRDemoEditor
     showAdvancedSettings: 0

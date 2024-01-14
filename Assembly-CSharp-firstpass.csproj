@@ -470,11 +470,32 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
+    <Reference Include="Firebase.App">
+      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Firestore">
+      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.Firestore.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.TaskExtension">
+      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.TaskExtension.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Auth">
+      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.Auth.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>C:\Git\AnimalMerge\Assets\Plugins\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="Firebase.Database">
+      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.Database.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Platform">
+      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.MiniJson">
+      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Google.MiniJson.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
       <HintPath>C:\Git\AnimalMerge\Assets\Violet\External Asset\Demigiant\DOTween\DOTween.dll</HintPath>

@@ -72,7 +72,15 @@
     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Editor\CFX_SpawnSystemEditor.cs" />
     <Compile Include="Assets\Violet\External Asset\SUI\Editor\SUIToggleInspector.cs" />
     <Compile Include="Assets\Violet\External Asset\UIEffect\Scripts\Editor\DeprecatedRemover.cs" />
+    <None Include="Assets\Firebase\Editor\FirebaseDatabase_version-11.6.0_manifest.txt" />
     <None Include="Assets\Violet\External Asset\Demigiant\DemiLib\Core\Editor\DemiEditor.xml" />
+    <None Include="Assets\ExternalDependencyManager\Editor\external-dependency-manager_version-1.2.177_manifest.txt" />
+    <None Include="Assets\Firebase\Editor\AuthDependencies.xml" />
+    <None Include="Assets\Firebase\Editor\FirestoreDependencies.xml" />
+    <None Include="Assets\Firebase\Editor\AppDependencies.xml" />
+    <None Include="Assets\Firebase\Editor\FirebaseFirestore_version-11.6.0_manifest.txt" />
+    <None Include="Assets\Firebase\Editor\DatabaseDependencies.xml" />
+    <None Include="Assets\Firebase\Editor\FirebaseAuth_version-11.6.0_manifest.txt" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -337,23 +345,62 @@
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="Google.PackageManagerResolver">
+      <HintPath>C:\Git\AnimalMerge\Assets\ExternalDependencyManager\Editor\1.2.177\Google.PackageManagerResolver.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.App">
+      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.App.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Plastic.Antlr3.Runtime">
       <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.unity.collab-proxy@1.13.5\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="unityplastic">
       <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.unity.collab-proxy@1.13.5\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
     </Reference>
+    <Reference Include="Firebase.Firestore">
+      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.Firestore.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.IOSResolver">
+      <HintPath>C:\Git\AnimalMerge\Assets\ExternalDependencyManager\Editor\1.2.177\Google.IOSResolver.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Plastic.Newtonsoft.Json">
       <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.unity.collab-proxy@1.13.5\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.TaskExtension">
+      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.TaskExtension.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.VersionHandler">
+      <HintPath>C:\Git\AnimalMerge\Assets\ExternalDependencyManager\Editor\Google.VersionHandler.dll</HintPath>
     </Reference>
     <Reference Include="log4netPlastic">
       <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.unity.collab-proxy@1.13.5\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
     </Reference>
+    <Reference Include="Firebase.Auth">
+      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.VersionHandlerImpl">
+      <HintPath>C:\Git\AnimalMerge\Assets\ExternalDependencyManager\Editor\1.2.177\Google.VersionHandlerImpl.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>C:\Git\AnimalMerge\Assets\Plugins\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="Firebase.Database">
+      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.Database.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>C:\Git\AnimalMerge\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Platform">
+      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Firebase.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.MiniJson">
+      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Plugins\Google.MiniJson.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.JarResolver">
+      <HintPath>C:\Git\AnimalMerge\Assets\ExternalDependencyManager\Editor\1.2.177\Google.JarResolver.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Editor">
+      <HintPath>C:\Git\AnimalMerge\Assets\FireBase\Editor\Firebase.Editor.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
       <HintPath>C:\Git\AnimalMerge\Assets\Violet\External Asset\Demigiant\DOTween\DOTween.dll</HintPath>
